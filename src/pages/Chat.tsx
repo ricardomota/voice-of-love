@@ -1,45 +1,52 @@
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageBubble } from "@/components/ui/message-bubble";
-import { TypingIndicator } from "@/components/ui/typing-indicator";
-import { SuggestedMessages } from "@/components/SuggestedMessages";
-import { ArrowLeft, Send, Mic, MicOff } from "lucide-react";
-import { Person, Message } from "@/types/person";
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, Send, Mic, Brain, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { MessageBubble } from '@/components/ui/message-bubble';
+import { TypingIndicator } from '@/components/ui/typing-indicator';
+import { SuggestedMessages } from '@/components/SuggestedMessages';
+import { ConversationInsights } from '@/components/ConversationInsights';
+import { SpeechToTextButton } from '@/components/SpeechToTextButton';
+import { supabase } from '@/integrations/supabase/client';
+import { Person, Message } from '@/types/person';
+import { conversationAnalyzer, ConversationAnalysis } from '@/services/conversationAnalyzer';
+import { peopleService } from '@/services/peopleService';
+import { useToast } from '@/hooks/use-toast';
 
 interface ChatProps {
   person: Person;
   onBack: () => void;
 }
 
-export const Chat = ({ person, onBack }: ChatProps) => {
+export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [showInsights, setShowInsights] = useState(false);
+  const [currentAnalysis, setCurrentAnalysis] = useState<ConversationAnalysis | null>(null);
+  const [messageCount, setMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const { toast } = useToast();
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages]);
 
-  // Load initial message
   useEffect(() => {
+    // Initialize with a greeting message
     const initialMessage: Message = {
-      id: "1",
+      id: '0',
       content: getInitialMessage(),
       isUser: false,
       timestamp: new Date(),
-      hasAudio: true
     };
     setMessages([initialMessage]);
-  }, [person]);
+  }, []);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const getInitialMessage = () => {
     const greetings = [
@@ -109,186 +116,232 @@ Agora responda como ${person.name}:`;
       id: Date.now().toString(),
       content: content.trim(),
       isUser: true,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setNewMessage("");
+    setInputValue('');
     setIsTyping(true);
+    setMessageCount(prev => prev + 1);
 
     try {
-      const aiResponseContent = await generateAIResponse(content);
-      const aiResponse: Message = {
+      const prompt = generatePersonalizedPrompt();
+      const aiResponse = await generateAIResponse(prompt, content);
+      
+      const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: aiResponseContent,
+        content: aiResponse,
         isUser: false,
         timestamp: new Date(),
-        hasAudio: true
       };
 
-      setMessages(prev => [...prev, aiResponse]);
+      setMessages(prev => [...prev, aiMessage]);
+      
+      // Atualizar última conversa
+      await peopleService.updatePersonLastConversation(person.id);
+
+      // Analisar conversa a cada 3 mensagens ou quando solicitado
+      if ((messageCount + 1) % 3 === 0) {
+        await analyzeConversation([...messages, userMessage, aiMessage]);
+      }
+
     } catch (error) {
-      console.error('Error getting AI response:', error);
-      const errorResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: `Desculpe, tive um problema para responder. Como ${person.name}, gostaria de conversar mais com você!`,
-        isUser: false,
-        timestamp: new Date(),
-        hasAudio: false
-      };
-      setMessages(prev => [...prev, errorResponse]);
+      console.error('Error sending message:', error);
+      toast({
+        title: "Erro na conversa",
+        description: "Não foi possível enviar a mensagem. Tente novamente.",
+        variant: "destructive",
+      });
     } finally {
       setIsTyping(false);
     }
   };
 
-  const generateAIResponse = async (prompt: string): Promise<string> => {
+  const analyzeConversation = async (conversationMessages: Message[]) => {
     try {
-      const systemPrompt = generatePersonalizedPrompt();
-      
-      const response = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/openai-chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: 'user', content: prompt }
-          ],
-          systemPrompt: systemPrompt,
-          temperature: person.temperature || 0.7
-        }),
+      // Só analisa se houver pelo menos 4 mensagens (2 de cada)
+      if (conversationMessages.length < 4) return;
+
+      toast({
+        title: "🧠 Analisando conversa...",
+        description: "Gerando insights sobre a dinâmica da conversa.",
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get AI response');
+      const analysis = await conversationAnalyzer.analyzeConversation(person, conversationMessages);
+      setCurrentAnalysis(analysis);
+
+      // Salvar análise
+      const { data: user } = await supabase.auth.getUser();
+      if (user.user) {
+        await conversationAnalyzer.saveAnalysis(person.id, user.user.id, analysis);
+        await conversationAnalyzer.saveDynamicMemories(person.id, analysis.suggestedMemories);
+        await conversationAnalyzer.suggestPersonalityEvolution(person, analysis);
       }
 
-      const data = await response.json();
+      // Mostrar notificação sobre qualidade da conversa
+      const quality = analysis.conversationQuality.engagement;
+      if (quality > 0.8) {
+        toast({
+          title: "✨ Conversa Excepcional!",
+          description: "A conexão emocional está muito forte hoje.",
+        });
+      } else if (quality < 0.4) {
+        toast({
+          title: "💡 Dica de Conversa",
+          description: "Que tal tentar um tópico diferente ou pergunta mais pessoal?",
+        });
+      }
+
+    } catch (error) {
+      console.error('Error analyzing conversation:', error);
+    }
+  };
+
+  const generateAIResponse = async (prompt: string, userMessage: string) => {
+    try {
+      // Buscar memórias dinâmicas recentes
+      const dynamicMemories = await conversationAnalyzer.getDynamicMemories(person.id);
+      const memoryContext = dynamicMemories.length > 0 
+        ? `\n\nMEMÓRIAS RECENTES IMPORTANTES:\n${dynamicMemories.map(m => `- ${m.memory_text}`).join('\n')}`
+        : '';
+
+      const enhancedPrompt = prompt + memoryContext;
+
+      const { data, error } = await supabase.functions.invoke('openai-chat', {
+        body: {
+          messages: [{ role: 'user', content: userMessage }],
+          systemPrompt: enhancedPrompt,
+          temperature: person.temperature
+        }
+      });
+
+      if (error) throw error;
       return data.response;
     } catch (error) {
       console.error('Error generating AI response:', error);
-      // Fallback to a simple response
-      return `Desculpe, tive um problema para responder. Como ${person.name}, gostaria de conversar mais com você!`;
+      throw error;
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(inputValue);
     }
   };
 
   const handleVoiceRecording = () => {
     setIsRecording(!isRecording);
-    // Implement voice recording logic here
-    if (!isRecording) {
-      // Start recording
-      setTimeout(() => {
-        setIsRecording(false);
-        handleSendMessage("Mensagem de áudio transcrita aqui");
-      }, 3000);
-    }
+    // TODO: Implement actual voice recording and transcription
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-warm">
+    <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <Card className="flex-shrink-0 border-b border-border/50 rounded-none shadow-soft">
-        <div className="flex items-center gap-3 p-4">
-          <Button variant="ghost" onClick={onBack} className="p-2">
-            <ArrowLeft className="w-5 h-5" />
+      <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur">
+        <div className="flex items-center space-x-3">
+          <Button variant="ghost" size="icon" onClick={onBack}>
+            <ArrowLeft className="h-5 w-5" />
           </Button>
-          
-          <Avatar className="w-10 h-10 shadow-soft">
-            <AvatarImage src={person.avatar} alt={person.name} />
-            <AvatarFallback className="bg-memory text-memory-foreground">
-              {person.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          
-          <div>
-            <h1 className="font-semibold text-foreground">{person.name}</h1>
-            <p className="text-sm text-muted-foreground">{person.relationship}</p>
+          <div className="flex items-center space-x-3">
+            {person.avatar && (
+              <img 
+                src={person.avatar} 
+                alt={person.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            )}
+            <div>
+              <h2 className="font-semibold">{person.name}</h2>
+              <p className="text-sm text-muted-foreground">{person.relationship}</p>
+            </div>
           </div>
         </div>
-      </Card>
+        <div className="flex items-center space-x-2">
+          {currentAnalysis && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowInsights(true)}
+              className="flex items-center gap-2"
+            >
+              <Brain className="h-4 w-4" />
+              Insights
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => analyzeConversation(messages)}
+            disabled={messages.length < 4}
+            className="flex items-center gap-2"
+          >
+            <Sparkles className="h-4 w-4" />
+            Analisar
+          </Button>
+        </div>
+      </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((message) => (
-            <MessageBubble
-              key={message.id}
-              content={message.content}
-              isUser={message.isUser}
-              personName={person.name}
-              personAvatar={person.avatar}
-              hasAudio={message.hasAudio}
-            />
-          ))}
-          
-          {isTyping && (
-            <TypingIndicator
-              personName={person.name}
-              personAvatar={person.avatar}
-            />
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* Suggested Messages */}
-        {messages.length <= 1 && (
-          <div className="p-4 pt-0">
-            <SuggestedMessages
-              onSelectMessage={handleSendMessage}
-              personName={person.name}
-            />
-          </div>
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message) => (
+          <MessageBubble
+            key={message.id}
+            content={message.content}
+            isUser={message.isUser}
+          />
+        ))}
+        
+        {isTyping && <TypingIndicator />}
+        
+        {messages.length === 1 && (
+          <SuggestedMessages 
+            onSelectMessage={handleSendMessage}
+          />
         )}
 
-        {/* Input */}
-        <Card className="flex-shrink-0 border-t border-border/50 rounded-none shadow-soft">
-          <div className="p-4">
-            <div className="flex gap-2">
-              <div className="flex-1 flex gap-2">
-                <Input
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder={`Escreva para ${person.name}...`}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage(newMessage);
-                    }
-                  }}
-                  className="border-border/50"
-                />
-                
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleVoiceRecording}
-                  className={isRecording ? "bg-destructive text-destructive-foreground" : ""}
-                >
-                  {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                </Button>
-              </div>
-              
-              <Button
-                onClick={() => handleSendMessage(newMessage)}
-                disabled={!newMessage.trim() || isTyping}
-                className="bg-primary hover:bg-primary/90"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
-            </div>
-            
-            {isRecording && (
-              <div className="mt-2 text-center">
-                <span className="text-sm text-destructive font-medium animate-pulse">
-                  Gravando... Toque novamente para parar
-                </span>
-              </div>
-            )}
-          </div>
-        </Card>
+        <div ref={messagesEndRef} />
       </div>
+
+      {/* Input */}
+      <div className="p-4 border-t bg-background/95 backdrop-blur">
+        <div className="flex items-center space-x-2">
+          <div className="flex-1 relative">
+            <Input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder={`Escreva para ${person.name}...`}
+              className="pr-12"
+              disabled={isTyping}
+            />
+          </div>
+          
+          <SpeechToTextButton 
+            onTranscription={(transcript) => {
+              setInputValue(transcript);
+              handleSendMessage(transcript);
+            }}
+          />
+          
+          <Button 
+            size="icon"
+            onClick={() => handleSendMessage(inputValue)}
+            disabled={!inputValue.trim() || isTyping}
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Insights Modal */}
+      {currentAnalysis && (
+        <ConversationInsights
+          analysis={currentAnalysis}
+          isVisible={showInsights}
+          onClose={() => setShowInsights(false)}
+        />
+      )}
     </div>
   );
 };
