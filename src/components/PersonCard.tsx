@@ -82,7 +82,7 @@ export const PersonCard = ({
           </Button>
         </div>
 
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4 mb-6">
           <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-2 backdrop-blur-sm">
             {birthYear && (
               <div className="flex items-center">
@@ -96,30 +96,35 @@ export const PersonCard = ({
             </div>
           </div>
           
-          <div className="space-y-3">
-            
-            {onAddMemory && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onAddMemory(id);
-                }}
-                className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200"
-              >
-                <Add className="w-4 h-4 mr-2" />
-                <span>Adicionar Memória</span>
-              </Button>
-            )}
-          </div>
-          
-          {lastConversation && (
-            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
-              <span>Última conversa há {Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24))} dias</span>
-            </div>
+          {onAddMemory && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddMemory(id);
+              }}
+              className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200"
+            >
+              <Add className="w-4 h-4 mr-2" />
+              <span>Adicionar Memória</span>
+            </Button>
           )}
         </div>
+
+        {/* Last conversation - with less prominence */}
+        {lastConversation && (
+          <div className="mb-6">
+            <div className="text-xs text-muted-foreground/70 text-center px-2">
+              {(() => {
+                const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
+                if (daysAgo === 0) return "Conversa hoje";
+                if (daysAgo === 1) return "Última conversa ontem";
+                return `Última conversa há ${daysAgo} dias`;
+              })()}
+            </div>
+          </div>
+        )}
 
         <Button 
           onClick={() => onChat(id)}
