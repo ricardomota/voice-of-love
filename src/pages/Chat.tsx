@@ -64,7 +64,7 @@ export const Chat = ({ person, onBack }: ChatProps) => {
       ? person.commonPhrases.join(', ') 
       : 'não há frases características definidas';
       
-    return `INSTRUÇÕES IMPORTANTES: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas.
+    return `INSTRUÇÕES IMPORTANTES: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas. SEJA CONCISO E NATURAL.
 
 PERFIL DA PESSOA:
 - Nome: ${person.name}
@@ -82,6 +82,7 @@ INSTRUÇÕES DE COMPORTAMENTO:
 4. Use as frases características ocasionalmente de forma natural
 5. Demonstre que você lembra das experiências vividas juntos
 6. Seja específico e pessoal baseado nas memórias
+7. MANTENHA RESPOSTAS CURTAS E NATURAIS - responda como uma pessoa real responderia
 
 Agora responda como ${person.name}:`;
   };
