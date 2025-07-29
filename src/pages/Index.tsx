@@ -208,6 +208,41 @@ const Index = () => {
               />
             );
           
+          case 'settings':
+            return selectedPerson ? (
+              <CreatePerson 
+                person={selectedPerson}
+                onSave={async (personData) => {
+                  try {
+                    const updatedPerson = await peopleService.updatePerson(selectedPerson.id, personData);
+                    setPeople(prev => prev.map(p => 
+                      p.id === selectedPerson.id ? updatedPerson : p
+                    ));
+                    setAppState('dashboard');
+                    toast({
+                      title: "Pessoa atualizada!",
+                      description: `${updatedPerson.name} foi atualizado com sucesso.`,
+                    });
+                  } catch (error: any) {
+                    console.error('Error updating person:', error);
+                    toast({
+                      title: "Erro",
+                      description: "Não foi possível atualizar a pessoa",
+                      variant: "destructive"
+                    });
+                  }
+                }}
+                onBack={handleBack}
+              />
+            ) : (
+              <Dashboard 
+                people={people}
+                onCreatePerson={handleCreatePerson}
+                onChat={handleChat}
+                onSettings={handleSettings}
+                onAddMemory={handleAddMemory}
+              />
+            );
           default:
             return (
               <Dashboard 

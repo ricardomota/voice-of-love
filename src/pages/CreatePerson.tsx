@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,11 +12,12 @@ import { StoryStep } from "@/components/StoryStep";
 import { SpeechToTextButton } from "@/components/SpeechToTextButton";
 
 interface CreatePersonProps {
+  person?: Person;
   onSave: (person: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => void;
   onBack: () => void;
 }
 
-export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
+export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +29,21 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     commonPhrases: [""]
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
+
+  // Initialize form data when editing existing person
+  useEffect(() => {
+    if (person) {
+      setFormData({
+        name: person.name,
+        relationship: person.relationship,
+        birthYear: person.birthYear?.toString() || "",
+        avatar: person.avatar || "",
+        memories: person.memories.length > 0 ? person.memories : [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
+        personality: person.personality.length > 0 ? person.personality : [""],
+        commonPhrases: person.commonPhrases.length > 0 ? person.commonPhrases : [""]
+      });
+    }
+  }, [person]);
 
   const relationships = [
     "Mãe", "Pai", "Avó", "Avô", "Irmã", "Irmão", 
@@ -283,11 +299,11 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     // Step 0: Introdução
     <StoryStep
       key="intro"
-      title="Vamos criar uma Pessoa Eterna"
-      subtitle="Este é um momento especial. Vamos preservar a essência de alguém querido para que ela viva para sempre em suas memórias e conversas."
+      title={person ? "Vamos editar essa Pessoa Eterna" : "Vamos criar uma Pessoa Eterna"}
+      subtitle={person ? "Atualize as informações desta pessoa especial para manter suas memórias sempre vivas." : "Este é um momento especial. Vamos preservar a essência de alguém querido para que ela viva para sempre em suas memórias e conversas."}
       onNext={() => setCurrentStep(1)}
       onBack={onBack}
-      nextText="Começar jornada"
+      nextText={person ? "Editar informações" : "Começar jornada"}
       backText="Voltar"
     >
       <div className="text-center space-y-6 py-8">

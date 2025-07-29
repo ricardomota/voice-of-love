@@ -118,6 +118,35 @@ export const peopleService = {
     if (error) throw error;
   },
 
+  async updatePerson(personId: string, personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>): Promise<Person> {
+    const { data: user, error: authError } = await supabase.auth.getUser();
+    if (authError || !user.user) {
+      console.error('Auth error:', authError);
+      throw new Error('Usuário não autenticado. Faça login novamente.');
+    }
+
+    // Update the person
+    const { error: personError } = await supabase
+      .from('people')
+      .update({
+        name: personData.name,
+        relationship: personData.relationship,
+        birth_year: personData.birthYear,
+        avatar: personData.avatar,
+        personality: personData.personality,
+        common_phrases: personData.commonPhrases,
+        voice_settings: personData.voiceSettings,
+        last_conversation: personData.lastConversation?.toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', personId);
+
+    if (personError) throw personError;
+
+    // Fetch the complete person with memories
+    return this.getPersonById(personId);
+  },
+
   async uploadMedia(file: File, userId: string): Promise<string> {
     try {
       console.log('Starting upload for file:', file.name, 'size:', file.size, 'type:', file.type);
