@@ -83,18 +83,20 @@ export const PersonCard = ({
         </div>
 
         <div className="space-y-4 mb-8">
-          {birthYear && (
-            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
-              <CalendarToday className="w-4 h-4 mr-3" />
-              <span>{new Date().getFullYear() - birthYear} anos</span>
-            </div>
-          )}
-          
-          <div className="space-y-3">
-            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
-              <Favorite className="w-4 h-4 mr-3" />
+          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-2 backdrop-blur-sm">
+            {birthYear && (
+              <div className="flex items-center">
+                <CalendarToday className="w-4 h-4 mr-2" />
+                <span>{new Date().getFullYear() - birthYear} anos</span>
+              </div>
+            )}
+            <div className="flex items-center">
+              <Favorite className="w-4 h-4 mr-2" />
               <span>{memoriesCount} memórias</span>
             </div>
+          </div>
+          
+          <div className="space-y-3">
             
             {onAddMemory && (
               <Button
