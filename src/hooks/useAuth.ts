@@ -7,14 +7,25 @@ export function useAuth() {
 
   useEffect(() => {
     // Get initial session
-    authService.getCurrentUser().then(({ user }) => {
+    console.log('useAuth: Checking initial session...');
+    authService.getCurrentUser().then(({ user, error }) => {
+      console.log('useAuth: Initial session result:', { user: !!user, error });
+      if (error) {
+        console.error('useAuth: Error getting initial user:', error);
+      }
       setUser(user);
+      setLoading(false);
+    }).catch((error) => {
+      console.error('useAuth: Exception getting initial user:', error);
+      setUser(null);
       setLoading(false);
     });
 
     // Listen for auth changes
+    console.log('useAuth: Setting up auth state listener...');
     const { data: { subscription } } = authService.onAuthStateChange(
       (event, session) => {
+        console.log('useAuth: Auth state changed:', { event, hasSession: !!session });
         setUser(session?.user ?? null);
         setLoading(false);
       }
