@@ -58,7 +58,7 @@ export const PersonCard = ({
               <Badge 
                 variant="secondary" 
                 className={cn(
-                  "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full",
+                  "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full mb-2",
                   getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
                   getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
                   getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent"
@@ -66,6 +66,18 @@ export const PersonCard = ({
               >
                 {relationship}
               </Badge>
+              
+              {/* Last conversation - right after relationship */}
+              {lastConversation && (
+                <div className="text-xs text-muted-foreground/70">
+                  {(() => {
+                    const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
+                    if (daysAgo === 0) return "Conversa hoje";
+                    if (daysAgo === 1) return "Última conversa ontem";
+                    return `Última conversa há ${daysAgo} dias`;
+                  })()}
+                </div>
+              )}
             </div>
           </div>
           
@@ -111,20 +123,6 @@ export const PersonCard = ({
             </Button>
           )}
         </div>
-
-        {/* Last conversation - with less prominence */}
-        {lastConversation && (
-          <div className="mb-6">
-            <div className="text-xs text-muted-foreground/70 text-center px-2">
-              {(() => {
-                const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
-                if (daysAgo === 0) return "Conversa hoje";
-                if (daysAgo === 1) return "Última conversa ontem";
-                return `Última conversa há ${daysAgo} dias`;
-              })()}
-            </div>
-          </div>
-        )}
 
         <Button 
           onClick={() => onChat(id)}
