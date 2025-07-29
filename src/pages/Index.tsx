@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { WelcomeView } from "@/components/WelcomeView";
 import { Dashboard } from "@/pages/Dashboard";
 import { CreatePerson } from "@/pages/CreatePerson";
+import { AddMemory } from "@/components/AddMemory";
 import { Chat } from "@/pages/Chat";
 import { Person } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
@@ -10,7 +11,7 @@ import { peopleService } from "@/services/peopleService";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
-type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings';
+type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings' | 'add-memory';
 
 const Index = () => {
   const [people, setPeople] = useState<Person[]>([]);
@@ -108,7 +109,27 @@ const Index = () => {
 
   const handleAddMemory = (personId: string) => {
     setSelectedPersonId(personId);
-    setAppState('settings'); // Por enquanto vai para settings, depois podemos criar uma tela específica para adicionar memórias
+    setAppState('add-memory');
+  };
+
+  const handleSaveMemory = async (memory: Omit<import("@/types/person").Memory, 'id'>) => {
+    if (!selectedPersonId) return;
+    
+    try {
+      const { memoriesService } = await import("@/services/memoriesService");
+      const newMemory = await memoriesService.createMemory(selectedPersonId, memory);
+
+      // Update local state
+      setPeople(prev => prev.map(person => 
+        person.id === selectedPersonId 
+          ? { ...person, memories: [...person.memories, newMemory] }
+          : person
+      ));
+      
+    } catch (error) {
+      console.error('Error saving memory:', error);
+      throw error;
+    }
   };
 
   const selectedPerson = selectedPersonId 
@@ -147,6 +168,23 @@ const Index = () => {
               <CreatePerson 
                 onSave={handleSavePerson}
                 onBack={handleBack}
+              />
+            );
+          
+          case 'add-memory':
+            return selectedPerson ? (
+              <AddMemory 
+                person={selectedPerson}
+                onSave={handleSaveMemory}
+                onBack={handleBack}
+              />
+            ) : (
+              <Dashboard 
+                people={people}
+                onCreatePerson={handleCreatePerson}
+                onChat={handleChat}
+                onSettings={handleSettings}
+                onAddMemory={handleAddMemory}
               />
             );
           
