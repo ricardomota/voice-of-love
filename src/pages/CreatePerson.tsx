@@ -9,6 +9,7 @@ import { Person, Memory } from "@/types/person";
 import { useAuth } from "@/hooks/useAuth";
 import { peopleService } from "@/services/peopleService";
 import { StoryStep } from "@/components/StoryStep";
+import { SpeechToTextButton } from "@/components/SpeechToTextButton";
 
 interface CreatePersonProps {
   onSave: (person: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => void;
@@ -117,6 +118,12 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     } finally {
       setUploading(prev => ({ ...prev, avatar: false }));
     }
+  };
+
+  const handleTranscription = (text: string, memoryIndex: number) => {
+    const currentText = formData.memories[memoryIndex].text;
+    const newText = currentText ? `${currentText} ${text}` : text;
+    updateField('memories', memoryIndex, newText);
   };
 
   const getMediaIcon = (mediaType?: string) => {
@@ -307,12 +314,19 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
                 {index + 1}
               </div>
               <div className="flex-1 space-y-3">
-                <Textarea
-                  value={memory.text}
-                  onChange={(e) => updateField('memories', index, e.target.value)}
-                  placeholder="Ex: Ela sempre fazia bolo de chocolate nos domingos e a casa toda ficava com aquele cheiro gostoso..."
-                  className="min-h-[100px] resize-none border-0 bg-transparent text-base"
-                />
+                <div className="flex gap-2">
+                  <Textarea
+                    value={memory.text}
+                    onChange={(e) => updateField('memories', index, e.target.value)}
+                    placeholder="Ex: Ela sempre fazia bolo de chocolate nos domingos e a casa toda ficava com aquele cheiro gostoso..."
+                    className="min-h-[100px] resize-none border-0 bg-transparent text-base flex-1"
+                  />
+                  <div className="flex flex-col justify-center">
+                    <SpeechToTextButton 
+                      onTranscription={(text) => handleTranscription(text, index)}
+                    />
+                  </div>
+                </div>
                 
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Adicionar foto, vídeo ou áudio (opcional)</p>
@@ -384,6 +398,12 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
           <Plus className="w-4 h-4 mr-2" />
           Adicionar outra memória
         </Button>
+        
+        <div className="text-center pt-4 border-t border-border/30">
+          <p className="text-xs text-muted-foreground">
+            💡 Usamos modelos LLM da OpenAI para interpretar e dar vida às suas memórias
+          </p>
+        </div>
       </div>
     </StoryStep>,
 
