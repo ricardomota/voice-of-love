@@ -116,19 +116,37 @@ export const peopleService = {
   },
 
   async uploadMedia(file: File, userId: string): Promise<string> {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userId}/${Date.now()}.${fileExt}`;
+    try {
+      console.log('Starting upload for file:', file.name, 'size:', file.size, 'type:', file.type);
+      
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}/${Date.now()}.${fileExt}`;
+      
+      console.log('Upload path:', fileName);
 
-    const { error: uploadError } = await supabase.storage
-      .from('media')
-      .upload(fileName, file);
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('media')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-    if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw new Error(`Erro no upload: ${uploadError.message}`);
+      }
 
-    const { data } = supabase.storage
-      .from('media')
-      .getPublicUrl(fileName);
+      console.log('Upload successful:', uploadData);
 
-    return data.publicUrl;
+      const { data } = supabase.storage
+        .from('media')
+        .getPublicUrl(fileName);
+
+      console.log('Public URL:', data.publicUrl);
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error in uploadMedia:', error);
+      throw error;
+    }
   }
 };
