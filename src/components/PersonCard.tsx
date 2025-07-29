@@ -103,9 +103,10 @@ export const PersonCard = ({
                   e.stopPropagation();
                   onAddMemory(id);
                 }}
-                className="opacity-0 group-hover/memory:opacity-100 transition-opacity h-6 w-6 p-0 hover:bg-accent/20"
+                className="opacity-70 hover:opacity-100 transition-opacity h-8 w-8 p-0 hover:bg-accent/20 rounded-xl"
+                title="Adicionar memória"
               >
-                <Add className="w-3 h-3" />
+                <Add className="w-4 h-4 text-accent" />
               </Button>
             )}
           </div>
