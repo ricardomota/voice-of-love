@@ -613,7 +613,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       subtitle="Essas expressões únicas vão tornar as conversas ainda mais autênticas e tocantes."
       onNext={handleSubmit}
       onBack={() => setCurrentStep(4)}
-      nextText="Criar Pessoa Eterna"
+      nextText={person ? "Atualizar Pessoa Eterna" : "Criar Pessoa Eterna"}
     >
       <div className="space-y-4">
         {formData.commonPhrases.map((phrase, index) => (
