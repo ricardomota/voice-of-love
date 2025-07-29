@@ -84,16 +84,13 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
               href="https://www.alz.org/?form=FUNDHYMMBXU" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity"
             >
               <img 
                 src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
                 alt="Alzheimer's Association" 
                 className="h-6 opacity-80"
               />
-              <span className="text-xs text-accent underline">
-                Apoie a Alzheimer's Association
-              </span>
             </a>
           </div>
         </CardContent>
