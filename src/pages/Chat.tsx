@@ -131,9 +131,9 @@ Responda como esta pessoa responderia, usando o tom de voz e expressões típica
             </AvatarFallback>
           </Avatar>
           
-          <div className="space-y-1">
-            <h2 className="text-lg font-semibold text-foreground">{person.name}</h2>
-            <p className="text-caption">{person.relationship}</p>
+          <div>
+            <h1 className="font-semibold text-foreground">{person.name}</h1>
+            <p className="text-sm text-muted-foreground">{person.relationship}</p>
           </div>
         </div>
       </Card>

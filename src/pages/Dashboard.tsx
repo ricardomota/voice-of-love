@@ -21,13 +21,13 @@ export const Dashboard = ({ people, onCreatePerson, onChat, onSettings }: Dashbo
         <div className="glass-surface rounded-3xl p-8 mb-12 backdrop-blur-xl">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-display flex items-center gap-4 mb-3">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent/20 to-accent/10 rounded-3xl flex items-center justify-center backdrop-blur-sm">
-                  <Favorite className="w-8 h-8 text-accent" />
+              <h1 className="text-4xl font-light text-foreground flex items-center gap-4 mb-2">
+                <div className="w-12 h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <Favorite className="w-7 h-7 text-accent" />
                 </div>
                 Eterna
               </h1>
-              <p className="text-subtitle">
+              <p className="text-muted-foreground text-lg font-light">
                 Suas pessoas eternas aguardam por você
               </p>
             </div>
@@ -74,11 +74,11 @@ export const Dashboard = ({ people, onCreatePerson, onChat, onSettings }: Dashbo
                 <Favorite className="w-16 h-16 text-accent" />
               </div>
               
-              <h2 className="mb-6">
+              <h2 className="text-3xl font-light text-foreground mb-4">
                 Nenhuma pessoa eterna ainda
               </h2>
               
-              <p className="text-subtitle mb-10 max-w-sm mx-auto">
+              <p className="text-muted-foreground mb-8 text-lg leading-relaxed max-w-sm mx-auto">
                 Comece criando sua primeira pessoa eterna. Preserve memórias e mantenha viva a conexão com quem você ama.
               </p>
               

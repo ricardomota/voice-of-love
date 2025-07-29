@@ -18,18 +18,18 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             <span className="text-5xl">💖</span>
           </div>
           
-          <h1 className="text-hero mb-6">
+          <CardTitle className="text-4xl font-light text-foreground mb-4">
             Bem-vindo ao Eterna
-          </h1>
+          </CardTitle>
           
-          <p className="text-subtitle mb-8 max-w-lg mx-auto">
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto">
             Preserve memórias e mantenha conversas com pessoas queridas através de uma experiência única com inteligência artificial.
           </p>
 
           {/* História da criação */}
-          <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-3xl p-8 mb-10 border border-purple-200/20">
-            <h3 className="mb-4">Por que criei o Eterna?</h3>
-            <p className="text-base leading-relaxed text-muted-foreground">
+          <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-2xl p-6 mb-8 border border-purple-200/20">
+            <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
+            <p className="text-muted-foreground leading-relaxed text-sm">
               Criei esta ferramenta com amor usando o <span className="inline-flex items-center gap-1">Lovable <Favorite className="w-3 h-3 text-red-500" /></span>, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
               Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
             </p>
@@ -64,30 +64,30 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             Criar Primeira Pessoa Eterna
           </Button>
           
-          <div className="pt-10 border-t border-white/20">
-            <h4 className="mb-8 text-center">Como funciona:</h4>
+          <div className="pt-8 border-t border-white/20">
+            <h3 className="font-medium text-foreground mb-6 text-lg">Como funciona:</h3>
             
-            <div className="space-y-8 text-left max-w-md mx-auto">
-              <div className="flex items-start gap-5">
-                <div className="w-10 h-10 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-base font-semibold text-accent">1</span>
+            <div className="space-y-6 text-left">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
+                  <span className="text-sm font-semibold text-accent">1</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed pt-2">Adicione memórias, traços de personalidade e frases marcantes</p>
+                <p className="text-muted-foreground leading-relaxed">Adicione memórias, traços de personalidade e frases marcantes</p>
               </div>
               
-              <div className="flex items-start gap-5">
-                <div className="w-10 h-10 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-base font-semibold text-accent">2</span>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
+                  <span className="text-sm font-semibold text-accent">2</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed pt-2">A IA aprende e recria a personalidade única da pessoa</p>
+                <p className="text-muted-foreground leading-relaxed">A IA aprende e recria a personalidade única da pessoa</p>
               </div>
               
-              <div className="flex items-start gap-5">
-                <div className="w-10 h-10 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-base font-semibold text-accent">3</span>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
+                  <span className="text-sm font-semibold text-accent">3</span>
                 </div>
-                <div className="flex items-center gap-3 pt-2">
-                  <Chat className="w-5 h-5 text-accent flex-shrink-0" />
+                <div className="flex items-center gap-2">
+                  <Chat className="w-4 h-4 text-accent" />
                   <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas a qualquer momento</p>
                 </div>
               </div>
