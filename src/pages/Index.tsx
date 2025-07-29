@@ -106,6 +106,11 @@ const Index = () => {
     setSelectedPersonId(null);
   };
 
+  const handleAddMemory = (personId: string) => {
+    setSelectedPersonId(personId);
+    setAppState('settings'); // Por enquanto vai para settings, depois podemos criar uma tela específica para adicionar memórias
+  };
+
   const selectedPerson = selectedPersonId 
     ? people.find(p => p.id === selectedPersonId) 
     : null;
@@ -133,6 +138,7 @@ const Index = () => {
                 onCreatePerson={handleCreatePerson}
                 onChat={handleChat}
                 onSettings={handleSettings}
+                onAddMemory={handleAddMemory}
               />
             );
           
@@ -156,6 +162,7 @@ const Index = () => {
                 onCreatePerson={handleCreatePerson}
                 onChat={handleChat}
                 onSettings={handleSettings}
+                onAddMemory={handleAddMemory}
               />
             );
           
@@ -166,6 +173,7 @@ const Index = () => {
                 onCreatePerson={handleCreatePerson}
                 onChat={handleChat}
                 onSettings={handleSettings}
+                onAddMemory={handleAddMemory}
               />
             );
         }
