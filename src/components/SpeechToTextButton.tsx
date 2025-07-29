@@ -79,10 +79,6 @@ export const SpeechToTextButton = ({ onTranscription, disabled }: SpeechToTextBu
           Gravando...
         </div>
       )}
-      
-      <div className="text-xs text-muted-foreground text-center max-w-32">
-        Powered by OpenAI Whisper
-      </div>
     </div>
   );
 };
