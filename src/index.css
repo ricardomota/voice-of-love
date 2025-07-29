@@ -2,72 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Eterna Design System - Emocional e Minimalista
-Inspirado em Apple Journal e Numer.ai
+/* Apple Liquid Glass Design System
+Clean, minimal, translucent - inspired by iOS and Apple's Liquid Glass
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Base colors - Warm whites and soft grays */
-    --background: 30 10% 98%;
-    --foreground: 215 25% 20%;
+    /* Base - Pure, airy whites */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
 
-    /* Card system - Elevated surfaces */
-    --card: 0 0% 100%;
-    --card-foreground: 215 25% 20%;
+    /* Glass surfaces - Translucent and elevated */
+    --card: 0 0% 100% / 0.85;
+    --card-foreground: 220 13% 18%;
+    --card-glass: 0 0% 100% / 0.7;
 
-    /* Popover system */
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 20%;
+    /* Popover system - Frosted glass */
+    --popover: 0 0% 100% / 0.9;
+    --popover-foreground: 220 13% 18%;
 
-    /* Primary - Deep blue-gray for emotional depth */
-    --primary: 210 40% 24%;
-    --primary-foreground: 30 10% 98%;
-    --primary-soft: 210 30% 85%;
+    /* Primary - Soft blue-gray iOS system */
+    --primary: 220 13% 18%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 220 13% 91%;
+    --primary-glass: 220 13% 18% / 0.8;
 
-    /* Secondary - Warm neutrals */
-    --secondary: 25 15% 94%;
-    --secondary-foreground: 215 25% 20%;
+    /* Secondary - Ultra light */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 18%;
 
-    /* Muted - Subtle text and backgrounds */
-    --muted: 25 10% 92%;
-    --muted-foreground: 215 15% 50%;
+    /* Muted - Whisper light */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    /* Accent - Golden warmth for special moments */
-    --accent: 45 85% 88%;
-    --accent-foreground: 45 95% 25%;
-    --accent-gold: 45 95% 55%;
+    /* Accent - Gentle system blue */
+    --accent: 213 94% 68%;
+    --accent-foreground: 0 0% 100%;
+    --accent-soft: 213 94% 95%;
+    --accent-glass: 213 94% 68% / 0.1;
 
-    /* Emotional states */
-    --love: 340 85% 92%;
-    --love-foreground: 340 85% 35%;
-    --memory: 220 60% 94%;
-    --memory-foreground: 220 60% 30%;
+    /* iOS system colors */
+    --ios-blue: 213 94% 68%;
+    --ios-green: 142 76% 36%;
+    --ios-red: 4 90% 58%;
+    --ios-orange: 28 87% 67%;
+    --ios-purple: 266 85% 58%;
 
     /* System colors */
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 4 90% 58%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 25 15% 89%;
-    --input: 25 15% 89%;
-    --ring: 210 40% 24%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 213 94% 68%;
 
-    --radius: 1rem;
+    --radius: 1.125rem;
 
-    /* Gradients for emotional depth */
-    --gradient-warm: linear-gradient(135deg, hsl(30 15% 96%), hsl(45 20% 92%));
-    --gradient-memory: linear-gradient(135deg, hsl(220 60% 94%), hsl(210 40% 90%));
-    --gradient-love: linear-gradient(135deg, hsl(340 85% 92%), hsl(320 70% 88%));
+    /* Liquid Glass effects */
+    --glass-blur: blur(20px);
+    --glass-blur-light: blur(10px);
+    --glass-backdrop: blur(40px) saturate(180%);
 
-    /* Shadows for depth */
-    --shadow-soft: 0 2px 20px -5px hsl(215 25% 20% / 0.08);
-    --shadow-medium: 0 8px 30px -8px hsl(215 25% 20% / 0.12);
-    --shadow-strong: 0 20px 40px -12px hsl(215 25% 20% / 0.18);
+    /* Gradients - Soft and minimal */
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.7), hsl(220 14% 96% / 0.4));
+    --gradient-accent: linear-gradient(135deg, hsl(213 94% 68% / 0.1), hsl(213 94% 85% / 0.05));
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
 
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Shadows - Soft and layered */
+    --shadow-glass: 0 8px 32px hsl(220 13% 18% / 0.04), 0 1px 3px hsl(220 13% 18% / 0.02);
+    --shadow-floating: 0 20px 40px hsl(220 13% 18% / 0.06), 0 4px 16px hsl(220 13% 18% / 0.04);
+    --shadow-modal: 0 32px 64px hsl(220 13% 18% / 0.08), 0 8px 24px hsl(220 13% 18% / 0.06);
+    --shadow-inset: inset 0 1px 0 hsl(0 0% 100% / 0.6);
+
+    /* Animations - Gentle and fluid */
+    --transition-glass: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -131,6 +142,96 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Liquid Glass Components */
+  .glass-card {
+    @apply relative backdrop-blur-xl bg-card border border-white/20;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-glass), var(--shadow-inset);
+    border-radius: var(--radius);
+  }
+
+  .glass-surface {
+    @apply backdrop-blur-2xl bg-white/70 border border-white/30;
+    box-shadow: var(--shadow-floating);
+  }
+
+  .glass-modal {
+    @apply backdrop-blur-3xl bg-white/80 border border-white/40;
+    box-shadow: var(--shadow-modal);
+  }
+
+  .floating-button {
+    @apply relative backdrop-blur-lg bg-white/60 border border-white/30 hover:bg-white/80;
+    transition: var(--transition-glass);
+    box-shadow: var(--shadow-glass);
+  }
+
+  .floating-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-floating);
+  }
+
+  .ios-button {
+    @apply rounded-2xl font-medium text-sm px-6 py-3 transition-all duration-300;
+    @apply bg-accent text-accent-foreground hover:scale-105 active:scale-95;
+    box-shadow: 0 2px 8px hsl(var(--accent) / 0.2);
+  }
+
+  .ios-button-secondary {
+    @apply rounded-2xl font-medium text-sm px-6 py-3 transition-all duration-300;
+    @apply bg-white/60 text-foreground hover:bg-white/80 backdrop-blur-lg border border-white/30;
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Gentle glow effect */
+  .gentle-glow {
+    position: relative;
+  }
+
+  .gentle-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, hsl(var(--accent) / 0.1), transparent);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  .gentle-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Minimal animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .parallax-slow {
+    transform: translateZ(0);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .parallax-slow:hover {
+    transform: translateY(-4px) translateZ(0);
   }
 }

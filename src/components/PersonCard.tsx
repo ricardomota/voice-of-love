@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Settings, Heart } from "lucide-react";
+import { Chat, Settings, Favorite, CalendarToday } from "@mui/icons-material";
 import { cn } from "@/lib/utils";
 
 interface PersonCardProps {
@@ -39,79 +39,74 @@ export const PersonCard = ({
 
   return (
     <Card className={cn(
-      "group hover:shadow-medium transition-smooth cursor-pointer animate-scale-in",
-      "bg-gradient-warm border-border/50",
+      "group cursor-pointer transition-all duration-500 hover:shadow-xl parallax-slow",
       className
     )}>
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar className="w-12 h-12 shadow-soft border-2 border-white">
+      <CardContent className="p-8">
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center space-x-5">
+            <Avatar className="w-20 h-20 border-2 border-white/50 shadow-lg backdrop-blur-sm">
               <AvatarImage src={avatar} alt={name} />
-              <AvatarFallback className="bg-memory text-memory-foreground font-medium">
-                {name.charAt(0)}
+              <AvatarFallback className="bg-gradient-to-br from-accent/20 to-accent/10 text-accent-foreground font-semibold text-xl backdrop-blur-sm">
+                {name.split(' ').map(n => n[0]).join('').slice(0, 2)}
               </AvatarFallback>
             </Avatar>
-            
             <div>
-              <h3 className="font-semibold text-foreground group-hover:text-primary transition-smooth">
-                {name}
-              </h3>
-              <div className="flex items-center gap-2 mt-1">
-                <Badge 
-                  variant="secondary" 
-                  className={cn(
-                    "text-xs px-2 py-0.5",
-                    getRelationshipColor(relationship) === 'love' && "bg-love text-love-foreground",
-                    getRelationshipColor(relationship) === 'memory' && "bg-memory text-memory-foreground",
-                    getRelationshipColor(relationship) === 'accent' && "bg-accent text-accent-foreground"
-                  )}
-                >
-                  {relationship}
-                </Badge>
-                {birthYear && (
-                  <span className="text-xs text-muted-foreground">
-                    {new Date().getFullYear() - birthYear} anos
-                  </span>
+              <h3 className="font-semibold text-xl text-foreground leading-tight mb-2">{name}</h3>
+              <Badge 
+                variant="secondary" 
+                className={cn(
+                  "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full",
+                  getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
+                  getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
+                  getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent"
                 )}
-              </div>
+              >
+                {relationship}
+              </Badge>
             </div>
           </div>
           
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={(e) => {
               e.stopPropagation();
               onSettings(id);
             }}
-            className="opacity-0 group-hover:opacity-100 transition-smooth"
+            className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="w-5 h-5" />
           </Button>
         </div>
-      </CardHeader>
-      
-      <CardContent className="pt-0">
-        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1">
-            <Heart className="w-3 h-3" />
+
+        <div className="space-y-4 mb-8">
+          {birthYear && (
+            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
+              <CalendarToday className="w-4 h-4 mr-3" />
+              <span>{new Date().getFullYear() - birthYear} anos</span>
+            </div>
+          )}
+          
+          <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
+            <Favorite className="w-4 h-4 mr-3" />
             <span>{memoriesCount} memórias</span>
           </div>
           
           {lastConversation && (
-            <span>
-              Última conversa há {Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24))} dias
-            </span>
+            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
+              <span>Última conversa há {Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24))} dias</span>
+            </div>
           )}
         </div>
-        
+
         <Button 
           onClick={() => onChat(id)}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-          size="sm"
+          className="w-full"
+          size="lg"
+          variant="glass"
         >
-          <MessageCircle className="w-4 h-4 mr-2" />
+          <Chat className="w-5 h-5 mr-3" />
           Conversar
         </Button>
       </CardContent>
