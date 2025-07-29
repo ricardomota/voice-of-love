@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      conversation_analytics: {
+        Row: {
+          conversation_date: string
+          created_at: string
+          id: string
+          key_moments: string[] | null
+          person_id: string
+          personality_adaptations: Json | null
+          relationship_dynamics: Json | null
+          sentiment_analysis: Json | null
+          topics_discussed: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conversation_date?: string
+          created_at?: string
+          id?: string
+          key_moments?: string[] | null
+          person_id: string
+          personality_adaptations?: Json | null
+          relationship_dynamics?: Json | null
+          sentiment_analysis?: Json | null
+          topics_discussed?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          conversation_date?: string
+          created_at?: string
+          id?: string
+          key_moments?: string[] | null
+          person_id?: string
+          personality_adaptations?: Json | null
+          relationship_dynamics?: Json | null
+          sentiment_analysis?: Json | null
+          topics_discussed?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
@@ -45,6 +87,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      dynamic_memories: {
+        Row: {
+          auto_generated: boolean | null
+          confirmed_by_user: boolean | null
+          context_tags: string[] | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          importance_score: number | null
+          memory_text: string
+          memory_type: string
+          person_id: string
+          source_conversation_id: string | null
+        }
+        Insert: {
+          auto_generated?: boolean | null
+          confirmed_by_user?: boolean | null
+          context_tags?: string[] | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          importance_score?: number | null
+          memory_text: string
+          memory_type: string
+          person_id: string
+          source_conversation_id?: string | null
+        }
+        Update: {
+          auto_generated?: boolean | null
+          confirmed_by_user?: boolean | null
+          context_tags?: string[] | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          importance_score?: number | null
+          memory_text?: string
+          memory_type?: string
+          person_id?: string
+          source_conversation_id?: string | null
+        }
+        Relationships: []
       }
       memories: {
         Row: {
@@ -188,12 +272,51 @@ export type Database = {
         }
         Relationships: []
       }
+      personality_evolution: {
+        Row: {
+          applied: boolean | null
+          confidence_score: number | null
+          created_at: string
+          evolution_date: string
+          evolution_reason: string | null
+          id: string
+          new_traits: Json | null
+          person_id: string
+          previous_traits: Json | null
+        }
+        Insert: {
+          applied?: boolean | null
+          confidence_score?: number | null
+          created_at?: string
+          evolution_date?: string
+          evolution_reason?: string | null
+          id?: string
+          new_traits?: Json | null
+          person_id: string
+          previous_traits?: Json | null
+        }
+        Update: {
+          applied?: boolean | null
+          confidence_score?: number | null
+          created_at?: string
+          evolution_date?: string
+          evolution_reason?: string | null
+          id?: string
+          new_traits?: Json | null
+          person_id?: string
+          previous_traits?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      schedule_memory_cleanup: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
