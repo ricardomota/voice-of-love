@@ -2,41 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Eterna Design System - Emocional e Minimalista
+Inspirado em Apple Journal e Numer.ai
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - Warm whites and soft grays */
+    --background: 30 10% 98%;
+    --foreground: 215 25% 20%;
 
+    /* Card system - Elevated surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 20%;
 
+    /* Popover system */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Deep blue-gray for emotional depth */
+    --primary: 210 40% 24%;
+    --primary-foreground: 30 10% 98%;
+    --primary-soft: 210 30% 85%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Warm neutrals */
+    --secondary: 25 15% 94%;
+    --secondary-foreground: 215 25% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Subtle text and backgrounds */
+    --muted: 25 10% 92%;
+    --muted-foreground: 215 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Golden warmth for special moments */
+    --accent: 45 85% 88%;
+    --accent-foreground: 45 95% 25%;
+    --accent-gold: 45 95% 55%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Emotional states */
+    --love: 340 85% 92%;
+    --love-foreground: 340 85% 35%;
+    --memory: 220 60% 94%;
+    --memory-foreground: 220 60% 30%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* System colors */
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --radius: 0.5rem;
+    --border: 25 15% 89%;
+    --input: 25 15% 89%;
+    --ring: 210 40% 24%;
+
+    --radius: 1rem;
+
+    /* Gradients for emotional depth */
+    --gradient-warm: linear-gradient(135deg, hsl(30 15% 96%), hsl(45 20% 92%));
+    --gradient-memory: linear-gradient(135deg, hsl(220 60% 94%), hsl(210 40% 90%));
+    --gradient-love: linear-gradient(135deg, hsl(340 85% 92%), hsl(320 70% 88%));
+
+    /* Shadows for depth */
+    --shadow-soft: 0 2px 20px -5px hsl(215 25% 20% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(215 25% 20% / 0.12);
+    --shadow-strong: 0 20px 40px -12px hsl(215 25% 20% / 0.18);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
