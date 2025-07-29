@@ -123,16 +123,28 @@ const Index = () => {
         memories.map(memory => memoriesService.createMemory(selectedPersonId, memory))
       );
 
-      // Update local state
+      // Update local state with new memories and updated timestamp
       setPeople(prev => prev.map(person => 
         person.id === selectedPersonId 
-          ? { ...person, memories: [...person.memories, ...savedMemories] }
+          ? { 
+              ...person, 
+              memories: [...person.memories, ...savedMemories],
+              updatedAt: new Date() // Update the last modified date
+            }
           : person
       ));
 
-      // Navigate back to dashboard after saving
-      setAppState('dashboard');
-      setSelectedPersonId(null);
+      // Show success toast
+      toast({
+        title: "Sucesso",
+        description: `${savedMemories.length} memórias adicionadas`,
+      });
+
+      // Navigate back to dashboard after a brief delay
+      setTimeout(() => {
+        setAppState('dashboard');
+        setSelectedPersonId(null);
+      }, 1000);
       
     } catch (error) {
       console.error('Error saving memories:', error);

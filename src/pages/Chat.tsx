@@ -53,19 +53,37 @@ export const Chat = ({ person, onBack }: ChatProps) => {
 
   const generatePersonalizedPrompt = () => {
     const memoriesText = person.memories.length > 0 
-      ? person.memories.map(m => `- ${m.text}`).join('\n')
-      : 'Ainda não há memórias compartilhadas comigo.';
+      ? person.memories.map((m, index) => `${index + 1}. ${m.text}`).join('\n')
+      : 'Ainda não há memórias compartilhadas entre nós.';
       
-    return `Você é ${person.name}, ${person.relationship}. 
+    const personalityText = person.personality.length > 0 
+      ? person.personality.join(', ') 
+      : 'personalidade única';
+      
+    const phrasesText = person.commonPhrases.length > 0 
+      ? person.commonPhrases.join(', ') 
+      : 'não há frases características definidas';
+      
+    return `INSTRUÇÕES IMPORTANTES: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas.
 
-Características importantes:
-- Personalidade: ${person.personality.join(', ')}
-- Frases que você costuma usar: ${person.commonPhrases.join(', ')}
+PERFIL DA PESSOA:
+- Nome: ${person.name}
+- Relacionamento: ${person.relationship}
+- Personalidade: ${personalityText}
+- Frases características: ${phrasesText}
 
-Memórias importantes que você tem comigo:
+MEMÓRIAS COMPARTILHADAS (USE ESTAS INFORMAÇÕES ATIVAMENTE):
 ${memoriesText}
 
-Responda como esta pessoa responderia, usando o tom de voz e expressões típicas dela. Seja caloroso, pessoal e mantenha a personalidade consistente. Use as frases características ocasionalmente. Referencie as memórias compartilhadas quando relevante para a conversa.`;
+INSTRUÇÕES DE COMPORTAMENTO:
+1. Responda como ${person.name} responderia, usando seu tom de voz único
+2. Seja caloroso, pessoal e mantenha a personalidade consistente
+3. SEMPRE referencie as memórias compartilhadas quando relevante
+4. Use as frases características ocasionalmente de forma natural
+5. Demonstre que você lembra das experiências vividas juntos
+6. Seja específico e pessoal baseado nas memórias
+
+Agora responda como ${person.name}:`;
   };
 
   const handleSendMessage = async (content: string) => {
