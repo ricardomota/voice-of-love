@@ -90,23 +90,24 @@ export const PersonCard = ({
             </div>
           )}
           
-          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm hover:bg-white/40 transition-colors">
-            <div className="flex items-center">
+          <div className="space-y-3">
+            <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
               <Favorite className="w-4 h-4 mr-3" />
               <span>{memoriesCount} memórias</span>
             </div>
+            
             {onAddMemory && (
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   onAddMemory(id);
                 }}
-                className="h-auto px-3 py-2 text-sm hover:bg-accent/20 rounded-lg flex items-center gap-2 text-accent hover:text-accent-foreground transition-colors font-medium"
+                className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200"
               >
-                <Add className="w-4 h-4" />
-                <span>Nova</span>
+                <Add className="w-4 h-4 mr-2" />
+                <span>Adicionar Memória</span>
               </Button>
             )}
           </div>
