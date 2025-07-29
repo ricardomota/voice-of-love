@@ -227,6 +227,30 @@ All colors MUST be HSL.
     transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .ios-button-cta {
+    @apply rounded-2xl font-semibold text-sm;
+    background: linear-gradient(135deg, hsl(210 100% 56%), hsl(210 100% 48%));
+    color: white;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px hsl(210 100% 56% / 0.4),
+                0 8px 32px hsl(210 100% 56% / 0.2),
+                0 1px 0 hsl(0 0% 100% / 0.6) inset;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ios-button-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 24px hsl(210 100% 56% / 0.5),
+                0 12px 40px hsl(210 100% 56% / 0.3),
+                0 1px 0 hsl(0 0% 100% / 0.8) inset;
+  }
+  
+  .ios-button-cta:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   .ios-button-secondary {
     @apply rounded-2xl font-medium text-sm px-6 py-3 transition-all duration-300;
     @apply bg-white/60 text-foreground hover:bg-white/80 backdrop-blur-lg border border-white/30;

@@ -31,7 +31,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             onClick={onCreatePerson}
             className="w-full mb-10"
             size="lg"
-            variant="glass"
+            variant="cta"
           >
             <Add className="w-6 h-6 mr-3" />
             Criar Primeira Pessoa Eterna

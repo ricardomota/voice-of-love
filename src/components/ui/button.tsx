@@ -16,6 +16,7 @@ const buttonVariants = cva(
         ghost: "rounded-xl hover:bg-white/40 backdrop-blur-sm px-4 py-2",
         link: "text-accent underline-offset-4 hover:underline rounded-lg px-2 py-1",
         glass: "floating-button parallax-slow px-6 py-3 rounded-2xl",
+        cta: "ios-button-cta px-6 py-3 rounded-2xl",
       },
       size: {
         default: "text-sm",
