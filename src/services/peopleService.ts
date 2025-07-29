@@ -35,8 +35,11 @@ export const peopleService = {
   },
 
   async createPerson(personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>): Promise<Person> {
-    const { data: user } = await supabase.auth.getUser();
-    if (!user.user) throw new Error('User not authenticated');
+    const { data: user, error: authError } = await supabase.auth.getUser();
+    if (authError || !user.user) {
+      console.error('Auth error:', authError);
+      throw new Error('Usuário não autenticado. Faça login novamente.');
+    }
 
     // First create the person
     const { data: person, error: personError } = await supabase
