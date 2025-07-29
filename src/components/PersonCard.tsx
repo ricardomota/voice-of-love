@@ -102,7 +102,7 @@ export const PersonCard = ({
 
         <Button 
           onClick={() => onChat(id)}
-          className="w-full ios-focus gentle-pulse"
+          className="w-full"
           size="lg"
           variant="glass"
         >
