@@ -52,14 +52,20 @@ export const Chat = ({ person, onBack }: ChatProps) => {
   };
 
   const generatePersonalizedPrompt = () => {
+    const memoriesText = person.memories.length > 0 
+      ? person.memories.map(m => `- ${m.text}`).join('\n')
+      : 'Ainda não há memórias compartilhadas comigo.';
+      
     return `Você é ${person.name}, ${person.relationship}. 
 
 Características importantes:
 - Personalidade: ${person.personality.join(', ')}
 - Frases que você costuma usar: ${person.commonPhrases.join(', ')}
-- Memórias importantes: ${person.memories.map(m => m.text).join('. ')}
 
-Responda como esta pessoa responderia, usando o tom de voz e expressões típicas dela. Seja caloroso, pessoal e mantenha a personalidade consistente. Use as frases características ocasionalmente.`;
+Memórias importantes que você tem comigo:
+${memoriesText}
+
+Responda como esta pessoa responderia, usando o tom de voz e expressões típicas dela. Seja caloroso, pessoal e mantenha a personalidade consistente. Use as frases características ocasionalmente. Referencie as memórias compartilhadas quando relevante para a conversa.`;
   };
 
   const handleSendMessage = async (content: string) => {

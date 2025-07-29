@@ -120,7 +120,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
         description: `${validMemories.length} memórias adicionadas para ${person.name}`,
       });
       
-      onBack();
+      // Navigation is now handled by the parent component
     } catch (error) {
       console.error('Error saving memories:', error);
       toast({

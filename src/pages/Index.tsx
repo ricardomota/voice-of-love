@@ -129,6 +129,10 @@ const Index = () => {
           ? { ...person, memories: [...person.memories, ...savedMemories] }
           : person
       ));
+
+      // Navigate back to dashboard after saving
+      setAppState('dashboard');
+      setSelectedPersonId(null);
       
     } catch (error) {
       console.error('Error saving memories:', error);
