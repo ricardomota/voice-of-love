@@ -148,9 +148,8 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     >
       <div className="text-center space-y-6 py-8">
         <div className="flex justify-center">
-          <div className="relative">
-            <Heart className="w-24 h-24 text-memory animate-pulse" />
-            <Sparkles className="w-8 h-8 text-memory-light absolute -top-2 -right-2" />
+          <div className="text-8xl animate-pulse">
+            💖
           </div>
         </div>
         <div className="prose prose-lg max-w-none text-center">
