@@ -14,7 +14,159 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          person_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          person_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          person_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memories: {
+        Row: {
+          created_at: string
+          file_name: string | null
+          id: string
+          media_type: string | null
+          media_url: string | null
+          person_id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          file_name?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          person_id: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          person_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memories_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          audio_url: string | null
+          content: string
+          conversation_id: string
+          created_at: string
+          has_audio: boolean | null
+          id: string
+          is_user: boolean
+        }
+        Insert: {
+          audio_url?: string | null
+          content: string
+          conversation_id: string
+          created_at?: string
+          has_audio?: boolean | null
+          id?: string
+          is_user?: boolean
+        }
+        Update: {
+          audio_url?: string | null
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          has_audio?: boolean | null
+          id?: string
+          is_user?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      people: {
+        Row: {
+          avatar: string | null
+          birth_year: number | null
+          common_phrases: string[] | null
+          created_at: string
+          id: string
+          last_conversation: string | null
+          name: string
+          personality: string[] | null
+          relationship: string
+          updated_at: string
+          user_id: string | null
+          voice_settings: Json | null
+        }
+        Insert: {
+          avatar?: string | null
+          birth_year?: number | null
+          common_phrases?: string[] | null
+          created_at?: string
+          id?: string
+          last_conversation?: string | null
+          name: string
+          personality?: string[] | null
+          relationship: string
+          updated_at?: string
+          user_id?: string | null
+          voice_settings?: Json | null
+        }
+        Update: {
+          avatar?: string | null
+          birth_year?: number | null
+          common_phrases?: string[] | null
+          created_at?: string
+          id?: string
+          last_conversation?: string | null
+          name?: string
+          personality?: string[] | null
+          relationship?: string
+          updated_at?: string
+          user_id?: string | null
+          voice_settings?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
