@@ -73,9 +73,11 @@ export const PersonCard = ({
                   <div className="text-xs text-muted-foreground/70">
                     {(() => {
                       const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
-                      if (daysAgo === 0) return "Conversa hoje";
-                      if (daysAgo === 1) return "Última conversa ontem";
-                      return `Última conversa há ${daysAgo} dias`;
+                      if (daysAgo === 0) return "conversaram hoje";
+                      if (daysAgo === 1) return "conversaram ontem";
+                      if (daysAgo <= 7) return `conversaram há ${daysAgo} dias`;
+                      if (daysAgo <= 30) return `conversaram há ${Math.floor(daysAgo / 7)} semanas`;
+                      return `conversaram há ${Math.floor(daysAgo / 30)} meses`;
                     })()}
                   </div>
                 )}
