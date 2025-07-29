@@ -1,10 +1,18 @@
+export interface Memory {
+  id: string;
+  text: string;
+  mediaUrl?: string;
+  mediaType?: 'image' | 'video' | 'audio';
+  fileName?: string;
+}
+
 export interface Person {
   id: string;
   name: string;
   relationship: string;
   birthYear?: number;
   avatar?: string;
-  memories: string[];
+  memories: Memory[];
   personality: string[];
   commonPhrases: string[];
   voiceSettings?: {

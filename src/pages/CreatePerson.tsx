@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Upload, Plus, X } from "lucide-react";
-import { Person } from "@/types/person";
+import { ArrowLeft, Upload, Plus, X, FileText, Image, Video, Music } from "lucide-react";
+import { Person, Memory } from "@/types/person";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CreatePersonProps {
   onSave: (person: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => void;
@@ -20,10 +21,11 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     relationship: "",
     birthYear: "",
     avatar: "",
-    memories: [""],
+    memories: [{ id: "", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }] as Memory[],
     personality: [""],
     commonPhrases: [""]
   });
+  const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
   const relationships = [
     "Mãe", "Pai", "Avó", "Avô", "Irmã", "Irmão", 
@@ -31,10 +33,17 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
   ];
 
   const addField = (field: 'memories' | 'personality' | 'commonPhrases') => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: [...prev[field], ""]
-    }));
+    if (field === 'memories') {
+      setFormData(prev => ({
+        ...prev,
+        memories: [...prev.memories, { id: `memory-${Date.now()}`, text: "", mediaUrl: "", mediaType: undefined, fileName: "" }]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [field]: [...prev[field], ""]
+      }));
+    }
   };
 
   const removeField = (field: 'memories' | 'personality' | 'commonPhrases', index: number) => {
@@ -45,10 +54,65 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
   };
 
   const updateField = (field: 'memories' | 'personality' | 'commonPhrases', index: number, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field].map((item, i) => i === index ? value : item)
-    }));
+    if (field === 'memories') {
+      setFormData(prev => ({
+        ...prev,
+        memories: prev.memories.map((item, i) => i === index ? { ...item, text: value } : item)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [field]: prev[field].map((item, i) => i === index ? value : item)
+      }));
+    }
+  };
+
+  const uploadFile = async (file: File, memoryIndex: number) => {
+    const fileId = `memory-${memoryIndex}-${Date.now()}`;
+    setUploading(prev => ({ ...prev, [fileId]: true }));
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `memories/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('eterna-files')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('eterna-files')
+        .getPublicUrl(filePath);
+
+      const mediaType = file.type.startsWith('image/') ? 'image' :
+                       file.type.startsWith('video/') ? 'video' :
+                       file.type.startsWith('audio/') ? 'audio' : undefined;
+
+      setFormData(prev => ({
+        ...prev,
+        memories: prev.memories.map((memory, i) => 
+          i === memoryIndex 
+            ? { ...memory, mediaUrl: publicUrl, mediaType, fileName: file.name }
+            : memory
+        )
+      }));
+    } catch (error) {
+      console.error('Erro no upload:', error);
+      alert('Erro ao fazer upload do arquivo');
+    } finally {
+      setUploading(prev => ({ ...prev, [fileId]: false }));
+    }
+  };
+
+  const getMediaIcon = (mediaType?: string) => {
+    switch (mediaType) {
+      case 'image': return <Image className="w-4 h-4" />;
+      case 'video': return <Video className="w-4 h-4" />;
+      case 'audio': return <Music className="w-4 h-4" />;
+      default: return <FileText className="w-4 h-4" />;
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,7 +123,7 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
       relationship: formData.relationship,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
       avatar: formData.avatar || undefined,
-      memories: formData.memories.filter(m => m.trim()),
+      memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
       commonPhrases: formData.commonPhrases.filter(p => p.trim()),
       voiceSettings: {
@@ -71,7 +135,7 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
   };
 
   const isValid = formData.name && formData.relationship && 
-                 formData.memories.some(m => m.trim()) && 
+                 formData.memories.some(m => m.text.trim() || m.mediaUrl) && 
                  formData.personality.some(p => p.trim());
 
   return (
@@ -169,26 +233,76 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-4">
               {formData.memories.map((memory, index) => (
-                <div key={index} className="flex gap-2">
-                  <Textarea
-                    value={memory}
-                    onChange={(e) => updateField('memories', index, e.target.value)}
-                    placeholder="Ex: Sempre fazia bolo de chocolate nos domingos..."
-                    className="min-h-[80px]"
-                  />
-                  {formData.memories.length > 1 && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeField('memories', index)}
-                      className="mt-1"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  )}
+                <div key={memory.id || index} className="space-y-3 p-4 border border-border/50 rounded-lg bg-background/50">
+                  <div className="flex gap-2">
+                    <Textarea
+                      value={memory.text}
+                      onChange={(e) => updateField('memories', index, e.target.value)}
+                      placeholder="Ex: Sempre fazia bolo de chocolate nos domingos..."
+                      className="min-h-[80px]"
+                    />
+                    {formData.memories.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeField('memories', index)}
+                        className="mt-1"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                  
+                  {/* Upload de arquivos */}
+                  <div className="flex flex-col gap-2">
+                    <Label className="text-sm text-muted-foreground">Adicionar mídia (foto, vídeo ou áudio)</Label>
+                    <div className="flex gap-2">
+                      <input
+                        type="file"
+                        accept="image/*,video/*,audio/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) uploadFile(file, index);
+                        }}
+                        className="hidden"
+                        id={`file-upload-${index}`}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => document.getElementById(`file-upload-${index}`)?.click()}
+                        disabled={uploading[`memory-${index}-${Date.now()}`]}
+                      >
+                        <Upload className="w-4 h-4 mr-1" />
+                        {uploading[`memory-${index}-${Date.now()}`] ? 'Enviando...' : 'Adicionar arquivo'}
+                      </Button>
+                    </div>
+                    
+                    {/* Preview do arquivo */}
+                    {memory.mediaUrl && (
+                      <div className="flex items-center gap-2 p-2 bg-muted/50 rounded border">
+                        {getMediaIcon(memory.mediaType)}
+                        <span className="text-sm truncate flex-1">{memory.fileName}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setFormData(prev => ({
+                            ...prev,
+                            memories: prev.memories.map((m, i) => 
+                              i === index ? { ...m, mediaUrl: "", mediaType: undefined, fileName: "" } : m
+                            )
+                          }))}
+                        >
+                          <X className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </CardContent>

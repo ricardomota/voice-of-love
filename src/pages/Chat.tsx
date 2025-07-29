@@ -57,7 +57,7 @@ export const Chat = ({ person, onBack }: ChatProps) => {
 Características importantes:
 - Personalidade: ${person.personality.join(', ')}
 - Frases que você costuma usar: ${person.commonPhrases.join(', ')}
-- Memórias importantes: ${person.memories.join('. ')}
+- Memórias importantes: ${person.memories.map(m => m.text).join('. ')}
 
 Responda como esta pessoa responderia, usando o tom de voz e expressões típicas dela. Seja caloroso, pessoal e mantenha a personalidade consistente. Use as frases características ocasionalmente.`;
   };
@@ -95,7 +95,7 @@ Responda como esta pessoa responderia, usando o tom de voz e expressões típica
     // This would be replaced with actual AI API call
     const responses = [
       `Ah, que bom ouvir isso de você! ${person.commonPhrases[0] || 'Sempre fico feliz em conversar contigo.'}`,
-      `Lembro quando... ${person.memories[0]?.substring(0, 100)}... Que tempos bons aqueles!`,
+      `Lembro quando... ${person.memories[0]?.text?.substring(0, 100)}... Que tempos bons aqueles!`,
       `Meu querido, você sabe que sempre pode contar comigo. ${person.commonPhrases[1] || 'Tudo vai dar certo!'}`,
       `Isso me faz lembrar de uma coisa que sempre dizia: ${person.commonPhrases[0] || 'A vida é preciosa, aproveite cada momento.'}`,
     ];
