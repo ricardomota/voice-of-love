@@ -28,10 +28,10 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
 
           {/* História da criação */}
           <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-2xl p-6 mb-8 border border-purple-200/20">
-            <h3 className="text-lg font-medium text-foreground mb-3">Por que criamos o Eterna?</h3>
+            <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
             <p className="text-muted-foreground leading-relaxed text-sm">
-              Esta ferramenta nasceu do amor e da necessidade de manter nossa mãe presente, mesmo com o Alzheimer. 
-              Queremos ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
+              Criei esta ferramenta com amor usando o Lovable, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
+              Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
             </p>
             
             {/* Logo e link da Alzheimer's Association */}
