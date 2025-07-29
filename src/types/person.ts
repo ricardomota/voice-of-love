@@ -15,6 +15,7 @@ export interface Person {
   memories: Memory[];
   personality: string[];
   commonPhrases: string[];
+  temperature: number;
   voiceSettings?: {
     hasRecording: boolean;
     voiceId?: string;

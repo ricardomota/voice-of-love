@@ -133,6 +133,7 @@ export type Database = {
           name: string
           personality: string[] | null
           relationship: string
+          temperature: number | null
           updated_at: string
           user_id: string | null
           voice_settings: Json | null
@@ -147,6 +148,7 @@ export type Database = {
           name: string
           personality?: string[] | null
           relationship: string
+          temperature?: number | null
           updated_at?: string
           user_id?: string | null
           voice_settings?: Json | null
@@ -161,6 +163,7 @@ export type Database = {
           name?: string
           personality?: string[] | null
           relationship?: string
+          temperature?: number | null
           updated_at?: string
           user_id?: string | null
           voice_settings?: Json | null

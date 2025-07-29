@@ -140,7 +140,8 @@ Agora responda como ${person.name}:`;
           messages: [
             { role: 'user', content: prompt }
           ],
-          systemPrompt: systemPrompt
+          systemPrompt: systemPrompt,
+          temperature: person.temperature || 0.7
         }),
       });
 

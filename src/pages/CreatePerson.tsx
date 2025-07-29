@@ -26,7 +26,8 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     avatar: "",
     memories: [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }] as Memory[],
     personality: [""],
-    commonPhrases: [""]
+    commonPhrases: [""],
+    temperature: 0.7
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
@@ -40,7 +41,8 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         avatar: person.avatar || "",
         memories: person.memories.length > 0 ? person.memories : [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
         personality: person.personality.length > 0 ? person.personality : [""],
-        commonPhrases: person.commonPhrases.length > 0 ? person.commonPhrases : [""]
+        commonPhrases: person.commonPhrases.length > 0 ? person.commonPhrases : [""],
+        temperature: person.temperature || 0.7
       });
     }
   }, [person]);
@@ -277,6 +279,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
       commonPhrases: formData.commonPhrases.filter(p => p.trim()),
+      temperature: formData.temperature,
       voiceSettings: {
         hasRecording: false
       }
@@ -291,6 +294,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       case 2: return Boolean(formData.relationship.trim());
       case 3: return formData.memories.some(m => m.text.trim() || m.mediaUrl);
       case 4: return formData.personality.some(p => p.trim());
+      case 5: return true; // Temperature always has a value
       default: return true;
     }
   };
@@ -606,13 +610,66 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 5: Frases marcantes
+    // Step 5: Configuração de Criatividade
+    <StoryStep
+      key="temperature"
+      title="Como você quer que a IA responda?"
+      subtitle="Escolha o nível de criatividade e espontaneidade das respostas da IA."
+      onNext={() => setCurrentStep(6)}
+      onBack={() => setCurrentStep(4)}
+      canNext={canProceed(5)}
+    >
+      <div className="space-y-6">
+        <div className="bg-gradient-to-r from-background to-muted/20 p-6 rounded-xl border border-border/50">
+          <label className="text-lg font-medium text-foreground block mb-4">
+            Nível de Criatividade
+          </label>
+          
+          <div className="space-y-4">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value={formData.temperature}
+              onChange={(e) => setFormData(prev => ({ ...prev, temperature: parseFloat(e.target.value) }))}
+              className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer slider"
+            />
+            
+            <div className="flex justify-between text-sm text-muted-foreground">
+              <span>Mais consistente</span>
+              <span className="font-medium text-foreground">
+                {formData.temperature}
+              </span>
+              <span>Mais criativo</span>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+            <h4 className="font-medium mb-2">
+              {formData.temperature <= 0.3 ? "Respostas Consistentes" :
+               formData.temperature <= 0.7 ? "Respostas Equilibradas" :
+               "Respostas Criativas"}
+            </h4>
+            <p className="text-sm text-muted-foreground">
+              {formData.temperature <= 0.3 ? 
+                "A IA dará respostas mais previsíveis e consistentes, mantendo sempre o mesmo padrão de fala." :
+               formData.temperature <= 0.7 ? 
+                "Um equilíbrio entre consistência e naturalidade. Recomendado para a maioria dos casos." :
+                "Respostas mais variadas e espontâneas, como uma conversa natural. Pode ser menos previsível."}
+            </p>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 6: Frases marcantes
     <StoryStep
       key="phrases"
       title="Quais frases ela sempre dizia?"
       subtitle="Essas expressões únicas vão tornar as conversas ainda mais autênticas e tocantes."
       onNext={handleSubmit}
-      onBack={() => setCurrentStep(4)}
+      onBack={() => setCurrentStep(5)}
       nextText={person ? "Atualizar Pessoa Eterna" : "Criar Pessoa Eterna"}
     >
       <div className="space-y-4">

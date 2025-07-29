@@ -15,7 +15,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, systemPrompt } = await req.json();
+    const { messages, systemPrompt, temperature = 0.7 } = await req.json();
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
@@ -33,7 +33,7 @@ serve(async (req) => {
           { role: 'system', content: systemPrompt },
           ...messages
         ],
-        temperature: 0.7,
+        temperature: temperature,
         max_tokens: 150,
       }),
     });

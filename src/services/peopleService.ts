@@ -27,6 +27,7 @@ export const peopleService = {
       memories: person.memories || [],
       personality: person.personality || [],
       commonPhrases: person.common_phrases || [],
+      temperature: person.temperature || 0.7,
       voiceSettings: (person.voice_settings as unknown as VoiceSettings) || { hasRecording: false },
       createdAt: new Date(person.created_at),
       updatedAt: new Date(person.updated_at),
@@ -52,6 +53,7 @@ export const peopleService = {
         avatar: personData.avatar,
         personality: personData.personality,
         common_phrases: personData.commonPhrases,
+        temperature: personData.temperature,
         voice_settings: personData.voiceSettings,
         last_conversation: personData.lastConversation?.toISOString()
       })
@@ -102,6 +104,7 @@ export const peopleService = {
       memories: person.memories || [],
       personality: person.personality || [],
       commonPhrases: person.common_phrases || [],
+      temperature: person.temperature || 0.7,
       voiceSettings: (person.voice_settings as unknown as VoiceSettings) || { hasRecording: false },
       createdAt: new Date(person.created_at),
       updatedAt: new Date(person.updated_at),
@@ -135,6 +138,7 @@ export const peopleService = {
         avatar: personData.avatar,
         personality: personData.personality,
         common_phrases: personData.commonPhrases,
+        temperature: personData.temperature,
         voice_settings: personData.voiceSettings,
         last_conversation: personData.lastConversation?.toISOString(),
         updated_at: new Date().toISOString()
