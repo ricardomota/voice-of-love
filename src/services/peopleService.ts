@@ -208,5 +208,34 @@ export const peopleService = {
       console.error('Error in uploadMedia:', error);
       throw error;
     }
+  },
+
+  async deletePerson(personId: string): Promise<void> {
+    try {
+      const { data: user, error: authError } = await supabase.auth.getUser();
+      if (authError || !user.user) {
+        throw new Error('Usuário não autenticado. Faça login novamente.');
+      }
+
+      // Delete associated memories first
+      const { error: memoriesError } = await supabase
+        .from('memories')
+        .delete()
+        .eq('person_id', personId);
+
+      if (memoriesError) throw memoriesError;
+
+      // Delete the person
+      const { error: personError } = await supabase
+        .from('people')
+        .delete()
+        .eq('id', personId)
+        .eq('user_id', user.user.id);
+
+      if (personError) throw personError;
+    } catch (error) {
+      console.error('Error deleting person:', error);
+      throw error;
+    }
   }
 };
