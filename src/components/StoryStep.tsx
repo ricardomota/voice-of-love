@@ -26,38 +26,39 @@ export const StoryStep = ({
   className = ""
 }: StoryStepProps) => {
   return (
-    <div className={`animate-fade-in space-y-8 ${className}`}>
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-foreground leading-tight">
+    <div className={`animate-fade-in space-y-6 sm:space-y-8 ${className}`}>
+      <div className="text-center space-y-3 sm:space-y-4 px-4">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-medium text-foreground leading-tight">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         )}
       </div>
 
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto px-4">
         {children}
       </div>
 
-      <div className="flex gap-4 justify-center pt-6">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 sm:pt-6 px-4">
         {onBack && (
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex items-center gap-2 px-6"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2 sm:order-1"
           >
             <ArrowLeft className="w-4 h-4" />
             {backText}
           </Button>
         )}
+
         {onNext && (
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-8 bg-primary hover:bg-primary/90"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-2"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
