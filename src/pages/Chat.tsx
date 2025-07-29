@@ -130,7 +130,7 @@ Agora responda como ${person.name}:`;
     try {
       const systemPrompt = generatePersonalizedPrompt();
       
-      const response = await fetch('/functions/v1/openai-chat', {
+      const response = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/openai-chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
