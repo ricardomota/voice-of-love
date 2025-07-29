@@ -39,10 +39,10 @@ export const PersonCard = ({
 
   return (
     <Card className={cn(
-      "group cursor-pointer transition-all duration-500 hover:shadow-xl parallax-slow",
+      "group cursor-pointer parallax-slow ios-focus overflow-hidden",
       className
     )}>
-      <CardContent className="p-8">
+      <CardContent className="p-8 relative">
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-5">
             <Avatar className="w-20 h-20 border-2 border-white/50 shadow-lg backdrop-blur-sm">
@@ -102,7 +102,7 @@ export const PersonCard = ({
 
         <Button 
           onClick={() => onChat(id)}
-          className="w-full"
+          className="w-full ios-focus gentle-pulse"
           size="lg"
           variant="glass"
         >
