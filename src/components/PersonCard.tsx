@@ -13,6 +13,7 @@ interface PersonCardProps {
   avatar?: string;
   memoriesCount: number;
   lastConversation?: Date;
+  updatedAt: Date;
   onChat: (id: string) => void;
   onSettings: (id: string) => void;
   onAddMemory?: (id: string) => void;
@@ -27,6 +28,7 @@ export const PersonCard = ({
   avatar,
   memoriesCount,
   lastConversation,
+  updatedAt,
   onChat,
   onSettings,
   onAddMemory,
@@ -81,6 +83,18 @@ export const PersonCard = ({
                     })()}
                   </div>
                 )}
+              </div>
+              
+              {/* Updated info - below the conversation info */}
+              <div className="text-xs text-muted-foreground/50 mt-1">
+                {(() => {
+                  const updatedDaysAgo = Math.floor((Date.now() - new Date(updatedAt).getTime()) / (1000 * 60 * 60 * 24));
+                  if (updatedDaysAgo === 0) return "atualizado hoje";
+                  if (updatedDaysAgo === 1) return "atualizado ontem";
+                  if (updatedDaysAgo <= 7) return `atualizado há ${updatedDaysAgo} dias`;
+                  if (updatedDaysAgo <= 30) return `atualizado há ${Math.floor(updatedDaysAgo / 7)} semanas`;
+                  return `atualizado há ${Math.floor(updatedDaysAgo / 30)} meses`;
+                })()}
               </div>
             </div>
           </div>

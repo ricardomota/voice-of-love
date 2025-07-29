@@ -62,6 +62,7 @@ export const Dashboard = ({ people, onCreatePerson, onChat, onSettings, onAddMem
                   avatar={person.avatar}
                   memoriesCount={person.memories.length}
                   lastConversation={person.lastConversation}
+                  updatedAt={person.updatedAt}
                   onChat={onChat}
                   onSettings={onSettings}
                   onAddMemory={onAddMemory}
