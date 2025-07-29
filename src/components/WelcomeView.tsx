@@ -22,9 +22,37 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             Bem-vindo ao Eterna
           </CardTitle>
           
-          <p className="text-muted-foreground leading-relaxed text-lg mb-10 max-w-md mx-auto">
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto">
             Preserve memórias e mantenha conversas com pessoas queridas através de uma experiência única com inteligência artificial.
           </p>
+
+          {/* História da criação */}
+          <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-2xl p-6 mb-8 border border-purple-200/20">
+            <h3 className="text-lg font-medium text-foreground mb-3">Por que criamos o Eterna?</h3>
+            <p className="text-muted-foreground leading-relaxed text-sm">
+              Esta ferramenta nasceu do amor e da necessidade de manter nossa mãe presente, mesmo com o Alzheimer. 
+              Queremos ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
+            </p>
+            
+            {/* Logo e link da Alzheimer's Association */}
+            <div className="flex items-center justify-center mt-4 pt-4 border-t border-purple-200/30">
+              <div className="flex flex-col items-center gap-2">
+                <img 
+                  src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
+                  alt="Alzheimer's Association" 
+                  className="h-8 opacity-80"
+                />
+                <a 
+                  href="https://www.alz.org/?form=FUNDHYMMBXU" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs text-purple-600 hover:text-purple-800 transition-colors underline"
+                >
+                  Apoie a Alzheimer's Association
+                </a>
+              </div>
+            </div>
+          </div>
           
           <Button 
             onClick={onCreatePerson}
