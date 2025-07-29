@@ -63,6 +63,14 @@ export const Chat = ({ person, onBack }: ChatProps) => {
     const phrasesText = person.commonPhrases.length > 0 
       ? person.commonPhrases.join(', ') 
       : 'não há frases características definidas';
+
+    const valuesText = person.values && person.values.length > 0
+      ? person.values.join(', ')
+      : '';
+
+    const topicsText = person.topics && person.topics.length > 0
+      ? person.topics.join(', ')
+      : '';
       
     return `INSTRUÇÕES IMPORTANTES: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas. SEJA CONCISO E NATURAL.
 
@@ -71,6 +79,12 @@ PERFIL DA PESSOA:
 - Relacionamento: ${person.relationship}
 - Personalidade: ${personalityText}
 - Frases características: ${phrasesText}
+${person.talkingStyle ? `- Estilo de conversa: ${person.talkingStyle}` : ''}
+${person.humorStyle ? `- Tipo de humor: ${person.humorStyle}` : ''}
+${person.emotionalTone ? `- Tom emocional: ${person.emotionalTone}` : ''}
+${person.verbosity ? `- Verbosidade: ${person.verbosity}` : ''}
+${valuesText ? `- Valores importantes: ${valuesText}` : ''}
+${topicsText ? `- Assuntos favoritos: ${topicsText}` : ''}
 
 MEMÓRIAS COMPARTILHADAS (USE ESTAS INFORMAÇÕES ATIVAMENTE):
 ${memoriesText}
@@ -83,6 +97,7 @@ INSTRUÇÕES DE COMPORTAMENTO:
 5. Demonstre que você lembra das experiências vividas juntos
 6. Seja específico e pessoal baseado nas memórias
 7. MANTENHA RESPOSTAS CURTAS E NATURAIS - responda como uma pessoa real responderia
+${valuesText ? `8. IMPORTANTE: Seus valores são ${valuesText} - mantenha-se fiel a eles sempre` : ''}
 
 Agora responda como ${person.name}:`;
   };
