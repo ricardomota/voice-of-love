@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Chat, Settings, Favorite, CalendarToday } from "@mui/icons-material";
+import { Chat, Settings, Favorite, CalendarToday, Add } from "@mui/icons-material";
 import { cn } from "@/lib/utils";
 
 interface PersonCardProps {
@@ -15,6 +15,7 @@ interface PersonCardProps {
   lastConversation?: Date;
   onChat: (id: string) => void;
   onSettings: (id: string) => void;
+  onAddMemory?: (id: string) => void;
   className?: string;
 }
 
@@ -28,6 +29,7 @@ export const PersonCard = ({
   lastConversation,
   onChat,
   onSettings,
+  onAddMemory,
   className
 }: PersonCardProps) => {
   const getRelationshipColor = (rel: string) => {
@@ -39,7 +41,7 @@ export const PersonCard = ({
 
   return (
     <Card className={cn(
-      "group cursor-pointer parallax-slow ios-focus overflow-hidden",
+      "group cursor-pointer parallax-slow ios-focus overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-accent/20",
       className
     )}>
       <CardContent className="p-8 relative">
@@ -88,9 +90,24 @@ export const PersonCard = ({
             </div>
           )}
           
-          <div className="flex items-center text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm">
-            <Favorite className="w-4 h-4 mr-3" />
-            <span>{memoriesCount} memórias</span>
+          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm group/memory hover:bg-white/40 transition-colors">
+            <div className="flex items-center">
+              <Favorite className="w-4 h-4 mr-3" />
+              <span>{memoriesCount} memórias</span>
+            </div>
+            {onAddMemory && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddMemory(id);
+                }}
+                className="opacity-0 group-hover/memory:opacity-100 transition-opacity h-6 w-6 p-0 hover:bg-accent/20"
+              >
+                <Add className="w-3 h-3" />
+              </Button>
+            )}
           </div>
           
           {lastConversation && (

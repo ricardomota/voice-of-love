@@ -8,9 +8,10 @@ interface DashboardProps {
   onCreatePerson: () => void;
   onChat: (personId: string) => void;
   onSettings: (personId: string) => void;
+  onAddMemory?: (personId: string) => void;
 }
 
-export const Dashboard = ({ people, onCreatePerson, onChat, onSettings }: DashboardProps) => {
+export const Dashboard = ({ people, onCreatePerson, onChat, onSettings, onAddMemory }: DashboardProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background with subtle patterns */}
@@ -63,6 +64,7 @@ export const Dashboard = ({ people, onCreatePerson, onChat, onSettings }: Dashbo
                   lastConversation={person.lastConversation}
                   onChat={onChat}
                   onSettings={onSettings}
+                  onAddMemory={onAddMemory}
                 />
               </div>
             ))}
