@@ -100,31 +100,60 @@ Agora responda como ${person.name}:`;
     setNewMessage("");
     setIsTyping(true);
 
-    // Simulate AI response delay
-    setTimeout(() => {
+    try {
+      const aiResponseContent = await generateAIResponse(content);
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateAIResponse(content),
+        content: aiResponseContent,
         isUser: false,
         timestamp: new Date(),
         hasAudio: true
       };
 
       setMessages(prev => [...prev, aiResponse]);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        content: `Desculpe, tive um problema para responder. Como ${person.name}, gostaria de conversar mais com você!`,
+        isUser: false,
+        timestamp: new Date(),
+        hasAudio: false
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    } finally {
       setIsTyping(false);
-    }, 1500 + Math.random() * 1000);
+    }
   };
 
-  const generateAIResponse = (userMessage: string) => {
-    // This would be replaced with actual AI API call
-    const responses = [
-      `Ah, que bom ouvir isso de você! ${person.commonPhrases[0] || 'Sempre fico feliz em conversar contigo.'}`,
-      `Lembro quando... ${person.memories[0]?.text?.substring(0, 100)}... Que tempos bons aqueles!`,
-      `Meu querido, você sabe que sempre pode contar comigo. ${person.commonPhrases[1] || 'Tudo vai dar certo!'}`,
-      `Isso me faz lembrar de uma coisa que sempre dizia: ${person.commonPhrases[0] || 'A vida é preciosa, aproveite cada momento.'}`,
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
+  const generateAIResponse = async (prompt: string): Promise<string> => {
+    try {
+      const systemPrompt = generatePersonalizedPrompt();
+      
+      const response = await fetch('/functions/v1/openai-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [
+            { role: 'user', content: prompt }
+          ],
+          systemPrompt: systemPrompt
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get AI response');
+      }
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.error('Error generating AI response:', error);
+      // Fallback to a simple response
+      return `Desculpe, tive um problema para responder. Como ${person.name}, gostaria de conversar mais com você!`;
+    }
   };
 
   const handleVoiceRecording = () => {
