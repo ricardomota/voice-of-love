@@ -99,6 +99,26 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     }
   };
 
+  const uploadAvatar = async (file: File) => {
+    setUploading(prev => ({ ...prev, avatar: true }));
+
+    try {
+      if (!user) throw new Error('User not authenticated');
+      
+      const avatarUrl = await peopleService.uploadMedia(file, user.id);
+      
+      setFormData(prev => ({
+        ...prev,
+        avatar: avatarUrl
+      }));
+    } catch (error) {
+      console.error('Erro no upload do avatar:', error);
+      alert('Erro ao fazer upload da foto');
+    } finally {
+      setUploading(prev => ({ ...prev, avatar: false }));
+    }
+  };
+
   const getMediaIcon = (mediaType?: string) => {
     switch (mediaType) {
       case 'image': return <Image className="w-4 h-4" />;
@@ -181,9 +201,25 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
               {formData.name.charAt(0) || "?"}
             </AvatarFallback>
           </Avatar>
-          <Button variant="outline" size="sm" className="text-sm">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) uploadAvatar(file);
+            }}
+            className="hidden"
+            id="avatar-upload"
+          />
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="text-sm"
+            onClick={() => document.getElementById('avatar-upload')?.click()}
+            disabled={uploading.avatar}
+          >
             <Upload className="w-4 h-4 mr-2" />
-            Adicionar foto
+            {uploading.avatar ? 'Enviando...' : 'Adicionar foto'}
           </Button>
         </div>
         
