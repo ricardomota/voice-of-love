@@ -55,29 +55,31 @@ export const PersonCard = ({
             </Avatar>
             <div>
               <h3 className="font-semibold text-xl text-foreground leading-tight mb-2">{name}</h3>
-              <Badge 
-                variant="secondary" 
-                className={cn(
-                  "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full mb-2",
-                  getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
-                  getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
-                  getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent"
+              <div className="flex items-center gap-3 flex-wrap">
+                <Badge 
+                  variant="secondary" 
+                  className={cn(
+                    "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full",
+                    getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
+                    getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
+                    getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent"
+                  )}
+                >
+                  {relationship}
+                </Badge>
+                
+                {/* Last conversation - beside relationship */}
+                {lastConversation && (
+                  <div className="text-xs text-muted-foreground/70">
+                    {(() => {
+                      const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
+                      if (daysAgo === 0) return "Conversa hoje";
+                      if (daysAgo === 1) return "Última conversa ontem";
+                      return `Última conversa há ${daysAgo} dias`;
+                    })()}
+                  </div>
                 )}
-              >
-                {relationship}
-              </Badge>
-              
-              {/* Last conversation - right after relationship */}
-              {lastConversation && (
-                <div className="text-xs text-muted-foreground/70">
-                  {(() => {
-                    const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
-                    if (daysAgo === 0) return "Conversa hoje";
-                    if (daysAgo === 1) return "Última conversa ontem";
-                    return `Última conversa há ${daysAgo} dias`;
-                  })()}
-                </div>
-              )}
+              </div>
             </div>
           </div>
           
