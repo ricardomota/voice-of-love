@@ -50,6 +50,20 @@ const Index = () => {
     loadPeople();
   }, [user, authLoading, appState, toast]);
 
+  const loadPeople = async () => {
+    try {
+      const peopleData = await peopleService.getAllPeople();
+      setPeople(peopleData);
+    } catch (error: any) {
+      console.error('Error loading people:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível carregar as pessoas",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleCreatePerson = () => {
     setAppState('create');
   };
@@ -180,6 +194,7 @@ const Index = () => {
                 onChat={handleChat}
                 onSettings={handleSettings}
                 onAddMemory={handleAddMemory}
+                onReload={loadPeople}
               />
             );
           
