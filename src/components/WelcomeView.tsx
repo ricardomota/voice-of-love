@@ -29,12 +29,12 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           
           <Button 
             onClick={onCreatePerson}
-            className="w-full mb-10"
+            className="w-full mb-10 min-h-[56px] text-sm sm:text-base px-4 py-3"
             size="lg"
             variant="cta"
           >
-            <Add className="w-6 h-6 mr-3" />
-            Criar Primeira Pessoa Eterna
+            <Add className="w-5 h-5 mr-2 flex-shrink-0" />
+            <span className="whitespace-normal leading-tight">Criar Primeira Pessoa Eterna</span>
           </Button>
           
           <div className="pt-8 border-t border-white/20">
@@ -59,10 +59,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
                 <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
                   <span className="text-sm font-semibold text-accent">3</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Chat className="w-4 h-4 text-accent" />
-                  <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas a qualquer momento</p>
-                </div>
+                <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas a qualquer momento</p>
               </div>
             </div>
           </div>
