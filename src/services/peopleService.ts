@@ -214,27 +214,69 @@ export const peopleService = {
     try {
       const { data: user, error: authError } = await supabase.auth.getUser();
       if (authError || !user.user) {
+        console.error('Auth error:', authError);
         throw new Error('Usuário não autenticado. Faça login novamente.');
       }
 
-      // Delete associated memories first
+      // Delete associated dynamic memories first
+      const { error: dynamicMemoriesError } = await supabase
+        .from('dynamic_memories')
+        .delete()
+        .eq('person_id', personId);
+
+      if (dynamicMemoriesError) {
+        console.error('Error deleting dynamic memories:', dynamicMemoriesError);
+        // Continue even if this fails
+      }
+
+      // Delete associated conversation analytics
+      const { error: analyticsError } = await supabase
+        .from('conversation_analytics')
+        .delete()
+        .eq('person_id', personId);
+
+      if (analyticsError) {
+        console.error('Error deleting analytics:', analyticsError);
+        // Continue even if this fails
+      }
+
+      // Delete associated personality evolution
+      const { error: evolutionError } = await supabase
+        .from('personality_evolution')
+        .delete()
+        .eq('person_id', personId);
+
+      if (evolutionError) {
+        console.error('Error deleting evolution:', evolutionError);
+        // Continue even if this fails
+      }
+
+      // Delete associated memories
       const { error: memoriesError } = await supabase
         .from('memories')
         .delete()
         .eq('person_id', personId);
 
-      if (memoriesError) throw memoriesError;
+      if (memoriesError) {
+        console.error('Error deleting memories:', memoriesError);
+        throw new Error(`Erro ao deletar memórias: ${memoriesError.message}`);
+      }
 
-      // Delete the person
+      // Finally delete the person
       const { error: personError } = await supabase
         .from('people')
         .delete()
         .eq('id', personId)
         .eq('user_id', user.user.id);
 
-      if (personError) throw personError;
+      if (personError) {
+        console.error('Error deleting person:', personError);
+        throw new Error(`Erro ao deletar pessoa: ${personError.message}`);
+      }
+
+      console.log('Person deleted successfully:', personId);
     } catch (error) {
-      console.error('Error deleting person:', error);
+      console.error('Error in deletePerson:', error);
       throw error;
     }
   }
