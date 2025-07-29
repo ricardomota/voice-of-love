@@ -8,10 +8,11 @@ interface WelcomeViewProps {
 
 export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden gap-8">
       {/* Ambient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50/20"></div>
       
+      {/* Card principal */}
       <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
         <CardContent className="p-12 text-center">
           <div className="w-24 h-24 bg-gradient-to-br from-accent/15 to-accent/5 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm shadow-lg">
@@ -25,34 +26,6 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto">
             Preserve memórias e mantenha conversas com pessoas queridas através de uma experiência única com inteligência artificial.
           </p>
-
-          {/* História da criação */}
-          <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-2xl p-6 mb-8 border border-purple-200/20">
-            <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">
-              Criei esta ferramenta com amor usando o <span className="inline-flex items-center gap-1">Lovable <Favorite className="w-3 h-3 text-red-500" /></span>, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
-              Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
-            </p>
-            
-            {/* Logo e link da Alzheimer's Association */}
-            <div className="flex items-center justify-center mt-4 pt-4 border-t border-purple-200/30">
-              <div className="flex flex-col items-center gap-2">
-                <img 
-                  src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
-                  alt="Alzheimer's Association" 
-                  className="h-8 opacity-80"
-                />
-                <a 
-                  href="https://www.alz.org/?form=FUNDHYMMBXU" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-xs text-purple-600 hover:text-purple-800 transition-colors underline"
-                >
-                  Apoie a Alzheimer's Association
-                </a>
-              </div>
-            </div>
-          </div>
           
           <Button 
             onClick={onCreatePerson}
@@ -91,6 +64,36 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
                   <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas a qualquer momento</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Card separado para a história */}
+      <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
+        <CardContent className="p-8 text-center">
+          <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
+          <p className="text-muted-foreground leading-relaxed text-sm mb-4">
+            Criei esta ferramenta com amor usando o <span className="inline-flex items-center gap-1">Lovable <Favorite className="w-3 h-3 text-red-500" /></span>, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
+            Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
+          </p>
+          
+          {/* Logo e link da Alzheimer's Association */}
+          <div className="flex items-center justify-center pt-4 border-t border-border/20">
+            <div className="flex flex-col items-center gap-2">
+              <img 
+                src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
+                alt="Alzheimer's Association" 
+                className="h-8 opacity-80"
+              />
+              <a 
+                href="https://www.alz.org/?form=FUNDHYMMBXU" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-accent hover:text-accent/80 transition-colors underline"
+              >
+                Apoie a Alzheimer's Association
+              </a>
             </div>
           </div>
         </CardContent>
