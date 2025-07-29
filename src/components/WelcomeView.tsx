@@ -8,12 +8,12 @@ interface WelcomeViewProps {
 
 export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden">
+    <div className="h-screen flex items-center justify-center p-4 relative overflow-hidden">
       {/* Ambient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50/20"></div>
       
-      <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
-        <CardContent className="p-12 text-center">
+      <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up max-h-[90vh] overflow-y-auto">
+        <CardContent className="p-8 text-center">
           <div className="w-24 h-24 bg-gradient-to-br from-accent/15 to-accent/5 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm shadow-lg">
             <span className="text-5xl">💖</span>
           </div>
