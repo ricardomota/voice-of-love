@@ -148,7 +148,7 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     >
       <div className="text-center space-y-6 py-8">
         <div className="flex justify-center">
-          <div className="text-8xl animate-pulse">
+          <div className="text-3xl">
             💖
           </div>
         </div>
