@@ -128,14 +128,20 @@ export type Database = {
           birth_year: number | null
           common_phrases: string[] | null
           created_at: string
+          emotional_tone: string | null
+          humor_style: string | null
           id: string
           last_conversation: string | null
           name: string
           personality: string[] | null
           relationship: string
+          talking_style: string | null
           temperature: number | null
+          topics: string[] | null
           updated_at: string
           user_id: string | null
+          values: string[] | null
+          verbosity: string | null
           voice_settings: Json | null
         }
         Insert: {
@@ -143,14 +149,20 @@ export type Database = {
           birth_year?: number | null
           common_phrases?: string[] | null
           created_at?: string
+          emotional_tone?: string | null
+          humor_style?: string | null
           id?: string
           last_conversation?: string | null
           name: string
           personality?: string[] | null
           relationship: string
+          talking_style?: string | null
           temperature?: number | null
+          topics?: string[] | null
           updated_at?: string
           user_id?: string | null
+          values?: string[] | null
+          verbosity?: string | null
           voice_settings?: Json | null
         }
         Update: {
@@ -158,14 +170,20 @@ export type Database = {
           birth_year?: number | null
           common_phrases?: string[] | null
           created_at?: string
+          emotional_tone?: string | null
+          humor_style?: string | null
           id?: string
           last_conversation?: string | null
           name?: string
           personality?: string[] | null
           relationship?: string
+          talking_style?: string | null
           temperature?: number | null
+          topics?: string[] | null
           updated_at?: string
           user_id?: string | null
+          values?: string[] | null
+          verbosity?: string | null
           voice_settings?: Json | null
         }
         Relationships: []
