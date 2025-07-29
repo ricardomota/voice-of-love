@@ -15,7 +15,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
       <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
         <CardContent className="p-12 text-center">
           <div className="w-24 h-24 bg-gradient-to-br from-accent/15 to-accent/5 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm shadow-lg">
-            <Favorite className="w-12 h-12 text-accent" />
+            <span className="text-5xl">💖</span>
           </div>
           
           <CardTitle className="text-4xl font-light text-foreground mb-4">
