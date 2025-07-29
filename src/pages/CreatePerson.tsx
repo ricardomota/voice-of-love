@@ -610,55 +610,77 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 5: Configuração de Criatividade
+    // Step 5: Estilo de Conversa
     <StoryStep
-      key="temperature"
-      title="Como você quer que a IA responda?"
-      subtitle="Escolha o nível de criatividade e espontaneidade das respostas da IA."
+      key="conversation-style"
+      title="Como ela conversava com você?"
+      subtitle="Escolha o estilo que melhor representa a personalidade dela."
       onNext={() => setCurrentStep(6)}
       onBack={() => setCurrentStep(4)}
       canNext={canProceed(5)}
     >
-      <div className="space-y-6">
-        <div className="bg-gradient-to-r from-background to-muted/20 p-6 rounded-xl border border-border/50">
-          <label className="text-lg font-medium text-foreground block mb-4">
-            Nível de Criatividade
-          </label>
-          
-          <div className="space-y-4">
-            <input
-              type="range"
-              min="0.1"
-              max="1.0"
-              step="0.1"
-              value={formData.temperature}
-              onChange={(e) => setFormData(prev => ({ ...prev, temperature: parseFloat(e.target.value) }))}
-              className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer slider"
-            />
-            
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Mais consistente</span>
-              <span className="font-medium text-foreground">
-                {formData.temperature}
-              </span>
-              <span>Mais criativo</span>
+      <div className="space-y-4">
+        <div className="grid gap-4">
+          {/* Opção Consistente */}
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.temperature <= 0.3 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, temperature: 0.2 }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🎯</div>
+              <h3 className="font-semibold">Sempre igual</h3>
             </div>
-          </div>
-          
-          <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-            <h4 className="font-medium mb-2">
-              {formData.temperature <= 0.3 ? "Respostas Consistentes" :
-               formData.temperature <= 0.7 ? "Respostas Equilibradas" :
-               "Respostas Criativas"}
-            </h4>
-            <p className="text-sm text-muted-foreground">
-              {formData.temperature <= 0.3 ? 
-                "A IA dará respostas mais previsíveis e consistentes, mantendo sempre o mesmo padrão de fala." :
-               formData.temperature <= 0.7 ? 
-                "Um equilíbrio entre consistência e naturalidade. Recomendado para a maioria dos casos." :
-                "Respostas mais variadas e espontâneas, como uma conversa natural. Pode ser menos previsível."}
+            <p className="text-muted-foreground text-sm">
+              Ela sempre respondia da mesma forma, tinha um jeito muito consistente de falar.
             </p>
           </div>
+
+          {/* Opção Equilibrada */}
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.temperature > 0.3 && formData.temperature <= 0.7
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, temperature: 0.7 }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">💝</div>
+              <h3 className="font-semibold">Natural e carinhosa</h3>
+              <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">Recomendado</span>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Era uma pessoa natural, às vezes variava a forma de falar dependendo do momento.
+            </p>
+          </div>
+
+          {/* Opção Criativa */}
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.temperature > 0.7
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, temperature: 0.9 }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">✨</div>
+              <h3 className="font-semibold">Espontânea e criativa</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Sempre me surpreendia! Era muito espontânea e criativa nas respostas.
+            </p>
+          </div>
+        </div>
+        
+        <div className="text-center pt-4">
+          <p className="text-muted-foreground text-sm">
+            Você pode alterar isso depois se quiser ajustar como ela responde.
+          </p>
         </div>
       </div>
     </StoryStep>,
