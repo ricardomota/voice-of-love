@@ -112,22 +112,26 @@ const Index = () => {
     setAppState('add-memory');
   };
 
-  const handleSaveMemory = async (memory: Omit<import("@/types/person").Memory, 'id'>) => {
+  const handleSaveMemory = async (memories: Omit<import("@/types/person").Memory, 'id'>[]) => {
     if (!selectedPersonId) return;
     
     try {
       const { memoriesService } = await import("@/services/memoriesService");
-      const newMemory = await memoriesService.createMemory(selectedPersonId, memory);
+      
+      // Save all memories
+      const savedMemories = await Promise.all(
+        memories.map(memory => memoriesService.createMemory(selectedPersonId, memory))
+      );
 
       // Update local state
       setPeople(prev => prev.map(person => 
         person.id === selectedPersonId 
-          ? { ...person, memories: [...person.memories, newMemory] }
+          ? { ...person, memories: [...person.memories, ...savedMemories] }
           : person
       ));
       
     } catch (error) {
-      console.error('Error saving memory:', error);
+      console.error('Error saving memories:', error);
       throw error;
     }
   };
