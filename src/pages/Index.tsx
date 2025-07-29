@@ -7,6 +7,7 @@ import { Person } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
 import { AuthGate } from "@/components/AuthGate";
 import { peopleService } from "@/services/peopleService";
+import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
 type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings';
@@ -17,9 +18,15 @@ const Index = () => {
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
 
-  // Load people from Supabase
+  // Load people from Supabase only after authentication is confirmed
   useEffect(() => {
+    if (authLoading || !user) {
+      setLoading(false);
+      return;
+    }
+
     const loadPeople = async () => {
       try {
         const peopleData = await peopleService.getAllPeople();
@@ -40,7 +47,7 @@ const Index = () => {
     };
 
     loadPeople();
-  }, [appState, toast]);
+  }, [user, authLoading, appState, toast]);
 
   const handleCreatePerson = () => {
     setAppState('create');
@@ -103,7 +110,7 @@ const Index = () => {
     ? people.find(p => p.id === selectedPersonId) 
     : null;
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
