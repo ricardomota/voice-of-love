@@ -90,7 +90,7 @@ export const PersonCard = ({
             </div>
           )}
           
-          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm group/memory hover:bg-white/40 transition-colors">
+          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-4 py-3 backdrop-blur-sm hover:bg-white/40 transition-colors">
             <div className="flex items-center">
               <Favorite className="w-4 h-4 mr-3" />
               <span>{memoriesCount} memórias</span>
@@ -103,10 +103,10 @@ export const PersonCard = ({
                   e.stopPropagation();
                   onAddMemory(id);
                 }}
-                className="opacity-70 hover:opacity-100 transition-opacity h-8 w-8 p-0 hover:bg-accent/20 rounded-xl"
-                title="Adicionar memória"
+                className="h-auto px-2 py-1 text-xs hover:bg-accent/20 rounded-lg flex items-center gap-1 text-accent hover:text-accent-foreground transition-colors"
               >
-                <Add className="w-4 h-4 text-accent" />
+                <Add className="w-3 h-3" />
+                <span>Nova</span>
               </Button>
             )}
           </div>
