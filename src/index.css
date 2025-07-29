@@ -2,115 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Eterna Design System - Moderno, Emocional e Minimalista
+/* Eterna Design System - Emocional e Minimalista
 Inspirado em Apple Journal e Numer.ai
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    /* Base colors with improved contrast */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - Warm whites and soft grays */
+    --background: 30 10% 98%;
+    --foreground: 215 25% 20%;
+
+    /* Card system - Elevated surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 20%;
+
+    /* Popover system */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 20%;
 
-    /* Primary colors - warmer, more inviting */
-    --primary: 142 76% 36%;
-    --primary-foreground: 210 40% 98%;
-    --primary-light: 142 76% 46%;
-    --primary-dark: 142 76% 26%;
+    /* Primary - Deep blue-gray for emotional depth */
+    --primary: 210 40% 24%;
+    --primary-foreground: 30 10% 98%;
+    --primary-soft: 210 30% 85%;
 
-    /* Secondary colors */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    /* Secondary - Warm neutrals */
+    --secondary: 25 15% 94%;
+    --secondary-foreground: 215 25% 20%;
 
-    /* Muted colors */
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Subtle text and backgrounds */
+    --muted: 25 10% 92%;
+    --muted-foreground: 215 15% 50%;
 
-    /* Accent colors */
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    /* Accent - Golden warmth for special moments */
+    --accent: 45 85% 88%;
+    --accent-foreground: 45 95% 25%;
+    --accent-gold: 45 95% 55%;
 
-    /* Destructive colors */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Emotional states */
+    --love: 340 85% 92%;
+    --love-foreground: 340 85% 35%;
+    --memory: 220 60% 94%;
+    --memory-foreground: 220 60% 30%;
 
-    /* Border and input colors */
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 142 76% 36%;
+    /* System colors */
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    /* Chart colors */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 25 15% 89%;
+    --input: 25 15% 89%;
+    --ring: 210 40% 24%;
 
-    /* Custom emotional colors */
-    --memory: 35 100% 85%;
-    --memory-foreground: 25 85% 25%;
-    --memory-light: 35 100% 92%;
+    --radius: 1rem;
 
-    /* Gradients */
-    --gradient-warm: linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted) / 0.3));
-    --gradient-memory: linear-gradient(135deg, hsl(var(--memory-light)), hsl(var(--memory) / 0.5));
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
+    /* Gradients for emotional depth */
+    --gradient-warm: linear-gradient(135deg, hsl(30 15% 96%), hsl(45 20% 92%));
+    --gradient-memory: linear-gradient(135deg, hsl(220 60% 94%), hsl(210 40% 90%));
+    --gradient-love: linear-gradient(135deg, hsl(340 85% 92%), hsl(320 70% 88%));
 
-    /* Shadows */
-    --shadow-soft: 0 2px 8px hsl(var(--foreground) / 0.04);
-    --shadow-medium: 0 4px 16px hsl(var(--foreground) / 0.08);
-    --shadow-elegant: 0 8px 32px hsl(var(--primary) / 0.12);
-    --shadow-glow: 0 0 32px hsl(var(--primary) / 0.2);
+    /* Shadows for depth */
+    --shadow-soft: 0 2px 20px -5px hsl(215 25% 20% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(215 25% 20% / 0.12);
+    --shadow-strong: 0 20px 40px -12px hsl(215 25% 20% / 0.18);
 
-    /* Transitions */
+    /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
+
     --sidebar-foreground: 240 5.3% 26.1%;
+
     --sidebar-primary: 240 5.9% 10%;
+
     --sidebar-primary-foreground: 0 0% 98%;
+
     --sidebar-accent: 240 4.8% 95.9%;
+
     --sidebar-accent-foreground: 240 5.9% 10%;
+
     --sidebar-border: 220 13% 91%;
+
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 142 76% 46%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --primary-light: 142 76% 56%;
-    --primary-dark: 142 76% 36%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 76% 46%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --memory: 35 85% 65%;
-    --memory-foreground: 25 85% 15%;
-    --memory-light: 35 85% 75%;
+    --ring: 212.7 26.8% 83.9%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -126,80 +129,8 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "cv11", "ss01";
-    font-variation-settings: "opsz" 32;
-  }
-}
-
-@layer utilities {
-  .bg-gradient-warm {
-    background: var(--gradient-warm);
-  }
-  
-  .bg-gradient-memory {
-    background: var(--gradient-memory);
-  }
-  
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-  
-  .shadow-soft {
-    box-shadow: var(--shadow-soft);
-  }
-  
-  .shadow-medium {
-    box-shadow: var(--shadow-medium);
-  }
-  
-  .shadow-elegant {
-    box-shadow: var(--shadow-elegant);
-  }
-  
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-  
-  .transition-smooth {
-    transition: var(--transition-smooth);
-  }
-  
-  .transition-spring {
-    transition: var(--transition-spring);
-  }
-
-  /* Micro-interaction utilities */
-  .hover-lift {
-    @apply transition-spring hover:scale-[1.02] hover:shadow-elegant;
-  }
-  
-  .hover-float {
-    @apply transition-smooth hover:-translate-y-1 hover:shadow-medium;
-  }
-  
-  .hover-glow {
-    @apply transition-smooth hover:shadow-glow;
-  }
-  
-  .glass-effect {
-    @apply bg-background/80 backdrop-blur-sm border border-border/50;
-  }
-  
-  .animate-stagger-1 {
-    animation-delay: 0.1s;
-  }
-  
-  .animate-stagger-2 {
-    animation-delay: 0.2s;
-  }
-  
-  .animate-stagger-3 {
-    animation-delay: 0.3s;
-  }
-  
-  .animate-stagger-4 {
-    animation-delay: 0.4s;
+    @apply bg-background text-foreground;
   }
 }

@@ -153,20 +153,19 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
       nextText="Começar jornada"
       backText="Voltar"
     >
-      <div className="text-center space-y-8 py-12">
+      <div className="text-center space-y-6 py-8">
         <div className="flex justify-center">
-          <div className="relative animate-float">
-            <div className="absolute inset-0 animate-glow rounded-full"></div>
-            <Heart className="w-32 h-32 text-memory animate-pulse-slow relative z-10" />
-            <Sparkles className="w-10 h-10 text-memory-light absolute -top-3 -right-3 animate-bounce-gentle" />
+          <div className="relative">
+            <Heart className="w-24 h-24 text-memory animate-pulse" />
+            <Sparkles className="w-8 h-8 text-memory-light absolute -top-2 -right-2" />
           </div>
         </div>
-        <div className="prose prose-xl max-w-none text-center space-y-6">
-          <p className="text-muted-foreground leading-relaxed animate-fade-in animate-stagger-1">
+        <div className="prose prose-lg max-w-none text-center">
+          <p className="text-muted-foreground leading-relaxed">
             Através das suas memórias, traços de personalidade e frases marcantes, 
             vamos criar uma versão digital que capture a verdadeira essência dessa pessoa especial.
           </p>
-          <p className="text-base text-muted-foreground/80 animate-fade-in animate-stagger-2">
+          <p className="text-sm text-muted-foreground/80 mt-4">
             Cada palavra importa. Cada lembrança é preciosa.
           </p>
         </div>
@@ -182,38 +181,35 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
       onBack={() => setCurrentStep(0)}
       canNext={canProceed(1)}
     >
-      <div className="space-y-10">
-        <div className="flex flex-col items-center gap-8">
-          <div className="relative group">
-            <Avatar className="w-40 h-40 shadow-elegant hover-glow transition-all duration-500">
-              <AvatarImage src={formData.avatar} alt={formData.name} />
-              <AvatarFallback className="bg-gradient-memory text-memory-foreground text-3xl font-medium">
-                {formData.name.charAt(0) || "?"}
-              </AvatarFallback>
-            </Avatar>
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300"></div>
-          </div>
-          <Button variant="outline" size="lg" className="text-base px-6 py-3 hover-lift">
-            <Upload className="w-5 h-5 mr-2" />
+      <div className="space-y-8">
+        <div className="flex flex-col items-center gap-6">
+          <Avatar className="w-32 h-32 shadow-elegant">
+            <AvatarImage src={formData.avatar} alt={formData.name} />
+            <AvatarFallback className="bg-memory text-memory-foreground text-2xl">
+              {formData.name.charAt(0) || "?"}
+            </AvatarFallback>
+          </Avatar>
+          <Button variant="outline" size="sm" className="text-sm">
+            <Upload className="w-4 h-4 mr-2" />
             Adicionar foto
           </Button>
         </div>
         
-        <div className="space-y-8">
-          <div className="glass-effect p-8 rounded-2xl">
-            <label className="text-xl font-semibold text-foreground block mb-4">
+        <div className="space-y-6">
+          <div>
+            <label className="text-lg font-medium text-foreground block mb-3">
               Qual é o nome dela?
             </label>
             <Input
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Digite o nome completo..."
-              className="text-xl py-4 text-center border-2 focus:border-primary focus:ring-primary transition-spring"
+              className="text-lg py-3 text-center"
             />
           </div>
 
-          <div className="glass-effect p-8 rounded-2xl">
-            <label className="text-xl font-semibold text-foreground block mb-4">
+          <div>
+            <label className="text-lg font-medium text-foreground block mb-3">
               Em que ano ela nasceu? (opcional)
             </label>
             <Input
@@ -223,7 +219,7 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
               placeholder="Ex: 1950"
               min="1900"
               max={new Date().getFullYear()}
-              className="text-xl py-4 text-center border-2 focus:border-primary focus:ring-primary transition-spring"
+              className="text-lg py-3 text-center"
             />
           </div>
         </div>
@@ -239,28 +235,26 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
       onBack={() => setCurrentStep(1)}
       canNext={canProceed(2)}
     >
-      <div className="space-y-8">
-        <div className="glass-effect p-8 rounded-2xl">
-          <Select 
-            value={formData.relationship} 
-            onValueChange={(value) => setFormData(prev => ({ ...prev, relationship: value }))}
-          >
-            <SelectTrigger className="text-xl py-6 text-center border-2 focus:border-primary focus:ring-primary transition-spring">
-              <SelectValue placeholder="Selecione a relação..." />
-            </SelectTrigger>
-            <SelectContent className="glass-effect">
-              {relationships.map(rel => (
-                <SelectItem key={rel} value={rel} className="text-lg py-4 hover-lift">
-                  {rel}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      <div className="space-y-6">
+        <Select 
+          value={formData.relationship} 
+          onValueChange={(value) => setFormData(prev => ({ ...prev, relationship: value }))}
+        >
+          <SelectTrigger className="text-lg py-6 text-center">
+            <SelectValue placeholder="Selecione a relação..." />
+          </SelectTrigger>
+          <SelectContent>
+            {relationships.map(rel => (
+              <SelectItem key={rel} value={rel} className="text-lg py-3">
+                {rel}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         
         {formData.relationship && (
-          <div className="text-center animate-fade-in glass-effect p-6 rounded-2xl">
-            <p className="text-lg text-muted-foreground">
+          <div className="text-center animate-fade-in">
+            <p className="text-muted-foreground">
               Que belo vínculo você tinha com {formData.relationship === "Mãe" || formData.relationship === "Pai" ? "seu" : "sua"} {formData.relationship.toLowerCase()}.
             </p>
           </div>
@@ -471,20 +465,20 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-primary/5 p-4">
-      <div className="max-w-5xl mx-auto py-12">
-        <div className="flex items-center gap-4 mb-12">
-          <Button variant="ghost" onClick={onBack} className="p-3 hover-lift">
-            <ArrowLeft className="w-6 h-6" />
+    <div className="min-h-screen bg-gradient-warm p-4">
+      <div className="max-w-4xl mx-auto py-8">
+        <div className="flex items-center gap-3 mb-8">
+          <Button variant="ghost" onClick={onBack} className="p-2">
+            <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="text-base font-medium text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="text-sm text-muted-foreground">
                 Passo {currentStep + 1} de {steps.length}
               </div>
-              <div className="flex-1 bg-muted/50 rounded-full h-3 overflow-hidden">
+              <div className="flex-1 bg-muted rounded-full h-2">
                 <div 
-                  className="bg-gradient-primary h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-primary h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
                 />
               </div>

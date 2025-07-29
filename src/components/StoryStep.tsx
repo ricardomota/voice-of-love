@@ -27,27 +27,27 @@ export const StoryStep = ({
 }: StoryStepProps) => {
   return (
     <div className={`animate-fade-in space-y-8 ${className}`}>
-      <div className="text-center space-y-6">
-        <h2 className="text-4xl font-bold text-foreground leading-tight tracking-tight animate-slide-up">
+      <div className="text-center space-y-4">
+        <h2 className="text-3xl font-bold text-foreground leading-tight">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-slide-up animate-stagger-1">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         )}
       </div>
 
-      <div className="max-w-3xl mx-auto animate-slide-up animate-stagger-2">
+      <div className="max-w-2xl mx-auto">
         {children}
       </div>
 
-      <div className="flex gap-4 justify-center pt-8 animate-slide-up animate-stagger-3">
+      <div className="flex gap-4 justify-center pt-6">
         {onBack && (
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex items-center gap-2 px-6 py-3 hover-lift text-base"
+            className="flex items-center gap-2 px-6"
           >
             <ArrowLeft className="w-4 h-4" />
             {backText}
@@ -57,7 +57,7 @@ export const StoryStep = ({
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-8 py-3 bg-gradient-primary hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 text-base font-medium"
+            className="flex items-center gap-2 px-8 bg-primary hover:bg-primary/90"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
