@@ -103,9 +103,9 @@ export const PersonCard = ({
                   e.stopPropagation();
                   onAddMemory(id);
                 }}
-                className="h-auto px-2 py-1 text-xs hover:bg-accent/20 rounded-lg flex items-center gap-1 text-accent hover:text-accent-foreground transition-colors"
+                className="h-auto px-3 py-2 text-sm hover:bg-accent/20 rounded-lg flex items-center gap-2 text-accent hover:text-accent-foreground transition-colors font-medium"
               >
-                <Add className="w-3 h-3" />
+                <Add className="w-4 h-4" />
                 <span>Nova</span>
               </Button>
             )}
