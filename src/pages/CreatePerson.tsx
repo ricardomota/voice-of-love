@@ -27,7 +27,13 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     memories: [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }] as Memory[],
     personality: [""],
     commonPhrases: [""],
-    temperature: 0.7
+    temperature: 0.7,
+    talkingStyle: "",
+    humorStyle: "",
+    emotionalTone: "",
+    verbosity: "",
+    values: [""],
+    topics: [""]
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
@@ -42,7 +48,13 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         memories: person.memories.length > 0 ? person.memories : [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
         personality: person.personality.length > 0 ? person.personality : [""],
         commonPhrases: person.commonPhrases.length > 0 ? person.commonPhrases : [""],
-        temperature: person.temperature || 0.7
+        temperature: person.temperature || 0.7,
+        talkingStyle: person.talkingStyle || "",
+        humorStyle: person.humorStyle || "",
+        emotionalTone: person.emotionalTone || "",
+        verbosity: person.verbosity || "",
+        values: person.values && person.values.length > 0 ? person.values : [""],
+        topics: person.topics && person.topics.length > 0 ? person.topics : [""]
       });
     }
   }, [person]);
@@ -152,7 +164,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     return relationshipPhrases[index];
   };
 
-  const addField = (field: 'memories' | 'personality' | 'commonPhrases') => {
+  const addField = (field: 'memories' | 'personality' | 'commonPhrases' | 'values' | 'topics') => {
     if (field === 'memories') {
       setFormData(prev => ({
         ...prev,
@@ -166,14 +178,14 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     }
   };
 
-  const removeField = (field: 'memories' | 'personality' | 'commonPhrases', index: number) => {
+  const removeField = (field: 'memories' | 'personality' | 'commonPhrases' | 'values' | 'topics', index: number) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index)
     }));
   };
 
-  const updateField = (field: 'memories' | 'personality' | 'commonPhrases', index: number, value: string) => {
+  const updateField = (field: 'memories' | 'personality' | 'commonPhrases' | 'values' | 'topics', index: number, value: string) => {
     if (field === 'memories') {
       setFormData(prev => ({
         ...prev,
@@ -280,6 +292,12 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       personality: formData.personality.filter(p => p.trim()),
       commonPhrases: formData.commonPhrases.filter(p => p.trim()),
       temperature: formData.temperature,
+      talkingStyle: formData.talkingStyle || undefined,
+      humorStyle: formData.humorStyle || undefined,
+      emotionalTone: formData.emotionalTone || undefined,
+      verbosity: formData.verbosity || undefined,
+      values: formData.values.filter(v => v.trim()) || undefined,
+      topics: formData.topics.filter(t => t.trim()) || undefined,
       voiceSettings: {
         hasRecording: false
       }
@@ -294,7 +312,13 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       case 2: return Boolean(formData.relationship.trim());
       case 3: return formData.memories.some(m => m.text.trim() || m.mediaUrl);
       case 4: return formData.personality.some(p => p.trim());
-      case 5: return true; // Temperature always has a value
+      case 5: return Boolean(formData.talkingStyle.trim());
+      case 6: return Boolean(formData.humorStyle.trim());
+      case 7: return Boolean(formData.emotionalTone.trim());
+      case 8: return Boolean(formData.verbosity.trim());
+      case 9: return formData.values.some(v => v.trim());
+      case 10: return formData.topics.some(t => t.trim());
+      case 11: return true; // Temperature always has a value
       default: return true;
     }
   };
@@ -610,14 +634,470 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 5: Estilo de Conversa
+    // Step 5: Como ela falava?
+    <StoryStep
+      key="talking-style"
+      title="Como ela costumava falar?"
+      subtitle="Cada pessoa tem seu jeito único de se expressar. Qual era o dela?"
+      onNext={() => setCurrentStep(6)}
+      onBack={() => setCurrentStep(4)}
+      canNext={canProceed(5)}
+    >
+      <div className="space-y-4">
+        <div className="grid gap-4">
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.talkingStyle === 'formal' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, talkingStyle: 'formal' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">👔</div>
+              <h3 className="font-semibold">Formal e educada</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Sempre muito educada, falava "por favor", "obrigada" e tratava todos com respeito.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.talkingStyle === 'casual' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, talkingStyle: 'casual' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">😊</div>
+              <h3 className="font-semibold">Descontraída e natural</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Falava de forma simples e natural, como uma conversa entre amigos.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.talkingStyle === 'carinhosa' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, talkingStyle: 'carinhosa' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🤗</div>
+              <h3 className="font-semibold">Carinhosa e afetuosa</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Sempre usava palavras carinhosas como "querido", "amor", "meu anjo".
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.talkingStyle === 'sabia' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, talkingStyle: 'sabia' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🦉</div>
+              <h3 className="font-semibold">Sábia e reflexiva</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Falava com sabedoria, sempre dava conselhos e fazia as pessoas pensarem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 6: Tipo de humor
+    <StoryStep
+      key="humor-style"
+      title="Que tipo de humor ela tinha?"
+      subtitle="O humor é parte importante da personalidade. Como ela costumava brincar?"
+      onNext={() => setCurrentStep(7)}
+      onBack={() => setCurrentStep(5)}
+      canNext={canProceed(6)}
+    >
+      <div className="space-y-4">
+        <div className="grid gap-4">
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.humorStyle === 'divertida' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, humorStyle: 'divertida' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">😄</div>
+              <h3 className="font-semibold">Divertida e brincalhona</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Adorava fazer piadas, contar histórias engraçadas e estava sempre sorrindo.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.humorStyle === 'sarcastica' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, humorStyle: 'sarcastica' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">😏</div>
+              <h3 className="font-semibold">Sarcástica e espirituosa</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Tinha um humor mais ácido, fazia comentários inteligentes e irônicos.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.humorStyle === 'suave' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, humorStyle: 'suave' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">😌</div>
+              <h3 className="font-semibold">Humor suave e gentil</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Tinha um humor mais sutil, gostava de situações engraçadas do dia a dia.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.humorStyle === 'seria' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, humorStyle: 'seria' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🤔</div>
+              <h3 className="font-semibold">Mais séria, pouco humor</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Era uma pessoa mais séria, focada em conversas profundas e significativas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 7: Tom emocional
+    <StoryStep
+      key="emotional-tone"
+      title="Qual era o clima emocional dela?"
+      subtitle="Como ela transmitia sentimentos? Qual energia ela passava?"
+      onNext={() => setCurrentStep(8)}
+      onBack={() => setCurrentStep(6)}
+      canNext={canProceed(7)}
+    >
+      <div className="space-y-4">
+        <div className="grid gap-4">
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.emotionalTone === 'alegre' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, emotionalTone: 'alegre' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">☀️</div>
+              <h3 className="font-semibold">Sempre alegre e positiva</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Irradiava alegria, estava sempre de bom humor e animava quem estava ao redor.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.emotionalTone === 'calma' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, emotionalTone: 'calma' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🕊️</div>
+              <h3 className="font-semibold">Calma e tranquila</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Transmitia paz e serenidade, tinha uma presença que acalmava os outros.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.emotionalTone === 'intensa' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, emotionalTone: 'intensa' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🔥</div>
+              <h3 className="font-semibold">Intensa e apaixonada</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Vivia tudo intensamente, era apaixonada pelas coisas que acreditava.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.emotionalTone === 'equilibrada' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, emotionalTone: 'equilibrada' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">⚖️</div>
+              <h3 className="font-semibold">Equilibrada e ponderada</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Sabia dosar as emoções, era estável e passava segurança emocional.
+            </p>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 8: Nível de conversa
+    <StoryStep
+      key="verbosity"
+      title="Como ela gostava de conversar?"
+      subtitle="Algumas pessoas falam muito, outras são mais diretas. Como ela era?"
+      onNext={() => setCurrentStep(9)}
+      onBack={() => setCurrentStep(7)}
+      canNext={canProceed(8)}
+    >
+      <div className="space-y-4">
+        <div className="grid gap-4">
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.verbosity === 'concisa' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, verbosity: 'concisa' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🎯</div>
+              <h3 className="font-semibold">Direta e objetiva</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Falava pouco mas sempre certeiro, ia direto ao ponto sem rodeios.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.verbosity === 'equilibrada' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, verbosity: 'equilibrada' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">💬</div>
+              <h3 className="font-semibold">Conversas na medida certa</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Sabia dosar: às vezes falava mais, às vezes menos, dependendo da situação.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.verbosity === 'detalhista' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, verbosity: 'detalhista' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">📚</div>
+              <h3 className="font-semibold">Adorava contar detalhes</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Gostava de explicar tudo direitinho, contava histórias com muitos detalhes.
+            </p>
+          </div>
+
+          <div 
+            className={`p-6 border-2 rounded-xl cursor-pointer transition-all ${
+              formData.verbosity === 'contadora' 
+                ? 'border-primary bg-primary/5' 
+                : 'border-border hover:border-primary/50'
+            }`}
+            onClick={() => setFormData(prev => ({ ...prev, verbosity: 'contadora' }))}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="text-2xl">🗣️</div>
+              <h3 className="font-semibold">Grande contadora de histórias</h3>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Adorava uma boa conversa longa, podia passar horas contando histórias e memórias.
+            </p>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 9: Valores importantes
+    <StoryStep
+      key="values"
+      title="O que era mais importante para ela?"
+      subtitle="Quais valores e princípios ela sempre defendia ou mencionava?"
+      onNext={() => setCurrentStep(10)}
+      onBack={() => setCurrentStep(8)}
+      canNext={canProceed(9)}
+    >
+      <div className="space-y-4">
+        {formData.values.map((value, index) => (
+          <div key={index} className="flex gap-3">
+            <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-accent-foreground text-sm font-medium mt-2">
+              {index + 1}
+            </div>
+            <div className="flex-1">
+              <Input
+                value={value}
+                onChange={(e) => updateField('values', index, e.target.value)}
+                placeholder="Ex: Família sempre em primeiro lugar, Sempre ajudar o próximo, Ser honesto em todas as situações..."
+                className="text-base py-3"
+              />
+            </div>
+            {formData.values.length > 1 && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeField('values', index)}
+                className="mt-1"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
+        ))}
+        
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => addField('values')}
+          className="w-full border-dashed"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Adicionar outro valor
+        </Button>
+
+        <div className="bg-gradient-to-r from-accent/5 to-secondary/5 rounded-lg p-4 mt-6">
+          <p className="text-sm font-medium text-foreground mb-2">
+            💡 Exemplos de valores importantes:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-muted-foreground">
+            <div>• Família sempre em primeiro lugar</div>
+            <div>• Tratar todos com respeito</div>
+            <div>• Ser grato pelas pequenas coisas</div>
+            <div>• Nunca desistir dos sonhos</div>
+            <div>• Ajudar quem precisa</div>
+            <div>• Ser honesto sempre</div>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 10: Assuntos favoritos
+    <StoryStep
+      key="topics"
+      title="Sobre o que ela mais gostava de conversar?"
+      subtitle="Quais assuntos a animavam? Do que ela falava com mais paixão?"
+      onNext={() => setCurrentStep(11)}
+      onBack={() => setCurrentStep(9)}
+      canNext={canProceed(10)}
+    >
+      <div className="space-y-4">
+        {formData.topics.map((topic, index) => (
+          <div key={index} className="flex gap-3">
+            <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-medium mt-2">
+              {index + 1}
+            </div>
+            <div className="flex-1">
+              <Input
+                value={topic}
+                onChange={(e) => updateField('topics', index, e.target.value)}
+                placeholder="Ex: Cozinhar e receitas de família, Plantas e jardinagem, Histórias da juventude..."
+                className="text-base py-3"
+              />
+            </div>
+            {formData.topics.length > 1 && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeField('topics', index)}
+                className="mt-1"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
+        ))}
+        
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => addField('topics')}
+          className="w-full border-dashed"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Adicionar outro assunto
+        </Button>
+
+        <div className="bg-gradient-to-r from-secondary/5 to-primary/5 rounded-lg p-4 mt-6">
+          <p className="text-sm font-medium text-foreground mb-2">
+            💭 Exemplos de assuntos favoritos:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-muted-foreground">
+            <div>• Receitas e culinária</div>
+            <div>• Histórias da família</div>
+            <div>• Plantas e jardinagem</div>
+            <div>• Música e artistas antigos</div>
+            <div>• Livros e leitura</div>
+            <div>• Viagens e lugares</div>
+            <div>• Religião e espiritualidade</div>
+            <div>• Conselhos sobre a vida</div>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 11: Estilo de Conversa (Temperatura)
     <StoryStep
       key="conversation-style"
       title="Como ela conversava com você?"
       subtitle="Escolha o estilo que melhor representa a personalidade dela."
-      onNext={() => setCurrentStep(6)}
-      onBack={() => setCurrentStep(4)}
-      canNext={canProceed(5)}
+      onNext={() => setCurrentStep(12)}
+      onBack={() => setCurrentStep(10)}
+      canNext={canProceed(11)}
     >
       <div className="space-y-4">
         <div className="grid gap-4">
@@ -685,13 +1165,13 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 6: Frases marcantes
+    // Step 12: Frases marcantes
     <StoryStep
       key="phrases"
       title="Quais frases ela sempre dizia?"
       subtitle="Essas expressões únicas vão tornar as conversas ainda mais autênticas e tocantes."
       onNext={handleSubmit}
-      onBack={() => setCurrentStep(5)}
+      onBack={() => setCurrentStep(11)}
       nextText={person ? "Atualizar Pessoa Eterna" : "Criar Pessoa Eterna"}
     >
       <div className="space-y-4">
