@@ -4,55 +4,85 @@ import { Dashboard } from "@/pages/Dashboard";
 import { CreatePerson } from "@/pages/CreatePerson";
 import { Chat } from "@/pages/Chat";
 import { Person } from "@/types/person";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useToast } from "@/hooks/use-toast";
+import { AuthGate } from "@/components/AuthGate";
+import { peopleService } from "@/services/peopleService";
+import { Loader2 } from "lucide-react";
 
 type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings';
 
 const Index = () => {
-  const [people, setPeople] = useLocalStorage<Person[]>('eterna-people', []);
+  const [people, setPeople] = useState<Person[]>([]);
   const [appState, setAppState] = useState<AppState>('welcome');
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Check if user has people and should go to dashboard
+  // Load people from Supabase
   useEffect(() => {
-    if (people.length > 0 && appState === 'welcome') {
-      setAppState('dashboard');
-    }
-  }, [people, appState]);
+    const loadPeople = async () => {
+      try {
+        const peopleData = await peopleService.getAllPeople();
+        setPeople(peopleData);
+        if (peopleData.length > 0 && appState === 'welcome') {
+          setAppState('dashboard');
+        }
+      } catch (error: any) {
+        console.error('Error loading people:', error);
+        toast({
+          title: "Erro",
+          description: "Não foi possível carregar as pessoas",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPeople();
+  }, [appState, toast]);
 
   const handleCreatePerson = () => {
     setAppState('create');
   };
 
-  const handleSavePerson = (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const newPerson: Person = {
-      ...personData,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-
-    setPeople(prev => [...prev, newPerson]);
-    setAppState('dashboard');
-    
-    toast({
-      title: "Pessoa Eterna criada!",
-      description: `${newPerson.name} foi adicionado com sucesso.`,
-    });
+  const handleSavePerson = async (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const newPerson = await peopleService.createPerson(personData);
+      setPeople(prev => [...prev, newPerson]);
+      setAppState('dashboard');
+      
+      toast({
+        title: "Pessoa Eterna criada!",
+        description: `${newPerson.name} foi adicionado com sucesso.`,
+      });
+    } catch (error: any) {
+      console.error('Error creating person:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível criar a pessoa",
+        variant: "destructive"
+      });
+    }
   };
 
-  const handleChat = (personId: string) => {
+  const handleChat = async (personId: string) => {
     setSelectedPersonId(personId);
     setAppState('chat');
     
-    // Update last conversation time
-    setPeople(prev => prev.map(person => 
-      person.id === personId 
-        ? { ...person, lastConversation: new Date() }
-        : person
-    ));
+    try {
+      // Update last conversation time in Supabase
+      await peopleService.updatePersonLastConversation(personId);
+      
+      // Update local state
+      setPeople(prev => prev.map(person => 
+        person.id === personId 
+          ? { ...person, lastConversation: new Date() }
+          : person
+      ));
+    } catch (error) {
+      console.error('Error updating last conversation:', error);
+    }
   };
 
   const handleSettings = (personId: string) => {
@@ -73,54 +103,68 @@ const Index = () => {
     ? people.find(p => p.id === selectedPersonId) 
     : null;
 
-  // Render based on app state
-  switch (appState) {
-    case 'welcome':
-      return <WelcomeView onCreatePerson={handleCreatePerson} />;
-    
-    case 'dashboard':
-      return (
-        <Dashboard 
-          people={people}
-          onCreatePerson={handleCreatePerson}
-          onChat={handleChat}
-          onSettings={handleSettings}
-        />
-      );
-    
-    case 'create':
-      return (
-        <CreatePerson 
-          onSave={handleSavePerson}
-          onBack={handleBack}
-        />
-      );
-    
-    case 'chat':
-      return selectedPerson ? (
-        <Chat 
-          person={selectedPerson}
-          onBack={handleBack}
-        />
-      ) : (
-        <Dashboard 
-          people={people}
-          onCreatePerson={handleCreatePerson}
-          onChat={handleChat}
-          onSettings={handleSettings}
-        />
-      );
-    
-    default:
-      return (
-        <Dashboard 
-          people={people}
-          onCreatePerson={handleCreatePerson}
-          onChat={handleChat}
-          onSettings={handleSettings}
-        />
-      );
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
+
+  // Render based on app state
+  return (
+    <AuthGate>
+      {(() => {
+        switch (appState) {
+          case 'welcome':
+            return <WelcomeView onCreatePerson={handleCreatePerson} />;
+          
+          case 'dashboard':
+            return (
+              <Dashboard 
+                people={people}
+                onCreatePerson={handleCreatePerson}
+                onChat={handleChat}
+                onSettings={handleSettings}
+              />
+            );
+          
+          case 'create':
+            return (
+              <CreatePerson 
+                onSave={handleSavePerson}
+                onBack={handleBack}
+              />
+            );
+          
+          case 'chat':
+            return selectedPerson ? (
+              <Chat 
+                person={selectedPerson}
+                onBack={handleBack}
+              />
+            ) : (
+              <Dashboard 
+                people={people}
+                onCreatePerson={handleCreatePerson}
+                onChat={handleChat}
+                onSettings={handleSettings}
+              />
+            );
+          
+          default:
+            return (
+              <Dashboard 
+                people={people}
+                onCreatePerson={handleCreatePerson}
+                onChat={handleChat}
+                onSettings={handleSettings}
+              />
+            );
+        }
+      })()}
+    </AuthGate>
+  );
 };
 
 export default Index;

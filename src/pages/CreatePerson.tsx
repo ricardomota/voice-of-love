@@ -6,7 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowLeft, Upload, Plus, X, FileText, Image, Video, Music, Heart, Sparkles } from "lucide-react";
 import { Person, Memory } from "@/types/person";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { peopleService } from "@/services/peopleService";
 import { StoryStep } from "@/components/StoryStep";
 
 interface CreatePersonProps {
@@ -67,25 +68,17 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
     }
   };
 
+  const { user } = useAuth();
+
   const uploadFile = async (file: File, memoryIndex: number) => {
     const fileId = `memory-${memoryIndex}-${Date.now()}`;
     setUploading(prev => ({ ...prev, [fileId]: true }));
 
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `memories/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('eterna-files')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('eterna-files')
-        .getPublicUrl(filePath);
-
+      if (!user) throw new Error('User not authenticated');
+      
+      const mediaUrl = await peopleService.uploadMedia(file, user.id);
+      
       const mediaType = file.type.startsWith('image/') ? 'image' :
                        file.type.startsWith('video/') ? 'video' :
                        file.type.startsWith('audio/') ? 'audio' : undefined;
@@ -94,7 +87,7 @@ export const CreatePerson = ({ onSave, onBack }: CreatePersonProps) => {
         ...prev,
         memories: prev.memories.map((memory, i) => 
           i === memoryIndex 
-            ? { ...memory, mediaUrl: publicUrl, mediaType, fileName: file.name }
+            ? { ...memory, mediaUrl, mediaType, fileName: file.name }
             : memory
         )
       }));
