@@ -30,7 +30,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           <div className="bg-gradient-to-br from-purple-50/50 to-purple-100/30 rounded-2xl p-6 mb-8 border border-purple-200/20">
             <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
             <p className="text-muted-foreground leading-relaxed text-sm">
-              Criei esta ferramenta com amor usando o Lovable, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
+              Criei esta ferramenta com amor usando o <span className="inline-flex items-center gap-1">Lovable <Favorite className="w-3 h-3 text-red-500" /></span>, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
               Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
             </p>
             
