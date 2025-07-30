@@ -1,48 +1,46 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Memory } from "@/types/person";
 
-export class MemoriesService {
+class MemoriesService {
+  private async uploadMedia(blob: Blob, personId: string, fileName?: string): Promise<string> {
+    const timestamp = Date.now();
+    const extension = fileName?.split('.').pop() || 'bin';
+    const fileNameToUse = `memory-${personId}-${timestamp}.${extension}`;
+    
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('media')
+      .upload(fileNameToUse, blob, {
+        contentType: blob.type,
+        upsert: false
+      });
+
+    if (uploadError) {
+      console.error('Upload error:', uploadError);
+      throw new Error('Erro ao fazer upload do arquivo');
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('media')
+      .getPublicUrl(fileNameToUse);
+    
+    return publicUrl;
+  }
+
   async createMemory(personId: string, memory: Omit<Memory, 'id'>): Promise<Memory> {
     let mediaUrl = memory.mediaUrl;
     
-    // If there's a media file, upload it to Supabase Storage
-    if (memory.mediaUrl && memory.mediaUrl.startsWith('blob:')) {
+    // Handle blob URL upload
+    if (mediaUrl?.startsWith('blob:')) {
       try {
-        // Convert blob URL to actual file
-        const response = await fetch(memory.mediaUrl);
+        const response = await fetch(mediaUrl);
         const blob = await response.blob();
-        
-        // Generate unique filename
-        const timestamp = Date.now();
-        const extension = memory.fileName?.split('.').pop() || 'bin';
-        const fileName = `memory-${personId}-${timestamp}.${extension}`;
-        
-        // Upload to Supabase Storage
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('media')
-          .upload(fileName, blob, {
-            contentType: blob.type,
-            upsert: false
-          });
-
-        if (uploadError) {
-          console.error('Upload error:', uploadError);
-          throw new Error('Erro ao fazer upload do arquivo');
-        }
-
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('media')
-          .getPublicUrl(fileName);
-        
-        mediaUrl = publicUrl;
+        mediaUrl = await this.uploadMedia(blob, personId, memory.fileName);
       } catch (error) {
         console.error('Error uploading file:', error);
         throw new Error('Erro ao fazer upload do arquivo');
       }
     }
 
-    // Create memory in database
     const { data, error } = await supabase
       .from('memories')
       .insert({
@@ -60,13 +58,7 @@ export class MemoriesService {
       throw new Error('Erro ao salvar memória no banco de dados');
     }
 
-    return {
-      id: data.id,
-      text: data.text,
-      mediaUrl: data.media_url,
-      mediaType: data.media_type as 'image' | 'video' | 'audio',
-      fileName: data.file_name
-    };
+    return this.mapDatabaseMemory(data);
   }
 
   async getMemoriesForPerson(personId: string): Promise<Memory[]> {
@@ -81,13 +73,7 @@ export class MemoriesService {
       throw new Error('Erro ao carregar memórias');
     }
 
-    return data.map(memory => ({
-      id: memory.id,
-      text: memory.text,
-      mediaUrl: memory.media_url,
-      mediaType: memory.media_type as 'image' | 'video' | 'audio',
-      fileName: memory.file_name
-    }));
+    return data.map(this.mapDatabaseMemory);
   }
 
   async deleteMemory(memoryId: string): Promise<void> {
@@ -120,6 +106,10 @@ export class MemoriesService {
       throw new Error('Erro ao atualizar memória');
     }
 
+    return this.mapDatabaseMemory(data);
+  }
+
+  private mapDatabaseMemory(data: any): Memory {
     return {
       id: data.id,
       text: data.text,
