@@ -378,7 +378,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="basic-info"
       title="Conte-me sobre essa pessoa especial"
       subtitle="Vamos começar com o básico. Como ela se chama?"
-      onNext={person ? undefined : () => setCurrentStep(2)}
+      onNext={() => setCurrentStep(2)}
       onBack={() => setCurrentStep(0)}
       canNext={canProceed(1)}
     >
@@ -459,7 +459,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="relationship"
       title={`Qual é a sua relação com ${formData.name || 'essa pessoa'}?`}
       subtitle="Essa informação ajuda a IA a entender o tipo de conversa e carinho que vocês compartilhavam."
-      onNext={person ? undefined : () => setCurrentStep(3)}
+      onNext={() => setCurrentStep(3)}
       onBack={() => setCurrentStep(1)}
       canNext={canProceed(2)}
     >
