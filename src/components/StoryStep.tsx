@@ -99,7 +99,7 @@ export const StoryStep = ({
             onClick={onNext}
             disabled={!canNext}
             variant="default"
-            className="flex items-center gap-2 px-4 sm:px-6 order-1 sm:order-3"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-3"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
