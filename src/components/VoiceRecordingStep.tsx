@@ -209,7 +209,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
               </div>
             </div>
 
-            <div>
+            <div className="flex justify-center">
               <input
                 type="file"
                 accept="audio/*"

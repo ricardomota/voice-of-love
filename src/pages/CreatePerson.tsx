@@ -378,10 +378,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="basic-info"
       title="Conte-me sobre essa pessoa especial"
       subtitle="Vamos começar com o básico. Como ela se chama?"
-      onNext={() => setCurrentStep(2)}
+      onNext={person ? undefined : () => setCurrentStep(2)}
       onBack={() => setCurrentStep(0)}
       canNext={canProceed(1)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-8">
         <div className="flex flex-col items-center gap-6">
           <Avatar className="w-32 h-32 shadow-elegant border-2 border-white/80 backdrop-blur-sm">
@@ -448,10 +459,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="relationship"
       title={`Qual é a sua relação com ${formData.name || 'essa pessoa'}?`}
       subtitle="Essa informação ajuda a IA a entender o tipo de conversa e carinho que vocês compartilhavam."
-      onNext={() => setCurrentStep(3)}
+      onNext={person ? undefined : () => setCurrentStep(3)}
       onBack={() => setCurrentStep(1)}
       canNext={canProceed(2)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-6">
         <Select 
           value={formData.relationship} 
@@ -484,10 +506,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="memories"
       title="Compartilhe as memórias mais preciosas"
       subtitle={`Conte-me sobre os momentos especiais que você viveu com ${formData.name}. Adicione quantas memórias, fotos, vídeos e áudios quiser - quanto mais conteúdo, melhor conseguiremos entender e recriar a personalidade única dessa pessoa especial.`}
-      onNext={() => setCurrentStep(4)}
+      onNext={person ? undefined : () => setCurrentStep(4)}
       onBack={() => setCurrentStep(2)}
       canNext={canProceed(3)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-6">
         {formData.memories.map((memory, index) => (
           <div key={memory.id || index} className="space-y-4 p-6 border border-border/50 rounded-xl bg-gradient-to-r from-background to-muted/20">
@@ -602,10 +635,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="personality"
       title="Como era a personalidade dela?"
       subtitle="Descreva os traços que faziam essa pessoa única. Era carinhosa? Sábia? Engraçada?"
-      onNext={() => setCurrentStep(5)}
+      onNext={person ? undefined : () => setCurrentStep(5)}
       onBack={() => setCurrentStep(3)}
       canNext={canProceed(4)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         {formData.personality.map((trait, index) => (
           <div key={index} className="flex gap-3">
@@ -733,10 +777,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="humor-style"
       title="Que tipo de humor ela tinha?"
       subtitle="O humor é parte importante da personalidade. Como ela costumava brincar?"
-      onNext={() => setCurrentStep(7)}
+      onNext={person ? undefined : () => setCurrentStep(7)}
       onBack={() => setCurrentStep(5)}
       canNext={canProceed(6)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         <div className="grid gap-4">
           <div 
@@ -815,10 +870,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="emotional-tone"
       title="Qual era o clima emocional dela?"
       subtitle="Como ela transmitia sentimentos? Qual energia ela passava?"
-      onNext={() => setCurrentStep(8)}
+      onNext={person ? undefined : () => setCurrentStep(8)}
       onBack={() => setCurrentStep(6)}
       canNext={canProceed(7)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         <div className="grid gap-4">
           <div 
@@ -897,10 +963,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="verbosity"
       title="Como ela gostava de conversar?"
       subtitle="Algumas pessoas falam muito, outras são mais diretas. Como ela era?"
-      onNext={() => setCurrentStep(9)}
+      onNext={person ? undefined : () => setCurrentStep(9)}
       onBack={() => setCurrentStep(7)}
       canNext={canProceed(8)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         <div className="grid gap-4">
           <div 
@@ -979,10 +1056,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="values"
       title="O que era mais importante para ela?"
       subtitle="Quais valores e princípios ela sempre defendia ou mencionava?"
-      onNext={() => setCurrentStep(10)}
+      onNext={person ? undefined : () => setCurrentStep(10)}
       onBack={() => setCurrentStep(8)}
       canNext={canProceed(9)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         {formData.values.map((value, index) => (
           <div key={index} className="flex gap-3">
@@ -1042,10 +1130,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="topics"
       title="Sobre o que ela mais gostava de conversar?"
       subtitle="Quais assuntos a animavam? Do que ela falava com mais paixão?"
-      onNext={() => setCurrentStep(11)}
+      onNext={person ? undefined : () => setCurrentStep(11)}
       onBack={() => setCurrentStep(9)}
       canNext={canProceed(10)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         {formData.topics.map((topic, index) => (
           <div key={index} className="flex gap-3">
@@ -1107,10 +1206,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="conversation-style"
       title="Como ela conversava com você?"
       subtitle="Escolha o estilo que melhor representa a personalidade dela."
-      onNext={() => setCurrentStep(12)}
+      onNext={person ? undefined : () => setCurrentStep(12)}
       onBack={() => setCurrentStep(10)}
       canNext={canProceed(11)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <div className="space-y-4">
         <div className="grid gap-4">
           {/* Opção Consistente */}
@@ -1182,10 +1292,21 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="voice-recording"
       title="Vamos gravar a voz dela?"
       subtitle="Esta etapa é opcional, mas vai tornar as conversas ainda mais reais e emocionantes."
-      onNext={() => setCurrentStep(13)}
+      onNext={person ? undefined : () => setCurrentStep(13)}
       onBack={() => setCurrentStep(11)}
       canNext={canProceed(12)}
     >
+      {person && (
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => handleSubmit()}
+            size="lg"
+            className="px-8"
+          >
+            Atualizar perfil
+          </Button>
+        </div>
+      )}
       <VoiceRecordingStep 
         onVoiceRecorded={handleVoiceRecorded}
         onSkip={skipVoiceRecording}
