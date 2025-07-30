@@ -289,6 +289,8 @@ Agora responda como ${person.name}:`;
             key={message.id}
             content={message.content}
             isUser={message.isUser}
+            personName={person.name}
+            personAvatar={person.avatar}
           />
         ))}
         
