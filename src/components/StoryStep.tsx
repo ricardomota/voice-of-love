@@ -61,7 +61,7 @@ export const StoryStep = ({
         {onUpdate && onNext && (
           <div className="flex flex-row items-center gap-3 order-2">
             <Button
-              variant="glass"
+              variant="default"
               onClick={onUpdate}
               className="flex items-center gap-2 px-4 sm:px-6"
             >
@@ -74,7 +74,7 @@ export const StoryStep = ({
             <Button
               onClick={onNext}
               disabled={!canNext}
-              variant="glass"
+              variant="default"
               className="flex items-center gap-2 px-4 sm:px-6"
             >
               {nextText}
@@ -85,7 +85,7 @@ export const StoryStep = ({
 
         {onUpdate && !onNext && (
           <Button
-            variant="glass"
+            variant="default"
             onClick={onUpdate}
             className="flex items-center gap-2 px-4 sm:px-6 order-2"
           >
@@ -98,7 +98,7 @@ export const StoryStep = ({
           <Button
             onClick={onNext}
             disabled={!canNext}
-            variant="glass"
+            variant="default"
             className="flex items-center gap-2 px-4 sm:px-6 order-1 sm:order-3"
           >
             {nextText}
