@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
 interface StoryStepProps {
   children: ReactNode;
@@ -8,8 +8,10 @@ interface StoryStepProps {
   subtitle?: string;
   onNext?: () => void;
   onBack?: () => void;
+  onUpdate?: () => void;
   nextText?: string;
   backText?: string;
+  updateText?: string;
   canNext?: boolean;
   className?: string;
 }
@@ -20,8 +22,10 @@ export const StoryStep = ({
   subtitle,
   onNext,
   onBack,
+  onUpdate,
   nextText = "Continuar",
   backText = "Voltar",
+  updateText = "Atualizar perfil",
   canNext = true,
   className = ""
 }: StoryStepProps) => {
@@ -47,10 +51,21 @@ export const StoryStep = ({
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2 sm:order-1"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-3 sm:order-1"
           >
             <ArrowLeft className="w-4 h-4" />
             {backText}
+          </Button>
+        )}
+
+        {onUpdate && (
+          <Button
+            variant="outline"
+            onClick={onUpdate}
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2"
+          >
+            <Check className="w-4 h-4" />
+            {updateText}
           </Button>
         )}
 
@@ -58,7 +73,7 @@ export const StoryStep = ({
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-2"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-3"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />

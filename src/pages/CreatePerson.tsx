@@ -380,21 +380,9 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       subtitle="Vamos começar com o básico. Como ela se chama?"
       onNext={() => setCurrentStep(2)}
       onBack={() => setCurrentStep(0)}
+      onUpdate={person ? () => handleSubmit() : undefined}
       canNext={canProceed(1)}
     >
-      {person && (
-        <div className="flex justify-center mb-6">
-          <Button
-            onClick={() => handleSubmit()}
-            variant="outline"
-            size="default"
-            className="flex items-center gap-2 px-4 sm:px-6"
-          >
-            <Check className="w-4 h-4" />
-            Atualizar perfil
-          </Button>
-        </div>
-      )}
       <div className="space-y-8">
         <div className="flex flex-col items-center gap-6">
           <Avatar className="w-32 h-32 shadow-elegant border-2 border-white/80 backdrop-blur-sm">
@@ -463,21 +451,9 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       subtitle="Essa informação ajuda a IA a entender o tipo de conversa e carinho que vocês compartilhavam."
       onNext={() => setCurrentStep(3)}
       onBack={() => setCurrentStep(1)}
+      onUpdate={person ? () => handleSubmit() : undefined}
       canNext={canProceed(2)}
     >
-      {person && (
-        <div className="flex justify-center mb-6">
-          <Button
-            onClick={() => handleSubmit()}
-            variant="outline"
-            size="default"
-            className="flex items-center gap-2 px-4 sm:px-6"
-          >
-            <Check className="w-4 h-4" />
-            Atualizar perfil
-          </Button>
-        </div>
-      )}
       <div className="space-y-6">
         <Select 
           value={formData.relationship} 
@@ -510,23 +486,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       key="memories"
       title="Compartilhe as memórias mais preciosas"
       subtitle={`Conte-me sobre os momentos especiais que você viveu com ${formData.name}. Adicione quantas memórias, fotos, vídeos e áudios quiser - quanto mais conteúdo, melhor conseguiremos entender e recriar a personalidade única dessa pessoa especial.`}
-      onNext={person ? undefined : () => setCurrentStep(4)}
+      onNext={() => setCurrentStep(4)}
       onBack={() => setCurrentStep(2)}
+      onUpdate={person ? () => handleSubmit() : undefined}
       canNext={canProceed(3)}
     >
-      {person && (
-        <div className="flex justify-center mb-6">
-          <Button
-            onClick={() => handleSubmit()}
-            variant="outline"
-            size="default"
-            className="flex items-center gap-2 px-4 sm:px-6"
-          >
-            <Check className="w-4 h-4" />
-            Atualizar perfil
-          </Button>
-        </div>
-      )}
       <div className="space-y-6">
         {formData.memories.map((memory, index) => (
           <div key={memory.id || index} className="space-y-4 p-6 border border-border/50 rounded-xl bg-gradient-to-r from-background to-muted/20">
