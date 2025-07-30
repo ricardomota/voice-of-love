@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/PersonCard";
 import { Add, Favorite } from "@mui/icons-material";
@@ -12,7 +13,7 @@ interface DashboardProps {
   onReload?: () => void;
 }
 
-export const Dashboard = ({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload }: DashboardProps) => {
+const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload }: DashboardProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background with subtle patterns */}
@@ -102,4 +103,8 @@ export const Dashboard = ({ people, onCreatePerson, onChat, onSettings, onAddMem
       </div>
     </div>
   );
-};
+});
+
+Dashboard.displayName = 'Dashboard';
+
+export { Dashboard };

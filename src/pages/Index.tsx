@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { WelcomeView } from "@/components/WelcomeView";
 import { Dashboard } from "@/pages/Dashboard";
 import { CreatePerson } from "@/pages/CreatePerson";
@@ -9,70 +9,52 @@ import { useToast } from "@/hooks/use-toast";
 import { AuthGate } from "@/components/AuthGate";
 import { peopleService } from "@/services/peopleService";
 import { useAuth } from "@/hooks/useAuth";
+import { usePeople } from "@/hooks/usePeople";
+import { useAppState } from "@/hooks/useAppState";
 import { Loader2 } from "lucide-react";
 
-type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings' | 'add-memory';
-
 const Index = () => {
-  const [people, setPeople] = useState<Person[]>([]);
-  const [appState, setAppState] = useState<AppState>('welcome');
-  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
+  const { 
+    people, 
+    loading: peopleLoading, 
+    loadPeople, 
+    addPerson, 
+    updatePerson, 
+    updatePersonLastConversation,
+    addMemoriesToPerson 
+  } = usePeople();
+  const {
+    appState,
+    selectedPersonId,
+    goBack,
+    goToChat,
+    goToSettings,
+    goToAddMemory,
+    goToCreate,
+    goToDashboard
+  } = useAppState('welcome');
 
   // Load people from Supabase only after authentication is confirmed
   useEffect(() => {
-    if (authLoading || !user) {
-      setLoading(false);
-      return;
-    }
+    if (authLoading || !user) return;
 
-    const loadPeople = async () => {
-      try {
-        const peopleData = await peopleService.getAllPeople();
-        setPeople(peopleData);
-        if (peopleData.length > 0 && appState === 'welcome') {
-          setAppState('dashboard');
-        }
-      } catch (error: any) {
-        console.error('Error loading people:', error);
-        toast({
-          title: "Erro",
-          description: "Não foi possível carregar as pessoas",
-          variant: "destructive"
-        });
-      } finally {
-        setLoading(false);
+    const initializeApp = async () => {
+      const peopleData = await loadPeople();
+      if (peopleData.length > 0 && appState === 'welcome') {
+        goToDashboard();
       }
     };
 
-    loadPeople();
-  }, [user, authLoading, appState, toast]);
+    initializeApp();
+  }, [user, authLoading, appState, loadPeople, goToDashboard]);
 
-  const loadPeople = async () => {
-    try {
-      const peopleData = await peopleService.getAllPeople();
-      setPeople(peopleData);
-    } catch (error: any) {
-      console.error('Error loading people:', error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível carregar as pessoas",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleCreatePerson = () => {
-    setAppState('create');
-  };
-
-  const handleSavePerson = async (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleSavePerson = useCallback(async (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
       const newPerson = await peopleService.createPerson(personData);
-      setPeople(prev => [...prev, newPerson]);
-      setAppState('dashboard');
+      addPerson(newPerson);
+      goToDashboard();
       
       toast({
         title: "Pessoa Eterna criada!",
@@ -86,47 +68,27 @@ const Index = () => {
         variant: "destructive"
       });
     }
-  };
+  }, [addPerson, goToDashboard, toast]);
 
-  const handleChat = async (personId: string) => {
-    setSelectedPersonId(personId);
-    setAppState('chat');
+  const handleChat = useCallback(async (personId: string) => {
+    goToChat(personId);
     
     try {
       // Update last conversation time in Supabase
       await peopleService.updatePersonLastConversation(personId);
       
       // Update local state
-      setPeople(prev => prev.map(person => 
-        person.id === personId 
-          ? { ...person, lastConversation: new Date() }
-          : person
-      ));
+      updatePersonLastConversation(personId);
     } catch (error) {
       console.error('Error updating last conversation:', error);
     }
-  };
+  }, [goToChat, updatePersonLastConversation]);
 
-  const handleSettings = (personId: string) => {
-    setSelectedPersonId(personId);
-    setAppState('settings');
-  };
+  const handleBack = useCallback(() => {
+    goBack(people.length);
+  }, [goBack, people.length]);
 
-  const handleBack = () => {
-    if (people.length > 0) {
-      setAppState('dashboard');
-    } else {
-      setAppState('welcome');
-    }
-    setSelectedPersonId(null);
-  };
-
-  const handleAddMemory = (personId: string) => {
-    setSelectedPersonId(personId);
-    setAppState('add-memory');
-  };
-
-  const handleSaveMemory = async (memories: Omit<import("@/types/person").Memory, 'id'>[]) => {
+  const handleSaveMemory = useCallback(async (memories: Omit<import("@/types/person").Memory, 'id'>[]) => {
     if (!selectedPersonId) return;
     
     try {
@@ -138,15 +100,7 @@ const Index = () => {
       );
 
       // Update local state with new memories and updated timestamp
-      setPeople(prev => prev.map(person => 
-        person.id === selectedPersonId 
-          ? { 
-              ...person, 
-              memories: [...person.memories, ...savedMemories],
-              updatedAt: new Date() // Update the last modified date
-            }
-          : person
-      ));
+      addMemoriesToPerson(selectedPersonId, savedMemories);
 
       // Show success toast
       toast({
@@ -156,21 +110,18 @@ const Index = () => {
 
       // Navigate back to dashboard after a brief delay
       setTimeout(() => {
-        setAppState('dashboard');
-        setSelectedPersonId(null);
+        goToDashboard();
       }, 1000);
       
     } catch (error) {
       console.error('Error saving memories:', error);
       throw error;
     }
-  };
+  }, [selectedPersonId, addMemoriesToPerson, toast, goToDashboard]);
 
-  const selectedPerson = selectedPersonId 
-    ? people.find(p => p.id === selectedPersonId) 
-    : null;
+  const selectedPerson = people.find(p => p.id === selectedPersonId) || null;
 
-  if (loading || authLoading) {
+  if (peopleLoading || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -184,16 +135,16 @@ const Index = () => {
       {(() => {
         switch (appState) {
           case 'welcome':
-            return <WelcomeView onCreatePerson={handleCreatePerson} />;
+            return <WelcomeView onCreatePerson={goToCreate} />;
           
           case 'dashboard':
             return (
               <Dashboard 
                 people={people}
-                onCreatePerson={handleCreatePerson}
+                onCreatePerson={goToCreate}
                 onChat={handleChat}
-                onSettings={handleSettings}
-                onAddMemory={handleAddMemory}
+                onSettings={goToSettings}
+                onAddMemory={goToAddMemory}
                 onReload={loadPeople}
               />
             );
@@ -216,10 +167,11 @@ const Index = () => {
             ) : (
               <Dashboard 
                 people={people}
-                onCreatePerson={handleCreatePerson}
+                onCreatePerson={goToCreate}
                 onChat={handleChat}
-                onSettings={handleSettings}
-                onAddMemory={handleAddMemory}
+                onSettings={goToSettings}
+                onAddMemory={goToAddMemory}
+                onReload={loadPeople}
               />
             );
           
@@ -232,10 +184,11 @@ const Index = () => {
             ) : (
               <Dashboard 
                 people={people}
-                onCreatePerson={handleCreatePerson}
+                onCreatePerson={goToCreate}
                 onChat={handleChat}
-                onSettings={handleSettings}
-                onAddMemory={handleAddMemory}
+                onSettings={goToSettings}
+                onAddMemory={goToAddMemory}
+                onReload={loadPeople}
               />
             );
           
@@ -246,10 +199,8 @@ const Index = () => {
                 onSave={async (personData) => {
                   try {
                     const updatedPerson = await peopleService.updatePerson(selectedPerson.id, personData);
-                    setPeople(prev => prev.map(p => 
-                      p.id === selectedPerson.id ? updatedPerson : p
-                    ));
-                    setAppState('dashboard');
+                    updatePerson(selectedPerson.id, updatedPerson);
+                    goToDashboard();
                     toast({
                       title: "Pessoa atualizada!",
                       description: `${updatedPerson.name} foi atualizado com sucesso.`,
@@ -268,20 +219,22 @@ const Index = () => {
             ) : (
               <Dashboard 
                 people={people}
-                onCreatePerson={handleCreatePerson}
+                onCreatePerson={goToCreate}
                 onChat={handleChat}
-                onSettings={handleSettings}
-                onAddMemory={handleAddMemory}
+                onSettings={goToSettings}
+                onAddMemory={goToAddMemory}
+                onReload={loadPeople}
               />
             );
           default:
             return (
               <Dashboard 
                 people={people}
-                onCreatePerson={handleCreatePerson}
+                onCreatePerson={goToCreate}
                 onChat={handleChat}
-                onSettings={handleSettings}
-                onAddMemory={handleAddMemory}
+                onSettings={goToSettings}
+                onAddMemory={goToAddMemory}
+                onReload={loadPeople}
               />
             );
         }

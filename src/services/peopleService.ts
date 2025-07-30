@@ -22,6 +22,7 @@ export const peopleService = {
       id: person.id,
       name: person.name,
       relationship: person.relationship,
+      howTheyCalledYou: person.how_they_called_you,
       birthYear: person.birth_year,
       avatar: person.avatar,
       memories: person.memories || [],
@@ -55,6 +56,7 @@ export const peopleService = {
         user_id: user.user.id,
         name: personData.name,
         relationship: personData.relationship,
+        how_they_called_you: personData.howTheyCalledYou,
         birth_year: personData.birthYear,
         avatar: personData.avatar,
         personality: personData.personality,
@@ -111,6 +113,7 @@ export const peopleService = {
       id: person.id,
       name: person.name,
       relationship: person.relationship,
+      howTheyCalledYou: person.how_they_called_you,
       birthYear: person.birth_year,
       avatar: person.avatar,
       memories: person.memories || [],
@@ -146,12 +149,13 @@ export const peopleService = {
       throw new Error('Usuário não autenticado. Faça login novamente.');
     }
 
-    // Update the person
-    const { error: personError } = await supabase
+    // Update the person and return the updated data in one query
+    const { data: updatedPerson, error: personError } = await supabase
       .from('people')
       .update({
         name: personData.name,
         relationship: personData.relationship,
+        how_they_called_you: personData.howTheyCalledYou,
         birth_year: personData.birthYear,
         avatar: personData.avatar,
         personality: personData.personality,
@@ -167,12 +171,38 @@ export const peopleService = {
         last_conversation: personData.lastConversation?.toISOString(),
         updated_at: new Date().toISOString()
       })
-      .eq('id', personId);
+      .eq('id', personId)
+      .select(`
+        *,
+        memories (*)
+      `)
+      .single();
 
     if (personError) throw personError;
 
-    // Fetch the complete person with memories
-    return this.getPersonById(personId);
+    // Transform the data to match our Person type
+    return {
+      id: updatedPerson.id,
+      name: updatedPerson.name,
+      relationship: updatedPerson.relationship,
+      howTheyCalledYou: updatedPerson.how_they_called_you,
+      birthYear: updatedPerson.birth_year,
+      avatar: updatedPerson.avatar,
+      memories: updatedPerson.memories || [],
+      personality: updatedPerson.personality || [],
+      commonPhrases: updatedPerson.common_phrases || [],
+      temperature: updatedPerson.temperature || 0.7,
+      talkingStyle: updatedPerson.talking_style,
+      humorStyle: updatedPerson.humor_style,
+      emotionalTone: updatedPerson.emotional_tone,
+      verbosity: updatedPerson.verbosity,
+      values: updatedPerson.values || [],
+      topics: updatedPerson.topics || [],
+      voiceSettings: (updatedPerson.voice_settings as unknown as VoiceSettings) || { hasRecording: false },
+      createdAt: new Date(updatedPerson.created_at),
+      updatedAt: new Date(updatedPerson.updated_at),
+      lastConversation: updatedPerson.last_conversation ? new Date(updatedPerson.last_conversation) : undefined
+    };
   },
 
   async uploadMedia(file: File, userId: string): Promise<string> {
