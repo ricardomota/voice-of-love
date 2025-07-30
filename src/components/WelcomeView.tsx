@@ -29,7 +29,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           
           <Button 
             onClick={onCreatePerson}
-            className="w-full mb-10 min-h-[64px] text-sm xs:text-base sm:text-lg px-6 xs:px-8 py-5"
+            className="w-full mb-10 min-h-[48px] sm:min-h-[64px] text-xs sm:text-base lg:text-lg px-4 sm:px-6 py-3 sm:py-5 rounded-xl"
             size="lg"
             variant="cta"
           >
