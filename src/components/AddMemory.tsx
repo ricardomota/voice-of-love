@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
+import { Textarea } from "@/components/ui/textarea";
 import { ArrowBack, CloudUpload, Close, Description, Add, Delete } from "@mui/icons-material";
 import { Person, Memory } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
@@ -265,7 +265,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                   <label className="text-sm font-medium text-foreground mb-2 block">
                     Descrição da Memória
                   </label>
-                  <TextareaWithVoice
+                  <Textarea
                     value={memory.text}
                     onChange={(e) => updateMemoryText(memory.id, e.target.value)}
                     placeholder="Conte uma memória especial, um momento marcante, uma história..."
