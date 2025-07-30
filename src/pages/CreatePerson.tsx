@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { peopleService } from "@/services/peopleService";
 import { StoryStep } from "@/components/StoryStep";
 import { SpeechToTextButton } from "@/components/SpeechToTextButton";
+import { VoiceRecordingStep } from "@/components/VoiceRecordingStep";
 
 interface CreatePersonProps {
   person?: Person;
@@ -33,7 +34,9 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     emotionalTone: "",
     verbosity: "",
     values: [""],
-    topics: [""]
+    topics: [""],
+    voiceRecording: null as Blob | null,
+    voiceDuration: 0
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
@@ -54,7 +57,9 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         emotionalTone: person.emotionalTone || "",
         verbosity: person.verbosity || "",
         values: person.values && person.values.length > 0 ? person.values : [""],
-        topics: person.topics && person.topics.length > 0 ? person.topics : [""]
+        topics: person.topics && person.topics.length > 0 ? person.topics : [""],
+        voiceRecording: null,
+        voiceDuration: 0
       });
     }
   }, [person]);
@@ -273,6 +278,19 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     updateField('memories', memoryIndex, newText);
   };
 
+  const handleVoiceRecorded = (audioBlob: Blob, duration: number) => {
+    setFormData(prev => ({
+      ...prev,
+      voiceRecording: audioBlob,
+      voiceDuration: duration
+    }));
+    setCurrentStep(13); // Go to common phrases step
+  };
+
+  const skipVoiceRecording = () => {
+    setCurrentStep(13); // Go to common phrases step  
+  };
+
   const getMediaIcon = (mediaType?: string) => {
     switch (mediaType) {
       case 'image': return <Image className="w-4 h-4" />;
@@ -299,7 +317,8 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       values: formData.values.filter(v => v.trim()) || undefined,
       topics: formData.topics.filter(t => t.trim()) || undefined,
       voiceSettings: {
-        hasRecording: false
+        hasRecording: Boolean(formData.voiceRecording),
+        voiceId: undefined // Will be set after ElevenLabs processing
       }
     };
 
@@ -319,6 +338,8 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       case 9: return formData.values.some(v => v.trim());
       case 10: return formData.topics.some(t => t.trim());
       case 11: return true; // Temperature always has a value
+      case 12: return true; // Voice recording is optional
+      case 13: return formData.commonPhrases.some(p => p.trim());
       default: return true;
     }
   };
@@ -1156,13 +1177,28 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 12: Frases marcantes
+    // Step 12: Gravação de Voz (Opcional)
+    <StoryStep
+      key="voice-recording"
+      title="Vamos gravar a voz dela?"
+      subtitle="Esta etapa é opcional, mas vai tornar as conversas ainda mais reais e emocionantes."
+      onNext={() => setCurrentStep(13)}
+      onBack={() => setCurrentStep(11)}
+      canNext={canProceed(12)}
+    >
+      <VoiceRecordingStep 
+        onVoiceRecorded={handleVoiceRecorded}
+        onSkip={skipVoiceRecording}
+      />
+    </StoryStep>,
+
+    // Step 13: Frases marcantes
     <StoryStep
       key="phrases"
       title="Quais frases ela sempre dizia?"
       subtitle="Essas expressões únicas vão tornar as conversas ainda mais autênticas e tocantes."
       onNext={handleSubmit}
-      onBack={() => setCurrentStep(11)}
+      onBack={() => setCurrentStep(12)}
       nextText={person ? "Atualizar Pessoa Eterna" : "Criar Pessoa Eterna"}
     >
       <div className="space-y-4">
