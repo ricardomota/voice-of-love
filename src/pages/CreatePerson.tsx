@@ -363,9 +363,9 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     >
       <div className="space-y-8">
         <div className="flex flex-col items-center gap-6">
-          <Avatar className="w-32 h-32 shadow-elegant">
+          <Avatar className="w-32 h-32 shadow-elegant border-2 border-white/80 backdrop-blur-sm">
             <AvatarImage src={formData.avatar} alt={formData.name} />
-            <AvatarFallback className="bg-memory text-memory-foreground text-2xl">
+            <AvatarFallback className="bg-gradient-to-br from-accent/20 to-accent/10 text-accent-foreground text-2xl backdrop-blur-sm border border-white/40">
               {formData.name.charAt(0) || "?"}
             </AvatarFallback>
           </Avatar>
