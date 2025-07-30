@@ -5,6 +5,7 @@ interface ErrorConfig {
   title?: string;
   description?: string;
   variant?: 'default' | 'destructive';
+  duration?: number;
 }
 
 export function useErrorHandler() {
@@ -19,29 +20,46 @@ export function useErrorHandler() {
     const { 
       title = "Erro", 
       description = error.message || "Ocorreu um erro inesperado",
-      variant = "destructive" 
+      variant = "destructive",
+      duration = 5000
     } = config;
 
     toast({
       title,
       description,
-      variant
+      variant,
+      duration
     });
   }, [toast]);
 
   const handleSuccess = useCallback((
     title: string, 
+    description: string,
+    duration: number = 3000
+  ) => {
+    toast({
+      title,
+      description,
+      variant: "default",
+      duration
+    });
+  }, [toast]);
+
+  const handleLoading = useCallback((
+    title: string,
     description: string
   ) => {
     toast({
       title,
       description,
-      variant: "default"
+      variant: "default",
+      duration: 10000
     });
   }, [toast]);
 
   return {
     handleError,
-    handleSuccess
+    handleSuccess,
+    handleLoading
   };
 }
