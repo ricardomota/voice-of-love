@@ -46,34 +46,58 @@ export const StoryStep = ({
         {children}
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 sm:pt-6 px-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 sm:pt-6 px-4">
         {onBack && (
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-3 sm:order-1"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-3 sm:order-1 transition-all duration-200 hover:scale-105 hover:shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
             {backText}
           </Button>
         )}
 
-        {onUpdate && (
+        {onUpdate && onNext && (
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 order-2">
+            <Button
+              variant="outline"
+              onClick={onUpdate}
+              className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto transition-all duration-200 hover:scale-105 hover:shadow-md"
+            >
+              <Check className="w-4 h-4" />
+              {updateText}
+            </Button>
+            
+            <span className="text-muted-foreground text-sm font-medium">ou</span>
+            
+            <Button
+              onClick={onNext}
+              disabled={!canNext}
+              className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto transition-all duration-200 hover:scale-105 hover:shadow-md"
+            >
+              {nextText}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
+
+        {onUpdate && !onNext && (
           <Button
             variant="outline"
             onClick={onUpdate}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2 transition-all duration-200 hover:scale-105 hover:shadow-md"
           >
             <Check className="w-4 h-4" />
             {updateText}
           </Button>
         )}
 
-        {onNext && (
+        {onNext && !onUpdate && (
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-3"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-3 transition-all duration-200 hover:scale-105 hover:shadow-md"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
