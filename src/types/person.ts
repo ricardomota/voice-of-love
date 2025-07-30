@@ -10,6 +10,7 @@ export interface Person {
   id: string;
   name: string;
   relationship: string;
+  howTheyCalledYou?: string;
   birthYear?: number;
   avatar?: string;
   memories: Memory[];

@@ -23,6 +23,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
   const [formData, setFormData] = useState({
     name: "",
     relationship: "",
+    howTheyCalledYou: "",
     birthYear: "",
     avatar: "",
     memories: [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }] as Memory[],
@@ -46,6 +47,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       setFormData({
         name: person.name,
         relationship: person.relationship,
+        howTheyCalledYou: person.howTheyCalledYou || "",
         birthYear: person.birthYear?.toString() || "",
         avatar: person.avatar || "",
         memories: person.memories.length > 0 ? person.memories : [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
@@ -304,6 +306,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     const person = {
       name: formData.name,
       relationship: formData.relationship,
+      howTheyCalledYou: formData.howTheyCalledYou || undefined,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
       avatar: formData.avatar || undefined,
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
@@ -329,17 +332,18 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
     switch (step) {
       case 1: return Boolean(formData.name.trim());
       case 2: return Boolean(formData.relationship.trim());
-      case 3: return formData.memories.some(m => m.text.trim() || m.mediaUrl);
-      case 4: return formData.personality.some(p => p.trim());
-      case 5: return Boolean(formData.talkingStyle.trim());
-      case 6: return Boolean(formData.humorStyle.trim());
-      case 7: return Boolean(formData.emotionalTone.trim());
-      case 8: return Boolean(formData.verbosity.trim());
-      case 9: return formData.values.some(v => v.trim());
-      case 10: return formData.topics.some(t => t.trim());
-      case 11: return true; // Temperature always has a value
-      case 12: return true; // Voice recording is optional
-      case 13: return formData.commonPhrases.some(p => p.trim());
+      case 3: return true; // How they called you is optional
+      case 4: return formData.memories.some(m => m.text.trim() || m.mediaUrl);
+      case 5: return formData.personality.some(p => p.trim());
+      case 6: return Boolean(formData.talkingStyle.trim());
+      case 7: return Boolean(formData.humorStyle.trim());
+      case 8: return Boolean(formData.emotionalTone.trim());
+      case 9: return Boolean(formData.verbosity.trim());
+      case 10: return formData.values.some(v => v.trim());
+      case 11: return formData.topics.some(t => t.trim());
+      case 12: return true; // Temperature always has a value
+      case 13: return true; // Voice recording is optional
+      case 14: return formData.commonPhrases.some(p => p.trim());
       default: return true;
     }
   };
@@ -481,15 +485,62 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
       </div>
     </StoryStep>,
 
-    // Step 3: Memórias
+    // Step 3: Como ela te chamava
     <StoryStep
-      key="memories"
-      title="Compartilhe as memórias mais preciosas"
-      subtitle={`Conte-me sobre os momentos especiais que você viveu com ${formData.name}. Adicione quantas memórias, fotos, vídeos e áudios quiser - quanto mais conteúdo, melhor conseguiremos entender e recriar a personalidade única dessa pessoa especial.`}
+      key="how-they-called-you"
+      title={`Como ${formData.name || 'essa pessoa'} costumava te chamar?`}
+      subtitle="Essa informação tornará as conversas mais autênticas, usando a forma carinhosa que ela tinha de se dirigir a você."
       onNext={() => setCurrentStep(4)}
       onBack={() => setCurrentStep(2)}
       onUpdate={person ? () => handleSubmit() : undefined}
       canNext={canProceed(3)}
+    >
+      <div className="space-y-6">
+        <div className="space-y-4">
+          <InputWithVoice
+            value={formData.howTheyCalledYou}
+            onChange={(e) => setFormData(prev => ({ ...prev, howTheyCalledYou: e.target.value }))}
+            placeholder={`Ex: "Rick", "meu filho do coração", "querido", "amor"...`}
+            className="text-lg py-4 text-center"
+          />
+          
+          <div className="text-center space-y-2">
+            <p className="text-sm text-muted-foreground">
+              💡 <strong>Dica:</strong> Se ela usava diferentes formas dependendo da situação, você pode adicionar várias separadas por vírgula.
+            </p>
+            {formData.howTheyCalledYou && (
+              <div className="animate-fade-in p-4 bg-accent/5 rounded-lg border border-accent/20">
+                <p className="text-accent-foreground">
+                  Nas conversas, ela se referirá a você como: <strong>"{formData.howTheyCalledYou}"</strong>
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <div className="space-y-3 p-4 bg-muted/30 rounded-lg">
+          <h4 className="text-sm font-medium text-muted-foreground">Exemplos comuns:</h4>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-muted-foreground">
+            <div>• Pelo nome próprio</div>
+            <div>• Meu filho/filha</div>
+            <div>• Querido(a)</div>
+            <div>• Amor</div>
+            <div>• Meu bem</div>
+            <div>• Filho do coração</div>
+          </div>
+        </div>
+      </div>
+    </StoryStep>,
+
+    // Step 4: Memórias
+    <StoryStep
+      key="memories"
+      title="Compartilhe as memórias mais preciosas"
+      subtitle={`Conte-me sobre os momentos especiais que você viveu com ${formData.name}. Adicione quantas memórias, fotos, vídeos e áudios quiser - quanto mais conteúdo, melhor conseguiremos entender e recriar a personalidade única dessa pessoa especial.`}
+      onNext={() => setCurrentStep(5)}
+      onBack={() => setCurrentStep(3)}
+      onUpdate={person ? () => handleSubmit() : undefined}
+      canNext={canProceed(4)}
     >
       <div className="space-y-6">
         {formData.memories.map((memory, index) => (
