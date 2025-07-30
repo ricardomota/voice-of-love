@@ -4,7 +4,7 @@ import { InputWithVoice } from "@/components/ui/input-with-voice";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Upload, Plus, X, FileText, Image, Video, Music, Heart, Sparkles } from "lucide-react";
+import { ArrowLeft, Upload, Plus, X, FileText, Image, Video, Music, Heart, Sparkles, Check } from "lucide-react";
 import { Person, Memory } from "@/types/person";
 import { useAuth } from "@/hooks/useAuth";
 import { peopleService } from "@/services/peopleService";
@@ -386,9 +386,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -467,9 +469,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -514,9 +518,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -643,9 +649,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -785,9 +793,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -878,9 +888,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -971,9 +983,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -1064,9 +1078,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -1138,9 +1154,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -1214,9 +1232,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
@@ -1300,9 +1320,11 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
         <div className="flex justify-center mb-6">
           <Button
             onClick={() => handleSubmit()}
-            size="lg"
-            className="px-8"
+            variant="outline"
+            size="default"
+            className="flex items-center gap-2 px-4 sm:px-6"
           >
+            <Check className="w-4 h-4" />
             Atualizar perfil
           </Button>
         </div>
