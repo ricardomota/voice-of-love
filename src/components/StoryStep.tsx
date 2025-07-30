@@ -59,11 +59,11 @@ export const StoryStep = ({
         )}
 
         {onUpdate && onNext && (
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 order-2">
+          <div className="flex flex-row items-center gap-3 order-2">
             <Button
               variant="outline"
               onClick={onUpdate}
-              className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto transition-all duration-200 hover:scale-105 hover:shadow-md"
+              className="flex items-center gap-2 px-4 sm:px-6 transition-all duration-200 hover:scale-105 hover:shadow-md"
             >
               <Check className="w-4 h-4" />
               {updateText}
@@ -74,7 +74,7 @@ export const StoryStep = ({
             <Button
               onClick={onNext}
               disabled={!canNext}
-              className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto transition-all duration-200 hover:scale-105 hover:shadow-md"
+              className="flex items-center gap-2 px-4 sm:px-6 transition-all duration-200 hover:scale-105 hover:shadow-md"
             >
               {nextText}
               <ArrowRight className="w-4 h-4" />
@@ -86,7 +86,7 @@ export const StoryStep = ({
           <Button
             variant="outline"
             onClick={onUpdate}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-2 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            className="flex items-center gap-2 px-4 sm:px-6 order-2 transition-all duration-200 hover:scale-105 hover:shadow-md"
           >
             <Check className="w-4 h-4" />
             {updateText}
@@ -97,7 +97,7 @@ export const StoryStep = ({
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-1 sm:order-3 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            className="flex items-center gap-2 px-4 sm:px-6 order-1 sm:order-3 transition-all duration-200 hover:scale-105 hover:shadow-md"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
