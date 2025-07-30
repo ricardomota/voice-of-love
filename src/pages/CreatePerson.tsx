@@ -475,19 +475,13 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
                 {index + 1}
               </div>
               <div className="flex-1 space-y-3">
-                <div className="flex gap-2">
-                  <TextareaWithVoice
-                    value={memory.text}
-                    onChange={(e) => updateField('memories', index, e.target.value)}
-                    placeholder="Ex: Ela sempre fazia bolo de chocolate nos domingos e a casa toda ficava com aquele cheiro gostoso..."
-                    className="min-h-[100px] resize-none border-0 bg-transparent text-base flex-1"
-                  />
-                  <div className="flex flex-col justify-center">
-                    <SpeechToTextButton 
-                      onTranscription={(text) => handleTranscription(text, index)}
-                    />
-                  </div>
-                </div>
+                <TextareaWithVoice
+                  value={memory.text}
+                  onChange={(e) => updateField('memories', index, e.target.value)}
+                  placeholder="Ex: Ela sempre fazia bolo de chocolate nos domingos e a casa toda ficava com aquele cheiro gostoso..."
+                  className="min-h-[100px] resize-none border-0 bg-transparent text-base"
+                  onVoiceTranscription={(text) => handleTranscription(text, index)}
+                />
                 
                 <div className="space-y-2">
                   <div className="text-center">
