@@ -7,9 +7,10 @@ import { useToast } from '@/components/ui/use-toast';
 interface SpeechToTextButtonProps {
   onTranscription: (text: string) => void;
   disabled?: boolean;
+  variant?: 'compact' | 'full';
 }
 
-export const SpeechToTextButton = ({ onTranscription, disabled }: SpeechToTextButtonProps) => {
+export const SpeechToTextButton = ({ onTranscription, disabled, variant = 'full' }: SpeechToTextButtonProps) => {
   const { isRecording, isProcessing, startRecording, stopRecording, error } = useSpeechToText();
   const { toast } = useToast();
 
@@ -40,6 +41,33 @@ export const SpeechToTextButton = ({ onTranscription, disabled }: SpeechToTextBu
       }
     }
   };
+
+  if (variant === 'compact') {
+    return (
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleClick}
+        disabled={disabled || isProcessing}
+        className={`
+          h-8 w-8 rounded-full transition-colors
+          ${isRecording 
+            ? 'text-red-500 hover:bg-red-50' 
+            : 'text-muted-foreground hover:text-foreground hover:bg-accent/10'
+          }
+        `}
+        title={isProcessing ? 'Processando...' : isRecording ? 'Parar gravação' : 'Gravar áudio'}
+      >
+        {isProcessing ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : isRecording ? (
+          <MicOff className="w-4 h-4" />
+        ) : (
+          <Mic className="w-4 h-4" />
+        )}
+      </Button>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-2">
