@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Favorite, Add, Chat } from "@mui/icons-material";
+import { Favorite, ArrowForward } from "@mui/icons-material";
 
 interface WelcomeViewProps {
   onCreatePerson: () => void;
@@ -29,12 +29,11 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           
           <Button 
             onClick={onCreatePerson}
-            className="w-full mb-10 min-h-[64px] text-sm xs:text-base sm:text-lg px-6 xs:px-8 py-5"
+            className="w-full mb-10 min-h-[64px] text-sm xs:text-base sm:text-lg px-6 xs:px-8 py-5 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl border-0 shadow-lg"
             size="lg"
-            variant="cta"
           >
-            <Add className="w-5 h-5 xs:w-6 xs:h-6 mr-3 xs:mr-4 flex-shrink-0" />
-            <span className="whitespace-nowrap leading-tight text-center">Criar Primeira Pessoa Eterna</span>
+            <span className="whitespace-nowrap leading-tight text-center">Começar jornada</span>
+            <ArrowForward className="w-5 h-5 xs:w-6 xs:h-6 ml-3 xs:ml-4 flex-shrink-0" />
           </Button>
           
           <div className="pt-8 border-t border-white/20">
