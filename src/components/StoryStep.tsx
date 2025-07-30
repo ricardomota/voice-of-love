@@ -49,9 +49,9 @@ export const StoryStep = ({
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 sm:pt-6 px-4">
         {onBack && (
           <Button
-            variant="outline"
+            variant="glass"
             onClick={onBack}
-            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-3 sm:order-1 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            className="flex items-center gap-2 px-4 sm:px-6 w-full sm:w-auto order-3 sm:order-1"
           >
             <ArrowLeft className="w-4 h-4" />
             {backText}
@@ -61,9 +61,9 @@ export const StoryStep = ({
         {onUpdate && onNext && (
           <div className="flex flex-row items-center gap-3 order-2">
             <Button
-              variant="outline"
+              variant="glass"
               onClick={onUpdate}
-              className="flex items-center gap-2 px-4 sm:px-6 transition-all duration-200 hover:scale-105 hover:shadow-md"
+              className="flex items-center gap-2 px-4 sm:px-6"
             >
               <Check className="w-4 h-4" />
               {updateText}
@@ -74,7 +74,8 @@ export const StoryStep = ({
             <Button
               onClick={onNext}
               disabled={!canNext}
-              className="flex items-center gap-2 px-4 sm:px-6 transition-all duration-200 hover:scale-105 hover:shadow-md"
+              variant="glass"
+              className="flex items-center gap-2 px-4 sm:px-6"
             >
               {nextText}
               <ArrowRight className="w-4 h-4" />
@@ -84,9 +85,9 @@ export const StoryStep = ({
 
         {onUpdate && !onNext && (
           <Button
-            variant="outline"
+            variant="glass"
             onClick={onUpdate}
-            className="flex items-center gap-2 px-4 sm:px-6 order-2 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            className="flex items-center gap-2 px-4 sm:px-6 order-2"
           >
             <Check className="w-4 h-4" />
             {updateText}
@@ -97,7 +98,8 @@ export const StoryStep = ({
           <Button
             onClick={onNext}
             disabled={!canNext}
-            className="flex items-center gap-2 px-4 sm:px-6 order-1 sm:order-3 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            variant="glass"
+            className="flex items-center gap-2 px-4 sm:px-6 order-1 sm:order-3"
           >
             {nextText}
             <ArrowRight className="w-4 h-4" />
