@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { InputWithVoice } from "@/components/ui/input-with-voice";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -396,7 +396,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
             <label className="text-lg font-medium text-foreground block mb-3">
               Qual é o nome dela?
             </label>
-            <Input
+            <InputWithVoice
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Digite o nome completo..."
@@ -408,7 +408,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
             <label className="text-lg font-medium text-foreground block mb-3">
               Em que ano ela nasceu? (opcional)
             </label>
-            <Input
+            <InputWithVoice
               type="number"
               value={formData.birthYear}
               onChange={(e) => setFormData(prev => ({ ...prev, birthYear: e.target.value }))}
@@ -969,7 +969,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
               {index + 1}
             </div>
             <div className="flex-1">
-              <Input
+              <InputWithVoice
                 value={value}
                 onChange={(e) => updateField('values', index, e.target.value)}
                 placeholder="Ex: Família sempre em primeiro lugar, Sempre ajudar o próximo, Ser honesto em todas as situações..."
@@ -1032,7 +1032,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
               {index + 1}
             </div>
             <div className="flex-1">
-              <Input
+              <InputWithVoice
                 value={topic}
                 onChange={(e) => updateField('topics', index, e.target.value)}
                 placeholder="Ex: Cozinhar e receitas de família, Plantas e jardinagem, Histórias da juventude..."
@@ -1172,7 +1172,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
               {index + 1}
             </div>
             <div className="flex-1">
-              <Input
+              <InputWithVoice
                 value={phrase}
                 onChange={(e) => updateField('commonPhrases', index, e.target.value)}
                 placeholder="Ex: 'Meu bem, tudo vai dar certo'"

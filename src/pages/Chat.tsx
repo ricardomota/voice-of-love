@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Send, Mic, Brain, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { InputWithVoice } from '@/components/ui/input-with-voice';
 import { MessageBubble } from '@/components/ui/message-bubble';
 import { TypingIndicator } from '@/components/ui/typing-indicator';
 import { SuggestedMessages } from '@/components/SuggestedMessages';
@@ -307,22 +307,18 @@ Agora responda como ${person.name}:`;
       <div className="p-4 border-t bg-background/95 backdrop-blur">
         <div className="flex items-center space-x-2">
           <div className="flex-1 relative">
-            <Input
+            <InputWithVoice
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={`Escreva para ${person.name}...`}
-              className="pr-12"
               disabled={isTyping}
+              onVoiceTranscription={(transcript) => {
+                setInputValue(transcript);
+                handleSendMessage(transcript);
+              }}
             />
           </div>
-          
-          <SpeechToTextButton 
-            onTranscription={(transcript) => {
-              setInputValue(transcript);
-              handleSendMessage(transcript);
-            }}
-          />
           
           <Button 
             size="icon"

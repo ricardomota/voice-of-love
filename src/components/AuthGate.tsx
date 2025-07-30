@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { InputWithVoice } from '@/components/ui/input-with-voice';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2 } from 'lucide-react';
@@ -77,13 +77,13 @@ export function AuthGate({ children }: AuthGateProps) {
               
               <TabsContent value="signin" className="space-y-4">
                 <div className="space-y-2">
-                  <Input
+                  <InputWithVoice
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <Input
+                  <InputWithVoice
                     type="password"
                     placeholder="Senha"
                     value={password}
@@ -102,13 +102,13 @@ export function AuthGate({ children }: AuthGateProps) {
               
               <TabsContent value="signup" className="space-y-4">
                 <div className="space-y-2">
-                  <Input
+                  <InputWithVoice
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <Input
+                  <InputWithVoice
                     type="password"
                     placeholder="Senha"
                     value={password}
