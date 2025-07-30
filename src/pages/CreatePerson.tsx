@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowLeft, Upload, Plus, X, FileText, Image, Video, Music, Heart, Sparkles } from "lucide-react";
@@ -476,7 +476,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
               </div>
               <div className="flex-1 space-y-3">
                 <div className="flex gap-2">
-                  <TextareaWithVoice
+                  <Textarea
                     value={memory.text}
                     onChange={(e) => updateField('memories', index, e.target.value)}
                     placeholder="Ex: Ela sempre fazia bolo de chocolate nos domingos e a casa toda ficava com aquele cheiro gostoso..."
@@ -598,7 +598,7 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
               {index + 1}
             </div>
             <div className="flex-1">
-              <TextareaWithVoice
+              <Textarea
                 value={trait}
                 onChange={(e) => updateField('personality', index, e.target.value)}
                 placeholder="Ex: Era muito carinhosa e sempre tinha uma palavra de conforto para todos..."
