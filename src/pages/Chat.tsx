@@ -10,6 +10,8 @@ import { SpeechToTextButton } from '@/components/SpeechToTextButton';
 import { supabase } from '@/integrations/supabase/client';
 import { Person, Message } from '@/types/person';
 import { conversationAnalyzer, ConversationAnalysis } from '@/services/conversationAnalyzer';
+import { conversationService } from '@/services/conversationService';
+import { adaptiveLearningService } from '@/services/adaptiveLearningService';
 import { peopleService } from '@/services/peopleService';
 import { useToast } from '@/hooks/use-toast';
 
@@ -26,6 +28,9 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   const [showInsights, setShowInsights] = useState(false);
   const [currentAnalysis, setCurrentAnalysis] = useState<ConversationAnalysis | null>(null);
   const [messageCount, setMessageCount] = useState(0);
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [isLearning, setIsLearning] = useState(false);
+  const [updatedPerson, setUpdatedPerson] = useState<Person>(person);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -34,14 +39,36 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   }, [messages]);
 
   useEffect(() => {
-    // Initialize with a greeting message
-    const initialMessage: Message = {
-      id: '0',
-      content: getInitialMessage(),
-      isUser: false,
-      timestamp: new Date(),
+    // Initialize conversation and with a greeting message
+    const initializeChat = async () => {
+      try {
+        const conversation = await conversationService.createConversation(person.id);
+        setCurrentConversationId(conversation.id);
+        
+        const initialMessage: Message = {
+          id: '0',
+          content: getInitialMessage(),
+          isUser: false,
+          timestamp: new Date(),
+        };
+        setMessages([initialMessage]);
+        
+        // Save initial AI message
+        await conversationService.addMessage(conversation.id, initialMessage.content, false);
+      } catch (error) {
+        console.error('Error initializing chat:', error);
+        // Fallback sem conversa persistente
+        const initialMessage: Message = {
+          id: '0',
+          content: getInitialMessage(),
+          isUser: false,
+          timestamp: new Date(),
+        };
+        setMessages([initialMessage]);
+      }
     };
-    setMessages([initialMessage]);
+    
+    initializeChat();
   }, []);
 
   const scrollToBottom = () => {
@@ -89,57 +116,59 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   };
 
   const generatePersonalizedPrompt = () => {
-    const memoriesText = person.memories.length > 0 
-      ? person.memories.map((m, index) => `${index + 1}. ${m.text}`).join('\n')
+    // Usar pessoa atualizada se disponível
+    const currentPerson = updatedPerson;
+    const memoriesText = currentPerson.memories.length > 0 
+      ? currentPerson.memories.map((m, index) => `${index + 1}. ${m.text}`).join('\n')
       : 'Ainda não há memórias compartilhadas entre nós.';
       
-    const personalityText = person.personality.length > 0 
-      ? person.personality.join(', ') 
+    const personalityText = currentPerson.personality.length > 0 
+      ? currentPerson.personality.join(', ') 
       : 'personalidade única';
       
-    const phrasesText = person.commonPhrases.length > 0 
-      ? person.commonPhrases.join(', ') 
-      : 'não há frases características definidas';
-
-    const valuesText = person.values && person.values.length > 0
-      ? person.values.join(', ')
+     const phrasesText = currentPerson.commonPhrases.length > 0
+      ? currentPerson.commonPhrases.join('; ') 
       : '';
-
-    const topicsText = person.topics && person.topics.length > 0
-      ? person.topics.join(', ')
-      : '';
-
-    const howYouCallUser = person.howTheyCalledYou || 'você';
       
-    return `INSTRUÇÕES CRÍTICAS: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas.
+    const valuesText = currentPerson.values && currentPerson.values.length > 0 
+      ? currentPerson.values.join(', ') 
+      : '';
+      
+    const topicsText = currentPerson.topics && currentPerson.topics.length > 0 
+      ? currentPerson.topics.join(', ') 
+      : '';
+
+    const howTheyCalledYou = currentPerson.howTheyCalledYou || 'você';
+
+    return `INSTRUÇÕES CRÍTICAS: Você é ${currentPerson.name}, ${currentPerson.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas.
 
 PERFIL DA PESSOA:
-- Nome: ${person.name}
-- Relacionamento: ${person.relationship}
-- Como você chama o usuário: ${howYouCallUser}
+- Nome: ${currentPerson.name}
+- Relacionamento: ${currentPerson.relationship}
+- Como você chama o usuário: ${howTheyCalledYou}
 - Personalidade: ${personalityText}
 - Frases características: ${phrasesText}
-${person.talkingStyle ? `- Estilo de conversa: ${person.talkingStyle}` : ''}
-${person.humorStyle ? `- Tipo de humor: ${person.humorStyle}` : ''}
-${person.emotionalTone ? `- Tom emocional: ${person.emotionalTone}` : ''}
-${person.verbosity ? `- Verbosidade: ${person.verbosity}` : ''}
-${valuesText ? `- Valores importantes: ${valuesText}` : ''}
-${topicsText ? `- Assuntos favoritos: ${topicsText}` : ''}
+- Estilo de conversa: ${currentPerson.talkingStyle || 'natural'}
+- Tipo de humor: ${currentPerson.humorStyle || 'suave'}
+- Tom emocional: ${currentPerson.emotionalTone || 'amigável'}
+- Verbosidade: ${currentPerson.verbosity || 'equilibrada'}
+- Valores importantes: ${valuesText}
+- Assuntos favoritos: ${topicsText}
 
 MEMÓRIAS COMPARTILHADAS (USE ESTAS INFORMAÇÕES ATIVAMENTE):
 ${memoriesText}
 
 INSTRUÇÕES DE RESPOSTA (SIGA RIGOROSAMENTE):
-1. ${getVerbosityInstruction(person.verbosity)}
-2. ${getTalkingStyleInstruction(person.talkingStyle)}
-3. SEMPRE se refira ao usuário como "${howYouCallUser}" - essa é a forma carinhosa que você usava
+1. ${getVerbosityInstruction(currentPerson.verbosity)}
+2. ${getTalkingStyleInstruction(currentPerson.talkingStyle)}
+3. SEMPRE se refira ao usuário como "${howTheyCalledYou}" - essa é a forma carinhosa que você usava
 4. Use as frases características "${phrasesText}" ocasionalmente de forma natural
 5. Demonstre que você lembra das experiências vividas juntos
 6. Seja específico e pessoal baseado nas memórias
-7. Mantenha o tom emocional "${person.emotionalTone || 'caloroso'}"
-${valuesText ? `8. IMPORTANTE: Seus valores são ${valuesText} - mantenha-se fiel a eles sempre` : ''}
+7. Mantenha o tom emocional "${currentPerson.emotionalTone || 'amigável'}"
+8. IMPORTANTE: Seus valores são ${valuesText} - mantenha-se fiel a eles sempre
 
-Agora responda como ${person.name}:`;
+Agora responda como ${currentPerson.name}:`;
   };
 
   const handleSendMessage = async (content: string) => {
@@ -170,12 +199,18 @@ Agora responda como ${person.name}:`;
 
       setMessages(prev => [...prev, aiMessage]);
       
+      // Salvar mensagens na conversa persistente
+      if (currentConversationId) {
+        await conversationService.addMessage(currentConversationId, userMessage.content, true);
+        await conversationService.addMessage(currentConversationId, aiMessage.content, false);
+      }
+      
       // Atualizar última conversa
       await peopleService.updatePersonLastConversation(person.id);
 
-      // Analisar conversa a cada 3 mensagens ou quando solicitado
+      // Analisar conversa e aplicar aprendizado a cada 3 mensagens
       if ((messageCount + 1) % 3 === 0) {
-        await analyzeConversation([...messages, userMessage, aiMessage]);
+        await analyzeAndLearn([...messages, userMessage, aiMessage]);
       }
 
     } catch (error) {
@@ -190,17 +225,18 @@ Agora responda como ${person.name}:`;
     }
   };
 
-  const analyzeConversation = async (conversationMessages: Message[]) => {
+  const analyzeAndLearn = async (conversationMessages: Message[]) => {
     try {
       // Só analisa se houver pelo menos 4 mensagens (2 de cada)
       if (conversationMessages.length < 4) return;
 
+      setIsLearning(true);
       toast({
-        title: "🧠 Analisando conversa...",
-        description: "Gerando insights sobre a dinâmica da conversa.",
+        title: "🧠 Analisando conversa e aprendendo...",
+        description: "Melhorando a personalidade baseado na conversa.",
       });
 
-      const analysis = await conversationAnalyzer.analyzeConversation(person, conversationMessages);
+      const analysis = await conversationAnalyzer.analyzeConversation(updatedPerson, conversationMessages);
       setCurrentAnalysis(analysis);
 
       // Salvar análise
@@ -208,32 +244,59 @@ Agora responda como ${person.name}:`;
       if (user.user) {
         await conversationAnalyzer.saveAnalysis(person.id, user.user.id, analysis);
         await conversationAnalyzer.saveDynamicMemories(person.id, analysis.suggestedMemories);
-        await conversationAnalyzer.suggestPersonalityEvolution(person, analysis);
+        
+        // Obter total de conversas para determinar se deve aplicar aprendizado
+        const conversations = await conversationService.getPersonConversations(person.id);
+        
+        // Aplicar aprendizado adaptativo
+        const learnedPerson = await adaptiveLearningService.applyLearning(
+          updatedPerson, 
+          analysis, 
+          conversations.length
+        );
+        
+        if (learnedPerson) {
+          // Atualizar pessoa no banco
+          const updated = await peopleService.updatePerson(person.id, learnedPerson);
+          setUpdatedPerson(updated);
+          
+          toast({
+            title: "✨ Aprendizado Aplicado!",
+            description: "A personalidade evoluiu baseada nas conversas.",
+          });
+        }
       }
 
-      // Mostrar notificação sobre qualidade da conversa
+      // Feedback sobre qualidade da conversa
       const quality = analysis.conversationQuality.engagement;
       if (quality > 0.8) {
         toast({
-          title: "✨ Conversa Excepcional!",
-          description: "A conexão emocional está muito forte hoje.",
+          title: "💖 Conexão Incrível!",
+          description: "A intimidade e autenticidade estão excepcionais hoje.",
         });
       } else if (quality < 0.4) {
         toast({
           title: "💡 Dica de Conversa",
-          description: "Que tal tentar um tópico diferente ou pergunta mais pessoal?",
+          description: "Tente perguntas mais pessoais ou compartilhe uma memória.",
         });
       }
 
     } catch (error) {
-      console.error('Error analyzing conversation:', error);
+      console.error('Error in adaptive learning:', error);
+      toast({
+        title: "Erro no aprendizado",
+        description: "Não foi possível aplicar o aprendizado, mas a conversa continua.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLearning(false);
     }
   };
 
   const generateAIResponse = async (prompt: string, userMessage: string) => {
     try {
       // Buscar memórias dinâmicas recentes
-      const dynamicMemories = await conversationAnalyzer.getDynamicMemories(person.id);
+      const dynamicMemories = await conversationAnalyzer.getDynamicMemories(updatedPerson.id);
       const memoryContext = dynamicMemories.length > 0 
         ? `\n\nMEMÓRIAS RECENTES IMPORTANTES:\n${dynamicMemories.map(m => `- ${m.memory_text}`).join('\n')}`
         : '';
@@ -244,7 +307,7 @@ Agora responda como ${person.name}:`;
         body: {
           messages: [{ role: 'user', content: userMessage }],
           systemPrompt: enhancedPrompt,
-          temperature: person.temperature
+          temperature: updatedPerson.temperature
         }
       });
 
@@ -305,12 +368,21 @@ Agora responda como ${person.name}:`;
           <Button
             variant="outline"
             size="sm"
-            onClick={() => analyzeConversation(messages)}
-            disabled={messages.length < 4}
+            onClick={() => analyzeAndLearn(messages)}
+            disabled={messages.length < 4 || isLearning}
             className="flex items-center gap-2"
           >
-            <Sparkles className="h-4 w-4" />
-            Analisar
+            {isLearning ? (
+              <>
+                <div className="w-4 h-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                Aprendendo
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                Analisar & Aprender
+              </>
+            )}
           </Button>
         </div>
       </div>

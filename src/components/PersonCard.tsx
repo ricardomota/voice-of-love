@@ -26,7 +26,7 @@ interface PersonCardProps {
   className?: string;
 }
 
-export const PersonCard = ({
+export const PersonCard: React.FC<PersonCardProps> = ({
   id,
   name,
   relationship,
@@ -69,6 +69,10 @@ export const PersonCard = ({
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const getLearningLevel = () => {
+    return { level: 'Iniciante', progress: 10, color: 'bg-gray-500' };
   };
 
   return (
