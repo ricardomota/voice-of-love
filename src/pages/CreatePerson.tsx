@@ -492,9 +492,6 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-muted-foreground">Adicionar arquivos (opcional)</p>
-                    <span className="text-xs text-primary bg-primary/10 px-2 py-1 rounded-full">
-                      📎 Sem limite - quanto mais, melhor!
-                    </span>
                   </div>
                   <div className="flex gap-2">
                     <input
