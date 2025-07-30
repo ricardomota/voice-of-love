@@ -490,10 +490,10 @@ export const CreatePerson = ({ person, onSave, onBack }: CreatePersonProps) => {
                 </div>
                 
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between">
+                  <div className="text-center">
                     <p className="text-sm text-muted-foreground">Adicionar arquivos (opcional)</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex justify-center">
                     <input
                       type="file"
                       accept="image/*,video/*,audio/*"
