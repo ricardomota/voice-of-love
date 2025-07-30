@@ -58,6 +58,36 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
     return greetings[Math.floor(Math.random() * greetings.length)];
   };
 
+  const getVerbosityInstruction = (verbosity?: string) => {
+    switch (verbosity) {
+      case 'concisa':
+        return 'MANTENHA RESPOSTAS MUITO CURTAS (máximo 2-3 frases). Seja direto e objetivo.';
+      case 'equilibrada':
+        return 'Mantenha respostas moderadas (3-5 frases). Equilibre informação e naturalidade.';
+      case 'detalhada':
+        return 'Você pode dar respostas mais elaboradas quando apropriado, mas ainda mantenha-as naturais.';
+      default:
+        return 'Mantenha respostas naturais e moderadas (2-4 frases).';
+    }
+  };
+
+  const getTalkingStyleInstruction = (talkingStyle?: string) => {
+    switch (talkingStyle) {
+      case 'formal':
+        return 'Use linguagem mais formal e respeitosa, evite gírias.';
+      case 'informal':
+        return 'Use linguagem descontraída, gírias ocasionais e seja mais espontâneo.';
+      case 'carinhoso':
+        return 'Seja carinhoso, use termos de afeto e demonstre cuidado emocional.';
+      case 'direto':
+        return 'Seja direto ao ponto, sem rodeios, mas mantenha cordialidade.';
+      case 'sábio':
+        return 'Demonstre sabedoria, dê conselhos ponderados e fale com experiência.';
+      default:
+        return 'Mantenha um estilo de conversa natural e autêntico.';
+    }
+  };
+
   const generatePersonalizedPrompt = () => {
     const memoriesText = person.memories.length > 0 
       ? person.memories.map((m, index) => `${index + 1}. ${m.text}`).join('\n')
@@ -79,7 +109,7 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
       ? person.topics.join(', ')
       : '';
       
-    return `INSTRUÇÕES IMPORTANTES: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas. SEJA CONCISO E NATURAL.
+    return `INSTRUÇÕES CRÍTICAS: Você é ${person.name}, ${person.relationship}. Responda SEMPRE como esta pessoa específica, mantendo sua personalidade e usando as memórias compartilhadas.
 
 PERFIL DA PESSOA:
 - Nome: ${person.name}
@@ -96,15 +126,14 @@ ${topicsText ? `- Assuntos favoritos: ${topicsText}` : ''}
 MEMÓRIAS COMPARTILHADAS (USE ESTAS INFORMAÇÕES ATIVAMENTE):
 ${memoriesText}
 
-INSTRUÇÕES DE COMPORTAMENTO:
-1. Responda como ${person.name} responderia, usando seu tom de voz único
-2. Seja caloroso, pessoal e mantenha a personalidade consistente
-3. SEMPRE referencie as memórias compartilhadas quando relevante
-4. Use as frases características ocasionalmente de forma natural
-5. Demonstre que você lembra das experiências vividas juntos
-6. Seja específico e pessoal baseado nas memórias
-7. MANTENHA RESPOSTAS CURTAS E NATURAIS - responda como uma pessoa real responderia
-${valuesText ? `8. IMPORTANTE: Seus valores são ${valuesText} - mantenha-se fiel a eles sempre` : ''}
+INSTRUÇÕES DE RESPOSTA (SIGA RIGOROSAMENTE):
+1. ${getVerbosityInstruction(person.verbosity)}
+2. ${getTalkingStyleInstruction(person.talkingStyle)}
+3. Use as frases características "${phrasesText}" ocasionalmente de forma natural
+4. Demonstre que você lembra das experiências vividas juntos
+5. Seja específico e pessoal baseado nas memórias
+6. Mantenha o tom emocional "${person.emotionalTone || 'caloroso'}"
+${valuesText ? `7. IMPORTANTE: Seus valores são ${valuesText} - mantenha-se fiel a eles sempre` : ''}
 
 Agora responda como ${person.name}:`;
   };
