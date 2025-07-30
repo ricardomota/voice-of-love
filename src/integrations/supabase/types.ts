@@ -213,6 +213,7 @@ export type Database = {
           common_phrases: string[] | null
           created_at: string
           emotional_tone: string | null
+          how_they_called_you: string | null
           humor_style: string | null
           id: string
           last_conversation: string | null
@@ -234,6 +235,7 @@ export type Database = {
           common_phrases?: string[] | null
           created_at?: string
           emotional_tone?: string | null
+          how_they_called_you?: string | null
           humor_style?: string | null
           id?: string
           last_conversation?: string | null
@@ -255,6 +257,7 @@ export type Database = {
           common_phrases?: string[] | null
           created_at?: string
           emotional_tone?: string | null
+          how_they_called_you?: string | null
           humor_style?: string | null
           id?: string
           last_conversation?: string | null
