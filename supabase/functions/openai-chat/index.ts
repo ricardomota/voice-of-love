@@ -34,7 +34,10 @@ serve(async (req) => {
           ...messages
         ],
         temperature: temperature,
-        max_tokens: 150,
+        max_tokens: 200,
+        frequency_penalty: 0.6,
+        presence_penalty: 0.4,
+        top_p: 0.9,
       }),
     });
 
