@@ -115,6 +115,47 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
     }
   };
 
+  // Nova função para analisar idade e determinar calibrações
+  const getAgeBasedCalibration = (birthYear?: number) => {
+    if (!birthYear) return { generationContext: '', speechPatterns: '', cognitiveStyle: '' };
+    
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - birthYear;
+    
+    let generationContext = '';
+    let speechPatterns = '';
+    let cognitiveStyle = '';
+    
+    if (age >= 85) {
+      // Nasceu antes de 1940 - Geração Silenciosa
+      generationContext = 'Viveu grandes transformações históricas, valoriza tradições, experiências de guerra ou pós-guerra.';
+      speechPatterns = 'Linguagem mais formal, expressões da época, pode usar termos antigos e regionalismos.';
+      cognitiveStyle = 'Sabedoria profunda, paciência, valoriza experiências vividas, memórias detalhadas de tempos passados.';
+    } else if (age >= 60) {
+      // 1940-1965 - Baby Boomers
+      generationContext = 'Viveu a época de ouro da TV, música clássica brasileira, grandes mudanças sociais.';
+      speechPatterns = 'Mistura de formalidade com informalidade, referências culturais dos anos 60-80.';
+      cognitiveStyle = 'Equilibra tradição e modernidade, tem experiência de vida rica, gosta de contar histórias.';
+    } else if (age >= 40) {
+      // 1965-1985 - Geração X
+      generationContext = 'Cresceu com TV, início da internet, música dos anos 80-90, transição analógico-digital.';
+      speechPatterns = 'Linguagem mais direta, referências pop dos anos 80-90, início de gírias modernas.';
+      cognitiveStyle = 'Pragmático, adaptável a mudanças, equilibra nostalgia com praticidade.';
+    } else if (age >= 25) {
+      // 1985-2000 - Millennials
+      generationContext = 'Era digital, internet, redes sociais, globalização, crises econômicas.';
+      speechPatterns = 'Linguagem moderna, gírias atuais, referências da internet e cultura pop.';
+      cognitiveStyle = 'Conectado, multitarefas, valoriza eficiência e autenticidade.';
+    } else {
+      // 2000+ - Geração Z
+      generationContext = 'Nativo digital, redes sociais, cultura de memes, sustentabilidade.';
+      speechPatterns = 'Linguagem muito informal, gírias de internet, expressões jovens.';
+      cognitiveStyle = 'Rápido, visual, direct, usa muito humor e ironia.';
+    }
+    
+    return { generationContext, speechPatterns, cognitiveStyle };
+  };
+
   const generatePersonalizedPrompt = () => {
     // Usar pessoa atualizada se disponível
     const currentPerson = updatedPerson;
@@ -140,6 +181,11 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
 
     const howTheyCalledYou = currentPerson.howTheyCalledYou || 'você';
 
+    // Análise inteligente da idade
+    const ageCalibration = getAgeBasedCalibration(currentPerson.birthYear);
+    const currentYear = new Date().getFullYear();
+    const approximateAge = currentPerson.birthYear ? currentYear - currentPerson.birthYear : null;
+
     // Pegar últimas 6 mensagens para contexto
     const recentMessages = messages.slice(-6).map(m => 
       `${m.isUser ? 'Usuário' : currentPerson.name}: ${m.content}`
@@ -149,12 +195,18 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
 
 PERSONALIDADE ÚNICA:
 - Nome: ${currentPerson.name} | Relacionamento: ${currentPerson.relationship}
+${approximateAge ? `- Idade aproximada: ${approximateAge} anos` : ''}
 - Personalidade: ${personalityText}
 - Como chama o usuário: ${howTheyCalledYou}
 - Estilo: ${currentPerson.talkingStyle || 'natural'} | Tom: ${currentPerson.emotionalTone || 'amigável'}
 - Verbosidade: ${currentPerson.verbosity || 'equilibrada'}
 ${valuesText ? `- Valores: ${valuesText}` : ''}
 ${topicsText ? `- Assuntos favoritos: ${topicsText}` : ''}
+
+${approximateAge ? `CALIBRAÇÃO POR IDADE (${approximateAge} anos):
+- CONTEXTO GERACIONAL: ${ageCalibration.generationContext}
+- PADRÕES DE FALA: ${ageCalibration.speechPatterns}
+- ESTILO COGNITIVO: ${ageCalibration.cognitiveStyle}` : ''}
 
 MEMÓRIAS COMPARTILHADAS:
 ${memoriesText}
@@ -164,14 +216,15 @@ ${recentMessages.length > 0 ? `CONTEXTO DA CONVERSA ATUAL:\n${recentMessages}\n`
 REGRAS CRÍTICAS:
 1. ${getVerbosityInstruction(currentPerson.verbosity)}
 2. VARIE suas respostas - NUNCA repita frases ou estruturas
-3. Seja espontâneo e natural, como uma pessoa real
+3. Seja espontâneo e natural, como uma pessoa real da sua época
 4. Use "${howTheyCalledYou}" para se dirigir ao usuário
 5. ${getTalkingStyleInstruction(currentPerson.talkingStyle)}
 6. Baseie-se nas memórias para criar conexão emocional
 7. Responda de forma única a cada mensagem
-${phrasesText ? `8. Use ocasionalmente: ${phrasesText}` : ''}
+${approximateAge ? `8. ADAPTE sua linguagem e referências à sua idade (${approximateAge} anos)` : ''}
+${phrasesText ? `9. Use ocasionalmente: ${phrasesText}` : ''}
 
-Responda como ${currentPerson.name} de forma ÚNICA e NATURAL:`;
+Responda como ${currentPerson.name} de forma ÚNICA e NATURAL, considerando sua idade e época de vida:`;
   };
 
   const handleSendMessage = async (content: string) => {
