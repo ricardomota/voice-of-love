@@ -13,7 +13,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { VoiceRecordingStep } from '@/components/VoiceRecordingStep';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
+import { X, Upload, User } from 'lucide-react';
+import { ProgressBar } from './ProgressBar';
 
 interface PersonFormProps {
   person?: Person;
@@ -86,8 +87,10 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   const currentGender = getGender(formData.relationship);
   const pronouns = getPronouns(currentGender);
 
+  const totalSteps = 15; // Aumentamos para 15 passos (incluindo foto)
+
   const handleNext = () => {
-    if (currentStep < 14) {
+    if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -159,6 +162,65 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 2:
         return (
           <FormStep
+            title="Adicione uma foto (opcional)"
+            subtitle="Uma foto ajuda a personalizar ainda mais a experiência"
+            onNext={handleNext}
+            onBack={handleBack}
+            canNext={canProceed(currentStep)}
+          >
+            <div className="space-y-6 text-center">
+              <div className="mx-auto w-32 h-32 rounded-full border-2 border-dashed border-border bg-muted/20 flex items-center justify-center overflow-hidden">
+                {formData.avatar ? (
+                  <img 
+                    src={formData.avatar} 
+                    alt="Avatar" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User className="w-12 h-12 text-muted-foreground" />
+                )}
+              </div>
+              
+              <div className="space-y-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const url = URL.createObjectURL(file);
+                      updateFormData({ avatar: url });
+                    }
+                  }}
+                  className="hidden"
+                  id="avatar-upload"
+                />
+                <Button 
+                  variant="outline" 
+                  onClick={() => document.getElementById('avatar-upload')?.click()}
+                  className="flex items-center gap-2"
+                >
+                  <Upload className="w-4 h-4" />
+                  {formData.avatar ? 'Alterar foto' : 'Adicionar foto'}
+                </Button>
+                
+                {formData.avatar && (
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => updateFormData({ avatar: '' })}
+                    className="text-muted-foreground"
+                  >
+                    Remover foto
+                  </Button>
+                )}
+              </div>
+            </div>
+          </FormStep>
+        );
+
+      case 3:
+        return (
+          <FormStep
             title="Qual era a relação de vocês?"
             subtitle="Descreva como vocês se conheciam"
             onNext={handleNext}
@@ -174,7 +236,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 3:
+      case 4:
         return (
           <FormStep
             title={`Como ${pronouns.subject} te chamava?`}
@@ -192,7 +254,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 4:
+      case 5:
         return (
           <FormStep
             title="Compartilhe algumas memórias"
@@ -256,7 +318,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 5:
+      case 6:
         return (
           <FormStep
             title={`Como era ${pronouns.article} personalidade ${pronouns.possessive}?`}
@@ -277,7 +339,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 6:
+      case 7:
         return (
           <FormStep
             title={`Como ${pronouns.subject} costumava falar?`}
@@ -301,7 +363,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 7:
+      case 8:
         return (
           <FormStep
             title={`Que tipo de humor ${pronouns.subject} tinha?`}
@@ -325,7 +387,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 8:
+      case 9:
         return (
           <FormStep
             title={`Qual era o tom emocional ${pronouns.possessive}?`}
@@ -349,7 +411,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 9:
+      case 10:
         return (
           <FormStep
             title={`Como ${pronouns.subject} respondia às perguntas?`}
@@ -372,7 +434,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 10:
+      case 11:
         return (
           <FormStep
             title={`Quais valores eram importantes para ${pronouns.object}?`}
@@ -393,7 +455,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 11:
+      case 12:
         return (
           <FormStep
             title={`Sobre o que ${pronouns.subject} mais gostava de conversar?`}
@@ -414,7 +476,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 12:
+      case 13:
         return (
           <FormStep
             title="Criatividade das respostas"
@@ -449,7 +511,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 13:
+      case 14:
         return (
           <FormStep
             title="Gravação de voz (opcional)"
@@ -467,7 +529,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 14:
+      case 15:
         return (
           <FormStep
             title="Frases características"
@@ -498,6 +560,13 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   return (
     <div className="min-h-screen bg-gradient-warm p-4">
       <div className="max-w-4xl mx-auto py-8">
+        <div className="mb-8">
+          <ProgressBar 
+            currentStep={currentStep} 
+            totalSteps={totalSteps}
+            className="mb-6"
+          />
+        </div>
         {renderStep()}
       </div>
     </div>
