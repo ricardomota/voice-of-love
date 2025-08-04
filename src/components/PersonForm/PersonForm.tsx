@@ -27,6 +27,65 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   const { canProceed, isFormValid } = useFormValidation(formData);
   const { toast } = useToast();
 
+  // Função para determinar o gênero baseado no relacionamento
+  const getGender = (relationship: string): 'male' | 'female' | 'neutral' => {
+    const masculineRelationships = [
+      'pai', 'papai', 'paizinho', 'padrasto', 'vovô', 'avô', 'vovozinho', 
+      'irmão', 'irmãozinho', 'meio-irmão', 'marido', 'esposo', 'namorado', 
+      'noivo', 'filho', 'filhinho', 'enteado', 'neto', 'netinho', 'tio', 
+      'tiozinho', 'padrinho', 'primo', 'priminho', 'cunhado', 'sogro', 
+      'genro', 'bisavô', 'sobrinho', 'afilhado'
+    ];
+    
+    const femininRelationships = [
+      'mãe', 'mamãe', 'mãezinha', 'madrasta', 'vovó', 'avó', 'vovozinha',
+      'irmã', 'irmãzinha', 'meia-irmã', 'esposa', 'mulher', 'namorada',
+      'noiva', 'filha', 'filhinha', 'enteada', 'neta', 'netinha', 'tia',
+      'tiazinha', 'madrinha', 'prima', 'priminha', 'cunhada', 'sogra',
+      'nora', 'bisavó', 'sobrinha', 'afilhada'
+    ];
+
+    const lowerRelationship = relationship.toLowerCase();
+    
+    if (masculineRelationships.some(rel => lowerRelationship.includes(rel))) {
+      return 'male';
+    }
+    if (femininRelationships.some(rel => lowerRelationship.includes(rel))) {
+      return 'female';
+    }
+    return 'neutral';
+  };
+
+  // Função para obter pronomes baseados no gênero
+  const getPronouns = (gender: 'male' | 'female' | 'neutral') => {
+    switch (gender) {
+      case 'male':
+        return {
+          subject: 'ele',
+          object: 'ele',
+          possessive: 'dele',
+          article: 'o'
+        };
+      case 'female':
+        return {
+          subject: 'ela',
+          object: 'ela', 
+          possessive: 'dela',
+          article: 'a'
+        };
+      default:
+        return {
+          subject: 'essa pessoa',
+          object: 'essa pessoa',
+          possessive: 'dessa pessoa',
+          article: 'a'
+        };
+    }
+  };
+
+  const currentGender = getGender(formData.relationship);
+  const pronouns = getPronouns(currentGender);
+
   const handleNext = () => {
     if (currentStep < 14) {
       setCurrentStep(currentStep + 1);
@@ -118,7 +177,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 3:
         return (
           <FormStep
-            title="Como ela te chamava?"
+            title={`Como ${pronouns.subject} te chamava?`}
             subtitle="Esse campo é opcional, mas pode tornar a conversa mais pessoal"
             onNext={handleNext}
             onBack={handleBack}
@@ -200,7 +259,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 5:
         return (
           <FormStep
-            title="Como era a personalidade dela?"
+            title={`Como era ${pronouns.article} personalidade ${pronouns.possessive}?`}
             subtitle="Descreva os traços de personalidade mais marcantes"
             onNext={handleNext}
             onBack={handleBack}
@@ -211,7 +270,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
               onAdd={() => addField('personality')}
               onRemove={(index) => removeField('personality', index)}
               onUpdate={(index, value) => updateField('personality', index, value)}
-              placeholder="Ex: carinhosa, engraçada, determinada..."
+              placeholder="Ex: carinhoso(a), engraçado(a), determinado(a)..."
               label="Traços de personalidade"
               addText="Adicionar traço"
             />
@@ -221,8 +280,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 6:
         return (
           <FormStep
-            title="Como ela costumava falar?"
-            subtitle="Descreva o estilo de comunicação dela"
+            title={`Como ${pronouns.subject} costumava falar?`}
+            subtitle={`Descreva o estilo de comunicação ${pronouns.possessive}`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -245,8 +304,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 7:
         return (
           <FormStep
-            title="Que tipo de humor ela tinha?"
-            subtitle="Como ela demonstrava seu senso de humor?"
+            title={`Que tipo de humor ${pronouns.subject} tinha?`}
+            subtitle={`Como ${pronouns.subject} demonstrava seu senso de humor?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -269,8 +328,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 8:
         return (
           <FormStep
-            title="Qual era o tom emocional dela?"
-            subtitle="Como ela expressava suas emoções?"
+            title={`Qual era o tom emocional ${pronouns.possessive}?`}
+            subtitle={`Como ${pronouns.subject} expressava suas emoções?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -293,8 +352,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 9:
         return (
           <FormStep
-            title="Como ela respondia às perguntas?"
-            subtitle="Ela era mais concisa ou detalhada?"
+            title={`Como ${pronouns.subject} respondia às perguntas?`}
+            subtitle={`${pronouns.subject === 'ele' ? 'Ele' : pronouns.subject === 'ela' ? 'Ela' : 'Essa pessoa'} era mais concis${currentGender === 'male' ? 'o' : 'a'} ou detalhand${currentGender === 'male' ? 'o' : 'a'}?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -304,8 +363,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                 <SelectValue placeholder="Selecione o estilo de resposta..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="concise">Concisa e direta</SelectItem>
-                <SelectItem value="detailed">Detalhada e explicativa</SelectItem>
+                <SelectItem value="concise">Concis{currentGender === 'male' ? 'o' : 'a'} e diret{currentGender === 'male' ? 'o' : 'a'}</SelectItem>
+                <SelectItem value="detailed">Detalhand{currentGender === 'male' ? 'o' : 'a'} e explicativ{currentGender === 'male' ? 'o' : 'a'}</SelectItem>
                 <SelectItem value="storytelling">Gostava de contar histórias completas</SelectItem>
                 <SelectItem value="variable">Variava conforme o assunto</SelectItem>
               </SelectContent>
@@ -316,8 +375,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 10:
         return (
           <FormStep
-            title="Quais valores eram importantes para ela?"
-            subtitle="O que ela mais valorizava na vida?"
+            title={`Quais valores eram importantes para ${pronouns.object}?`}
+            subtitle={`O que ${pronouns.subject} mais valorizava na vida?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -337,8 +396,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 11:
         return (
           <FormStep
-            title="Sobre o que ela mais gostava de conversar?"
-            subtitle="Quais eram os assuntos favoritos dela?"
+            title={`Sobre o que ${pronouns.subject} mais gostava de conversar?`}
+            subtitle={`Quais eram os assuntos favoritos ${pronouns.possessive}?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -359,7 +418,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
         return (
           <FormStep
             title="Criatividade das respostas"
-            subtitle="Quão criativa e imprevisível você gostaria que ela fosse?"
+            subtitle={`Quão criativ${currentGender === 'male' ? 'o' : 'a'} e imprevisível você gostaria que ${pronouns.subject} fosse?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -394,7 +453,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
         return (
           <FormStep
             title="Gravação de voz (opcional)"
-            subtitle="Grave um áudio para que possamos capturar melhor a essência da voz dela"
+            subtitle={`Grave um áudio para que possamos capturar melhor a essência da voz ${pronouns.possessive}`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -412,7 +471,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
         return (
           <FormStep
             title="Frases características"
-            subtitle="Quais eram as expressões ou frases que ela mais usava?"
+            subtitle={`Quais eram as expressões ou frases que ${pronouns.subject} mais usava?`}
             onNext={isFormValid ? handleSave : undefined}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
