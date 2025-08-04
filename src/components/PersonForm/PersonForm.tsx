@@ -182,7 +182,9 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       lastConversation: person?.lastConversation
     };
 
+    // Chama onSave que vai automaticamente para o fluxo correto (create ou update)
     onSave(personData);
+    
     toast({
       title: "✨ Pessoa salva!",
       description: "Você pode continuar editando depois a qualquer momento.",
