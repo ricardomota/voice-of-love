@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Lock, Unlock } from "lucide-react";
 import { ArrowBack, CloudUpload, Close, Description, Add, Delete, Edit } from "@mui/icons-material";
 import { Person, Memory } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
@@ -35,6 +36,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
   });
   const [uploading, setUploading] = useState(false);
   const [deletedMemoryIds, setDeletedMemoryIds] = useState<string[]>([]);
+  const [editingMemoryIds, setEditingMemoryIds] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   const addMemory = () => {
@@ -68,6 +70,18 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
     setMemories(prev => prev.map(memory => 
       memory.id === id ? { ...memory, file } : memory
     ));
+  };
+
+  const toggleEditMode = (id: string) => {
+    setEditingMemoryIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
   };
 
   const handleFileSelect = (id: string, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,6 +313,63 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
             
              return (
                <Card key={memory.id} className={`relative ${isExistingMemory ? 'bg-blue/5 border-blue/20' : ''}`}>
+                 {/* Lock Overlay for Existing Memories */}
+                 {isExistingMemory && !editingMemoryIds.has(memory.id) && (
+                   <div className="absolute inset-0 bg-black/5 backdrop-blur-[1px] rounded-lg z-10 flex items-center justify-center">
+                     <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50">
+                       <div className="flex flex-col items-center gap-4">
+                         <div className="p-3 bg-amber-100 rounded-full">
+                           <Lock className="w-6 h-6 text-amber-600" />
+                         </div>
+                         <div className="text-center">
+                           <h3 className="font-medium text-foreground mb-2">Memória Protegida</h3>
+                           <p className="text-sm text-muted-foreground mb-4">Esta é uma memória existente</p>
+                           <div className="flex gap-2">
+                             <Button
+                               variant="outline"
+                               size="sm"
+                               onClick={() => toggleEditMode(memory.id)}
+                               className="flex items-center gap-2"
+                             >
+                               <Edit className="w-4 h-4" />
+                               Editar
+                             </Button>
+                             <AlertDialog>
+                               <AlertDialogTrigger asChild>
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+                                   className="flex items-center gap-2 text-destructive hover:text-destructive"
+                                 >
+                                   <Delete className="w-4 h-4" />
+                                   Remover
+                                 </Button>
+                               </AlertDialogTrigger>
+                               <AlertDialogContent>
+                                 <AlertDialogHeader>
+                                   <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                                   <AlertDialogDescription>
+                                     Tem certeza que deseja excluir esta memória existente? Esta ação não pode ser desfeita.
+                                   </AlertDialogDescription>
+                                 </AlertDialogHeader>
+                                 <AlertDialogFooter>
+                                   <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                   <AlertDialogAction 
+                                     onClick={() => removeMemory(memory.id)}
+                                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                   >
+                                     Excluir
+                                   </AlertDialogAction>
+                                 </AlertDialogFooter>
+                               </AlertDialogContent>
+                             </AlertDialog>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 )}
+
                  <CardHeader className="pb-4">
                    <div className="flex items-center justify-between">
                      <div className="flex items-center gap-2">
@@ -310,50 +381,28 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                            Existente
                          </span>
                        )}
+                       {isExistingMemory && editingMemoryIds.has(memory.id) && (
+                         <Button
+                           variant="ghost"
+                           size="sm"
+                           onClick={() => toggleEditMode(memory.id)}
+                           className="flex items-center gap-1 text-amber-600 hover:bg-amber-50"
+                         >
+                           <Unlock className="w-4 h-4" />
+                           Desbloqueado
+                         </Button>
+                       )}
                      </div>
-                      {memories.length > 1 && (
-                        <>
-                          {isExistingMemory ? (
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="hover:bg-destructive/20 text-destructive rounded-full"
-                                >
-                                  <Delete className="w-4 h-4" />
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Tem certeza que deseja excluir esta memória existente? Esta ação não pode ser desfeita.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                  <AlertDialogAction 
-                                    onClick={() => removeMemory(memory.id)}
-                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                  >
-                                    Excluir
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          ) : (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => removeMemory(memory.id)}
-                              className="hover:bg-destructive/20 text-destructive rounded-full"
-                            >
-                              <Delete className="w-4 h-4" />
-                            </Button>
-                          )}
-                        </>
-                      )}
+                     {memories.length > 1 && !isExistingMemory && (
+                       <Button
+                         variant="ghost"
+                         size="icon"
+                         onClick={() => removeMemory(memory.id)}
+                         className="hover:bg-destructive/20 text-destructive rounded-full"
+                       >
+                         <Delete className="w-4 h-4" />
+                       </Button>
+                     )}
                    </div>
                  </CardHeader>
                 <CardContent className="space-y-4">
@@ -367,44 +416,47 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                        onChange={(e) => updateMemoryText(memory.id, e.target.value)}
                        placeholder={isExistingMemory ? "Edite esta memória existente" : "Conte uma memória especial, um momento marcante, uma história..."}
                        className="min-h-24 resize-none"
+                       readOnly={isExistingMemory && !editingMemoryIds.has(memory.id)}
                      />
                   </div>
 
-                  {/* File Upload */}
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Arquivo (Opcional)
-                    </label>
-                    
-                    {!memory.file ? (
-                      <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-accent/50 transition-colors">
-                        <CloudUpload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Adicione uma foto, vídeo ou áudio
-                        </p>
-                        <input
-                          type="file"
-                          accept="image/*,video/*,audio/*"
-                          onChange={(e) => handleFileSelect(memory.id, e)}
-                          className="hidden"
-                          id={`file-upload-${memory.id}`}
-                        />
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => document.getElementById(`file-upload-${memory.id}`)?.click()}
-                        >
-                          <CloudUpload className="w-4 h-4 mr-2" />
-                          Selecionar
-                        </Button>
-                        <p className="text-xs text-muted-foreground mt-2">
-                          Máximo 10MB
-                        </p>
-                      </div>
-                    ) : (
-                      renderFilePreview(memory)
-                    )}
-                  </div>
+                  {/* File Upload - only for new memories or editing existing ones */}
+                  {(!isExistingMemory || editingMemoryIds.has(memory.id)) && (
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-2 block">
+                        Arquivo (Opcional)
+                      </label>
+                      
+                      {!memory.file ? (
+                        <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-accent/50 transition-colors">
+                          <CloudUpload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Adicione uma foto, vídeo ou áudio
+                          </p>
+                          <input
+                            type="file"
+                            accept="image/*,video/*,audio/*"
+                            onChange={(e) => handleFileSelect(memory.id, e)}
+                            className="hidden"
+                            id={`file-upload-${memory.id}`}
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => document.getElementById(`file-upload-${memory.id}`)?.click()}
+                          >
+                            <CloudUpload className="w-4 h-4 mr-2" />
+                            Selecionar
+                          </Button>
+                          <p className="text-xs text-muted-foreground mt-2">
+                            Máximo 10MB
+                          </p>
+                        </div>
+                      ) : (
+                        renderFilePreview(memory)
+                      )}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );
