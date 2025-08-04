@@ -313,9 +313,9 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
             
              return (
                <Card key={memory.id} className={`relative ${isExistingMemory ? 'bg-blue/5 border-blue/20' : ''}`}>
-                 {/* Lock Overlay for Existing Memories */}
-                 {isExistingMemory && !editingMemoryIds.has(memory.id) && (
-                   <div className="absolute inset-0 bg-black/5 backdrop-blur-[1px] rounded-lg z-10 flex items-center justify-center">
+                  {/* Lock Overlay for Existing Memories */}
+                  {isExistingMemory && !editingMemoryIds.has(memory.id) && (
+                    <div className="absolute inset-0 bg-white/30 backdrop-blur-[0.5px] rounded-lg z-10 flex items-center justify-center">
                      <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50">
                        <div className="flex flex-col items-center gap-4">
                          <div className="p-3 bg-amber-100 rounded-full">
