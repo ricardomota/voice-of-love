@@ -102,6 +102,9 @@ const Index = () => {
       // Update local state with new memories and updated timestamp
       addMemoriesToPerson(selectedPersonId, savedMemories);
 
+      // Reload all people data to get the most up-to-date information
+      await loadPeople();
+
       // Show success toast
       toast({
         title: "Sucesso",
@@ -117,7 +120,7 @@ const Index = () => {
       console.error('Error saving memories:', error);
       throw error;
     }
-  }, [selectedPersonId, addMemoriesToPerson, toast, goToDashboard]);
+  }, [selectedPersonId, addMemoriesToPerson, loadPeople, toast, goToDashboard]);
 
   const selectedPerson = people.find(p => p.id === selectedPersonId) || null;
 

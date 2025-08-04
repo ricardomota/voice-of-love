@@ -33,6 +33,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
     ];
   });
   const [uploading, setUploading] = useState(false);
+  const [deletedMemoryIds, setDeletedMemoryIds] = useState<string[]>([]);
   const { toast } = useToast();
 
   const addMemory = () => {
@@ -43,21 +44,23 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
   };
 
   const removeMemory = (id: string) => {
-    // Don't allow removing existing memories, only new ones
     const existingMemoryIds = new Set(person.memories.map(m => m.id));
-    if (!existingMemoryIds.has(id) && memories.length > 1) {
+    
+    if (existingMemoryIds.has(id)) {
+      // For existing memories, just mark as deleted
+      setDeletedMemoryIds(prev => [...prev, id]);
+      setMemories(prev => prev.filter(memory => memory.id !== id));
+    } else if (memories.length > 1) {
+      // For new memories, just remove from array
       setMemories(prev => prev.filter(memory => memory.id !== id));
     }
   };
 
   const updateMemoryText = (id: string, text: string) => {
-    // Don't allow editing existing memories, only new ones
-    const existingMemoryIds = new Set(person.memories.map(m => m.id));
-    if (!existingMemoryIds.has(id)) {
-      setMemories(prev => prev.map(memory => 
-        memory.id === id ? { ...memory, text } : memory
-      ));
-    }
+    // Now allow editing both existing and new memories
+    setMemories(prev => prev.map(memory => 
+      memory.id === id ? { ...memory, text } : memory
+    ));
   };
 
   const updateMemoryFile = (id: string, file: File | null) => {
@@ -107,16 +110,21 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
   };
 
   const handleSave = async () => {
-    // Only save new memories (ones that don't exist in person.memories)
     const existingMemoryIds = new Set(person.memories.map(m => m.id));
+    
+    // Separate new memories from edited existing ones
     const newMemories = memories.filter(memory => 
       !existingMemoryIds.has(memory.id) && (memory.text.trim() || memory.file)
     );
+    
+    const editedMemories = memories.filter(memory => 
+      existingMemoryIds.has(memory.id) && memory.text.trim()
+    );
 
-    if (newMemories.length === 0) {
+    if (newMemories.length === 0 && editedMemories.length === 0 && deletedMemoryIds.length === 0) {
       toast({
-        title: "Nenhuma memória nova",
-        description: "Adicione pelo menos uma nova memória com texto ou arquivo",
+        title: "Nenhuma alteração",
+        description: "Faça pelo menos uma alteração para salvar",
         variant: "destructive"
       });
       return;
@@ -124,6 +132,22 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
 
     setUploading(true);
     try {
+      const { memoriesService } = await import("@/services/memoriesService");
+      
+      // Process deletions first
+      for (const deletedId of deletedMemoryIds) {
+        await memoriesService.deleteMemory(deletedId);
+      }
+
+      // Process edits
+      for (const editedMemory of editedMemories) {
+        await memoriesService.updateMemory(editedMemory.id, {
+          text: editedMemory.text.trim(),
+          // Note: We're not handling file updates for existing memories yet
+        });
+      }
+
+      // Process new memories
       const memoriesToSave: Omit<Memory, 'id'>[] = newMemories.map(memory => ({
         text: memory.text.trim(),
         mediaUrl: memory.file ? URL.createObjectURL(memory.file) : undefined,
@@ -131,19 +155,29 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
         fileName: memory.file?.name
       }));
 
-      await onSave(memoriesToSave);
+      if (memoriesToSave.length > 0) {
+        await Promise.all(
+          memoriesToSave.map(memory => memoriesService.createMemory(person.id, memory))
+        );
+      }
+
+      const totalChanges = deletedMemoryIds.length + editedMemories.length + newMemories.length;
       
       toast({
-        title: "Memórias adicionadas!",
-        description: `${newMemories.length} memórias adicionadas para ${person.name}`,
+        title: "Memórias atualizadas!",
+        description: `${totalChanges} alterações salvas para ${person.name}`,
       });
+
+      // Reload the person data to reflect changes
+      setTimeout(() => {
+        onBack();
+      }, 1000);
       
-      // Navigation is now handled by the parent component
     } catch (error) {
       console.error('Error saving memories:', error);
       toast({
         title: "Erro",
-        description: "Não foi possível salvar as memórias",
+        description: "Não foi possível salvar as alterações",
         variant: "destructive"
       });
     } finally {
@@ -246,12 +280,12 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                 <ArrowBack className="w-5 h-5 mr-2" />
                 Voltar
               </Button>
-              <h1 className="text-3xl font-light text-foreground mb-2">
-                Adicionar Memória
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                Para {person.name}
-              </p>
+               <h1 className="text-3xl font-light text-foreground mb-2">
+                 Gerenciar Memórias
+               </h1>
+               <p className="text-muted-foreground text-lg">
+                 Para {person.name} • Edite, adicione ou remova memórias
+               </p>
             </div>
           </div>
         </div>
@@ -262,84 +296,81 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
             const existingMemoryIds = new Set(person.memories.map(m => m.id));
             const isExistingMemory = existingMemoryIds.has(memory.id);
             
-            return (
-              <Card key={memory.id} className={`relative ${isExistingMemory ? 'bg-muted/30 border-muted' : ''}`}>
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <CardTitle className="text-lg">
-                        Memória {index + 1}
-                      </CardTitle>
-                      {isExistingMemory && (
-                        <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-full">
-                          Existente
-                        </span>
-                      )}
-                    </div>
-                    {memories.length > 1 && !isExistingMemory && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removeMemory(memory.id)}
-                        className="hover:bg-destructive/20 text-destructive rounded-full"
-                      >
-                        <Delete className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                </CardHeader>
+             return (
+               <Card key={memory.id} className={`relative ${isExistingMemory ? 'bg-blue/5 border-blue/20' : ''}`}>
+                 <CardHeader className="pb-4">
+                   <div className="flex items-center justify-between">
+                     <div className="flex items-center gap-2">
+                       <CardTitle className="text-lg">
+                         Memória {index + 1}
+                       </CardTitle>
+                       {isExistingMemory && (
+                         <span className="text-xs bg-blue/10 text-blue-600 px-2 py-1 rounded-full">
+                           Existente
+                         </span>
+                       )}
+                     </div>
+                     {memories.length > 1 && (
+                       <Button
+                         variant="ghost"
+                         size="icon"
+                         onClick={() => removeMemory(memory.id)}
+                         className="hover:bg-destructive/20 text-destructive rounded-full"
+                       >
+                         <Delete className="w-4 h-4" />
+                       </Button>
+                     )}
+                   </div>
+                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Text Area */}
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Descrição da Memória
                     </label>
-                    <TextareaWithVoice
-                      value={memory.text}
-                      onChange={(e) => updateMemoryText(memory.id, e.target.value)}
-                      placeholder={isExistingMemory ? "Esta memória já está salva" : "Conte uma memória especial, um momento marcante, uma história..."}
-                      className={`min-h-24 resize-none ${isExistingMemory ? 'bg-muted/50 cursor-not-allowed' : ''}`}
-                      disabled={isExistingMemory}
-                    />
+                     <TextareaWithVoice
+                       value={memory.text}
+                       onChange={(e) => updateMemoryText(memory.id, e.target.value)}
+                       placeholder={isExistingMemory ? "Edite esta memória existente" : "Conte uma memória especial, um momento marcante, uma história..."}
+                       className="min-h-24 resize-none"
+                     />
                   </div>
 
-                  {/* File Upload - only for new memories */}
-                  {!isExistingMemory && (
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 block">
-                        Arquivo (Opcional)
-                      </label>
-                      
-                      {!memory.file ? (
-                        <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-accent/50 transition-colors">
-                          <CloudUpload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                          <p className="text-sm text-muted-foreground mb-3">
-                            Adicione uma foto, vídeo ou áudio
-                          </p>
-                          <input
-                            type="file"
-                            accept="image/*,video/*,audio/*"
-                            onChange={(e) => handleFileSelect(memory.id, e)}
-                            className="hidden"
-                            id={`file-upload-${memory.id}`}
-                          />
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => document.getElementById(`file-upload-${memory.id}`)?.click()}
-                          >
-                            <CloudUpload className="w-4 h-4 mr-2" />
-                            Selecionar
-                          </Button>
-                          <p className="text-xs text-muted-foreground mt-2">
-                            Máximo 10MB
-                          </p>
-                        </div>
-                      ) : (
-                        renderFilePreview(memory)
-                      )}
-                    </div>
-                  )}
+                  {/* File Upload */}
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">
+                      Arquivo (Opcional)
+                    </label>
+                    
+                    {!memory.file ? (
+                      <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-accent/50 transition-colors">
+                        <CloudUpload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Adicione uma foto, vídeo ou áudio
+                        </p>
+                        <input
+                          type="file"
+                          accept="image/*,video/*,audio/*"
+                          onChange={(e) => handleFileSelect(memory.id, e)}
+                          className="hidden"
+                          id={`file-upload-${memory.id}`}
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => document.getElementById(`file-upload-${memory.id}`)?.click()}
+                        >
+                          <CloudUpload className="w-4 h-4 mr-2" />
+                          Selecionar
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Máximo 10MB
+                        </p>
+                      </div>
+                    ) : (
+                      renderFilePreview(memory)
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             );
@@ -366,39 +397,55 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
           <Card>
             <CardContent className="p-6">
               <div className="flex justify-between items-center">
-                <div className="text-sm text-muted-foreground">
-                  {(() => {
-                    const existingMemoryIds = new Set(person.memories.map(m => m.id));
-                    const newValidMemories = memories.filter(m => 
-                      !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)
-                    ).length;
-                    return `${person.memories.length} memórias existentes • ${newValidMemories} novas memórias prontas`;
-                  })()}
-                </div>
-                <div className="flex space-x-4">
-                  <Button 
-                    variant="outline" 
-                    onClick={onBack}
-                    disabled={uploading}
-                  >
-                    Cancelar
-                  </Button>
-                  <Button 
-                    onClick={handleSave}
-                    disabled={uploading || (() => {
-                      const existingMemoryIds = new Set(person.memories.map(m => m.id));
-                      return memories.filter(m => !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)).length === 0;
-                    })()}
-                    className="min-w-32"
-                  >
-                    {uploading ? "Salvando..." : (() => {
-                      const existingMemoryIds = new Set(person.memories.map(m => m.id));
-                      const newValidMemories = memories.filter(m => 
-                        !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)
-                      ).length;
-                      return `Salvar ${newValidMemories} Novas Memórias`;
-                    })()}
-                  </Button>
+                 <div className="text-sm text-muted-foreground">
+                   {(() => {
+                     const existingMemoryIds = new Set(person.memories.map(m => m.id));
+                     const newValidMemories = memories.filter(m => 
+                       !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)
+                     ).length;
+                     const editedMemories = memories.filter(m => 
+                       existingMemoryIds.has(m.id) && m.text.trim()
+                     ).length;
+                     const totalChanges = newValidMemories + editedMemories + deletedMemoryIds.length;
+                     
+                     if (totalChanges === 0) {
+                       return `${person.memories.length - deletedMemoryIds.length} memórias • Nenhuma alteração pendente`;
+                     }
+                     
+                     const parts = [];
+                     if (newValidMemories > 0) parts.push(`${newValidMemories} novas`);
+                     if (editedMemories > 0) parts.push(`${editedMemories} editadas`);
+                     if (deletedMemoryIds.length > 0) parts.push(`${deletedMemoryIds.length} removidas`);
+                     
+                     return `${totalChanges} alterações: ${parts.join(', ')}`;
+                   })()}
+                 </div>
+                 <div className="flex space-x-4">
+                   <Button 
+                     variant="outline" 
+                     onClick={onBack}
+                     disabled={uploading}
+                   >
+                     Cancelar
+                   </Button>
+                   <Button 
+                     onClick={handleSave}
+                     disabled={uploading || (() => {
+                       const existingMemoryIds = new Set(person.memories.map(m => m.id));
+                       const newValidMemories = memories.filter(m => !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)).length;
+                       const editedMemories = memories.filter(m => existingMemoryIds.has(m.id) && m.text.trim()).length;
+                       return newValidMemories + editedMemories + deletedMemoryIds.length === 0;
+                     })()}
+                     className="min-w-32"
+                   >
+                     {uploading ? "Salvando..." : (() => {
+                       const existingMemoryIds = new Set(person.memories.map(m => m.id));
+                       const newValidMemories = memories.filter(m => !existingMemoryIds.has(m.id) && (m.text.trim() || m.file)).length;
+                       const editedMemories = memories.filter(m => existingMemoryIds.has(m.id) && m.text.trim()).length;
+                       const totalChanges = newValidMemories + editedMemories + deletedMemoryIds.length;
+                       return totalChanges > 0 ? `Salvar ${totalChanges} Alterações` : "Nenhuma Alteração";
+                     })()}
+                   </Button>
                 </div>
               </div>
             </CardContent>
