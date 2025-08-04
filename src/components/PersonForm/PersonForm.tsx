@@ -144,8 +144,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 1:
         return (
           <FormStep
-            title="Qual o nome desta pessoa?"
-            subtitle="Como você gostaria de se referir a ela?"
+            title="Vamos começar! Qual o nome desta pessoa especial? ✨"
+            subtitle="Como você gostaria de se referir a ela durante nossas conversas?"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -162,8 +162,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 2:
         return (
           <FormStep
-            title="Adicione uma foto (opcional)"
-            subtitle="Uma foto ajuda a personalizar ainda mais a experiência"
+            title="Uma foto vale mais que mil palavras! 📸"
+            subtitle="Adicione uma foto para dar vida à nossa conversa (pode pular se quiser!)"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -221,8 +221,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 3:
         return (
           <FormStep
-            title="Qual era a relação de vocês?"
-            subtitle="Descreva como vocês se conheciam"
+            title="Agora me conta: qual era a conexão especial de vocês? 💝"
+            subtitle="Essa parte é importante para eu entender como vocês se relacionavam"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -239,8 +239,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 4:
         return (
           <FormStep
-            title={`Como ${pronouns.subject} te chamava?`}
-            subtitle="Esse campo é opcional, mas pode tornar a conversa mais pessoal"
+            title={`Que carinhoso! Como ${pronouns.subject} costumava te chamar? 🥰`}
+            subtitle="Esses detalhes fazem toda diferença para criar uma conversa autêntica"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -257,8 +257,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 5:
         return (
           <FormStep
-            title="Compartilhe algumas memórias"
-            subtitle="Conte-nos sobre momentos especiais que vocês viveram juntos"
+            title="Hora das memórias! Vamos guardar esses momentos preciosos 💭"
+            subtitle="Compartilhe histórias que vocês viveram juntos - cada lembrança conta!"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -321,8 +321,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 6:
         return (
           <FormStep
-            title={`Como era ${pronouns.article} personalidade ${pronouns.possessive}?`}
-            subtitle="Descreva os traços de personalidade mais marcantes"
+            title={`Agora vamos falar da personalidade única ${pronouns.possessive}! 🌟`}
+            subtitle="O que fazia essa pessoa tão especial? Me conta os traços marcantes!"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -342,8 +342,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 7:
         return (
           <FormStep
-            title={`Como ${pronouns.subject} costumava falar?`}
-            subtitle={`Descreva o estilo de comunicação ${pronouns.possessive}`}
+            title={`Agora me conta: como era o jeitinho ${pronouns.possessive} de falar? 💬`}
+            subtitle={`Cada pessoa tem seu estilo único - me ajuda a entender como ${pronouns.subject} se comunicava`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -366,8 +366,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 8:
         return (
           <FormStep
-            title={`Que tipo de humor ${pronouns.subject} tinha?`}
-            subtitle={`Como ${pronouns.subject} demonstrava seu senso de humor?`}
+            title={`E o humor? ${pronouns.subject === 'ele' ? 'Ele' : pronouns.subject === 'ela' ? 'Ela' : 'Essa pessoa'} era do tipo brincalhão? 😄`}
+            subtitle={`O humor diz muito sobre uma pessoa - como ${pronouns.subject} gostava de brincar?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -479,8 +479,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 13:
         return (
           <FormStep
-            title="Criatividade das respostas"
-            subtitle={`Quão criativ${currentGender === 'male' ? 'o' : 'a'} e imprevisível você gostaria que ${pronouns.subject} fosse?`}
+            title="Vamos ajustar a criatividade! 🎨"
+            subtitle={`Que tal definir o quão criativ${currentGender === 'male' ? 'o' : 'a'} e espontâne${currentGender === 'male' ? 'o' : 'a'} você quer que ${pronouns.subject} seja nas respostas?`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -514,8 +514,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 14:
         return (
           <FormStep
-            title="Gravação de voz (opcional)"
-            subtitle={`Grave um áudio para que possamos capturar melhor a essência da voz ${pronouns.possessive}`}
+            title="Que tal capturar a voz ${pronouns.possessive}? 🎙️"
+            subtitle={`Esta parte é opcional, mas pode deixar tudo ainda mais autêntico! Grave um áudio da voz ${pronouns.possessive} se tiver`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
@@ -532,13 +532,13 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 15:
         return (
           <FormStep
-            title="Frases características"
-            subtitle={`Quais eram as expressões ou frases que ${pronouns.subject} mais usava?`}
+            title="Para finalizar: as frases marcantes! 💫"
+            subtitle={`Quais eram aquelas expressões ou frases que só ${pronouns.subject} falava? Essas que ficaram gravadas na sua memória?`}
             onNext={isFormValid ? handleSave : undefined}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
             isLast={true}
-            nextText={person ? "Atualizar Pessoa" : "Criar Pessoa"}
+            nextText={person ? "✨ Atualizar Pessoa" : "🎉 Criar Pessoa"}
           >
             <ArrayField
               values={formData.commonPhrases}
