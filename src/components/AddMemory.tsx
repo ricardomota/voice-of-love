@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
-import { ArrowBack, CloudUpload, Close, Description, Add, Delete } from "@mui/icons-material";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { ArrowBack, CloudUpload, Close, Description, Add, Delete, Edit } from "@mui/icons-material";
 import { Person, Memory } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
 
@@ -310,16 +311,49 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                          </span>
                        )}
                      </div>
-                     {memories.length > 1 && (
-                       <Button
-                         variant="ghost"
-                         size="icon"
-                         onClick={() => removeMemory(memory.id)}
-                         className="hover:bg-destructive/20 text-destructive rounded-full"
-                       >
-                         <Delete className="w-4 h-4" />
-                       </Button>
-                     )}
+                      {memories.length > 1 && (
+                        <>
+                          {isExistingMemory ? (
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="hover:bg-destructive/20 text-destructive rounded-full"
+                                >
+                                  <Delete className="w-4 h-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Tem certeza que deseja excluir esta memória existente? Esta ação não pode ser desfeita.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    onClick={() => removeMemory(memory.id)}
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  >
+                                    Excluir
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeMemory(memory.id)}
+                              className="hover:bg-destructive/20 text-destructive rounded-full"
+                            >
+                              <Delete className="w-4 h-4" />
+                            </Button>
+                          )}
+                        </>
+                      )}
                    </div>
                  </CardHeader>
                 <CardContent className="space-y-4">
