@@ -87,7 +87,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   const currentGender = getGender(formData.relationship);
   const pronouns = getPronouns(currentGender);
 
-  const totalSteps = 15; // Aumentamos para 15 passos (incluindo foto)
+  const totalSteps = 16; // Aumentamos para 16 passos (incluindo idade)
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -289,6 +289,24 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 4:
         return (
           <FormStep
+            title="Qual era a idade dessa pessoa especial? 🎂"
+            subtitle="Pode colocar o ano de nascimento ou idade aproximada - isso nos ajuda a entender melhor o contexto"
+            onNext={handleNext}
+            onBack={handleBack}
+            canNext={canProceed(currentStep)}
+          >
+            <Input
+              placeholder="Ex: 1950, 75 anos, aproximadamente 80..."
+              value={formData.birthYear}
+              onChange={(e) => updateFormData({ birthYear: e.target.value })}
+              className="text-lg h-14"
+            />
+          </FormStep>
+        );
+
+      case 5:
+        return (
+          <FormStep
             title={`Que carinhoso! Como ${pronouns.subject} costumava te chamar? 🥰`}
             subtitle="Esses detalhes fazem toda diferença para criar uma conversa autêntica"
             onNext={handleNext}
@@ -304,7 +322,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 5:
+      case 6:
         return (
           <FormStep
             title="Hora das memórias! Vamos guardar esses momentos preciosos 💭"
@@ -368,7 +386,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 6:
+      case 7:
         return (
           <FormStep
             title={`Agora vamos falar da personalidade única ${pronouns.possessive}! 🌟`}
@@ -389,7 +407,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 7:
+      case 8:
         return (
           <FormStep
             title={`Agora me conta: como era o jeitinho ${pronouns.possessive} de falar? 💬`}
@@ -413,7 +431,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 8:
+      case 9:
         return (
           <FormStep
             title={`E o humor? ${pronouns.subject === 'ele' ? 'Ele' : pronouns.subject === 'ela' ? 'Ela' : 'Essa pessoa'} era do tipo brincalhão? 😄`}
@@ -437,7 +455,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 9:
+      case 10:
         return (
           <FormStep
             title={`Qual era o tom emocional ${pronouns.possessive}?`}
@@ -461,7 +479,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 10:
+      case 11:
         return (
           <FormStep
             title={`Como ${pronouns.subject} respondia às perguntas?`}
@@ -484,7 +502,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 11:
+      case 12:
         return (
           <FormStep
             title={`Quais valores eram importantes para ${pronouns.object}?`}
@@ -505,7 +523,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 12:
+      case 13:
         return (
           <FormStep
             title={`Sobre o que ${pronouns.subject} mais gostava de conversar?`}
@@ -526,7 +544,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 13:
+      case 14:
         return (
           <FormStep
             title="Vamos ajustar a criatividade! 🎨"
@@ -561,7 +579,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 14:
+      case 15:
         return (
           <FormStep
             title="Que tal capturar a voz ${pronouns.possessive}? 🎙️"
@@ -579,7 +597,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           </FormStep>
         );
 
-      case 15:
+      case 16:
         return (
           <FormStep
             title="Para finalizar: as frases marcantes! 💫"
