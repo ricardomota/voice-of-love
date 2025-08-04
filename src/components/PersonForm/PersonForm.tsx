@@ -181,7 +181,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                 )}
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-4 flex flex-col items-center">
                 <input
                   type="file"
                   accept="image/*"
