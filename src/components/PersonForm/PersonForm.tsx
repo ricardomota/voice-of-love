@@ -462,7 +462,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
               onVoiceRecorded={(blob, duration) => {
                 updateFormData({ voiceRecording: blob, voiceDuration: duration });
               }}
-              onSkip={() => {}}
+              onSkip={handleNext}
             />
           </FormStep>
         );
