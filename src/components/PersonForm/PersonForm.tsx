@@ -139,6 +139,56 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
     onSave(personData);
   };
 
+  const handleSaveAndExit = () => {
+    // Salva mesmo com dados incompletos, mas apenas se pelo menos nome e relacionamento estiverem preenchidos
+    if (!formData.name.trim()) {
+      toast({
+        title: "Nome obrigatório",
+        description: "Por favor, adicione pelo menos um nome antes de salvar.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.relationship.trim()) {
+      toast({
+        title: "Relacionamento obrigatório", 
+        description: "Por favor, descreva qual era a relação de vocês antes de salvar.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const personData = {
+      name: formData.name,
+      relationship: formData.relationship,
+      howTheyCalledYou: formData.howTheyCalledYou,
+      birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
+      avatar: formData.avatar,
+      memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
+      personality: formData.personality.filter(p => p.trim()),
+      commonPhrases: formData.commonPhrases.filter(p => p.trim()),
+      temperature: formData.temperature,
+      talkingStyle: formData.talkingStyle,
+      humorStyle: formData.humorStyle,
+      emotionalTone: formData.emotionalTone,
+      verbosity: formData.verbosity,
+      values: formData.values?.filter(v => v.trim()) || [],
+      topics: formData.topics?.filter(t => t.trim()) || [],
+      voiceSettings: {
+        hasRecording: !!formData.voiceRecording,
+        voiceId: formData.voiceRecording ? 'custom' : undefined
+      },
+      lastConversation: person?.lastConversation
+    };
+
+    onSave(personData);
+    toast({
+      title: "✨ Pessoa salva!",
+      description: "Você pode continuar editando depois a qualquer momento.",
+    });
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -566,6 +616,19 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             totalSteps={totalSteps}
             className="mb-6"
           />
+          
+          {/* Botão Salvar e Sair - visível quando nome e relacionamento estão preenchidos */}
+          {formData.name.trim() && formData.relationship.trim() && (
+            <div className="flex justify-end mb-4">
+              <Button
+                variant="outline"
+                onClick={handleSaveAndExit}
+                className="flex items-center gap-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm"
+              >
+                💾 Salvar e Sair
+              </Button>
+            </div>
+          )}
         </div>
         {renderStep()}
       </div>
