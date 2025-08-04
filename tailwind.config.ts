@@ -90,6 +90,20 @@ export default {
 					"0%, 100%": { transform: "translateY(0px)" },
 					"50%": { transform: "translateY(-10px)" },
 				},
+				"shimmer": {
+					"0%": { transform: "translateX(-100%)" },
+					"100%": { transform: "translateX(100%)" },
+				},
+				"flow": {
+					"0%, 100%": { 
+						transform: "translateX(-10px) scale(1)",
+						opacity: "0.3"
+					},
+					"50%": { 
+						transform: "translateX(10px) scale(1.05)",
+						opacity: "0.7"
+					},
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -97,6 +111,8 @@ export default {
 				"fade-in-up": "fade-in-up 0.6s ease-out forwards",
 				"parallax-slow": "parallax 20s ease-in-out infinite alternate",
 				"float": "float 6s ease-in-out infinite",
+				"shimmer": "shimmer 2s ease-in-out infinite",
+				"flow": "flow 3s ease-in-out infinite alternate",
 			},
 		},
 	},
