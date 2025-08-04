@@ -4,11 +4,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete } from "@mui/icons-material";
+import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image } from "@mui/icons-material";
 import { cn } from "@/lib/utils";
 import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
+import { Memory } from "@/types/person";
 
 interface PersonCardProps {
   id: string;
@@ -17,6 +19,7 @@ interface PersonCardProps {
   birthYear?: number;
   avatar?: string;
   memoriesCount: number;
+  memories?: Memory[];
   lastConversation?: Date;
   updatedAt: Date;
   onChat: (id: string) => void;
@@ -33,6 +36,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   birthYear,
   avatar,
   memoriesCount,
+  memories = [],
   lastConversation,
   updatedAt,
   onChat,
@@ -42,6 +46,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   className
 }: PersonCardProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMemoriesDialogOpen, setIsMemoriesDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const getRelationshipColor = (rel: string) => {
@@ -194,10 +199,117 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 <span className="text-xs sm:text-sm">{new Date().getFullYear() - birthYear} anos</span>
               </div>
             )}
-            <div className="flex items-center">
-              <Favorite className="w-4 h-4 mr-2" />
-              <span className="text-xs sm:text-sm">{memoriesCount} memórias</span>
-            </div>
+            <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost" 
+                  size="sm"
+                  className="h-auto p-0 hover:bg-transparent"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center">
+                    <Favorite className="w-4 h-4 mr-2" />
+                    <span className="text-xs sm:text-sm">
+                      {memoriesCount} {memoriesCount === 1 ? 'memória' : 'memórias'}
+                    </span>
+                  </div>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden">
+                <DialogHeader>
+                  <DialogTitle>Memórias de {name}</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
+                  {memories.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Favorite className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p>Nenhuma memória registrada ainda.</p>
+                      {onAddMemory && (
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setIsMemoriesDialogOpen(false);
+                            onAddMemory(id);
+                          }}
+                          className="mt-4"
+                        >
+                          <Add className="w-4 h-4 mr-2" />
+                          Adicionar primeira memória
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="grid gap-4">
+                        {memories.map((memory) => (
+                          <Card key={memory.id} className="p-4">
+                            <div className="space-y-3">
+                              {memory.mediaUrl && (
+                                <div className="relative">
+                                  {memory.mediaType === 'image' && (
+                                    <img 
+                                      src={memory.mediaUrl} 
+                                      alt="Memória" 
+                                      className="w-full h-32 object-cover rounded-lg"
+                                    />
+                                  )}
+                                  {memory.mediaType === 'video' && (
+                                    <video 
+                                      src={memory.mediaUrl} 
+                                      controls 
+                                      className="w-full h-32 rounded-lg"
+                                    />
+                                  )}
+                                  {memory.mediaType === 'audio' && (
+                                    <audio 
+                                      src={memory.mediaUrl} 
+                                      controls 
+                                      className="w-full"
+                                    />
+                                  )}
+                                  <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
+                                    <Image className="w-4 h-4 text-white" />
+                                  </div>
+                                </div>
+                              )}
+                              <p className="text-sm leading-relaxed">{memory.text}</p>
+                              <div className="flex justify-end gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => {
+                                    setIsMemoriesDialogOpen(false);
+                                    onAddMemory?.(id);
+                                  }}
+                                >
+                                  <Edit className="w-4 h-4 mr-2" />
+                                  Editar
+                                </Button>
+                              </div>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                      {onAddMemory && (
+                        <div className="pt-4 border-t">
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              setIsMemoriesDialogOpen(false);
+                              onAddMemory(id);
+                            }}
+                            className="w-full"
+                          >
+                            <Add className="w-4 h-4 mr-2" />
+                            Adicionar nova memória
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
           
           {onAddMemory && (
