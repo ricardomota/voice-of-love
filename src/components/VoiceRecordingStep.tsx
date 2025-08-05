@@ -468,7 +468,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
           {existingVoiceSettings?.hasRecording && existingVoiceSettings?.voiceId && (
             <div className="p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
               <p className="text-sm text-green-700 dark:text-green-300">
-                ✅ Clone de voz já criado com sucesso!
+                ✅ Clone de voz já criado com sucesso! (ID: {existingVoiceSettings.voiceId})
               </p>
             </div>
           )}
