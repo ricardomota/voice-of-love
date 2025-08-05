@@ -19,6 +19,7 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
+  const [isCalculatingDuration, setIsCalculatingDuration] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStep, setProcessingStep] = useState<string>('');
@@ -169,44 +170,58 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
     if (validFiles.length > 0) {
       setUploadedFiles(validFiles);
       setError(null);
+      setIsCalculatingDuration(true);
+      setTotalDuration(0);
       
       // Calculate total duration
-      let loadedCount = 0;
-      let totalDur = 0;
-      
       const calculateDuration = async () => {
+        let totalDur = 0;
+        
         for (const file of validFiles) {
           try {
             const url = URL.createObjectURL(file);
             const audio = new Audio(url);
             
-            await new Promise<void>((resolve, reject) => {
-              audio.addEventListener('loadedmetadata', () => {
-                totalDur += Math.floor(audio.duration || 0);
-                loadedCount++;
+            const duration = await new Promise<number>((resolve) => {
+              const handleLoadedMetadata = () => {
+                const dur = audio.duration || 0;
                 URL.revokeObjectURL(url);
-                resolve();
-              });
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(Math.floor(dur));
+              };
               
-              audio.addEventListener('error', () => {
+              const handleError = () => {
                 console.warn(`Não foi possível carregar a duração do arquivo: ${file.name}`);
-                loadedCount++;
                 URL.revokeObjectURL(url);
-                resolve(); // Continue mesmo com erro
-              });
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(0);
+              };
+              
+              audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+              audio.addEventListener('error', handleError);
+              
+              // Force load metadata
+              audio.load();
               
               // Timeout para evitar travamentos
               setTimeout(() => {
                 URL.revokeObjectURL(url);
-                resolve();
-              }, 5000);
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(0);
+              }, 10000);
             });
+            
+            totalDur += duration;
           } catch (error) {
             console.warn(`Erro ao processar arquivo ${file.name}:`, error);
           }
         }
         
         setTotalDuration(totalDur);
+        setIsCalculatingDuration(false);
       };
       
       calculateDuration();
@@ -450,7 +465,16 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
                     </Button>
                     
                     <p className="text-sm text-muted-foreground">
-                      Total: {uploadedFiles.length} arquivo{uploadedFiles.length > 1 ? 's' : ''} | {formatDuration(totalDuration)}
+                      Total: {uploadedFiles.length} arquivo{uploadedFiles.length > 1 ? 's' : ''} | {
+                        isCalculatingDuration ? (
+                          <span className="inline-flex items-center gap-1">
+                            <div className="w-3 h-3 border border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin"></div>
+                            Calculando...
+                          </span>
+                        ) : (
+                          formatDuration(totalDuration)
+                        )
+                      }
                     </p>
                   </>
                 ) : null}
