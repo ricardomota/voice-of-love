@@ -68,6 +68,7 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
                   voiceSettings={person.voiceSettings}
                   lastConversation={person.lastConversation}
                   updatedAt={person.updatedAt}
+                  person={person}
                   onChat={onChat}
                   onSettings={onSettings}
                   onAddMemory={onAddMemory}
