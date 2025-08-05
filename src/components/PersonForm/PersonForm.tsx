@@ -170,13 +170,25 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       return;
     }
 
+    // Validar avatar - não permitir blob URLs
+    let validAvatar = formData.avatar;
+    if (formData.avatar && formData.avatar.startsWith('blob:')) {
+      console.warn('PersonForm: Blob URL detected, setting avatar to null');
+      validAvatar = "";
+      toast({
+        title: "Foto não salva",
+        description: "A foto não foi carregada corretamente. Tente fazer upload novamente.",
+        variant: "destructive"
+      });
+    }
+
     const personData = {
       name: formData.name,
       relationship: formData.relationship,
       howTheyCalledYou: formData.howTheyCalledYou,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
       birthDate: formData.birthDate || undefined,
-      avatar: formData.avatar,
+      avatar: validAvatar,
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
       commonPhrases: formData.commonPhrases.filter(p => p.trim()),
@@ -216,13 +228,21 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       return;
     }
 
+    
+    // Validar avatar - não permitir blob URLs  
+    let validAvatar = formData.avatar;
+    if (formData.avatar && formData.avatar.startsWith('blob:')) {
+      console.warn('PersonForm: Blob URL detected in SaveAndExit, setting avatar to null');
+      validAvatar = "";
+    }
+
     const personData = {
       name: formData.name,
       relationship: formData.relationship,
       howTheyCalledYou: formData.howTheyCalledYou,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
       birthDate: formData.birthDate || undefined,
-      avatar: formData.avatar,
+      avatar: validAvatar,
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
       commonPhrases: formData.commonPhrases.filter(p => p.trim()),
