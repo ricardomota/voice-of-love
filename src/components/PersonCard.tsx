@@ -13,6 +13,7 @@ import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
 import { Memory, Person } from "@/types/person";
 import { VoiceMessageGenerator } from "@/components/VoiceMessageGenerator";
+import { AudioChat } from "@/components/AudioChat";
 
 interface PersonCardProps {
   id: string;
@@ -377,30 +378,58 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         )}
 
         {/* CTAs principais com o mesmo peso */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-2">
           <Button 
             onClick={() => onChat(id)}
             className="w-full h-10 sm:h-12"
             size="lg"
             variant="glass"
           >
-            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            <span className="text-xs sm:text-sm">Conversar</span>
+            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+            <span className="text-xs sm:text-sm">Chat</span>
           </Button>
 
-          {/* Botão de receber áudio com o mesmo peso */}
+          {/* Botão de receber áudio */}
           {person ? (
-            <VoiceMessageGenerator 
+          <VoiceMessageGenerator 
+            person={person}
+            trigger={
+              <Button
+                onClick={(e) => e.stopPropagation()}
+                className="w-full h-10 sm:h-12"
+                size="lg"
+                variant="outline"
+              >
+                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <span className="text-xs sm:text-sm">Receber Áudio</span>
+              </Button>
+            }
+          />
+          ) : (
+            <Button
+              disabled
+              className="w-full h-10 sm:h-12"
+              size="lg"
+              variant="outline"
+            >
+              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+              <span className="text-xs sm:text-sm">Receber</span>
+            </Button>
+          )}
+
+          {/* Botão de conversa por áudio */}
+          {person ? (
+            <AudioChat 
               person={person}
               trigger={
                 <Button
                   onClick={(e) => e.stopPropagation()}
                   className="w-full h-10 sm:h-12"
                   size="lg"
-                  variant="outline"
+                  variant="secondary"
                 >
-                  <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  <span className="text-xs sm:text-sm">Receber Áudio</span>
+                  <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+                  <span className="text-xs sm:text-sm">Áudio</span>
                 </Button>
               }
             />
@@ -409,10 +438,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               disabled
               className="w-full h-10 sm:h-12"
               size="lg"
-              variant="outline"
+              variant="secondary"
             >
-              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              <span className="text-xs sm:text-sm">Receber Áudio</span>
+              <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
+              <span className="text-xs sm:text-sm">Áudio</span>
             </Button>
           )}
         </div>

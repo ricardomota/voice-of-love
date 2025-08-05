@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      audio_files: {
+        Row: {
+          created_at: string
+          duration: number | null
+          file_name: string
+          file_url: string
+          id: string
+          person_id: string
+          transcription: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration?: number | null
+          file_name: string
+          file_url: string
+          id?: string
+          person_id: string
+          transcription?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration?: number | null
+          file_name?: string
+          file_url?: string
+          id?: string
+          person_id?: string
+          transcription?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audio_files_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversation_analytics: {
         Row: {
           conversation_date: string

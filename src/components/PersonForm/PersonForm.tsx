@@ -720,16 +720,19 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
               onVoiceRecorded={(blob, duration) => {
                 updateFormData({ voiceRecording: blob, voiceDuration: duration });
               }}
-              onVoiceProcessed={async (voiceId, transcriptions) => {
-                console.log('VoiceRecordingStep: onVoiceProcessed called', { voiceId, transcriptions });
+              onVoiceProcessed={async (voiceId, transcriptions, audioFiles) => {
+                console.log('VoiceRecordingStep: onVoiceProcessed called', { voiceId, transcriptions, audioFiles });
                 
                 try {
-                  // Atualizar configurações de voz
-                  if (voiceId) {
-                    console.log('VoiceRecordingStep: Updating voice settings with voiceId:', voiceId);
-                    updateFormData({ 
-                      voiceSettings: { hasRecording: true, voiceId } 
-                    });
+                  // Atualizar configurações de voz com os arquivos de áudio
+                  if (voiceId || audioFiles?.length) {
+                    console.log('VoiceRecordingStep: Updating voice settings with voiceId:', voiceId, 'and audioFiles:', audioFiles?.length);
+                    const newVoiceSettings = { 
+                      hasRecording: true, 
+                      ...(voiceId && { voiceId }),
+                      ...(audioFiles && { audioFiles })
+                    };
+                    updateFormData({ voiceSettings: newVoiceSettings });
                   }
                   
                   // Analisar transcrições para extrair características da fala

@@ -8,7 +8,7 @@ interface VoiceRecordingStepProps {
   personName: string;
   existingVoiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number; transcription?: string }> };
   onVoiceRecorded?: (audioBlob: Blob, duration: number) => void;
-  onVoiceProcessed?: (voiceId: string, transcriptions: string[]) => void;
+  onVoiceProcessed?: (voiceId: string, transcriptions: string[], audioFiles?: Array<{ name: string; url: string; duration?: number; transcription?: string }>) => void;
   onSkip: () => void;
 }
 
@@ -321,52 +321,67 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
     try {
       console.log(`Starting to process ${files.length} audio files`);
       const transcriptions: string[] = [];
+      const audioFiles: Array<{ name: string; url: string; duration?: number; transcription?: string }> = [];
       let voiceId: string | null = null;
 
-      // Step 1: Transcrever todos os áudios
-      setProcessingStep('Transcrevendo áudios...');
+      // Step 1: Upload and process each file
+      setProcessingStep('Enviando e processando áudios...');
       
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        setProcessingStep(`Transcrevendo áudio ${i + 1} de ${files.length}...`);
+        const fileName = file instanceof File ? file.name : `audio_${i + 1}.webm`;
+        setProcessingStep(`Processando ${fileName} (${i + 1} de ${files.length})...`);
         
         try {
-          // Convert file to base64
+          // Convert file to base64 for APIs
           const base64Audio = await new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => {
               const result = reader.result as string;
-              const base64 = result.split(',')[1]; // Remove data:audio/... prefix
+              const base64 = result.split(',')[1];
               resolve(base64);
             };
             reader.onerror = reject;
             reader.readAsDataURL(file);
           });
 
+          // Upload to Supabase storage
+          const fileUrl = await uploadAudioFile(file, fileName);
+          
           // Transcrever áudio
           const transcriptionResult = await supabase.functions.invoke('speech-to-text', {
             body: { audio: base64Audio }
           });
 
+          let transcription = '';
           if (transcriptionResult.error) {
             console.error(`Transcription error for file ${i + 1}:`, transcriptionResult.error);
-            // Continue with other files even if one fails
           } else if (transcriptionResult.data?.text) {
-            transcriptions.push(transcriptionResult.data.text);
-            console.log(`Transcription ${i + 1} completed:`, transcriptionResult.data.text.substring(0, 50) + '...');
+            transcription = transcriptionResult.data.text;
+            transcriptions.push(transcription);
+            console.log(`Transcription ${i + 1} completed:`, transcription.substring(0, 50) + '...');
           }
+
+          // Add to audio files array
+          audioFiles.push({
+            name: fileName,
+            url: fileUrl,
+            duration: undefined, // Could be calculated if needed
+            transcription
+          });
+
         } catch (fileError) {
           console.error(`Error processing file ${i + 1}:`, fileError);
           // Continue with other files
         }
       }
 
-      // Step 2: Criar clone de voz com o primeiro arquivo (ou o de melhor qualidade)
-      if (files.length > 0) {
+      // Step 2: Create voice clone with the first file
+      if (files.length > 0 && audioFiles.length > 0) {
         setProcessingStep('Criando clone de voz...');
         
         try {
-          const primaryFile = files[0]; // Use o primeiro arquivo para o clone
+          const primaryFile = files[0];
           const base64Audio = await new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -390,11 +405,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
 
           if (voiceCloneResult.error) {
             console.error('Voice clone error:', voiceCloneResult.error);
-            const errorMessage = voiceCloneResult.error?.message || 'Erro desconhecido no clone de voz';
-            
-            // Mesmo com erro no clone, continue com a transcrição
-            console.warn(`Erro no clone de voz (continuando): ${errorMessage}`);
-            setProcessingStep('⚠️ Clone de voz falhou, mas transcrições concluídas');
+            setProcessingStep('⚠️ Clone de voz falhou, mas áudios salvos');
           } else if (voiceCloneResult.data?.voiceId) {
             voiceId = voiceCloneResult.data.voiceId;
             console.log('Voice clone created successfully with ID:', voiceId);
@@ -405,31 +416,30 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
           }
         } catch (voiceError) {
           console.error('Error in voice cloning:', voiceError);
-          setProcessingStep('⚠️ Erro no clone de voz, mas transcrições concluídas');
+          setProcessingStep('⚠️ Erro no clone de voz, mas áudios salvos');
         }
       }
 
       setProcessingStep('Finalizando...');
       
-      console.log(`Processing completed. Voice ID: ${voiceId}, Transcriptions: ${transcriptions.length}`);
+      console.log(`Processing completed. Voice ID: ${voiceId}, Audio files: ${audioFiles.length}, Transcriptions: ${transcriptions.length}`);
       
-      // Callback com os resultados
+      // Callback with results including audio files
       if (onVoiceProcessed) {
-        await onVoiceProcessed(voiceId || '', transcriptions);
+        await onVoiceProcessed(voiceId || '', transcriptions, audioFiles);
       }
 
-      // Mensagem final baseada no que foi processado
+      // Final status message
       if (voiceId && transcriptions.length > 0) {
-        setProcessingStep('✅ Clone de voz criado e transcrições concluídas!');
+        setProcessingStep('✅ Clone de voz criado e áudios processados!');
       } else if (voiceId) {
         setProcessingStep('✅ Clone de voz criado com sucesso!');
-      } else if (transcriptions.length > 0) {
-        setProcessingStep('✅ Transcrições concluídas!');
+      } else if (audioFiles.length > 0) {
+        setProcessingStep('✅ Áudios processados e salvos!');
       } else {
         setProcessingStep('⚠️ Processamento concluído com avisos');
       }
       
-      // Aguardar um pouco para mostrar a mensagem de sucesso
       setTimeout(() => {
         setIsProcessing(false);
         setProcessingStep('');
@@ -441,6 +451,40 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
       setError(error instanceof Error ? error.message : 'Erro ao processar áudios');
       setIsProcessing(false);
       setProcessingStep('');
+    }
+  };
+
+  const uploadAudioFile = async (file: File | Blob, fileName: string): Promise<string> => {
+    try {
+      console.log('Uploading audio file:', fileName);
+      const formData = new FormData();
+      formData.append('file', file, fileName);
+      
+      // Upload to Supabase storage
+      const { data: user } = await supabase.auth.getUser();
+      if (!user.user) throw new Error('User not authenticated');
+      
+      const filePath = `${user.user.id}/${Date.now()}_${fileName}`;
+      
+      const { data, error } = await supabase.storage
+        .from('media')
+        .upload(filePath, file);
+
+      if (error) {
+        console.error('Storage upload error:', error);
+        throw error;
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('media')
+        .getPublicUrl(filePath);
+
+      console.log('Audio file uploaded successfully:', publicUrl);
+      return publicUrl;
+    } catch (error) {
+      console.error('Error uploading audio file:', error);
+      throw error;
     }
   };
 

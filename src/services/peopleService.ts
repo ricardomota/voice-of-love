@@ -5,6 +5,7 @@ import { sanitizePersonData } from "@/utils/avatarUtils";
 interface VoiceSettings {
   hasRecording: boolean;
   voiceId?: string;
+  audioFiles?: Array<{ name: string; url: string; duration?: number; transcription?: string }>;
 }
 
 export const peopleService = {

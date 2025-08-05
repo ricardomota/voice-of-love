@@ -22,6 +22,7 @@ export interface FormData {
   voiceSettings?: {
     hasRecording: boolean;
     voiceId?: string;
+    audioFiles?: Array<{ name: string; url: string; duration?: number; transcription?: string }>;
   };
 }
 
