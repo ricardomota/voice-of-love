@@ -319,35 +319,45 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
     setError(null);
     
     try {
+      console.log(`Starting to process ${files.length} audio files`);
       const transcriptions: string[] = [];
       let voiceId: string | null = null;
 
       // Step 1: Transcrever todos os áudios
       setProcessingStep('Transcrevendo áudios...');
+      
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setProcessingStep(`Transcrevendo áudio ${i + 1} de ${files.length}...`);
         
-        // Convert file to base64
-        const base64Audio = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const result = reader.result as string;
-            const base64 = result.split(',')[1]; // Remove data:audio/... prefix
-            resolve(base64);
-          };
-          reader.readAsDataURL(file);
-        });
+        try {
+          // Convert file to base64
+          const base64Audio = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const result = reader.result as string;
+              const base64 = result.split(',')[1]; // Remove data:audio/... prefix
+              resolve(base64);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
 
-        // Transcrever áudio
-        const transcriptionResult = await supabase.functions.invoke('speech-to-text', {
-          body: { audio: base64Audio }
-        });
+          // Transcrever áudio
+          const transcriptionResult = await supabase.functions.invoke('speech-to-text', {
+            body: { audio: base64Audio }
+          });
 
-        if (transcriptionResult.error) {
-          console.error('Transcription error:', transcriptionResult.error);
-        } else if (transcriptionResult.data?.text) {
-          transcriptions.push(transcriptionResult.data.text);
+          if (transcriptionResult.error) {
+            console.error(`Transcription error for file ${i + 1}:`, transcriptionResult.error);
+            // Continue with other files even if one fails
+          } else if (transcriptionResult.data?.text) {
+            transcriptions.push(transcriptionResult.data.text);
+            console.log(`Transcription ${i + 1} completed:`, transcriptionResult.data.text.substring(0, 50) + '...');
+          }
+        } catch (fileError) {
+          console.error(`Error processing file ${i + 1}:`, fileError);
+          // Continue with other files
         }
       }
 
@@ -355,49 +365,57 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
       if (files.length > 0) {
         setProcessingStep('Criando clone de voz...');
         
-        const primaryFile = files[0]; // Use o primeiro arquivo para o clone
-        const base64Audio = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const result = reader.result as string;
-            const base64 = result.split(',')[1];
-            resolve(base64);
-          };
-          reader.readAsDataURL(primaryFile);
-        });
+        try {
+          const primaryFile = files[0]; // Use o primeiro arquivo para o clone
+          const base64Audio = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const result = reader.result as string;
+              const base64 = result.split(',')[1];
+              resolve(base64);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(primaryFile);
+          });
 
-        const voiceCloneResult = await supabase.functions.invoke('voice-clone', {
-          body: {
-            audioBlob: base64Audio,
-            name: personName,
-            description: `Voice clone of ${personName} - Created from uploaded audio`
+          const voiceCloneResult = await supabase.functions.invoke('voice-clone', {
+            body: {
+              audioBlob: base64Audio,
+              name: personName,
+              description: `Voice clone of ${personName} - Created from uploaded audio`
+            }
+          });
+
+          console.log('Voice clone result:', voiceCloneResult);
+
+          if (voiceCloneResult.error) {
+            console.error('Voice clone error:', voiceCloneResult.error);
+            const errorMessage = voiceCloneResult.error?.message || 'Erro desconhecido no clone de voz';
+            
+            // Mesmo com erro no clone, continue com a transcrição
+            console.warn(`Erro no clone de voz (continuando): ${errorMessage}`);
+            setProcessingStep('⚠️ Clone de voz falhou, mas transcrições concluídas');
+          } else if (voiceCloneResult.data?.voiceId) {
+            voiceId = voiceCloneResult.data.voiceId;
+            console.log('Voice clone created successfully with ID:', voiceId);
+            setProcessingStep('✅ Clone de voz criado com sucesso!');
+          } else {
+            console.warn('Voice clone result unexpected:', voiceCloneResult);
+            setProcessingStep('⚠️ Clone de voz não retornou ID esperado');
           }
-        });
-
-        console.log('Voice clone result:', voiceCloneResult);
-
-        if (voiceCloneResult.error) {
-          console.error('Voice clone error:', voiceCloneResult.error);
-          const errorMessage = voiceCloneResult.error?.message || 'Erro desconhecido no clone de voz';
-          
-          // Mesmo com erro no clone, continue com a transcrição
-          console.warn(`Erro no clone de voz (continuando): ${errorMessage}`);
-          setProcessingStep('⚠️ Clone de voz falhou, mas transcrições concluídas');
-        } else if (voiceCloneResult.data?.voiceId) {
-          voiceId = voiceCloneResult.data.voiceId;
-          console.log('Voice clone created successfully with ID:', voiceId);
-          setProcessingStep('✅ Clone de voz criado com sucesso!');
-        } else {
-          console.warn('Voice clone result unexpected:', voiceCloneResult);
-          setProcessingStep('⚠️ Clone de voz não retornou ID esperado');
+        } catch (voiceError) {
+          console.error('Error in voice cloning:', voiceError);
+          setProcessingStep('⚠️ Erro no clone de voz, mas transcrições concluídas');
         }
       }
 
       setProcessingStep('Finalizando...');
       
+      console.log(`Processing completed. Voice ID: ${voiceId}, Transcriptions: ${transcriptions.length}`);
+      
       // Callback com os resultados
       if (onVoiceProcessed) {
-        onVoiceProcessed(voiceId || '', transcriptions);
+        await onVoiceProcessed(voiceId || '', transcriptions);
       }
 
       // Mensagem final baseada no que foi processado
@@ -415,6 +433,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
       setTimeout(() => {
         setIsProcessing(false);
         setProcessingStep('');
+        console.log('Voice processing UI cleanup completed');
       }, 3000);
 
     } catch (error) {
