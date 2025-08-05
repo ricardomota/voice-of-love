@@ -12,9 +12,11 @@ interface VoiceRecordingStepProps {
 export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingStepProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -112,8 +114,10 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
 
   const resetRecording = () => {
     setRecordedAudio(null);
+    setUploadedFiles([]);
     setAudioUrl(null);
     setRecordingDuration(0);
+    setTotalDuration(0);
     setIsPlaying(false);
     setError(null);
     
@@ -124,15 +128,20 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Lista expandida de formatos aceitos
-      const acceptedFormats = [
-        'audio/webm', 'audio/ogg', 'audio/mpeg', 'audio/mp3', 'audio/wav', 
-        'audio/mp4', 'audio/m4a', 'audio/aac', 'audio/opus', 'audio/flac',
-        'audio/x-wav', 'audio/x-m4a', 'audio/x-aac'
-      ];
-      
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) return;
+
+    // Lista expandida de formatos aceitos
+    const acceptedFormats = [
+      'audio/webm', 'audio/ogg', 'audio/mpeg', 'audio/mp3', 'audio/wav', 
+      'audio/mp4', 'audio/m4a', 'audio/aac', 'audio/opus', 'audio/flac',
+      'audio/x-wav', 'audio/x-m4a', 'audio/x-aac'
+    ];
+    
+    const validFiles: File[] = [];
+    const invalidFiles: string[] = [];
+    
+    files.forEach(file => {
       const isValidAudio = acceptedFormats.some(format => 
         file.type === format || 
         file.name.toLowerCase().endsWith('.' + format.split('/')[1]) ||
@@ -143,26 +152,47 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
       );
       
       if (isValidAudio) {
-        setRecordedAudio(file);
-        
+        validFiles.push(file);
+      } else {
+        invalidFiles.push(file.name);
+      }
+    });
+    
+    if (invalidFiles.length > 0) {
+      setError(`Alguns arquivos não são suportados: ${invalidFiles.join(', ')}`);
+    }
+    
+    if (validFiles.length > 0) {
+      setUploadedFiles(validFiles);
+      setError(null);
+      
+      // Calculate total duration
+      let loadedCount = 0;
+      let totalDur = 0;
+      
+      validFiles.forEach(file => {
         const url = URL.createObjectURL(file);
-        setAudioUrl(url);
-        setError(null);
-        
-        // Get duration from file (approximation)
         const audio = new Audio(url);
         audio.addEventListener('loadedmetadata', () => {
-          setRecordingDuration(Math.floor(audio.duration || 0));
+          totalDur += Math.floor(audio.duration || 0);
+          loadedCount++;
+          
+          if (loadedCount === validFiles.length) {
+            setTotalDuration(totalDur);
+          }
+          
+          URL.revokeObjectURL(url);
         });
-      } else {
-        setError('Formato não suportado. Use: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM ou MP4.');
-      }
+      });
     }
   };
 
   const confirmRecording = () => {
     if (recordedAudio && onVoiceRecorded) {
       onVoiceRecorded(recordedAudio, recordingDuration);
+    } else if (uploadedFiles.length > 0 && onVoiceRecorded) {
+      // For multiple files, use the first one or combine them
+      onVoiceRecorded(uploadedFiles[0], totalDuration);
     }
   };
 
@@ -181,10 +211,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
             Grave algumas palavras ou frases dessa pessoa para que possamos replicar sua voz única.
           </p>
           <p className="text-sm text-muted-foreground/80 leading-relaxed">
-            Recomendamos pelo menos 30 segundos de áudio claro. Você pode usar áudios do <strong>WhatsApp</strong>, gravações de vídeos, ou qualquer arquivo de áudio que tenha a voz da pessoa.
-          </p>
-          <p className="text-xs text-muted-foreground/60">
-            Formatos aceitos: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM.
+            Você pode usar áudios do <strong>WhatsApp</strong>, gravações de vídeos, ou qualquer arquivo de áudio.
           </p>
         </div>
       </div>
@@ -196,7 +223,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
       )}
 
       <div className="space-y-6">
-        {!recordedAudio ? (
+        {!recordedAudio && uploadedFiles.length === 0 ? (
           <div className="space-y-4">
             <div className="flex flex-col items-center gap-4">
               <Button
@@ -237,6 +264,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
                 onChange={handleFileUpload}
                 className="hidden"
                 id="audio-upload"
+                multiple
               />
               <Button 
                 variant="outline" 
@@ -244,7 +272,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
                 className="flex items-center gap-2"
               >
                 <Upload className="w-4 h-4" />
-                Enviar arquivo de áudio (MP3, WAV, OPUS, etc.)
+                Enviar arquivo(s) de áudio
               </Button>
             </div>
           </div>
@@ -252,29 +280,58 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
           <div className="space-y-6">
             <div className="p-6 bg-accent/5 rounded-lg border border-accent/20">
               <div className="space-y-4">
-                <div className="flex items-center justify-center gap-4">
-                  <Button
-                    variant="outline"
-                    onClick={isPlaying ? stopPlaying : playRecording}
-                    className="flex items-center gap-2"
-                  >
-                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                    {isPlaying ? 'Pausar' : 'Reproduzir'}
-                  </Button>
-                  
-                  <Button
-                    variant="ghost"
-                    onClick={resetRecording}
-                    className="flex items-center gap-2"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Gravar novamente
-                  </Button>
-                </div>
-                
-                <p className="text-sm text-muted-foreground">
-                  Duração: {formatDuration(recordingDuration)}
-                </p>
+                {recordedAudio ? (
+                  <>
+                    <div className="flex items-center justify-center gap-4">
+                      <Button
+                        variant="outline"
+                        onClick={isPlaying ? stopPlaying : playRecording}
+                        className="flex items-center gap-2"
+                      >
+                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                        {isPlaying ? 'Pausar' : 'Reproduzir'}
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        onClick={resetRecording}
+                        className="flex items-center gap-2"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                        Gravar novamente
+                      </Button>
+                    </div>
+                    
+                    <p className="text-sm text-muted-foreground">
+                      Duração: {formatDuration(recordingDuration)}
+                    </p>
+                  </>
+                ) : uploadedFiles.length > 0 ? (
+                  <>
+                    <div className="space-y-2">
+                      <h4 className="font-medium">Arquivos selecionados:</h4>
+                      {uploadedFiles.map((file, index) => (
+                        <div key={index} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          {file.name}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <Button
+                      variant="ghost"
+                      onClick={resetRecording}
+                      className="flex items-center gap-2"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      Escolher outros arquivos
+                    </Button>
+                    
+                    <p className="text-sm text-muted-foreground">
+                      Total: {uploadedFiles.length} arquivo{uploadedFiles.length > 1 ? 's' : ''} | {formatDuration(totalDuration)}
+                    </p>
+                  </>
+                ) : null}
               </div>
             </div>
 
@@ -283,7 +340,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
               size="lg"
               className="w-full"
             >
-              Usar esta gravação
+              {recordedAudio ? 'Usar esta gravação' : `Usar arquivo${uploadedFiles.length > 1 ? 's' : ''}`}
             </Button>
           </div>
         )}
