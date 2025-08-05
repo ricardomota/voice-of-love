@@ -349,8 +349,8 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <div className="flex items-center">
                 <Mic className="w-4 h-4 mr-2" />
                 <span className="text-xs sm:text-sm">
-                  {voiceSettings?.hasRecording && voiceSettings?.audioFiles?.length 
-                    ? `${voiceSettings.audioFiles.length} áudio${voiceSettings.audioFiles.length > 1 ? 's' : ''}`
+                  {person?.audioFiles?.length 
+                    ? `${person.audioFiles.length} áudio${person.audioFiles.length > 1 ? 's' : ''}`
                     : '0 áudios'}
                 </span>
                 {voiceSettings?.hasRecording && voiceSettings?.voiceId && (

@@ -15,6 +15,7 @@ export interface Person {
   birthDate?: string; // Data de nascimento completa no formato YYYY-MM-DD
   avatar?: string;
   memories: Memory[];
+  audioFiles?: AudioFile[];
   personality: string[];
   commonPhrases: string[];
   temperature: number;
@@ -33,6 +34,16 @@ export interface Person {
   createdAt: Date;
   updatedAt: Date;
   lastConversation?: Date;
+}
+
+export interface AudioFile {
+  id?: string;
+  personId?: string;
+  fileName: string;
+  fileUrl: string;
+  duration?: number;
+  transcription?: string;
+  createdAt?: Date;
 }
 
 export interface Message {

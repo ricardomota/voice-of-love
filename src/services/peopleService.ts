@@ -14,7 +14,8 @@ export const peopleService = {
       .from('people')
       .select(`
         *,
-        memories (*)
+        memories (*),
+        audio_files (*)
       `)
       .order('created_at', { ascending: false });
 
@@ -29,6 +30,15 @@ export const peopleService = {
       birthDate: person.birth_date,
       avatar: person.avatar,
       memories: person.memories || [],
+      audioFiles: (person.audio_files || []).map((audioFile: any) => ({
+        id: audioFile.id,
+        personId: audioFile.person_id,
+        fileName: audioFile.file_name,
+        fileUrl: audioFile.file_url,
+        duration: audioFile.duration,
+        transcription: audioFile.transcription,
+        createdAt: audioFile.created_at ? new Date(audioFile.created_at) : undefined
+      })),
       personality: person.personality || [],
       commonPhrases: person.common_phrases || [],
       temperature: person.temperature || 0.7,
@@ -98,6 +108,29 @@ export const peopleService = {
 
     console.log('peopleService: Person created successfully:', person.id);
 
+    // Save audio files if they exist
+    if (personData.voiceSettings?.audioFiles?.length > 0) {
+      console.log('peopleService: Inserting audio files...', personData.voiceSettings.audioFiles.length);
+      const { error: audioError } = await supabase
+        .from('audio_files')
+        .insert(
+          personData.voiceSettings.audioFiles.map(audioFile => ({
+            person_id: person.id,
+            file_name: audioFile.name,
+            file_url: audioFile.url,
+            duration: audioFile.duration,
+            transcription: audioFile.transcription
+          }))
+        );
+
+      if (audioError) {
+        console.error('peopleService: Audio files insert error:', audioError);
+        throw new Error(`Erro ao salvar arquivos de áudio: ${audioError.message}`);
+      }
+
+      console.log('peopleService: Audio files inserted successfully');
+    }
+
     // Then create the memories
     if (personData.memories.length > 0) {
       console.log('peopleService: Inserting memories...', personData.memories.length);
@@ -133,7 +166,8 @@ export const peopleService = {
       .from('people')
       .select(`
         *,
-        memories (*)
+        memories (*),
+        audio_files (*)
       `)
       .eq('id', id)
       .single();
@@ -149,6 +183,15 @@ export const peopleService = {
       birthDate: person.birth_date,
       avatar: person.avatar,
       memories: person.memories || [],
+      audioFiles: (person.audio_files || []).map((audioFile: any) => ({
+        id: audioFile.id,
+        personId: audioFile.person_id,
+        fileName: audioFile.file_name,
+        fileUrl: audioFile.file_url,
+        duration: audioFile.duration,
+        transcription: audioFile.transcription,
+        createdAt: audioFile.created_at ? new Date(audioFile.created_at) : undefined
+      })),
       personality: person.personality || [],
       commonPhrases: person.common_phrases || [],
       temperature: person.temperature || 0.7,
@@ -219,7 +262,8 @@ export const peopleService = {
       .eq('id', personId)
       .select(`
         *,
-        memories (*)
+        memories (*),
+        audio_files (*)
       `)
       .single();
 
@@ -240,6 +284,15 @@ export const peopleService = {
       birthDate: updatedPerson.birth_date,
       avatar: updatedPerson.avatar,
       memories: updatedPerson.memories || [],
+      audioFiles: (updatedPerson.audio_files || []).map((audioFile: any) => ({
+        id: audioFile.id,
+        personId: audioFile.person_id,
+        fileName: audioFile.file_name,
+        fileUrl: audioFile.file_url,
+        duration: audioFile.duration,
+        transcription: audioFile.transcription,
+        createdAt: audioFile.created_at ? new Date(audioFile.created_at) : undefined
+      })),
       personality: updatedPerson.personality || [],
       commonPhrases: updatedPerson.common_phrases || [],
       temperature: updatedPerson.temperature || 0.7,
@@ -329,6 +382,17 @@ export const peopleService = {
 
       if (evolutionError) {
         console.error('Error deleting evolution:', evolutionError);
+        // Continue even if this fails
+      }
+
+      // Delete associated audio files
+      const { error: audioError } = await supabase
+        .from('audio_files')
+        .delete()
+        .eq('person_id', personId);
+
+      if (audioError) {
+        console.error('Error deleting audio files:', audioError);
         // Continue even if this fails
       }
 
