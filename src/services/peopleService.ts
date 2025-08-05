@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Person, Memory } from "@/types/person";
+import { sanitizePersonData } from "@/utils/avatarUtils";
 
 interface VoiceSettings {
   hasRecording: boolean;
@@ -44,6 +45,11 @@ export const peopleService = {
   },
 
   async createPerson(personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>): Promise<Person> {
+    console.log('peopleService: createPerson called with:', personData);
+    
+    // Sanitize person data before saving
+    const sanitizedData = sanitizePersonData(personData);
+    
     const { data: user, error: authError } = await supabase.auth.getUser();
     if (authError || !user.user) {
       console.error('Auth error:', authError);
@@ -55,23 +61,23 @@ export const peopleService = {
       .from('people')
       .insert({
         user_id: user.user.id,
-        name: personData.name,
-        relationship: personData.relationship,
-        how_they_called_you: personData.howTheyCalledYou,
-        birth_year: personData.birthYear,
-        birth_date: personData.birthDate,
-        avatar: personData.avatar,
-        personality: personData.personality,
-        common_phrases: personData.commonPhrases,
-        temperature: personData.temperature,
-        talking_style: personData.talkingStyle,
-        humor_style: personData.humorStyle,
-        emotional_tone: personData.emotionalTone,
-        verbosity: personData.verbosity,
-        values: personData.values,
-        topics: personData.topics,
-        voice_settings: personData.voiceSettings,
-        last_conversation: personData.lastConversation?.toISOString()
+        name: sanitizedData.name,
+        relationship: sanitizedData.relationship,
+        how_they_called_you: sanitizedData.howTheyCalledYou,
+        birth_year: sanitizedData.birthYear,
+        birth_date: sanitizedData.birthDate,
+        avatar: sanitizedData.avatar,
+        personality: sanitizedData.personality,
+        common_phrases: sanitizedData.commonPhrases,
+        temperature: sanitizedData.temperature,
+        talking_style: sanitizedData.talkingStyle,
+        humor_style: sanitizedData.humorStyle,
+        emotional_tone: sanitizedData.emotionalTone,
+        verbosity: sanitizedData.verbosity,
+        values: sanitizedData.values,
+        topics: sanitizedData.topics,
+        voice_settings: sanitizedData.voiceSettings,
+        last_conversation: sanitizedData.lastConversation?.toISOString()
       })
       .select()
       .single();
@@ -146,33 +152,45 @@ export const peopleService = {
   },
 
   async updatePerson(personId: string, personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>): Promise<Person> {
+    console.log('peopleService: updatePerson called with:', { personId, personData });
+    
+    // Sanitize person data before saving
+    const sanitizedData = sanitizePersonData(personData);
+    console.log('peopleService: Sanitized data:', { avatar: sanitizedData.avatar });
+    
     const { data: user, error: authError } = await supabase.auth.getUser();
     if (authError || !user.user) {
-      console.error('Auth error:', authError);
+      console.error('peopleService: Auth error:', authError);
       throw new Error('Usuário não autenticado. Faça login novamente.');
     }
 
     // Update the person and return the updated data in one query
+    console.log('peopleService: Preparing to update database with data:', {
+      name: personData.name,
+      avatar: personData.avatar,
+      voiceSettings: personData.voiceSettings
+    });
+    
     const { data: updatedPerson, error: personError } = await supabase
       .from('people')
       .update({
-        name: personData.name,
-        relationship: personData.relationship,
-        how_they_called_you: personData.howTheyCalledYou,
-        birth_year: personData.birthYear,
-        birth_date: personData.birthDate,
-        avatar: personData.avatar,
-        personality: personData.personality,
-        common_phrases: personData.commonPhrases,
-        temperature: personData.temperature,
-        talking_style: personData.talkingStyle,
-        humor_style: personData.humorStyle,
-        emotional_tone: personData.emotionalTone,
-        verbosity: personData.verbosity,
-        values: personData.values,
-        topics: personData.topics,
-        voice_settings: personData.voiceSettings,
-        last_conversation: personData.lastConversation?.toISOString(),
+        name: sanitizedData.name,
+        relationship: sanitizedData.relationship,
+        how_they_called_you: sanitizedData.howTheyCalledYou,
+        birth_year: sanitizedData.birthYear,
+        birth_date: sanitizedData.birthDate,
+        avatar: sanitizedData.avatar,
+        personality: sanitizedData.personality,
+        common_phrases: sanitizedData.commonPhrases,
+        temperature: sanitizedData.temperature,
+        talking_style: sanitizedData.talkingStyle,
+        humor_style: sanitizedData.humorStyle,
+        emotional_tone: sanitizedData.emotionalTone,
+        verbosity: sanitizedData.verbosity,
+        values: sanitizedData.values,
+        topics: sanitizedData.topics,
+        voice_settings: sanitizedData.voiceSettings,
+        last_conversation: sanitizedData.lastConversation?.toISOString(),
         updated_at: new Date().toISOString()
       })
       .eq('id', personId)
@@ -182,7 +200,12 @@ export const peopleService = {
       `)
       .single();
 
-    if (personError) throw personError;
+    console.log('peopleService: Database update result:', { updatedPerson, personError });
+
+    if (personError) {
+      console.error('peopleService: Database update error:', personError);
+      throw personError;
+    }
 
     // Transform the data to match our Person type
     return {
