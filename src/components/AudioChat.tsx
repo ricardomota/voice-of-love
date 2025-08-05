@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Person } from '@/types/person';
@@ -202,12 +203,20 @@ export const AudioChat: React.FC<AudioChatProps> = ({ person, trigger }) => {
       audioContextRef.current = new AudioContext({ sampleRate: 24000 });
       audioQueueRef.current = new AudioQueue(audioContextRef.current);
       
-      // Connect to WebSocket
-      const wsUrl = `wss://awodornqrhssfbkgjgfx.functions.supabase.co/functions/v1/realtime-chat`;
+      // Get auth token for WebSocket connection
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado');
+      }
+      
+      // Connect to WebSocket  
+      const wsUrl = `wss://awodornqrhssfbkgjgfx.functions.supabase.co/functions/v1/realtime-chat?token=${session.access_token}`;
+      console.log('Connecting to WebSocket URL:', wsUrl);
+      
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
-        console.log('WebSocket connected');
+        console.log('WebSocket connected successfully');
         setIsConnected(true);
         toast({
           title: "Conectado",
@@ -259,12 +268,28 @@ export const AudioChat: React.FC<AudioChatProps> = ({ person, trigger }) => {
       };
 
       wsRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error);
+        console.error('WebSocket error details:', error);
+        console.error('WebSocket readyState:', wsRef.current?.readyState);
+        console.error('WebSocket URL:', wsRef.current?.url);
+        
+        let errorMessage = "Falha na conexão com o servidor";
+        
+        // Provide more specific error messages
+        if (wsRef.current?.readyState === WebSocket.CONNECTING) {
+          errorMessage = "Não foi possível conectar ao servidor. Verifique sua conexão com a internet.";
+        } else if (wsRef.current?.readyState === WebSocket.CLOSED) {
+          errorMessage = "Conexão perdida com o servidor.";
+        }
+        
         toast({
           title: "Erro de conexão",
-          description: "Falha na conexão com o servidor",
+          description: errorMessage,
           variant: "destructive"
         });
+        
+        setIsConnected(false);
+        setIsSpeaking(false);
+        setIsListening(false);
       };
 
       wsRef.current.onclose = () => {
@@ -289,12 +314,28 @@ export const AudioChat: React.FC<AudioChatProps> = ({ person, trigger }) => {
       setIsListening(true);
 
     } catch (error) {
-      console.error('Error connecting:', error);
+      console.error('Error connecting to audio chat:', error);
+      
+      let errorMessage = "Não foi possível conectar ao chat de áudio";
+      
+      if (error instanceof Error) {
+        if (error.message.includes('autenticado')) {
+          errorMessage = "Você precisa estar logado para usar o chat de áudio";
+        } else if (error.message.includes('microphone') || error.message.includes('getUserMedia')) {
+          errorMessage = "Não foi possível acessar o microfone. Verifique as permissões do navegador.";
+        } else {
+          errorMessage = `Erro: ${error.message}`;
+        }
+      }
+      
       toast({
         title: "Erro",
-        description: "Não foi possível conectar ao chat de áudio",
+        description: errorMessage,
         variant: "destructive"
       });
+      
+      // Cleanup on error
+      disconnect();
     }
   };
 

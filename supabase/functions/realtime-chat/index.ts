@@ -14,15 +14,29 @@ serve(async (req) => {
   }
 
   try {
+    console.log("Realtime-chat function called");
+    
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
+      console.error('OPENAI_API_KEY is not set');
       throw new Error('OPENAI_API_KEY is not set');
     }
 
     const url = new URL(req.url);
     const upgrade = req.headers.get("upgrade") || "";
     
+    // Check for authentication token
+    const token = url.searchParams.get('token');
+    if (!token) {
+      console.error('No authentication token provided');
+      return new Response("Authentication required", { 
+        status: 401,
+        headers: corsHeaders 
+      });
+    }
+    
     if (upgrade.toLowerCase() !== "websocket") {
+      console.error('Expected websocket connection, got:', upgrade);
       return new Response("Expected websocket connection", { 
         status: 400,
         headers: corsHeaders 
@@ -37,21 +51,31 @@ serve(async (req) => {
     let sessionCreated = false;
 
     socket.onopen = () => {
-      console.log("Client WebSocket connected");
+      console.log("Client WebSocket connected successfully");
       
-      // Connect to OpenAI Realtime API
-      const openaiUrl = `wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01`;
-      
-      openaiWs = new WebSocket(openaiUrl, {
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'OpenAI-Beta': 'realtime=v1'
-        }
-      });
+      try {
+        // Connect to OpenAI Realtime API
+        const openaiUrl = `wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01`;
+        console.log("Connecting to OpenAI:", openaiUrl);
+        
+        openaiWs = new WebSocket(openaiUrl, {
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            'OpenAI-Beta': 'realtime=v1'
+          }
+        });
+      } catch (error) {
+        console.error("Error creating OpenAI WebSocket:", error);
+        socket.send(JSON.stringify({
+          type: 'error',
+          message: 'Failed to connect to OpenAI'
+        }));
+      }
 
-      openaiWs.onopen = () => {
-        console.log("Connected to OpenAI Realtime API");
-      };
+      if (openaiWs) {
+        openaiWs.onopen = () => {
+          console.log("Connected to OpenAI Realtime API successfully");
+        };
 
       openaiWs.onmessage = (event) => {
         try {
@@ -105,18 +129,19 @@ serve(async (req) => {
         }
       };
 
-      openaiWs.onerror = (error) => {
-        console.error("OpenAI WebSocket error:", error);
-        socket.send(JSON.stringify({
-          type: 'error',
-          message: 'OpenAI connection error'
-        }));
-      };
+        openaiWs.onerror = (error) => {
+          console.error("OpenAI WebSocket error:", error);
+          socket.send(JSON.stringify({
+            type: 'error',
+            message: 'OpenAI connection error'
+          }));
+        };
 
-      openaiWs.onclose = () => {
-        console.log("OpenAI WebSocket closed");
-        socket.close();
-      };
+        openaiWs.onclose = (event) => {
+          console.log("OpenAI WebSocket closed. Code:", event.code, "Reason:", event.reason);
+          socket.close();
+        };
+      }
     };
 
     socket.onmessage = (event) => {
