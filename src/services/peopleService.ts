@@ -111,24 +111,33 @@ export const peopleService = {
     // Save audio files if they exist
     if (personData.voiceSettings?.audioFiles?.length > 0) {
       console.log('peopleService: Inserting audio files...', personData.voiceSettings.audioFiles.length);
+      console.log('peopleService: Audio files data:', personData.voiceSettings.audioFiles);
       
       // Validar dados dos arquivos de áudio antes de inserir
-      const validAudioFiles = personData.voiceSettings.audioFiles.filter(audioFile => 
-        audioFile.name && audioFile.url
-      );
+      const validAudioFiles = personData.voiceSettings.audioFiles.filter(audioFile => {
+        const isValid = audioFile.name && audioFile.url;
+        if (!isValid) {
+          console.warn('peopleService: Invalid audio file:', audioFile);
+        }
+        return isValid;
+      });
+
+      console.log('peopleService: Valid audio files count:', validAudioFiles.length);
 
       if (validAudioFiles.length > 0) {
+        const audioInsertData = validAudioFiles.map(audioFile => ({
+          person_id: person.id,
+          file_name: audioFile.name,
+          file_url: audioFile.url,
+          duration: audioFile.duration || null,
+          transcription: audioFile.transcription || null
+        }));
+
+        console.log('peopleService: Audio insert data:', audioInsertData);
+
         const { error: audioError } = await supabase
           .from('audio_files')
-          .insert(
-            validAudioFiles.map(audioFile => ({
-              person_id: person.id,
-              file_name: audioFile.name,
-              file_url: audioFile.url,
-              duration: audioFile.duration || null,
-              transcription: audioFile.transcription || null
-            }))
-          );
+          .insert(audioInsertData);
 
         if (audioError) {
           console.error('peopleService: Audio files insert error:', audioError);
@@ -139,6 +148,8 @@ export const peopleService = {
       } else {
         console.warn('peopleService: No valid audio files to insert');
       }
+    } else {
+      console.log('peopleService: No audio files in voiceSettings to insert');
     }
 
     // Then create the memories
