@@ -180,8 +180,11 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
           <p className="text-lg text-muted-foreground leading-relaxed">
             Grave algumas palavras ou frases dessa pessoa para que possamos replicar sua voz única.
           </p>
-          <p className="text-sm text-muted-foreground/80">
-            Recomendamos pelo menos 30 segundos de áudio claro. Formatos aceitos: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM.
+          <p className="text-sm text-muted-foreground/80 leading-relaxed">
+            Recomendamos pelo menos 30 segundos de áudio claro. Você pode usar áudios do <strong>WhatsApp</strong>, gravações de vídeos, ou qualquer arquivo de áudio que tenha a voz da pessoa.
+          </p>
+          <p className="text-xs text-muted-foreground/60">
+            Formatos aceitos: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM.
           </p>
         </div>
       </div>
