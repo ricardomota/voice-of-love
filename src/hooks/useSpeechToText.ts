@@ -72,19 +72,24 @@ export const useSpeechToText = (): UseSpeechToTextReturn => {
           reader.onloadend = async () => {
             try {
               const base64Audio = (reader.result as string).split(',')[1];
+              console.log('useSpeechToText: Sending audio to transcription service, audio length:', base64Audio.length);
               
               const { data, error } = await supabase.functions.invoke('speech-to-text', {
                 body: { audio: base64Audio }
               });
               
+              console.log('useSpeechToText: Transcription service response:', { data, error });
+              
               if (error) {
+                console.error('useSpeechToText: Transcription service error:', error);
                 throw new Error(error.message || 'Erro ao processar áudio');
               }
               
+              console.log('useSpeechToText: Transcription result:', data.text);
               resolve(data.text || null);
             } catch (err) {
+              console.error('useSpeechToText: Error processing audio:', err);
               setError('Erro ao converter áudio em texto');
-              console.error('Error processing audio:', err);
               resolve(null);
             } finally {
               setIsProcessing(false);

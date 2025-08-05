@@ -10,16 +10,27 @@ export interface InputWithVoiceProps
 const InputWithVoice = React.forwardRef<HTMLInputElement, InputWithVoiceProps>(
   ({ className, onVoiceTranscription, value, onChange, type, ...props }, ref) => {
     const handleVoiceTranscription = (transcription: string) => {
+      console.log('InputWithVoice: handleVoiceTranscription called with:', transcription);
+      console.log('InputWithVoice: onVoiceTranscription exists?', !!onVoiceTranscription);
+      console.log('InputWithVoice: onChange exists?', !!onChange);
+      console.log('InputWithVoice: current value:', value);
+      
       if (onVoiceTranscription) {
+        console.log('InputWithVoice: Using onVoiceTranscription callback');
         onVoiceTranscription(transcription);
       } else if (onChange) {
+        console.log('InputWithVoice: Using onChange callback');
         // Append transcription to existing text
         const currentValue = value?.toString() || '';
         const newValue = currentValue ? `${currentValue} ${transcription}` : transcription;
+        console.log('InputWithVoice: New value to set:', newValue);
+        
         const syntheticEvent = {
           target: { value: newValue }
         } as React.ChangeEvent<HTMLInputElement>;
         onChange(syntheticEvent);
+      } else {
+        console.warn('InputWithVoice: No callback available to handle transcription');
       }
     };
 

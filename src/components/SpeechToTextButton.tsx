@@ -15,15 +15,22 @@ export const SpeechToTextButton = ({ onTranscription, disabled, variant = 'full'
   const { toast } = useToast();
 
   const handleClick = async () => {
+    console.log('SpeechToTextButton: handleClick called, isRecording:', isRecording);
+    
     if (isRecording) {
+      console.log('SpeechToTextButton: Stopping recording...');
       const transcription = await stopRecording();
+      console.log('SpeechToTextButton: Transcription received:', transcription);
+      
       if (transcription) {
+        console.log('SpeechToTextButton: Calling onTranscription with:', transcription);
         onTranscription(transcription);
         toast({
           title: "Transcrição concluída",
           description: "O áudio foi convertido em texto com sucesso!",
         });
       } else if (error) {
+        console.error('SpeechToTextButton: Error during transcription:', error);
         toast({
           title: "Erro na transcrição",
           description: error,
@@ -31,8 +38,10 @@ export const SpeechToTextButton = ({ onTranscription, disabled, variant = 'full'
         });
       }
     } else {
+      console.log('SpeechToTextButton: Starting recording...');
       await startRecording();
       if (error) {
+        console.error('SpeechToTextButton: Error starting recording:', error);
         toast({
           title: "Erro ao iniciar gravação",
           description: error,
