@@ -124,21 +124,21 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
         throw new Error(`ElevenLabs API error: ${errorText}`);
       }
 
-      // Converter audio para base64
+      // Converter audio para base64 de forma mais robusta
       const audioBuffer = await elevenLabsResponse.arrayBuffer();
-      const audioArray = new Uint8Array(audioBuffer);
       
-      // Usar TextEncoder para conversão segura
-      const chunks: string[] = [];
-      const chunkSize = 0x8000; // 32KB chunks
+      // Usar uma abordagem mais simples e confiável
+      const uint8Array = new Uint8Array(audioBuffer);
+      let binaryString = '';
       
-      for (let i = 0; i < audioArray.length; i += chunkSize) {
-        const chunk = audioArray.slice(i, i + chunkSize);
-        const binaryString = Array.from(chunk, byte => String.fromCharCode(byte)).join('');
-        chunks.push(btoa(binaryString));
+      // Processar em chunks menores para evitar problemas
+      const chunkSize = 8192;
+      for (let i = 0; i < uint8Array.length; i += chunkSize) {
+        const chunk = uint8Array.slice(i, i + chunkSize);
+        binaryString += String.fromCharCode(...chunk);
       }
       
-      const base64Audio = chunks.join('');
+      const base64Audio = btoa(binaryString);
 
       return new Response(JSON.stringify({
         success: true,
@@ -176,19 +176,19 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
       }
 
       const audioBuffer = await elevenLabsResponse.arrayBuffer();
-      const audioArray = new Uint8Array(audioBuffer);
       
-      // Usar TextEncoder para conversão segura
-      const chunks: string[] = [];
-      const chunkSize = 0x8000; // 32KB chunks
+      // Usar uma abordagem mais simples e confiável
+      const uint8Array = new Uint8Array(audioBuffer);
+      let binaryString = '';
       
-      for (let i = 0; i < audioArray.length; i += chunkSize) {
-        const chunk = audioArray.slice(i, i + chunkSize);
-        const binaryString = Array.from(chunk, byte => String.fromCharCode(byte)).join('');
-        chunks.push(btoa(binaryString));
+      // Processar em chunks menores para evitar problemas
+      const chunkSize = 8192;
+      for (let i = 0; i < uint8Array.length; i += chunkSize) {
+        const chunk = uint8Array.slice(i, i + chunkSize);
+        binaryString += String.fromCharCode(...chunk);
       }
       
-      const base64Audio = chunks.join('');
+      const base64Audio = btoa(binaryString);
 
       return new Response(JSON.stringify({
         success: true,

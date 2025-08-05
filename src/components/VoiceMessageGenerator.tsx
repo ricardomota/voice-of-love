@@ -93,12 +93,21 @@ export const VoiceMessageGenerator: React.FC<VoiceMessageGeneratorProps> = ({
         throw new Error(data.error || 'Erro desconhecido ao gerar mensagem');
       }
 
-      // Converter base64 para blob URL
-      const audioBlob = new Blob([
-        Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))
-      ], { type: 'audio/mpeg' });
-      
-      const audioUrl = URL.createObjectURL(audioBlob);
+      // Converter base64 para blob URL de forma segura
+      let audioUrl: string;
+      try {
+        const binaryString = atob(data.audioContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+        audioUrl = URL.createObjectURL(audioBlob);
+      } catch (base64Error) {
+        console.error('Error converting base64 to blob:', base64Error);
+        throw new Error('Erro ao processar o áudio gerado');
+      }
 
       setCurrentMessage({
         text: data.message,
