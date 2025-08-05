@@ -15,6 +15,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { X, Upload, User } from 'lucide-react';
 import { ProgressBar } from './ProgressBar';
+import { supabase } from '@/integrations/supabase/client';
+import { peopleService } from '@/services/peopleService';
 
 interface PersonFormProps {
   person?: Person;
@@ -292,11 +294,30 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => {
+                  onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      const url = URL.createObjectURL(file);
-                      updateFormData({ avatar: url });
+                      try {
+                        // Create temporary blob URL for immediate preview
+                        const tempUrl = URL.createObjectURL(file);
+                        updateFormData({ avatar: tempUrl });
+                        
+                        // Upload to Supabase Storage in the background
+                        const { data: { user } } = await supabase.auth.getUser();
+                        if (user) {
+                          const permanentUrl = await peopleService.uploadMedia(file, user.id);
+                          updateFormData({ avatar: permanentUrl });
+                          // Clean up the temporary blob URL
+                          URL.revokeObjectURL(tempUrl);
+                        }
+                      } catch (error) {
+                        console.error('Erro ao fazer upload da foto:', error);
+                        toast({
+                          title: "Erro no upload",
+                          description: "Não foi possível enviar a foto. Tente novamente.",
+                          variant: "destructive"
+                        });
+                      }
                     }
                   }}
                   className="hidden"
