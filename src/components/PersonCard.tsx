@@ -349,9 +349,13 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <div className="flex items-center">
                 <Mic className="w-4 h-4 mr-2" />
                 <span className="text-xs sm:text-sm">
-                  {person?.audioFiles?.length 
-                    ? `${person.audioFiles.length} áudio${person.audioFiles.length > 1 ? 's' : ''}`
-                    : '0 áudios'}
+                  {(() => {
+                    // Primeiro tenta buscar dos audioFiles (tabela), depois do voiceSettings
+                    const audioCount = person?.audioFiles?.length || person?.voiceSettings?.audioFiles?.length || 0;
+                    return audioCount > 0
+                      ? `${audioCount} áudio${audioCount > 1 ? 's' : ''}`
+                      : '0 áudios';
+                  })()}
                 </span>
                 {voiceSettings?.hasRecording && voiceSettings?.voiceId && (
                   <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Clone de voz criado"></span>
