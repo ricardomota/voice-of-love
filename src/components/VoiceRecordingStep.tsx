@@ -125,20 +125,38 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file && file.type.startsWith('audio/')) {
-      setRecordedAudio(file);
+    if (file) {
+      // Lista expandida de formatos aceitos
+      const acceptedFormats = [
+        'audio/webm', 'audio/ogg', 'audio/mpeg', 'audio/mp3', 'audio/wav', 
+        'audio/mp4', 'audio/m4a', 'audio/aac', 'audio/opus', 'audio/flac',
+        'audio/x-wav', 'audio/x-m4a', 'audio/x-aac'
+      ];
       
-      const url = URL.createObjectURL(file);
-      setAudioUrl(url);
-      setError(null);
+      const isValidAudio = acceptedFormats.some(format => 
+        file.type === format || 
+        file.name.toLowerCase().endsWith('.' + format.split('/')[1]) ||
+        file.name.toLowerCase().endsWith('.opus') ||
+        file.name.toLowerCase().endsWith('.m4a') ||
+        file.name.toLowerCase().endsWith('.aac') ||
+        file.name.toLowerCase().endsWith('.flac')
+      );
       
-      // Get duration from file (approximation)
-      const audio = new Audio(url);
-      audio.addEventListener('loadedmetadata', () => {
-        setRecordingDuration(Math.floor(audio.duration || 0));
-      });
-    } else {
-      setError('Por favor, selecione um arquivo de áudio válido.');
+      if (isValidAudio) {
+        setRecordedAudio(file);
+        
+        const url = URL.createObjectURL(file);
+        setAudioUrl(url);
+        setError(null);
+        
+        // Get duration from file (approximation)
+        const audio = new Audio(url);
+        audio.addEventListener('loadedmetadata', () => {
+          setRecordingDuration(Math.floor(audio.duration || 0));
+        });
+      } else {
+        setError('Formato não suportado. Use: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM ou MP4.');
+      }
     }
   };
 
@@ -163,7 +181,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
             Grave algumas palavras ou frases dessa pessoa para que possamos replicar sua voz única.
           </p>
           <p className="text-sm text-muted-foreground/80">
-            Recomendamos pelo menos 30 segundos de áudio claro. Você também pode enviar um arquivo de áudio.
+            Recomendamos pelo menos 30 segundos de áudio claro. Formatos aceitos: MP3, WAV, OGG, OPUS, FLAC, M4A, AAC, WebM.
           </p>
         </div>
       </div>
@@ -212,7 +230,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
             <div className="flex justify-center">
               <input
                 type="file"
-                accept="audio/*"
+                accept="audio/*,.opus,.m4a,.aac,.flac"
                 onChange={handleFileUpload}
                 className="hidden"
                 id="audio-upload"
@@ -223,7 +241,7 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
                 className="flex items-center gap-2"
               >
                 <Upload className="w-4 h-4" />
-                Enviar arquivo de áudio
+                Enviar arquivo de áudio (MP3, WAV, OPUS, etc.)
               </Button>
             </div>
           </div>

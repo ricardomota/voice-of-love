@@ -614,8 +614,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       case 15:
         return (
           <FormStep
-            title="Que tal capturar a voz ${pronouns.possessive}? 🎙️"
-            subtitle={`Esta parte é opcional, mas pode deixar tudo ainda mais autêntico! Grave um áudio da voz ${pronouns.possessive} se tiver`}
+            title={`Que tal capturar a voz ${formData.name ? `d${formData.name.toLowerCase().includes('a') ? 'a' : 'o'} ${formData.name}` : 'dessa pessoa'}? 🎙️`}
+            subtitle={`Esta parte é opcional, mas pode deixar tudo ainda mais autêntico! Grave um áudio da voz ${formData.name ? `d${formData.name.toLowerCase().includes('a') ? 'a' : 'o'} ${formData.name}` : 'dessa pessoa'} se tiver`}
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
