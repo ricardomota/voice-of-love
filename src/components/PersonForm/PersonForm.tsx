@@ -716,6 +716,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           >
             <VoiceRecordingStep
               personName={formData.name || 'pessoa'}
+              existingVoiceSettings={person?.voiceSettings}
               onVoiceRecorded={(blob, duration) => {
                 updateFormData({ voiceRecording: blob, voiceDuration: duration });
               }}

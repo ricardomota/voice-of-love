@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image } from "@mui/icons-material";
+import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image, Mic } from "@mui/icons-material";
 import { cn } from "@/lib/utils";
 import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
@@ -21,6 +21,7 @@ interface PersonCardProps {
   avatar?: string;
   memoriesCount: number;
   memories?: Memory[];
+  voiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number }> };
   lastConversation?: Date;
   updatedAt: Date;
   onChat: (id: string) => void;
@@ -39,6 +40,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   avatar,
   memoriesCount,
   memories = [],
+  voiceSettings,
   lastConversation,
   updatedAt,
   onChat,
@@ -225,22 +227,23 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 );
               })()}
             </div>
-            <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost" 
-                  size="sm"
-                  className="h-auto p-0 hover:bg-transparent"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center">
-                    <Favorite className="w-4 h-4 mr-2" />
-                    <span className="text-xs sm:text-sm">
-                      {memoriesCount} {memoriesCount === 1 ? 'memória' : 'memórias'}
-                    </span>
-                  </div>
-                </Button>
-              </DialogTrigger>
+            <div className="flex items-center gap-4">
+              <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost" 
+                    size="sm"
+                    className="h-auto p-0 hover:bg-transparent"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex items-center">
+                      <Favorite className="w-4 h-4 mr-2" />
+                      <span className="text-xs sm:text-sm">
+                        {memoriesCount} {memoriesCount === 1 ? 'memória' : 'memórias'}
+                      </span>
+                    </div>
+                  </Button>
+                </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden">
                 <DialogHeader>
                   <DialogTitle>Memórias de {name}</DialogTitle>
@@ -335,7 +338,21 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                   )}
                 </div>
               </DialogContent>
-            </Dialog>
+              </Dialog>
+
+              {/* Visualização de áudios */}
+              <div className="flex items-center">
+                <Mic className="w-4 h-4 mr-2" />
+                <span className="text-xs sm:text-sm">
+                  {voiceSettings?.hasRecording && voiceSettings?.audioFiles?.length 
+                    ? `${voiceSettings.audioFiles.length} áudio${voiceSettings.audioFiles.length > 1 ? 's' : ''}`
+                    : '0 áudios'}
+                </span>
+                {voiceSettings?.hasRecording && voiceSettings?.voiceId && (
+                  <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Clone de voz criado"></span>
+                )}
+              </div>
+            </div>
           </div>
           
           {onAddMemory && (

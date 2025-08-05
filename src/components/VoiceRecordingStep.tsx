@@ -6,12 +6,13 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface VoiceRecordingStepProps {
   personName: string;
+  existingVoiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number }> };
   onVoiceRecorded?: (audioBlob: Blob, duration: number) => void;
   onVoiceProcessed?: (voiceId: string, transcriptions: string[]) => void;
   onSkip: () => void;
 }
 
-export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcessed, onSkip }: VoiceRecordingStepProps) => {
+export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceRecorded, onVoiceProcessed, onSkip }: VoiceRecordingStepProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -373,32 +374,48 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
           }
         });
 
+        console.log('Voice clone result:', voiceCloneResult);
+
         if (voiceCloneResult.error) {
           console.error('Voice clone error:', voiceCloneResult.error);
           const errorMessage = voiceCloneResult.error?.message || 'Erro desconhecido no clone de voz';
-          throw new Error(`Erro no clone de voz: ${errorMessage}`);
+          
+          // Mesmo com erro no clone, continue com a transcrição
+          console.warn(`Erro no clone de voz (continuando): ${errorMessage}`);
+          setProcessingStep('⚠️ Clone de voz falhou, mas transcrições concluídas');
         } else if (voiceCloneResult.data?.voiceId) {
           voiceId = voiceCloneResult.data.voiceId;
+          console.log('Voice clone created successfully with ID:', voiceId);
+          setProcessingStep('✅ Clone de voz criado com sucesso!');
         } else {
-          console.warn('Voice clone result:', voiceCloneResult);
-          // Continue sem voice ID se não foi possível criar
+          console.warn('Voice clone result unexpected:', voiceCloneResult);
+          setProcessingStep('⚠️ Clone de voz não retornou ID esperado');
         }
       }
 
       setProcessingStep('Finalizando...');
       
       // Callback com os resultados
-      if (onVoiceProcessed && (voiceId || transcriptions.length > 0)) {
+      if (onVoiceProcessed) {
         onVoiceProcessed(voiceId || '', transcriptions);
       }
 
-      setProcessingStep('✅ Processamento concluído!');
+      // Mensagem final baseada no que foi processado
+      if (voiceId && transcriptions.length > 0) {
+        setProcessingStep('✅ Clone de voz criado e transcrições concluídas!');
+      } else if (voiceId) {
+        setProcessingStep('✅ Clone de voz criado com sucesso!');
+      } else if (transcriptions.length > 0) {
+        setProcessingStep('✅ Transcrições concluídas!');
+      } else {
+        setProcessingStep('⚠️ Processamento concluído com avisos');
+      }
       
       // Aguardar um pouco para mostrar a mensagem de sucesso
       setTimeout(() => {
         setIsProcessing(false);
         setProcessingStep('');
-      }, 2000);
+      }, 3000);
 
     } catch (error) {
       console.error('Error processing voice files:', error);
@@ -414,6 +431,10 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Verificar se já existem áudios anteriores
+  const hasExistingAudios = existingVoiceSettings?.hasRecording && existingVoiceSettings?.audioFiles?.length > 0;
+  const existingAudioFiles = existingVoiceSettings?.audioFiles || [];
+
   return (
     <div className="space-y-8 text-center">
       <div className="space-y-4">
@@ -425,8 +446,47 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
           <p className="text-sm text-muted-foreground/80 leading-relaxed">
             Você pode usar áudios do <strong>WhatsApp</strong>, gravações de vídeos, ou qualquer arquivo de áudio.
           </p>
+          {existingVoiceSettings?.hasRecording && existingVoiceSettings?.voiceId && (
+            <div className="p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
+              <p className="text-sm text-green-700 dark:text-green-300">
+                ✅ Clone de voz já criado com sucesso!
+              </p>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Mostrar áudios anteriores se existirem */}
+      {hasExistingAudios && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h4 className="font-medium text-left">Áudios já adicionados:</h4>
+            <span className="text-sm text-muted-foreground">{existingAudioFiles.length} arquivo{existingAudioFiles.length > 1 ? 's' : ''}</span>
+          </div>
+          <div className="space-y-2 max-h-32 overflow-y-auto">
+            {existingAudioFiles.map((audioFile, index) => (
+              <div key={index} className="flex items-center justify-between gap-2 p-3 bg-muted/30 rounded-lg border">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
+                  <span className="text-sm truncate">{audioFile.name}</span>
+                  {audioFile.duration && (
+                    <span className="text-xs text-muted-foreground">
+                      {formatDuration(audioFile.duration)}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  {audioFile.url && (
+                    <audio controls className="h-8">
+                      <source src={audioFile.url} type="audio/mpeg" />
+                    </audio>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {error && (
         <div className="p-4 bg-destructive/10 text-destructive rounded-lg border border-destructive/20">
