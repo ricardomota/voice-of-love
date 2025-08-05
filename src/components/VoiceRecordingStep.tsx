@@ -168,16 +168,18 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
     }
     
     if (validFiles.length > 0) {
-      setUploadedFiles(validFiles);
+      // Combinar arquivos existentes com novos arquivos
+      const allFiles = [...uploadedFiles, ...validFiles];
+      setUploadedFiles(allFiles);
       setError(null);
       setIsCalculatingDuration(true);
       setTotalDuration(0);
       
-      // Calculate total duration
+      // Calculate total duration for all files
       const calculateDuration = async () => {
         let totalDur = 0;
         
-        for (const file of validFiles) {
+        for (const file of allFiles) {
           try {
             const url = URL.createObjectURL(file);
             const audio = new Audio(url);
@@ -226,6 +228,9 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
       
       calculateDuration();
     }
+
+    // Reset input value to allow selecting the same files again
+    event.target.value = '';
   };
 
   const confirmRecording = async () => {
@@ -455,14 +460,26 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
                       ))}
                     </div>
                     
-                    <Button
-                      variant="ghost"
-                      onClick={resetRecording}
-                      className="flex items-center gap-2"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                      Escolher outros arquivos
-                    </Button>
+                    <div className="flex justify-center gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => document.getElementById('audio-upload')?.click()}
+                        className="flex items-center gap-2"
+                        disabled={isCalculatingDuration}
+                      >
+                        <Upload className="w-4 h-4" />
+                        Adicionar mais áudios
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        onClick={resetRecording}
+                        className="flex items-center gap-2"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                        Recomeçar
+                      </Button>
+                    </div>
                     
                     <div className="text-sm text-muted-foreground">
                       Total: {uploadedFiles.length} arquivo{uploadedFiles.length > 1 ? 's' : ''} | {
