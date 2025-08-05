@@ -102,54 +102,191 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
     const phrases: string[] = [];
     const lowerText = text.toLowerCase();
     
-    // Padrões comuns de cumprimentos e expressões
+    // Padrões expandidos para capturar mais expressões características
     const patterns = [
-      /\b(oi|olá|e aí|eae|fala|beleza)\b/gi,
-      /\b(tchau|até|falou|abraço|beijo)\b/gi,
-      /\b(nossa|meu deus|caramba|puxa|nossa senhora)\b/gi,
-      /\b(né|não é|sabe|entende|viu)\b/gi,
-      /\b(meu filho|minha filha|filho|filha|querido|querida)\b/gi,
+      // Cumprimentos e saudações
+      /\b(oi|olá|e aí|eae|fala|beleza|bom dia|boa tarde|boa noite|paz|salve)\b/gi,
+      // Despedidas
+      /\b(tchau|até|falou|abraço|beijo|fique bem|até mais|até logo|vai com deus)\b/gi,
+      // Expressões de surpresa/emoção
+      /\b(nossa|meu deus|caramba|puxa|nossa senhora|ai meu deus|santa maria|jesus)\b/gi,
+      // Confirmações e concordâncias
+      /\b(né|não é|sabe|entende|viu|certo|exato|isso mesmo|claro|óbvio)\b/gi,
+      // Tratamentos carinhosos
+      /\b(meu filho|minha filha|filho|filha|querido|querida|amor|benzinho|coração)\b/gi,
+      // Expressões regionais/características
+      /\b(uai|sô|oxe|trem|negócio|bagulho|parada|massa|legal|bacana)\b/gi,
+      // Frases completas comuns
+      /(como você está|tudo bem|que bom|que legal|imagina só|pode crer|sem dúvida)/gi,
+      // Expressões de carinho/preocupação
+      /(se cuida|fica bem|com cuidado|deus te abençoe|que deus te proteja)/gi
     ];
     
     patterns.forEach(pattern => {
       const matches = text.match(pattern);
       if (matches) {
         matches.forEach(match => {
-          if (match.length > 2 && !phrases.includes(match)) {
-            phrases.push(match);
+          const cleanMatch = match.trim();
+          if (cleanMatch.length > 2 && !phrases.includes(cleanMatch)) {
+            phrases.push(cleanMatch);
           }
         });
       }
     });
     
-    return phrases.slice(0, 5); // Máximo 5 frases
+    // Também extrair frases mais longas e características
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+    sentences.forEach(sentence => {
+      const trimmed = sentence.trim();
+      // Procurar por frases que contenham palavras-chave emocionais
+      if ((trimmed.includes('sempre') || trimmed.includes('lembro') || 
+           trimmed.includes('amor') || trimmed.includes('saudade') ||
+           trimmed.includes('orgulho') || trimmed.includes('feliz')) &&
+          trimmed.length < 100) {
+        phrases.push(trimmed);
+      }
+    });
+    
+    return phrases.slice(0, 8); // Máximo 8 frases
   };
 
-  // Função para analisar estilo de fala
+  // Função para analisar estilo de fala e extrair características da personalidade
   const analyzeSpechStyle = (text: string): string => {
     const lowerText = text.toLowerCase();
     
     // Detectar formalidade
-    if (lowerText.includes('senhor') || lowerText.includes('senhora') || lowerText.includes('vossa')) {
+    if (lowerText.includes('senhor') || lowerText.includes('senhora') || 
+        lowerText.includes('vossa') || lowerText.includes('pois não') ||
+        lowerText.includes('com licença') || lowerText.includes('por favor') ||
+        lowerText.includes('muito obrigado')) {
       return 'formal';
     }
     
-    // Detectar informalidade
-    if (lowerText.includes('cara') || lowerText.includes('mano') || lowerText.includes('véi')) {
+    // Detectar informalidade jovem
+    if (lowerText.includes('cara') || lowerText.includes('mano') || 
+        lowerText.includes('véi') || lowerText.includes('brother') ||
+        lowerText.includes('galera') || lowerText.includes('pessoal')) {
       return 'informal';
     }
     
-    // Detectar carinho
-    if (lowerText.includes('amor') || lowerText.includes('querido') || lowerText.includes('meu bem')) {
+    // Detectar carinho maternal/paternal
+    if (lowerText.includes('amor') || lowerText.includes('querido') || 
+        lowerText.includes('meu bem') || lowerText.includes('benzinho') ||
+        lowerText.includes('coração') || lowerText.includes('meu filho') ||
+        lowerText.includes('minha filha')) {
       return 'carinhoso';
     }
     
-    // Detectar narrativa/storytelling
-    if (lowerText.includes('era uma vez') || lowerText.includes('aconteceu') || lowerText.includes('lembro que')) {
+    // Detectar storytelling/narrativo
+    if (lowerText.includes('era uma vez') || lowerText.includes('aconteceu') || 
+        lowerText.includes('lembro que') || lowerText.includes('uma vez') ||
+        lowerText.includes('você sabe que') || lowerText.includes('deixa eu te contar')) {
       return 'storyteller';
     }
     
+    // Detectar estilo motivacional/conselheiro
+    if (lowerText.includes('sempre digo') || lowerText.includes('acredite') ||
+        lowerText.includes('nunca desista') || lowerText.includes('tenha fé') ||
+        lowerText.includes('você consegue') || lowerText.includes('força')) {
+      return 'motivacional';
+    }
+    
+    // Detectar humor/brincalhão
+    if (lowerText.includes('haha') || lowerText.includes('rsrs') ||
+        lowerText.includes('que engraçado') || lowerText.includes('brincadeira') ||
+        lowerText.includes('piada') || text.includes('😂') || text.includes('😄')) {
+      return 'brincalhão';
+    }
+    
     return 'natural'; // Padrão
+  };
+
+  // Função para extrair traços de personalidade da transcrição
+  const extractPersonalityTraits = (text: string): string[] => {
+    const traits: string[] = [];
+    const lowerText = text.toLowerCase();
+    
+    // Detectar religiosidade
+    if (lowerText.includes('deus') || lowerText.includes('jesus') || 
+        lowerText.includes('oração') || lowerText.includes('igreja') ||
+        lowerText.includes('fé') || lowerText.includes('abençoe')) {
+      traits.push('Religioso(a)');
+    }
+    
+    // Detectar otimismo
+    if (lowerText.includes('sempre bom') || lowerText.includes('tudo vai dar certo') ||
+        lowerText.includes('positivo') || lowerText.includes('esperança') ||
+        lowerText.includes('vai ficar bem')) {
+      traits.push('Otimista');
+    }
+    
+    // Detectar preocupação/cuidado
+    if (lowerText.includes('se cuida') || lowerText.includes('cuidado') ||
+        lowerText.includes('preocupo') || lowerText.includes('atenção') ||
+        lowerText.includes('tem cuidado')) {
+      traits.push('Cuidadoso(a)');
+    }
+    
+    // Detectar sabedoria/experiência
+    if (lowerText.includes('experiência') || lowerText.includes('aprendi') ||
+        lowerText.includes('vida ensina') || lowerText.includes('com o tempo') ||
+        lowerText.includes('já vi muito')) {
+      traits.push('Sábio(a)');
+    }
+    
+    // Detectar carinho familiar
+    if (lowerText.includes('família') || lowerText.includes('filhos') ||
+        lowerText.includes('netos') || lowerText.includes('casa') ||
+        lowerText.includes('lar')) {
+      traits.push('Familiar');
+    }
+    
+    return traits;
+  };
+
+  // Função para extrair valores e temas favoritos
+  const extractValuesAndTopics = (text: string): { values: string[], topics: string[] } => {
+    const lowerText = text.toLowerCase();
+    const values: string[] = [];
+    const topics: string[] = [];
+    
+    // Valores detectados
+    if (lowerText.includes('honestidade') || lowerText.includes('verdade') ||
+        lowerText.includes('honesto') || lowerText.includes('sincero')) {
+      values.push('Honestidade');
+    }
+    if (lowerText.includes('família') || lowerText.includes('unidos') ||
+        lowerText.includes('juntos') || lowerText.includes('parentes')) {
+      values.push('Família');
+    }
+    if (lowerText.includes('trabalho') || lowerText.includes('esforço') ||
+        lowerText.includes('dedicação') || lowerText.includes('batalha')) {
+      values.push('Trabalho');
+    }
+    if (lowerText.includes('estudar') || lowerText.includes('aprender') ||
+        lowerText.includes('conhecimento') || lowerText.includes('escola')) {
+      values.push('Educação');
+    }
+    
+    // Tópicos favoritos detectados
+    if (lowerText.includes('comida') || lowerText.includes('cozinha') ||
+        lowerText.includes('receita') || lowerText.includes('cozinhar')) {
+      topics.push('Culinária');
+    }
+    if (lowerText.includes('viagem') || lowerText.includes('lugar') ||
+        lowerText.includes('cidade') || lowerText.includes('passear')) {
+      topics.push('Viagens');
+    }
+    if (lowerText.includes('música') || lowerText.includes('cantar') ||
+        lowerText.includes('canção') || lowerText.includes('rádio')) {
+      topics.push('Música');
+    }
+    if (lowerText.includes('saúde') || lowerText.includes('médico') ||
+        lowerText.includes('remédio') || lowerText.includes('exercício')) {
+      topics.push('Saúde');
+    }
+    
+    return { values, topics };
   };
 
   const handleBack = () => {
@@ -735,9 +872,9 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                     updateFormData({ voiceSettings: newVoiceSettings });
                   }
                   
-                  // Analisar transcrições para extrair características da fala
+                  // Analisar transcrições para extrair características da fala e personalidade
                   if (transcriptions.length > 0) {
-                    console.log('VoiceRecordingStep: Processing transcriptions:', transcriptions);
+                    console.log('VoiceRecordingStep: Processing transcriptions for personality extraction:', transcriptions);
                     const combinedText = transcriptions.join(' ');
                     
                     // Adicionar frases características encontradas na transcrição
@@ -751,9 +888,49 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                     
                     // Detectar estilo de fala baseado na transcrição
                     const detectedStyle = analyzeSpechStyle(combinedText);
-                    if (detectedStyle && !formData.talkingStyle) {
+                    if (detectedStyle && (!formData.talkingStyle || formData.talkingStyle === 'natural')) {
                       console.log('VoiceRecordingStep: Detected talking style:', detectedStyle);
                       updateFormData({ talkingStyle: detectedStyle });
+                    }
+                    
+                    // Extrair traços de personalidade automaticamente
+                    const newTraits = extractPersonalityTraits(combinedText);
+                    if (newTraits.length > 0) {
+                      console.log('VoiceRecordingStep: Detected personality traits:', newTraits);
+                      const currentTraits = formData.personality.filter(p => p.trim());
+                      const uniqueTraits = [...new Set([...currentTraits, ...newTraits])];
+                      updateFormData({ personality: uniqueTraits });
+                    }
+                    
+                    // Extrair valores e tópicos favoritos
+                    const { values: newValues, topics: newTopics } = extractValuesAndTopics(combinedText);
+                    
+                    if (newValues.length > 0) {
+                      console.log('VoiceRecordingStep: Detected values:', newValues);
+                      const currentValues = formData.values?.filter(v => v.trim()) || [];
+                      const uniqueValues = [...new Set([...currentValues, ...newValues])];
+                      updateFormData({ values: uniqueValues });
+                    }
+                    
+                    if (newTopics.length > 0) {
+                      console.log('VoiceRecordingStep: Detected topics:', newTopics);
+                      const currentTopics = formData.topics?.filter(t => t.trim()) || [];
+                      const uniqueTopics = [...new Set([...currentTopics, ...newTopics])];
+                      updateFormData({ topics: uniqueTopics });
+                    }
+                    
+                    // Exibir toast informativo sobre o que foi detectado
+                    const detectedItems = [];
+                    if (newPhrases.length > 0) detectedItems.push(`${newPhrases.length} expressões características`);
+                    if (newTraits.length > 0) detectedItems.push(`${newTraits.length} traços de personalidade`);
+                    if (newValues.length > 0) detectedItems.push(`${newValues.length} valores`);
+                    if (newTopics.length > 0) detectedItems.push(`${newTopics.length} tópicos favoritos`);
+                    
+                    if (detectedItems.length > 0) {
+                      toast({
+                        title: "🤖 IA analisou a voz!",
+                        description: `Detectei automaticamente: ${detectedItems.join(', ')}. Isso vai deixar o clone muito mais realista!`,
+                      });
                     }
                   }
                   
