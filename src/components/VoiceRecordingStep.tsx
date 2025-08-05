@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, MicOff, Upload, Play, Pause, RotateCcw } from 'lucide-react';
+import { Mic, MicOff, Upload, Play, Pause, RotateCcw, BookOpen } from 'lucide-react';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { supabase } from '@/integrations/supabase/client';
+import { VoiceTrainingScript } from '@/components/VoiceTrainingScript';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface VoiceRecordingStepProps {
   personName: string;
@@ -24,6 +26,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStep, setProcessingStep] = useState<string>('');
+  const [showScript, setShowScript] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -529,6 +532,31 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
           <p className="text-sm text-muted-foreground/80 leading-relaxed">
             Você pode usar áudios do <strong>WhatsApp</strong>, gravações de vídeos, ou qualquer arquivo de áudio.
           </p>
+          
+          {/* Botão do Script de Treinamento */}
+          <div className="pt-2">
+            <Dialog open={showScript} onOpenChange={setShowScript}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2 text-xs"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Ver Script de Treinamento
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden p-0">
+                <DialogHeader className="px-6 py-4 border-b">
+                  <DialogTitle>Script de Treinamento de Voz</DialogTitle>
+                </DialogHeader>
+                <div className="overflow-y-auto max-h-[80vh]">
+                  <VoiceTrainingScript onClose={() => setShowScript(false)} />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+          
           {existingVoiceSettings?.hasRecording && existingVoiceSettings?.voiceId && (
             <div className="p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
               <p className="text-sm text-green-700 dark:text-green-300">
