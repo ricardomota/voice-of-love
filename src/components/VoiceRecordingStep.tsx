@@ -174,20 +174,42 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
       let loadedCount = 0;
       let totalDur = 0;
       
-      validFiles.forEach(file => {
-        const url = URL.createObjectURL(file);
-        const audio = new Audio(url);
-        audio.addEventListener('loadedmetadata', () => {
-          totalDur += Math.floor(audio.duration || 0);
-          loadedCount++;
-          
-          if (loadedCount === validFiles.length) {
-            setTotalDuration(totalDur);
+      const calculateDuration = async () => {
+        for (const file of validFiles) {
+          try {
+            const url = URL.createObjectURL(file);
+            const audio = new Audio(url);
+            
+            await new Promise<void>((resolve, reject) => {
+              audio.addEventListener('loadedmetadata', () => {
+                totalDur += Math.floor(audio.duration || 0);
+                loadedCount++;
+                URL.revokeObjectURL(url);
+                resolve();
+              });
+              
+              audio.addEventListener('error', () => {
+                console.warn(`Não foi possível carregar a duração do arquivo: ${file.name}`);
+                loadedCount++;
+                URL.revokeObjectURL(url);
+                resolve(); // Continue mesmo com erro
+              });
+              
+              // Timeout para evitar travamentos
+              setTimeout(() => {
+                URL.revokeObjectURL(url);
+                resolve();
+              }, 5000);
+            });
+          } catch (error) {
+            console.warn(`Erro ao processar arquivo ${file.name}:`, error);
           }
-          
-          URL.revokeObjectURL(url);
-        });
-      });
+        }
+        
+        setTotalDuration(totalDur);
+      };
+      
+      calculateDuration();
     }
   };
 
