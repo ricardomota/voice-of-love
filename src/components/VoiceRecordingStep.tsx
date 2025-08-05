@@ -301,16 +301,23 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
   };
 
   const confirmRecording = async () => {
-    if (recordedAudio) {
-      if (onVoiceRecorded) {
-        onVoiceRecorded(recordedAudio, recordingDuration);
+    try {
+      if (recordedAudio) {
+        if (onVoiceRecorded) {
+          onVoiceRecorded(recordedAudio, recordingDuration);
+        }
+        await processVoiceFiles([recordedAudio]);
+      } else if (uploadedFiles.length > 0) {
+        if (onVoiceRecorded) {
+          onVoiceRecorded(uploadedFiles[0], totalDuration);
+        }
+        await processVoiceFiles(uploadedFiles);
       }
-      await processVoiceFiles([recordedAudio]);
-    } else if (uploadedFiles.length > 0) {
-      if (onVoiceRecorded) {
-        onVoiceRecorded(uploadedFiles[0], totalDuration);
-      }
-      await processVoiceFiles(uploadedFiles);
+    } catch (error) {
+      console.error('Error in confirmRecording:', error);
+      setError(error instanceof Error ? error.message : 'Erro ao processar áudios');
+      setIsProcessing(false);
+      setProcessingStep('');
     }
   };
 
@@ -444,6 +451,10 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
         setIsProcessing(false);
         setProcessingStep('');
         console.log('Voice processing UI cleanup completed');
+        // Avançar automaticamente para a próxima etapa após processamento bem-sucedido
+        if (onVoiceProcessed) {
+          console.log('Advancing to next step after successful voice processing');
+        }
       }, 3000);
 
     } catch (error) {

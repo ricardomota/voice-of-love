@@ -758,8 +758,20 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                   }
                   
                   console.log('VoiceRecordingStep: Voice processing completed successfully');
+                  
+                  // Avançar automaticamente para a próxima etapa após processamento bem-sucedido
+                  setTimeout(() => {
+                    console.log('VoiceRecordingStep: Advancing to next step after voice processing');
+                    handleNext();
+                  }, 3500);
+                  
                 } catch (error) {
                   console.error('VoiceRecordingStep: Error in onVoiceProcessed:', error);
+                  toast({
+                    title: "Erro no processamento",
+                    description: "Houve um erro ao processar os áudios, mas você pode continuar.",
+                    variant: "destructive"
+                  });
                 }
               }}
               onSkip={handleNext}
