@@ -76,11 +76,12 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   };
 
   const getInitialMessage = () => {
+    const userName = person.howTheyCalledYou || 'querido';
     const greetings = [
-      `Olá, querido! Como você está?`,
-      `Que alegria te ver! Como tem passado?`,
-      `Oi, meu bem! Estava com saudades de conversar com você.`,
-      `Olá! É sempre um prazer nossa conversa.`
+      `Olá, ${userName}! Como você está?`,
+      `Que alegria te ver, ${userName}! Como tem passado?`,
+      `Oi, ${userName}! Estava com saudades de conversar com você.`,
+      `Olá, ${userName}! É sempre um prazer nossa conversa.`
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
   };
