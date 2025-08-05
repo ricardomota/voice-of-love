@@ -7,6 +7,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image, Mic } from "@mui/icons-material";
+import { VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
@@ -359,50 +360,62 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-2">
-          {/* Botão de mensagem de voz - aparece se a pessoa tem dados suficientes */}
-          {person && (
+        {/* Botão de adicionar memória */}
+        {onAddMemory && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddMemory(id);
+            }}
+            className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10 mb-4"
+          >
+            <Add className="w-4 h-4 mr-2" />
+            <span className="text-xs sm:text-sm">Adicionar Memória</span>
+          </Button>
+        )}
+
+        {/* CTAs principais com o mesmo peso */}
+        <div className="grid grid-cols-2 gap-3">
+          <Button 
+            onClick={() => onChat(id)}
+            className="w-full h-10 sm:h-12"
+            size="lg"
+            variant="glass"
+          >
+            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+            <span className="text-xs sm:text-sm">Conversar</span>
+          </Button>
+
+          {/* Botão de receber áudio com o mesmo peso */}
+          {person ? (
             <VoiceMessageGenerator 
               person={person}
               trigger={
                 <Button
-                  variant="outline"
-                  size="sm"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex-1 bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10"
+                  className="w-full h-10 sm:h-12"
+                  size="lg"
+                  variant="outline"
                 >
-                  <Chat className="w-4 h-4 mr-2" />
-                  <span className="text-xs sm:text-sm">Receber Mensagem</span>
+                  <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  <span className="text-xs sm:text-sm">Receber Áudio</span>
                 </Button>
               }
             />
-          )}
-          
-          {onAddMemory && (
+          ) : (
             <Button
+              disabled
+              className="w-full h-10 sm:h-12"
+              size="lg"
               variant="outline"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddMemory(id);
-              }}
-              className="flex-1 bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10"
             >
-              <Add className="w-4 h-4 mr-2" />
-              <span className="text-xs sm:text-sm">Adicionar Memória</span>
+              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <span className="text-xs sm:text-sm">Receber Áudio</span>
             </Button>
           )}
         </div>
-
-        <Button 
-          onClick={() => onChat(id)}
-          className="w-full h-10 sm:h-12 mt-4"
-          size="lg"
-          variant="glass"
-        >
-          <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
-          <span className="text-sm sm:text-base">Conversar</span>
-        </Button>
       </CardContent>
     </Card>
   );
