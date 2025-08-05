@@ -103,7 +103,6 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
       const elevenLabsResponse = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${person.voiceSettings.voiceId}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${ELEVENLABS_API_KEY}`,
           'Content-Type': 'application/json',
           'xi-api-key': ELEVENLABS_API_KEY,
         },
@@ -145,7 +144,6 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
       const elevenLabsResponse = await fetch('https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${ELEVENLABS_API_KEY}`,
           'Content-Type': 'application/json',
           'xi-api-key': ELEVENLABS_API_KEY,
         },
