@@ -126,7 +126,15 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
 
       // Converter audio para base64
       const audioBuffer = await elevenLabsResponse.arrayBuffer();
-      const base64Audio = btoa(String.fromCharCode(...new Uint8Array(audioBuffer)));
+      const audioArray = new Uint8Array(audioBuffer);
+      
+      // Converter para base64 em chunks para evitar stack overflow
+      let base64Audio = '';
+      const chunkSize = 0x8000; // 32KB chunks
+      for (let i = 0; i < audioArray.length; i += chunkSize) {
+        const chunk = audioArray.slice(i, i + chunkSize);
+        base64Audio += btoa(String.fromCharCode.apply(null, Array.from(chunk)));
+      }
 
       return new Response(JSON.stringify({
         success: true,
@@ -164,7 +172,15 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
       }
 
       const audioBuffer = await elevenLabsResponse.arrayBuffer();
-      const base64Audio = btoa(String.fromCharCode(...new Uint8Array(audioBuffer)));
+      const audioArray = new Uint8Array(audioBuffer);
+      
+      // Converter para base64 em chunks para evitar stack overflow
+      let base64Audio = '';
+      const chunkSize = 0x8000; // 32KB chunks
+      for (let i = 0; i < audioArray.length; i += chunkSize) {
+        const chunk = audioArray.slice(i, i + chunkSize);
+        base64Audio += btoa(String.fromCharCode.apply(null, Array.from(chunk)));
+      }
 
       return new Response(JSON.stringify({
         success: true,
