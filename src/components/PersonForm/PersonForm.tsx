@@ -95,6 +95,61 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
     }
   };
 
+  // Função para extrair frases características da transcrição
+  const extractCharacteristicPhrases = (text: string): string[] => {
+    const phrases: string[] = [];
+    const lowerText = text.toLowerCase();
+    
+    // Padrões comuns de cumprimentos e expressões
+    const patterns = [
+      /\b(oi|olá|e aí|eae|fala|beleza)\b/gi,
+      /\b(tchau|até|falou|abraço|beijo)\b/gi,
+      /\b(nossa|meu deus|caramba|puxa|nossa senhora)\b/gi,
+      /\b(né|não é|sabe|entende|viu)\b/gi,
+      /\b(meu filho|minha filha|filho|filha|querido|querida)\b/gi,
+    ];
+    
+    patterns.forEach(pattern => {
+      const matches = text.match(pattern);
+      if (matches) {
+        matches.forEach(match => {
+          if (match.length > 2 && !phrases.includes(match)) {
+            phrases.push(match);
+          }
+        });
+      }
+    });
+    
+    return phrases.slice(0, 5); // Máximo 5 frases
+  };
+
+  // Função para analisar estilo de fala
+  const analyzeSpechStyle = (text: string): string => {
+    const lowerText = text.toLowerCase();
+    
+    // Detectar formalidade
+    if (lowerText.includes('senhor') || lowerText.includes('senhora') || lowerText.includes('vossa')) {
+      return 'formal';
+    }
+    
+    // Detectar informalidade
+    if (lowerText.includes('cara') || lowerText.includes('mano') || lowerText.includes('véi')) {
+      return 'informal';
+    }
+    
+    // Detectar carinho
+    if (lowerText.includes('amor') || lowerText.includes('querido') || lowerText.includes('meu bem')) {
+      return 'carinhoso';
+    }
+    
+    // Detectar narrativa/storytelling
+    if (lowerText.includes('era uma vez') || lowerText.includes('aconteceu') || lowerText.includes('lembro que')) {
+      return 'storyteller';
+    }
+    
+    return 'natural'; // Padrão
+  };
+
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
@@ -130,10 +185,9 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       verbosity: formData.verbosity,
       values: formData.values?.filter(v => v.trim()) || [],
       topics: formData.topics?.filter(t => t.trim()) || [],
-      voiceSettings: {
-        hasRecording: !!formData.voiceRecording,
-        voiceId: formData.voiceRecording ? 'custom' : undefined
-      },
+      voiceSettings: formData.voiceSettings || { hasRecording: false },
+      createdAt: new Date(),
+      updatedAt: new Date(),
       lastConversation: person?.lastConversation
     };
 
@@ -177,10 +231,9 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       verbosity: formData.verbosity,
       values: formData.values?.filter(v => v.trim()) || [],
       topics: formData.topics?.filter(t => t.trim()) || [],
-      voiceSettings: {
-        hasRecording: !!formData.voiceRecording,
-        voiceId: formData.voiceRecording ? 'custom' : undefined
-      },
+      voiceSettings: formData.voiceSettings || { hasRecording: false },
+      createdAt: new Date(),
+      updatedAt: new Date(),
       lastConversation: person?.lastConversation
     };
 
@@ -621,8 +674,36 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             canNext={canProceed(currentStep)}
           >
             <VoiceRecordingStep
+              personName={formData.name || 'pessoa'}
               onVoiceRecorded={(blob, duration) => {
                 updateFormData({ voiceRecording: blob, voiceDuration: duration });
+              }}
+              onVoiceProcessed={async (voiceId, transcriptions) => {
+                // Atualizar configurações de voz
+                if (voiceId) {
+                  updateFormData({ 
+                    voiceSettings: { hasRecording: true, voiceId } 
+                  });
+                }
+                
+                // Analisar transcrições para extrair características da fala
+                if (transcriptions.length > 0) {
+                  const combinedText = transcriptions.join(' ');
+                  
+                  // Adicionar frases características encontradas na transcrição
+                  const newPhrases = extractCharacteristicPhrases(combinedText);
+                  if (newPhrases.length > 0) {
+                    const currentPhrases = formData.commonPhrases.filter(p => p.trim());
+                    const uniquePhrases = [...new Set([...currentPhrases, ...newPhrases])];
+                    updateFormData({ commonPhrases: uniquePhrases });
+                  }
+                  
+                  // Detectar estilo de fala baseado na transcrição
+                  const detectedStyle = analyzeSpechStyle(combinedText);
+                  if (detectedStyle && !formData.talkingStyle) {
+                    updateFormData({ talkingStyle: detectedStyle });
+                  }
+                }
               }}
               onSkip={handleNext}
             />

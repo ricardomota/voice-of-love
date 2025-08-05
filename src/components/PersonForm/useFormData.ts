@@ -25,7 +25,8 @@ export const useFormData = (person?: Person) => {
         values: person.values && person.values.length > 0 ? person.values : [""],
         topics: person.topics && person.topics.length > 0 ? person.topics : [""],
         voiceRecording: null,
-        voiceDuration: 0
+        voiceDuration: 0,
+        voiceSettings: person.voiceSettings || { hasRecording: false }
       });
     }
   }, [person]);

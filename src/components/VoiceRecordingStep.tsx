@@ -5,11 +5,13 @@ import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { supabase } from '@/integrations/supabase/client';
 
 interface VoiceRecordingStepProps {
+  personName: string;
   onVoiceRecorded?: (audioBlob: Blob, duration: number) => void;
+  onVoiceProcessed?: (voiceId: string, transcriptions: string[]) => void;
   onSkip: () => void;
 }
 
-export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingStepProps) => {
+export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcessed, onSkip }: VoiceRecordingStepProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -18,6 +20,8 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingStep, setProcessingStep] = useState<string>('');
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -187,12 +191,108 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
     }
   };
 
-  const confirmRecording = () => {
-    if (recordedAudio && onVoiceRecorded) {
-      onVoiceRecorded(recordedAudio, recordingDuration);
-    } else if (uploadedFiles.length > 0 && onVoiceRecorded) {
-      // For multiple files, use the first one or combine them
-      onVoiceRecorded(uploadedFiles[0], totalDuration);
+  const confirmRecording = async () => {
+    if (recordedAudio) {
+      if (onVoiceRecorded) {
+        onVoiceRecorded(recordedAudio, recordingDuration);
+      }
+      await processVoiceFiles([recordedAudio]);
+    } else if (uploadedFiles.length > 0) {
+      if (onVoiceRecorded) {
+        onVoiceRecorded(uploadedFiles[0], totalDuration);
+      }
+      await processVoiceFiles(uploadedFiles);
+    }
+  };
+
+  const processVoiceFiles = async (files: (File | Blob)[]) => {
+    setIsProcessing(true);
+    setError(null);
+    
+    try {
+      const transcriptions: string[] = [];
+      let voiceId: string | null = null;
+
+      // Step 1: Transcrever todos os áudios
+      setProcessingStep('Transcrevendo áudios...');
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        setProcessingStep(`Transcrevendo áudio ${i + 1} de ${files.length}...`);
+        
+        // Convert file to base64
+        const base64Audio = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            const base64 = result.split(',')[1]; // Remove data:audio/... prefix
+            resolve(base64);
+          };
+          reader.readAsDataURL(file);
+        });
+
+        // Transcrever áudio
+        const transcriptionResult = await supabase.functions.invoke('speech-to-text', {
+          body: { audio: base64Audio }
+        });
+
+        if (transcriptionResult.error) {
+          console.error('Transcription error:', transcriptionResult.error);
+        } else if (transcriptionResult.data?.text) {
+          transcriptions.push(transcriptionResult.data.text);
+        }
+      }
+
+      // Step 2: Criar clone de voz com o primeiro arquivo (ou o de melhor qualidade)
+      if (files.length > 0) {
+        setProcessingStep('Criando clone de voz...');
+        
+        const primaryFile = files[0]; // Use o primeiro arquivo para o clone
+        const base64Audio = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            const base64 = result.split(',')[1];
+            resolve(base64);
+          };
+          reader.readAsDataURL(primaryFile);
+        });
+
+        const voiceCloneResult = await supabase.functions.invoke('voice-clone', {
+          body: {
+            audioBlob: base64Audio,
+            name: personName,
+            description: `Voice clone of ${personName} - Created from uploaded audio`
+          }
+        });
+
+        if (voiceCloneResult.error) {
+          console.error('Voice clone error:', voiceCloneResult.error);
+          throw new Error('Não foi possível criar o clone de voz');
+        } else if (voiceCloneResult.data?.voiceId) {
+          voiceId = voiceCloneResult.data.voiceId;
+        }
+      }
+
+      setProcessingStep('Finalizando...');
+      
+      // Callback com os resultados
+      if (onVoiceProcessed && (voiceId || transcriptions.length > 0)) {
+        onVoiceProcessed(voiceId || '', transcriptions);
+      }
+
+      setProcessingStep('✅ Processamento concluído!');
+      
+      // Aguardar um pouco para mostrar a mensagem de sucesso
+      setTimeout(() => {
+        setIsProcessing(false);
+        setProcessingStep('');
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error processing voice files:', error);
+      setError(error instanceof Error ? error.message : 'Erro ao processar áudios');
+      setIsProcessing(false);
+      setProcessingStep('');
     }
   };
 
@@ -339,9 +439,33 @@ export const VoiceRecordingStep = ({ onVoiceRecorded, onSkip }: VoiceRecordingSt
               onClick={confirmRecording}
               size="lg"
               className="w-full"
+              disabled={isProcessing}
             >
-              {recordedAudio ? 'Usar esta gravação' : `Usar arquivo${uploadedFiles.length > 1 ? 's' : ''}`}
+              {isProcessing ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  {processingStep || 'Processando...'}
+                </div>
+              ) : (
+                recordedAudio ? 'Usar esta gravação' : `Usar arquivo${uploadedFiles.length > 1 ? 's' : ''}`
+              )}
             </Button>
+
+            {isProcessing && (
+              <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
+                  <div>
+                    <p className="font-medium text-blue-900 dark:text-blue-100">
+                      Processando áudios...
+                    </p>
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      {processingStep}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -19,6 +19,10 @@ export interface FormData {
   topics: string[];
   voiceRecording: Blob | null;
   voiceDuration: number;
+  voiceSettings?: {
+    hasRecording: boolean;
+    voiceId?: string;
+  };
 }
 
 export const getInitialFormData = (): FormData => ({
@@ -39,7 +43,8 @@ export const getInitialFormData = (): FormData => ({
   values: [""],
   topics: [""],
   voiceRecording: null,
-  voiceDuration: 0
+  voiceDuration: 0,
+  voiceSettings: { hasRecording: false }
 });
 
 export const getRelationshipPhrase = (relationship: string, name: string = ""): string => {
