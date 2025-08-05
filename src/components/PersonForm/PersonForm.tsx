@@ -761,8 +761,10 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                   
                   // Avançar automaticamente para a próxima etapa após processamento bem-sucedido
                   setTimeout(() => {
-                    console.log('VoiceRecordingStep: Advancing to next step after voice processing');
-                    handleNext();
+                    if (currentStep === 15) { // Garantir que ainda estamos na etapa de gravação
+                      console.log('VoiceRecordingStep: Advancing to next step after voice processing');
+                      handleNext();
+                    }
                   }, 3500);
                   
                 } catch (error) {

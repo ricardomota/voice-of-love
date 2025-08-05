@@ -111,24 +111,34 @@ export const peopleService = {
     // Save audio files if they exist
     if (personData.voiceSettings?.audioFiles?.length > 0) {
       console.log('peopleService: Inserting audio files...', personData.voiceSettings.audioFiles.length);
-      const { error: audioError } = await supabase
-        .from('audio_files')
-        .insert(
-          personData.voiceSettings.audioFiles.map(audioFile => ({
-            person_id: person.id,
-            file_name: audioFile.name,
-            file_url: audioFile.url,
-            duration: audioFile.duration,
-            transcription: audioFile.transcription
-          }))
-        );
+      
+      // Validar dados dos arquivos de áudio antes de inserir
+      const validAudioFiles = personData.voiceSettings.audioFiles.filter(audioFile => 
+        audioFile.name && audioFile.url
+      );
 
-      if (audioError) {
-        console.error('peopleService: Audio files insert error:', audioError);
-        throw new Error(`Erro ao salvar arquivos de áudio: ${audioError.message}`);
+      if (validAudioFiles.length > 0) {
+        const { error: audioError } = await supabase
+          .from('audio_files')
+          .insert(
+            validAudioFiles.map(audioFile => ({
+              person_id: person.id,
+              file_name: audioFile.name,
+              file_url: audioFile.url,
+              duration: audioFile.duration || null,
+              transcription: audioFile.transcription || null
+            }))
+          );
+
+        if (audioError) {
+          console.error('peopleService: Audio files insert error:', audioError);
+          throw new Error(`Erro ao salvar arquivos de áudio: ${audioError.message}`);
+        }
+
+        console.log('peopleService: Audio files inserted successfully');
+      } else {
+        console.warn('peopleService: No valid audio files to insert');
       }
-
-      console.log('peopleService: Audio files inserted successfully');
     }
 
     // Then create the memories

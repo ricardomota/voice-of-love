@@ -301,6 +301,11 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
   };
 
   const confirmRecording = async () => {
+    if (isProcessing) {
+      console.log('Already processing, ignoring duplicate call');
+      return;
+    }
+
     try {
       if (recordedAudio) {
         if (onVoiceRecorded) {
@@ -312,6 +317,9 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
           onVoiceRecorded(uploadedFiles[0], totalDuration);
         }
         await processVoiceFiles(uploadedFiles);
+      } else {
+        setError('Nenhum áudio disponível para processar');
+        return;
       }
     } catch (error) {
       console.error('Error in confirmRecording:', error);
@@ -454,6 +462,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
         // Avançar automaticamente para a próxima etapa após processamento bem-sucedido
         if (onVoiceProcessed) {
           console.log('Advancing to next step after successful voice processing');
+          onVoiceProcessed(voiceId, transcriptions, audioFiles);
         }
       }, 3000);
 

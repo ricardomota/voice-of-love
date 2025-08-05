@@ -9,6 +9,11 @@ export function usePeople() {
   const { toast } = useToast();
 
   const loadPeople = useCallback(async () => {
+    if (loading) {
+      console.log('Already loading people, skipping duplicate request');
+      return people;
+    }
+
     setLoading(true);
     try {
       const peopleData = await peopleService.getAllPeople();
@@ -25,7 +30,7 @@ export function usePeople() {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [toast, loading, people]);
 
   const addPerson = useCallback((person: Person) => {
     setPeople(prev => [...prev, person]);
