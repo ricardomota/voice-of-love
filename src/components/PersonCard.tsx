@@ -193,12 +193,16 @@ export const PersonCard: React.FC<PersonCardProps> = ({
 
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-3 sm:px-4 py-2 backdrop-blur-sm">
-            {birthYear && (
-              <div className="flex items-center">
-                <CalendarToday className="w-4 h-4 mr-2" />
-                <span className="text-xs sm:text-sm">{new Date().getFullYear() - birthYear} anos</span>
-              </div>
-            )}
+            <div className="flex items-center">
+              {birthYear ? (
+                <>
+                  <CalendarToday className="w-4 h-4 mr-2" />
+                  <span className="text-xs sm:text-sm">{new Date().getFullYear() - birthYear} anos</span>
+                </>
+              ) : (
+                <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>
+              )}
+            </div>
             <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
               <DialogTrigger asChild>
                 <Button
