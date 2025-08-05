@@ -209,6 +209,7 @@ export type Database = {
       people: {
         Row: {
           avatar: string | null
+          birth_date: string | null
           birth_year: number | null
           common_phrases: string[] | null
           created_at: string
@@ -231,6 +232,7 @@ export type Database = {
         }
         Insert: {
           avatar?: string | null
+          birth_date?: string | null
           birth_year?: number | null
           common_phrases?: string[] | null
           created_at?: string
@@ -253,6 +255,7 @@ export type Database = {
         }
         Update: {
           avatar?: string | null
+          birth_date?: string | null
           birth_year?: number | null
           common_phrases?: string[] | null
           created_at?: string

@@ -118,6 +118,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       relationship: formData.relationship,
       howTheyCalledYou: formData.howTheyCalledYou,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
+      birthDate: formData.birthDate || undefined,
       avatar: formData.avatar,
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
@@ -164,6 +165,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
       relationship: formData.relationship,
       howTheyCalledYou: formData.howTheyCalledYou,
       birthYear: formData.birthYear ? parseInt(formData.birthYear) : undefined,
+      birthDate: formData.birthDate || undefined,
       avatar: formData.avatar,
       memories: formData.memories.filter(m => m.text.trim() || m.mediaUrl),
       personality: formData.personality.filter(p => p.trim()),
@@ -292,17 +294,45 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
         return (
           <FormStep
             title="Qual era a idade dessa pessoa especial? 🎂"
-            subtitle="Pode colocar o ano de nascimento ou idade aproximada - isso nos ajuda a entender melhor o contexto"
+            subtitle="Você pode informar o ano de nascimento, data completa ou idade aproximada"
             onNext={handleNext}
             onBack={handleBack}
             canNext={canProceed(currentStep)}
           >
-            <Input
-              placeholder="Ex: 1950, 75 anos, aproximadamente 80..."
-              value={formData.birthYear}
-              onChange={(e) => updateFormData({ birthYear: e.target.value })}
-              className="text-lg h-14"
-            />
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium text-muted-foreground mb-2 block">
+                  Data de nascimento (se souber a data completa)
+                </label>
+                <Input
+                  type="date"
+                  value={formData.birthDate}
+                  onChange={(e) => {
+                    updateFormData({ birthDate: e.target.value });
+                    // Se uma data foi selecionada, extrair o ano automaticamente
+                    if (e.target.value) {
+                      const year = new Date(e.target.value).getFullYear().toString();
+                      updateFormData({ birthYear: year });
+                    }
+                  }}
+                  className="text-lg h-14"
+                />
+              </div>
+              
+              <div className="text-center text-muted-foreground">ou</div>
+              
+              <div>
+                <label className="text-sm font-medium text-muted-foreground mb-2 block">
+                  Ano de nascimento ou idade aproximada
+                </label>
+                <Input
+                  placeholder="Ex: 1950, 75 anos, aproximadamente 80..."
+                  value={formData.birthYear}
+                  onChange={(e) => updateFormData({ birthYear: e.target.value })}
+                  className="text-lg h-14"
+                />
+              </div>
+            </div>
           </FormStep>
         );
 

@@ -12,6 +12,7 @@ export interface Person {
   relationship: string;
   howTheyCalledYou?: string;
   birthYear?: number;
+  birthDate?: string; // Data de nascimento completa no formato YYYY-MM-DD
   avatar?: string;
   memories: Memory[];
   personality: string[];

@@ -17,6 +17,7 @@ interface PersonCardProps {
   name: string;
   relationship: string;
   birthYear?: number;
+  birthDate?: string;
   avatar?: string;
   memoriesCount: number;
   memories?: Memory[];
@@ -34,6 +35,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   name,
   relationship,
   birthYear,
+  birthDate,
   avatar,
   memoriesCount,
   memories = [],
@@ -74,6 +76,23 @@ export const PersonCard: React.FC<PersonCardProps> = ({
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const calculateAge = () => {
+    if (birthDate) {
+      const birth = new Date(birthDate);
+      const today = new Date();
+      let age = today.getFullYear() - birth.getFullYear();
+      const monthDiff = today.getMonth() - birth.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+      }
+      return age;
+    } else if (birthYear) {
+      return new Date().getFullYear() - birthYear;
+    }
+    return null;
   };
 
   const getLearningLevel = () => {
@@ -194,14 +213,17 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-3 sm:px-4 py-2 backdrop-blur-sm">
             <div className="flex items-center">
-              {birthYear ? (
-                <>
-                  <CalendarToday className="w-4 h-4 mr-2" />
-                  <span className="text-xs sm:text-sm">{new Date().getFullYear() - birthYear} anos</span>
-                </>
-              ) : (
-                <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>
-              )}
+              {(() => {
+                const age = calculateAge();
+                return age !== null ? (
+                  <>
+                    <CalendarToday className="w-4 h-4 mr-2" />
+                    <span className="text-xs sm:text-sm">{age} anos</span>
+                  </>
+                ) : (
+                  <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>
+                );
+              })()}
             </div>
             <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
               <DialogTrigger asChild>

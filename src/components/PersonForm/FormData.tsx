@@ -5,6 +5,7 @@ export interface FormData {
   relationship: string;
   howTheyCalledYou: string;
   birthYear: string;
+  birthDate: string; // Data completa de nascimento
   avatar: string;
   memories: Memory[];
   personality: string[];
@@ -25,6 +26,7 @@ export const getInitialFormData = (): FormData => ({
   relationship: "",
   howTheyCalledYou: "",
   birthYear: "",
+  birthDate: "",
   avatar: "",
   memories: [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
   personality: [""],

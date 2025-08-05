@@ -12,6 +12,7 @@ export const useFormData = (person?: Person) => {
         relationship: person.relationship,
         howTheyCalledYou: person.howTheyCalledYou || "",
         birthYear: person.birthYear?.toString() || "",
+        birthDate: person.birthDate || "",
         avatar: person.avatar || "",
         memories: person.memories.length > 0 ? person.memories : [{ id: "memory-1", text: "", mediaUrl: "", mediaType: undefined, fileName: "" }],
         personality: person.personality.length > 0 ? person.personality : [""],
