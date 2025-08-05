@@ -132,6 +132,72 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
     }
   };
 
+  const removeFile = (index: number) => {
+    const newFiles = uploadedFiles.filter((_, i) => i !== index);
+    setUploadedFiles(newFiles);
+    
+    if (newFiles.length === 0) {
+      setTotalDuration(0);
+      setIsCalculatingDuration(false);
+    } else {
+      // Recalcular duração total
+      setIsCalculatingDuration(true);
+      setTotalDuration(0);
+      
+      const calculateDuration = async () => {
+        let totalDur = 0;
+        
+        for (const file of newFiles) {
+          try {
+            const url = URL.createObjectURL(file);
+            const audio = new Audio(url);
+            
+            const duration = await new Promise<number>((resolve) => {
+              const handleLoadedMetadata = () => {
+                const dur = audio.duration || 0;
+                URL.revokeObjectURL(url);
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(Math.floor(dur));
+              };
+              
+              const handleError = () => {
+                console.warn(`Não foi possível carregar a duração do arquivo: ${file.name}`);
+                URL.revokeObjectURL(url);
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(0);
+              };
+              
+              audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+              audio.addEventListener('error', handleError);
+              
+              // Force load metadata
+              audio.load();
+              
+              // Timeout para evitar travamentos
+              setTimeout(() => {
+                URL.revokeObjectURL(url);
+                audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audio.removeEventListener('error', handleError);
+                resolve(0);
+              }, 10000);
+            });
+            
+            totalDur += duration;
+          } catch (error) {
+            console.warn(`Erro ao processar arquivo ${file.name}:`, error);
+          }
+        }
+        
+        setTotalDuration(totalDur);
+        setIsCalculatingDuration(false);
+      };
+      
+      calculateDuration();
+    }
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     if (files.length === 0) return;
@@ -309,9 +375,13 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
 
         if (voiceCloneResult.error) {
           console.error('Voice clone error:', voiceCloneResult.error);
-          throw new Error('Não foi possível criar o clone de voz');
+          const errorMessage = voiceCloneResult.error?.message || 'Erro desconhecido no clone de voz';
+          throw new Error(`Erro no clone de voz: ${errorMessage}`);
         } else if (voiceCloneResult.data?.voiceId) {
           voiceId = voiceCloneResult.data.voiceId;
+        } else {
+          console.warn('Voice clone result:', voiceCloneResult);
+          // Continue sem voice ID se não foi possível criar
         }
       }
 
@@ -453,9 +523,19 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
                     <div className="space-y-2">
                       <h4 className="font-medium">Arquivos selecionados:</h4>
                       {uploadedFiles.map((file, index) => (
-                        <div key={index} className="text-sm text-muted-foreground flex items-center gap-2">
-                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                          {file.name}
+                        <div key={index} className="text-sm text-muted-foreground flex items-center justify-between gap-2 p-2 bg-muted/30 rounded">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span className="flex-1 truncate">{file.name}</span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFile(index)}
+                            className="h-6 w-6 p-0 hover:bg-destructive/20"
+                          >
+                            ✕
+                          </Button>
                         </div>
                       ))}
                     </div>
