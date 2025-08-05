@@ -110,10 +110,10 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
           text: messageText,
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75,
-            style: 0.5,
-            use_speaker_boost: true
+            stability: (person.voiceSettings as any)?.stability || 0.5,
+            similarity_boost: (person.voiceSettings as any)?.similarityBoost || 0.75,
+            style: (person.voiceSettings as any)?.style || 0.0,
+            use_speaker_boost: (person.voiceSettings as any)?.useSpeakerBoost || true
           }
         }),
       });
@@ -163,8 +163,10 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
           text: messageText,
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75
+            stability: (person.voiceSettings as any)?.stability || 0.5,
+            similarity_boost: (person.voiceSettings as any)?.similarityBoost || 0.75,
+            style: (person.voiceSettings as any)?.style || 0.0,
+            use_speaker_boost: (person.voiceSettings as any)?.useSpeakerBoost || true
           }
         }),
       });

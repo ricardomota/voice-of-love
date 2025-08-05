@@ -13,6 +13,7 @@ import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
 import { Memory, Person } from "@/types/person";
 import { VoiceMessageGenerator } from "@/components/VoiceMessageGenerator";
+import { VoiceSettings } from "@/components/VoiceSettings";
 import { AudioChat } from "@/components/AudioChat";
 
 interface PersonCardProps {
@@ -442,8 +443,15 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               <span className="text-sm font-medium">Áudio</span>
             </Button>
-          )}
+           )}
         </div>
+
+        {/* Configurações de voz */}
+        {person && person.voiceSettings?.hasRecording && (
+          <div className="mt-4">
+            <VoiceSettings person={person} onUpdate={onDelete} />
+          </div>
+        )}
       </CardContent>
     </Card>
   );
