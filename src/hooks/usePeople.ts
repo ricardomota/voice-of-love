@@ -30,7 +30,7 @@ export function usePeople() {
     } finally {
       setLoading(false);
     }
-  }, [toast, loading, people]);
+  }, [toast, loading]);
 
   const addPerson = useCallback((person: Person) => {
     setPeople(prev => [...prev, person]);

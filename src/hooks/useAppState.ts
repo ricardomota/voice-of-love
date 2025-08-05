@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 export type AppState = 'welcome' | 'dashboard' | 'create' | 'chat' | 'settings' | 'add-memory';
 
@@ -7,6 +7,7 @@ export function useAppState(initialState: AppState = 'welcome') {
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
 
   const navigateTo = useCallback((newState: AppState, personId?: string) => {
+    console.log('useAppState: Navigating to:', newState, personId ? `with personId: ${personId}` : '');
     setAppState(newState);
     setSelectedPersonId(personId || null);
   }, []);
@@ -39,7 +40,7 @@ export function useAppState(initialState: AppState = 'welcome') {
     navigateTo('dashboard');
   }, [navigateTo]);
 
-  return {
+  return useMemo(() => ({
     appState,
     selectedPersonId,
     navigateTo,
@@ -49,5 +50,15 @@ export function useAppState(initialState: AppState = 'welcome') {
     goToAddMemory,
     goToCreate,
     goToDashboard
-  };
+  }), [
+    appState,
+    selectedPersonId,
+    navigateTo,
+    goBack,
+    goToChat,
+    goToSettings,
+    goToAddMemory,
+    goToCreate,
+    goToDashboard
+  ]);
 }

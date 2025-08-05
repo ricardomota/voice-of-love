@@ -41,14 +41,16 @@ const Index = () => {
     if (authLoading || !user) return;
 
     const initializeApp = async () => {
+      console.log('Index: Initializing app and loading people...');
       const peopleData = await loadPeople();
       if (peopleData.length > 0 && appState === 'welcome') {
+        console.log('Index: Found people, navigating to dashboard');
         goToDashboard();
       }
     };
 
     initializeApp();
-  }, [user, authLoading, appState, loadPeople, goToDashboard]);
+  }, [user, authLoading]); // Removidas dependências que causavam loop
 
   const handleSavePerson = useCallback(async (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {

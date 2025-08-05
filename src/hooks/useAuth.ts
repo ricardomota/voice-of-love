@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { authService } from '@/services/authService';
 
 export function useAuth() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const initialized = useRef(false);
 
   useEffect(() => {
+    if (initialized.current) {
+      return;
+    }
+    
+    initialized.current = true;
+
     // Get initial session
     console.log('useAuth: Checking initial session...');
     authService.getCurrentUser().then(({ user, error }) => {
