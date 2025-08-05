@@ -39,7 +39,7 @@ const MessageListComponent: React.FC<MessageListProps> = ({
         />
       ))}
       
-      {isTyping && <TypingIndicator />}
+      {isTyping && <TypingIndicator personName={personName} personAvatar={personAvatar} />}
       
       {showSuggestions && (
         <SuggestedMessages onSelectMessage={onSelectSuggestion} />

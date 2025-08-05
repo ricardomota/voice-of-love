@@ -524,7 +524,7 @@ Responda como ${currentPerson.name} de forma ÚNICA, NATURAL e PERSONALIZADA, in
           />
         ))}
         
-        {isTyping && <TypingIndicator />}
+        {isTyping && <TypingIndicator personName={person.name} personAvatar={person.avatar} />}
         
         {messages.length === 1 && (
           <SuggestedMessages 

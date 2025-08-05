@@ -20,7 +20,7 @@ export const TypingIndicator = ({
       <Avatar className="w-8 h-8 shadow-soft">
         <AvatarImage src={personAvatar} alt={personName} />
         <AvatarFallback className="bg-memory text-memory-foreground text-xs">
-          {personName?.charAt(0) || "E"}
+          {personName?.split(' ').map(n => n[0]).join('').slice(0, 2) || "AI"}
         </AvatarFallback>
       </Avatar>
       
