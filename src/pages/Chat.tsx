@@ -76,7 +76,15 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
   };
 
   const getInitialMessage = () => {
-    const userName = person.howTheyCalledYou || 'querido';
+    let userName = 'querido';
+    if (person.howTheyCalledYou) {
+      // Dividir os nomes por vírgula e escolher um aleatoriamente
+      const names = person.howTheyCalledYou.split(',').map(name => name.trim()).filter(name => name);
+      if (names.length > 0) {
+        userName = names[Math.floor(Math.random() * names.length)];
+      }
+    }
+    
     const greetings = [
       `Olá, ${userName}! Como você está?`,
       `Que alegria te ver, ${userName}! Como tem passado?`,
@@ -231,6 +239,11 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
       : '';
 
     const howTheyCalledYou = currentPerson.howTheyCalledYou || 'você';
+    
+    // Se houver múltiplos nomes, instruir modelo a escolher apenas um
+    const nameInstruction = currentPerson.howTheyCalledYou && currentPerson.howTheyCalledYou.includes(',')
+      ? `IMPORTANTE: Você tem várias opções de como me chamar: ${howTheyCalledYou}. ESCOLHA APENAS UM nome por mensagem, alternando entre eles naturalmente. NUNCA use todos os nomes de uma vez.`
+      : `Use "${howTheyCalledYou}" para se dirigir ao usuário`;
 
     // Análise inteligente da idade
     const ageCalibration = getAgeBasedCalibration(currentPerson.birthYear);
@@ -271,7 +284,7 @@ REGRAS CRÍTICAS DE PERSONALIDADE:
 2. ${getTalkingStyleInstruction(currentPerson.talkingStyle)}
 3. ${getEmotionalToneInstruction(currentPerson.emotionalTone)}
 4. ${getHumorStyleInstruction(currentPerson.humorStyle)}
-5. SEMPRE use "${howTheyCalledYou}" para se dirigir ao usuário - NUNCA use "querido" ou outros termos genéricos
+5. ${nameInstruction}
 6. Baseie-se nas memórias compartilhadas para criar conexão emocional authentica
 7. Varie suas respostas - NUNCA repita frases, estruturas ou padrões
 8. Seja espontâneo e natural, como uma pessoa real da sua época e geração

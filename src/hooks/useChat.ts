@@ -22,7 +22,15 @@ export const useChat = (person: Person) => {
   const initializationRef = useRef(false);
 
   const getInitialMessage = useCallback(() => {
-    const userName = person.howTheyCalledYou || 'querido';
+    let userName = 'querido';
+    if (person.howTheyCalledYou) {
+      // Dividir os nomes por vírgula e escolher um aleatoriamente
+      const names = person.howTheyCalledYou.split(',').map(name => name.trim()).filter(name => name);
+      if (names.length > 0) {
+        userName = names[Math.floor(Math.random() * names.length)];
+      }
+    }
+    
     const greetings = [
       `Olá, ${userName}! Como você está?`,
       `Que alegria te ver, ${userName}! Como tem passado?`,
