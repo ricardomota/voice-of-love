@@ -464,18 +464,20 @@ export const VoiceRecordingStep = ({ personName, onVoiceRecorded, onVoiceProcess
                       Escolher outros arquivos
                     </Button>
                     
-                    <p className="text-sm text-muted-foreground">
+                    <div className="text-sm text-muted-foreground">
                       Total: {uploadedFiles.length} arquivo{uploadedFiles.length > 1 ? 's' : ''} | {
                         isCalculatingDuration ? (
                           <span className="inline-flex items-center gap-1">
                             <div className="w-3 h-3 border border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin"></div>
                             Calculando...
                           </span>
-                        ) : (
+                        ) : totalDuration > 0 ? (
                           formatDuration(totalDuration)
+                        ) : (
+                          "Duração não disponível"
                         )
                       }
-                    </p>
+                    </div>
                   </>
                 ) : null}
               </div>
