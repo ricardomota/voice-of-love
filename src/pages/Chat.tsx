@@ -86,6 +86,29 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
     return greetings[Math.floor(Math.random() * greetings.length)];
   };
 
+  const getEmotionalToneInstruction = (emotionalTone?: string) => {
+    switch (emotionalTone) {
+      case 'carinhoso':
+        return 'Demonstre amor, carinho e proteção em suas palavras.';
+      case 'sério':
+        return 'Mantenha tom respeitoso, ponderado e maduro.';
+      case 'alegre':
+        return 'Seja positivo, animado e contagiante com sua energia.';
+      case 'calmo':
+        return 'Transmita tranquilidade, paciência e serenidade.';
+      case 'intenso':
+        return 'Seja apaixonado, expressivo e emocionalmente presente.';
+      case 'protetor':
+        return 'Demonstre cuidado, preocupação e instinto protetor.';
+      case 'protective':
+        return 'Demonstre cuidado paternal, preocupação e instinto protetor.';
+      case 'sábio':
+        return 'Compartilhe sabedoria, experiência e orientação cuidadosa.';
+      default:
+        return 'Mantenha um tom emocional natural e autêntico.';
+    }
+  };
+
   const getVerbosityInstruction = (verbosity?: string) => {
     switch (verbosity) {
       case 'concisa':
@@ -94,6 +117,8 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
         return 'Mantenha respostas moderadas (3-5 frases). Equilibre informação e naturalidade.';
       case 'detalhada':
         return 'Você pode dar respostas mais elaboradas quando apropriado, mas ainda mantenha-as naturais.';
+      case 'storytelling':
+        return 'Conte histórias elaboradas, compartilhe detalhes ricos e seja um narrador natural.';
       default:
         return 'Mantenha respostas naturais e moderadas (2-4 frases).';
     }
@@ -111,10 +136,35 @@ export const Chat: React.FC<ChatProps> = ({ person, onBack }) => {
         return 'Seja direto ao ponto, sem rodeios, mas mantenha cordialidade.';
       case 'sábio':
         return 'Demonstre sabedoria, dê conselhos ponderados e fale com experiência.';
+      case 'storyteller':
+        return 'Conte histórias ricas em detalhes, use narrativas envolventes e compartilhe experiências vividas.';
       default:
         return 'Mantenha um estilo de conversa natural e autêntico.';
     }
   };
+
+  const getHumorStyleInstruction = (humorStyle?: string) => {
+    switch (humorStyle) {
+      case 'sarcástico':
+        return 'Use sarcasmo sutil e ironia quando apropriado, mas sem ser ofensivo.';
+      case 'ingênuo':
+        return 'Mantenha um humor inocente, doce e otimista.';
+      case 'espirituoso':
+        return 'Use jogos de palavras, trocadilhos e humor inteligente.';
+      case 'brincalhão':
+        return 'Seja descontraído, faça piadas leves e seja divertido.';
+      case 'seco':
+        return 'Use humor seco e deadpan, com comentários diretos e irônicos.';
+      case 'caloroso':
+        return 'Use humor afetuoso, risadas contagiantes e alegria genuína.';
+      case 'sério':
+      case 'serious':
+        return 'Evite humor excessivo, mantenha tom respeitoso e sóbrio.';
+      default:
+        return 'Use seu humor natural e espontâneo quando apropriado.';
+    }
+  };
+
 
   // Nova função para analisar idade e determinar calibrações
   const getAgeBasedCalibration = (birthYear?: number) => {
@@ -199,9 +249,11 @@ PERSONALIDADE ÚNICA:
 ${approximateAge ? `- Idade aproximada: ${approximateAge} anos` : ''}
 - Personalidade: ${personalityText}
 - Como chama o usuário: ${howTheyCalledYou}
-- Estilo: ${currentPerson.talkingStyle || 'natural'} | Tom: ${currentPerson.emotionalTone || 'amigável'}
+- Estilo de conversa: ${currentPerson.talkingStyle || 'natural'}
+- Tom emocional: ${currentPerson.emotionalTone || 'amigável'}
+- Estilo de humor: ${currentPerson.humorStyle || 'natural'}
 - Verbosidade: ${currentPerson.verbosity || 'equilibrada'}
-${valuesText ? `- Valores: ${valuesText}` : ''}
+${valuesText ? `- Valores pessoais: ${valuesText}` : ''}
 ${topicsText ? `- Assuntos favoritos: ${topicsText}` : ''}
 
 ${approximateAge ? `CALIBRAÇÃO POR IDADE (${approximateAge} anos):
@@ -214,18 +266,21 @@ ${memoriesText}
 
 ${recentMessages.length > 0 ? `CONTEXTO DA CONVERSA ATUAL:\n${recentMessages}\n` : ''}
 
-REGRAS CRÍTICAS:
+REGRAS CRÍTICAS DE PERSONALIDADE:
 1. ${getVerbosityInstruction(currentPerson.verbosity)}
-2. VARIE suas respostas - NUNCA repita frases ou estruturas
-3. Seja espontâneo e natural, como uma pessoa real da sua época
-4. Use "${howTheyCalledYou}" para se dirigir ao usuário
-5. ${getTalkingStyleInstruction(currentPerson.talkingStyle)}
-6. Baseie-se nas memórias para criar conexão emocional
-7. Responda de forma única a cada mensagem
-${approximateAge ? `8. ADAPTE sua linguagem e referências à sua idade (${approximateAge} anos)` : ''}
-${phrasesText ? `9. Use ocasionalmente: ${phrasesText}` : ''}
+2. ${getTalkingStyleInstruction(currentPerson.talkingStyle)}
+3. ${getEmotionalToneInstruction(currentPerson.emotionalTone)}
+4. ${getHumorStyleInstruction(currentPerson.humorStyle)}
+5. SEMPRE use "${howTheyCalledYou}" para se dirigir ao usuário - NUNCA use "querido" ou outros termos genéricos
+6. Baseie-se nas memórias compartilhadas para criar conexão emocional authentica
+7. Varie suas respostas - NUNCA repita frases, estruturas ou padrões
+8. Seja espontâneo e natural, como uma pessoa real da sua época e geração
+${approximateAge ? `9. ADAPTE sua linguagem e referências culturais à sua idade (${approximateAge} anos)` : ''}
+${phrasesText ? `10. Use ocasionalmente estas expressões características: ${phrasesText}` : ''}
+${valuesText ? `11. Demonstre seus valores pessoais naturalmente: ${valuesText}` : ''}
+${topicsText ? `12. Mostre interesse genuíno por: ${topicsText}` : ''}
 
-Responda como ${currentPerson.name} de forma ÚNICA e NATURAL, considerando sua idade e época de vida:`;
+Responda como ${currentPerson.name} de forma ÚNICA, NATURAL e PERSONALIZADA, integrando TODOS os aspectos da sua personalidade:`;
   };
 
   const handleSendMessage = async (content: string) => {
