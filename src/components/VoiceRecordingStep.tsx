@@ -203,7 +203,9 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('handleFileUpload called');
     const files = Array.from(event.target.files || []);
+    console.log('Files selected:', files.length, files.map(f => f.name));
     if (files.length === 0) return;
 
     // Lista expandida de formatos aceitos
@@ -616,7 +618,14 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" size="sm">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => {
+                console.log('Botão "Adicionar mais áudios" clicado');
+                document.getElementById('audio-upload')?.click();
+              }}
+            >
               Adicionar mais áudios
             </Button>
           </div>
