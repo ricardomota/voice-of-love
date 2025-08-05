@@ -721,30 +721,42 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                 updateFormData({ voiceRecording: blob, voiceDuration: duration });
               }}
               onVoiceProcessed={async (voiceId, transcriptions) => {
-                // Atualizar configurações de voz
-                if (voiceId) {
-                  updateFormData({ 
-                    voiceSettings: { hasRecording: true, voiceId } 
-                  });
-                }
+                console.log('VoiceRecordingStep: onVoiceProcessed called', { voiceId, transcriptions });
                 
-                // Analisar transcrições para extrair características da fala
-                if (transcriptions.length > 0) {
-                  const combinedText = transcriptions.join(' ');
-                  
-                  // Adicionar frases características encontradas na transcrição
-                  const newPhrases = extractCharacteristicPhrases(combinedText);
-                  if (newPhrases.length > 0) {
-                    const currentPhrases = formData.commonPhrases.filter(p => p.trim());
-                    const uniquePhrases = [...new Set([...currentPhrases, ...newPhrases])];
-                    updateFormData({ commonPhrases: uniquePhrases });
+                try {
+                  // Atualizar configurações de voz
+                  if (voiceId) {
+                    console.log('VoiceRecordingStep: Updating voice settings with voiceId:', voiceId);
+                    updateFormData({ 
+                      voiceSettings: { hasRecording: true, voiceId } 
+                    });
                   }
                   
-                  // Detectar estilo de fala baseado na transcrição
-                  const detectedStyle = analyzeSpechStyle(combinedText);
-                  if (detectedStyle && !formData.talkingStyle) {
-                    updateFormData({ talkingStyle: detectedStyle });
+                  // Analisar transcrições para extrair características da fala
+                  if (transcriptions.length > 0) {
+                    console.log('VoiceRecordingStep: Processing transcriptions:', transcriptions);
+                    const combinedText = transcriptions.join(' ');
+                    
+                    // Adicionar frases características encontradas na transcrição
+                    const newPhrases = extractCharacteristicPhrases(combinedText);
+                    if (newPhrases.length > 0) {
+                      console.log('VoiceRecordingStep: Found characteristic phrases:', newPhrases);
+                      const currentPhrases = formData.commonPhrases.filter(p => p.trim());
+                      const uniquePhrases = [...new Set([...currentPhrases, ...newPhrases])];
+                      updateFormData({ commonPhrases: uniquePhrases });
+                    }
+                    
+                    // Detectar estilo de fala baseado na transcrição
+                    const detectedStyle = analyzeSpechStyle(combinedText);
+                    if (detectedStyle && !formData.talkingStyle) {
+                      console.log('VoiceRecordingStep: Detected talking style:', detectedStyle);
+                      updateFormData({ talkingStyle: detectedStyle });
+                    }
                   }
+                  
+                  console.log('VoiceRecordingStep: Voice processing completed successfully');
+                } catch (error) {
+                  console.error('VoiceRecordingStep: Error in onVoiceProcessed:', error);
                 }
               }}
               onSkip={handleNext}

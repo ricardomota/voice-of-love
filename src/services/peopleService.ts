@@ -45,18 +45,26 @@ export const peopleService = {
   },
 
   async createPerson(personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>): Promise<Person> {
-    console.log('peopleService: createPerson called with:', personData);
+    console.log('peopleService: createPerson called with:', {
+      name: personData.name,
+      voiceSettings: personData.voiceSettings,
+      memoriesCount: personData.memories?.length || 0
+    });
     
     // Sanitize person data before saving
     const sanitizedData = sanitizePersonData(personData);
+    console.log('peopleService: sanitized data:', sanitizedData);
     
     const { data: user, error: authError } = await supabase.auth.getUser();
     if (authError || !user.user) {
-      console.error('Auth error:', authError);
+      console.error('peopleService: Auth error:', authError);
       throw new Error('Usuário não autenticado. Faça login novamente.');
     }
 
+    console.log('peopleService: User authenticated:', user.user.id);
+
     // First create the person
+    console.log('peopleService: Inserting person into database...');
     const { data: person, error: personError } = await supabase
       .from('people')
       .insert({
@@ -82,10 +90,16 @@ export const peopleService = {
       .select()
       .single();
 
-    if (personError) throw personError;
+    if (personError) {
+      console.error('peopleService: Person insert error:', personError);
+      throw new Error(`Erro ao criar pessoa: ${personError.message}`);
+    }
+
+    console.log('peopleService: Person created successfully:', person.id);
 
     // Then create the memories
     if (personData.memories.length > 0) {
+      console.log('peopleService: Inserting memories...', personData.memories.length);
       const { error: memoriesError } = await supabase
         .from('memories')
         .insert(
@@ -98,11 +112,19 @@ export const peopleService = {
           }))
         );
 
-      if (memoriesError) throw memoriesError;
+      if (memoriesError) {
+        console.error('peopleService: Memories insert error:', memoriesError);
+        throw new Error(`Erro ao salvar memórias: ${memoriesError.message}`);
+      }
+
+      console.log('peopleService: Memories inserted successfully');
     }
 
     // Fetch the complete person with memories
-    return this.getPersonById(person.id);
+    console.log('peopleService: Fetching complete person data...');
+    const completePerson = await this.getPersonById(person.id);
+    console.log('peopleService: Person creation completed successfully');
+    return completePerson;
   },
 
   async getPersonById(id: string): Promise<Person> {
