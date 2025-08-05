@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface VoiceRecordingStepProps {
   personName: string;
-  existingVoiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number }> };
+  existingVoiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number; transcription?: string }> };
   onVoiceRecorded?: (audioBlob: Blob, duration: number) => void;
   onVoiceProcessed?: (voiceId: string, transcriptions: string[]) => void;
   onSkip: () => void;
@@ -463,27 +463,51 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
             <h4 className="font-medium text-left">Áudios já adicionados:</h4>
             <span className="text-sm text-muted-foreground">{existingAudioFiles.length} arquivo{existingAudioFiles.length > 1 ? 's' : ''}</span>
           </div>
-          <div className="space-y-2 max-h-32 overflow-y-auto">
+          <div className="space-y-3 max-h-48 overflow-y-auto">
             {existingAudioFiles.map((audioFile, index) => (
-              <div key={index} className="flex items-center justify-between gap-2 p-3 bg-muted/30 rounded-lg border">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                  <span className="text-sm truncate">{audioFile.name}</span>
-                  {audioFile.duration && (
-                    <span className="text-xs text-muted-foreground">
-                      {formatDuration(audioFile.duration)}
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  {audioFile.url && (
-                    <audio controls className="h-8">
-                      <source src={audioFile.url} type="audio/mpeg" />
-                    </audio>
+              <div key={index} className="p-4 bg-muted/30 rounded-lg border">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="w-3 h-3 bg-green-500 rounded-full flex-shrink-0"></div>
+                      <span className="text-sm font-medium truncate">{audioFile.name}</span>
+                      {audioFile.duration && (
+                        <span className="text-xs text-muted-foreground px-2 py-1 bg-background/50 rounded">
+                          {formatDuration(audioFile.duration)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {audioFile.url && (
+                        <audio controls className="h-8 max-w-32">
+                          <source src={audioFile.url} type="audio/mpeg" />
+                        </audio>
+                      )}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
+                        title="Remover áudio"
+                      >
+                        ✕
+                      </Button>
+                    </div>
+                  </div>
+                  {audioFile.transcription && (
+                    <div className="pl-6">
+                      <p className="text-xs text-muted-foreground italic bg-background/30 p-2 rounded">
+                        "{audioFile.transcription}"
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>
             ))}
+          </div>
+          <div className="text-center">
+            <Button variant="outline" size="sm">
+              Adicionar mais áudios
+            </Button>
           </div>
         </div>
       )}
