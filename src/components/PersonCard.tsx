@@ -377,16 +377,15 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           </Button>
         )}
 
-        {/* CTAs principais com o mesmo peso */}
-        <div className="grid grid-cols-3 gap-2">
+        {/* CTAs principais com destaque e espaçamento adequado */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
           <Button 
             onClick={() => onChat(id)}
-            className="w-full h-10 sm:h-12"
+            className="w-full h-12 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
             size="lg"
-            variant="glass"
           >
-            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-            <span className="text-xs sm:text-sm">Chat</span>
+            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+            <span className="text-sm font-medium">Chat</span>
           </Button>
 
           {/* Botão de receber áudio */}
@@ -396,24 +395,22 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             trigger={
               <Button
                 onClick={(e) => e.stopPropagation()}
-                className="w-full h-10 sm:h-12"
+                className="w-full h-12 sm:h-14 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 size="lg"
-                variant="outline"
               >
                 <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span className="text-xs sm:text-sm">Receber Áudio</span>
+                <span className="text-xs sm:text-sm font-medium">Receber</span>
               </Button>
             }
           />
           ) : (
             <Button
               disabled
-              className="w-full h-10 sm:h-12"
+              className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium"
               size="lg"
-              variant="outline"
             >
-              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-              <span className="text-xs sm:text-sm">Receber</span>
+              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <span className="text-xs sm:text-sm font-medium">Receber</span>
             </Button>
           )}
 
@@ -424,24 +421,22 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               trigger={
                 <Button
                   onClick={(e) => e.stopPropagation()}
-                  className="w-full h-10 sm:h-12"
+                  className="w-full h-12 sm:h-14 bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                   size="lg"
-                  variant="secondary"
                 >
-                  <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-                  <span className="text-xs sm:text-sm">Áudio</span>
+                  <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  <span className="text-sm font-medium">Áudio</span>
                 </Button>
               }
             />
           ) : (
             <Button
               disabled
-              className="w-full h-10 sm:h-12"
+              className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium"
               size="lg"
-              variant="secondary"
             >
-              <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-              <span className="text-xs sm:text-sm">Áudio</span>
+              <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <span className="text-sm font-medium">Áudio</span>
             </Button>
           )}
         </div>
