@@ -16,10 +16,7 @@ export function useAuth() {
     // Get initial session
     console.log('useAuth: Checking initial session...');
     authService.getCurrentUser().then(({ user, error }) => {
-      console.log('useAuth: Initial session result:', { user: !!user, error });
-      if (error) {
-        console.error('useAuth: Error getting initial user:', error);
-      }
+      console.log('useAuth: Initial session result:', { user: !!user, error: error?.message });
       setUser(user);
       setLoading(false);
     }).catch((error) => {

@@ -5,6 +5,9 @@ export const authService = {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`
+      }
     });
     return { data, error };
   },
@@ -23,8 +26,8 @@ export const authService = {
   },
 
   async getCurrentUser() {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    return { user, error };
+    const { data: { session }, error } = await supabase.auth.getSession();
+    return { user: session?.user || null, error };
   },
 
   onAuthStateChange(callback: (event: string, session: any) => void) {
