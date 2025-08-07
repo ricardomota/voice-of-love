@@ -299,30 +299,74 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             <span className="text-xs sm:text-sm">Adicionar Memória</span>
           </Button>}
 
-        {/* CTAs principais com destaque e espaçamento adequado */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
-          <Button onClick={() => onChat(id)} size="lg" className="w-full h-12 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 mx-0 py-[2px] px-[12px]">
-            <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            <span className="text-sm font-medium">Chat</span>
+        {/* CTAs principais com hierarquia e espaçamento otimizado */}
+        <div className="space-y-4">
+          {/* Botão principal - Chat (destaque máximo) */}
+          <Button 
+            onClick={() => onChat(id)} 
+            size="lg" 
+            className="w-full h-14 sm:h-16 bg-primary hover:bg-primary/90 text-primary-foreground border-0 rounded-2xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-base sm:text-lg"
+          >
+            <Chat className="w-5 h-5 sm:w-6 sm:h-6 mr-3" />
+            <span className="font-semibold">Conversar</span>
           </Button>
 
-          {/* Botão de receber áudio */}
-          {person ? <VoiceMessageGenerator person={person} trigger={<Button onClick={e => e.stopPropagation()} size="lg" className="w-full h-12 sm:h-14 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 px-[6px] py-[3px]">
+          {/* Botões secundários - Grid responsivo */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+            {/* Botão de receber áudio */}
+            {person ? (
+              <VoiceMessageGenerator 
+                person={person} 
+                trigger={
+                  <Button 
+                    onClick={e => e.stopPropagation()} 
+                    size="lg" 
+                    variant="secondary"
+                    className="w-full h-12 sm:h-14 bg-secondary hover:bg-secondary/80 text-secondary-foreground border-0 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.01]"
+                  >
+                    <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                    <span className="text-sm sm:text-base font-medium">Receber</span>
+                  </Button>
+                } 
+              />
+            ) : (
+              <Button 
+                disabled 
+                className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
+                size="lg"
+              >
                 <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span className="text-xs sm:text-sm font-medium">Receber</span>
-              </Button>} /> : <Button disabled className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium" size="lg">
-              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              <span className="text-xs sm:text-sm font-medium">Receber</span>
-            </Button>}
+                <span className="text-sm sm:text-base font-medium">Receber</span>
+              </Button>
+            )}
 
-          {/* Botão de conversa por áudio */}
-          {person ? <AudioChat person={person} trigger={<Button onClick={e => e.stopPropagation()} size="lg" className="w-full h-12 sm:h-14 bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 py-[3px] px-[11px]">
-                  <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  <span className="text-sm font-medium">Áudio</span>
-                </Button>} /> : <Button disabled className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium" size="lg">
-              <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              <span className="text-sm font-medium">Áudio</span>
-            </Button>}
+            {/* Botão de conversa por áudio */}
+            {person ? (
+              <AudioChat 
+                person={person} 
+                trigger={
+                  <Button 
+                    onClick={e => e.stopPropagation()} 
+                    size="lg" 
+                    variant="secondary"
+                    className="w-full h-12 sm:h-14 bg-secondary hover:bg-secondary/80 text-secondary-foreground border-0 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.01]"
+                  >
+                    <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                    <span className="text-sm sm:text-base font-medium">Áudio</span>
+                  </Button>
+                } 
+              />
+            ) : (
+              <Button 
+                disabled 
+                className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
+                size="lg"
+              >
+                <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <span className="text-sm sm:text-base font-medium">Áudio</span>
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Configurações de voz */}
