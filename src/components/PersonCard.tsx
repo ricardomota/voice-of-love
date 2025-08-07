@@ -15,7 +15,6 @@ import { Memory, Person } from "@/types/person";
 import { VoiceMessageGenerator } from "@/components/VoiceMessageGenerator";
 import { VoiceSettings } from "@/components/VoiceSettings";
 import { AudioChat } from "@/components/AudioChat";
-
 interface PersonCardProps {
   id: string;
   name: string;
@@ -25,7 +24,15 @@ interface PersonCardProps {
   avatar?: string;
   memoriesCount: number;
   memories?: Memory[];
-  voiceSettings?: { hasRecording: boolean; voiceId?: string; audioFiles?: Array<{ name: string; url: string; duration?: number }> };
+  voiceSettings?: {
+    hasRecording: boolean;
+    voiceId?: string;
+    audioFiles?: Array<{
+      name: string;
+      url: string;
+      duration?: number;
+    }>;
+  };
   lastConversation?: Date;
   updatedAt: Date;
   person?: Person; // Pessoa completa para VoiceMessageGenerator
@@ -35,7 +42,6 @@ interface PersonCardProps {
   onDelete?: () => void;
   className?: string;
 }
-
 export const PersonCard: React.FC<PersonCardProps> = ({
   id,
   name,
@@ -57,43 +63,41 @@ export const PersonCard: React.FC<PersonCardProps> = ({
 }: PersonCardProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMemoriesDialogOpen, setIsMemoriesDialogOpen] = useState(false);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const getRelationshipColor = (rel: string) => {
     const lowerRel = rel.toLowerCase();
     if (lowerRel.includes('mãe') || lowerRel.includes('pai')) return 'love';
     if (lowerRel.includes('avô') || lowerRel.includes('avó')) return 'memory';
     return 'accent';
   };
-
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
       await peopleService.deletePerson(id);
       toast({
         title: "Pessoa removida",
-        description: `${name} foi removido com sucesso.`,
+        description: `${name} foi removido com sucesso.`
       });
       onDelete?.();
     } catch (error) {
       toast({
         title: "Erro",
         description: "Não foi possível remover a pessoa.",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setIsDeleting(false);
     }
   };
-
   const calculateAge = () => {
     if (birthDate) {
       const birth = new Date(birthDate);
       const today = new Date();
       let age = today.getFullYear() - birth.getFullYear();
       const monthDiff = today.getMonth() - birth.getMonth();
-      
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      if (monthDiff < 0 || monthDiff === 0 && today.getDate() < birth.getDate()) {
         age--;
       }
       return age;
@@ -102,16 +106,14 @@ export const PersonCard: React.FC<PersonCardProps> = ({
     }
     return null;
   };
-
   const getLearningLevel = () => {
-    return { level: 'Iniciante', progress: 10, color: 'bg-gray-500' };
+    return {
+      level: 'Iniciante',
+      progress: 10,
+      color: 'bg-gray-500'
+    };
   };
-
-  return (
-    <Card className={cn(
-      "group cursor-pointer parallax-slow ios-focus overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-accent/20",
-      className
-    )}>
+  return <Card className={cn("group cursor-pointer parallax-slow ios-focus overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-accent/20", className)}>
       <CardContent className="p-4 sm:p-8 relative">
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-3 sm:space-x-5 flex-1 min-w-0">
@@ -124,72 +126,53 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-lg sm:text-xl text-foreground leading-tight mb-2 truncate">{name}</h3>
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <Badge 
-                  variant="secondary" 
-                  className={cn(
-                    "backdrop-blur-sm border border-white/30 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm",
-                    getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
-                    getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
-                    getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent"
-                  )}
-                >
+                <Badge variant="secondary" className={cn("backdrop-blur-sm border border-white/30 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm", getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600", getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600", getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent")}>
                   {relationship}
                 </Badge>
                 
-                {lastConversation && (
-                  <div className="text-xs text-muted-foreground/70 hidden sm:block">
+                {lastConversation && <div className="text-xs text-muted-foreground/70 hidden sm:block">
                     {(() => {
-                      const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
-                      if (daysAgo === 0) return "conversaram hoje";
-                      if (daysAgo === 1) return "conversaram ontem";
-                      if (daysAgo <= 7) return `conversaram há ${daysAgo} dias`;
-                      if (daysAgo <= 30) return `conversaram há ${Math.floor(daysAgo / 7)} semanas`;
-                      return `conversaram há ${Math.floor(daysAgo / 30)} meses`;
-                    })()}
-                  </div>
-                )}
+                  const daysAgo = Math.floor((Date.now() - lastConversation.getTime()) / (1000 * 60 * 60 * 24));
+                  if (daysAgo === 0) return "conversaram hoje";
+                  if (daysAgo === 1) return "conversaram ontem";
+                  if (daysAgo <= 7) return `conversaram há ${daysAgo} dias`;
+                  if (daysAgo <= 30) return `conversaram há ${Math.floor(daysAgo / 7)} semanas`;
+                  return `conversaram há ${Math.floor(daysAgo / 30)} meses`;
+                })()}
+                  </div>}
               </div>
               
               <div className="text-xs text-muted-foreground/50 mt-1 hidden sm:block">
                 {(() => {
-                  const updatedDaysAgo = Math.floor((Date.now() - new Date(updatedAt).getTime()) / (1000 * 60 * 60 * 24));
-                  if (updatedDaysAgo === 0) return "atualizado hoje";
-                  if (updatedDaysAgo === 1) return "atualizado ontem";
-                  if (updatedDaysAgo <= 7) return `atualizado há ${updatedDaysAgo} dias`;
-                  if (updatedDaysAgo <= 30) return `atualizado há ${Math.floor(updatedDaysAgo / 7)} semanas`;
-                  return `atualizado há ${Math.floor(updatedDaysAgo / 30)} meses`;
-                })()}
+                const updatedDaysAgo = Math.floor((Date.now() - new Date(updatedAt).getTime()) / (1000 * 60 * 60 * 24));
+                if (updatedDaysAgo === 0) return "atualizado hoje";
+                if (updatedDaysAgo === 1) return "atualizado ontem";
+                if (updatedDaysAgo <= 7) return `atualizado há ${updatedDaysAgo} dias`;
+                if (updatedDaysAgo <= 30) return `atualizado há ${Math.floor(updatedDaysAgo / 7)} semanas`;
+                return `atualizado há ${Math.floor(updatedDaysAgo / 30)} meses`;
+              })()}
               </div>
             </div>
           </div>
           
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                onSettings(id);
-              }}
-              className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10"
-            >
+            <Button variant="ghost" size="icon" onClick={e => {
+            e.stopPropagation();
+            onSettings(id);
+          }} className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10">
               <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10"
-                >
+                <Button variant="ghost" size="icon" className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10">
                   <MoreVert className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-red-600 focus:text-red-600">
+                    <DropdownMenuItem onSelect={e => e.preventDefault()} className="text-red-600 focus:text-red-600">
                       <Delete className="w-4 h-4 mr-2" />
                       Remover pessoa
                     </DropdownMenuItem>
@@ -203,11 +186,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     </AlertDialogHeader>
                     <AlertDialogFooter className="flex-col sm:flex-row gap-2">
                       <AlertDialogCancel className="w-full sm:w-auto">Cancelar</AlertDialogCancel>
-                      <AlertDialogAction 
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                        className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white"
-                      >
+                      <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white">
                         {isDeleting ? "Removendo..." : "Remover definitivamente"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -222,26 +201,17 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-3 sm:px-4 py-2 backdrop-blur-sm">
             <div className="flex items-center">
               {(() => {
-                const age = calculateAge();
-                return age !== null ? (
-                  <>
+              const age = calculateAge();
+              return age !== null ? <>
                     <CalendarToday className="w-4 h-4 mr-2" />
                     <span className="text-xs sm:text-sm">{age} anos</span>
-                  </>
-                ) : (
-                  <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>
-                );
-              })()}
+                  </> : <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>;
+            })()}
             </div>
             <div className="flex items-center gap-4">
               <Dialog open={isMemoriesDialogOpen} onOpenChange={setIsMemoriesDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button
-                    variant="ghost" 
-                    size="sm"
-                    className="h-auto p-0 hover:bg-transparent"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <Button variant="ghost" size="sm" className="h-auto p-0 hover:bg-transparent" onClick={e => e.stopPropagation()}>
                     <div className="flex items-center">
                       <Favorite className="w-4 h-4 mr-2" />
                       <span className="text-xs sm:text-sm">
@@ -255,93 +225,51 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     <DialogTitle>Memórias de {name}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
-                    {memories.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
+                    {memories.length === 0 ? <div className="text-center py-8 text-muted-foreground">
                         <Favorite className="w-12 h-12 mx-auto mb-4 opacity-50" />
                         <p>Nenhuma memória registrada ainda.</p>
-                        {onAddMemory && (
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              setIsMemoriesDialogOpen(false);
-                              onAddMemory(id);
-                            }}
-                            className="mt-4"
-                          >
+                        {onAddMemory && <Button variant="outline" onClick={() => {
+                      setIsMemoriesDialogOpen(false);
+                      onAddMemory(id);
+                    }} className="mt-4">
                             <Add className="w-4 h-4 mr-2" />
                             Adicionar primeira memória
-                          </Button>
-                        )}
-                      </div>
-                    ) : (
-                      <>
+                          </Button>}
+                      </div> : <>
                         <div className="grid gap-4">
-                          {memories.map((memory) => (
-                            <Card key={memory.id} className="p-4">
+                          {memories.map(memory => <Card key={memory.id} className="p-4">
                               <div className="space-y-3">
-                                {memory.mediaUrl && (
-                                  <div className="relative">
-                                    {memory.mediaType === 'image' && (
-                                      <img 
-                                        src={memory.mediaUrl} 
-                                        alt="Memória" 
-                                        className="w-full h-32 object-cover rounded-lg"
-                                      />
-                                    )}
-                                    {memory.mediaType === 'video' && (
-                                      <video 
-                                        src={memory.mediaUrl} 
-                                        controls 
-                                        className="w-full h-32 rounded-lg"
-                                      />
-                                    )}
-                                    {memory.mediaType === 'audio' && (
-                                      <audio 
-                                        src={memory.mediaUrl} 
-                                        controls 
-                                        className="w-full"
-                                      />
-                                    )}
+                                {memory.mediaUrl && <div className="relative">
+                                    {memory.mediaType === 'image' && <img src={memory.mediaUrl} alt="Memória" className="w-full h-32 object-cover rounded-lg" />}
+                                    {memory.mediaType === 'video' && <video src={memory.mediaUrl} controls className="w-full h-32 rounded-lg" />}
+                                    {memory.mediaType === 'audio' && <audio src={memory.mediaUrl} controls className="w-full" />}
                                     <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
                                       <Image className="w-4 h-4 text-white" />
                                     </div>
-                                  </div>
-                                )}
+                                  </div>}
                                 <p className="text-sm leading-relaxed">{memory.text}</p>
                                 <div className="flex justify-end gap-2">
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => {
-                                      setIsMemoriesDialogOpen(false);
-                                      onAddMemory?.(id);
-                                    }}
-                                  >
+                                  <Button variant="ghost" size="sm" onClick={() => {
+                              setIsMemoriesDialogOpen(false);
+                              onAddMemory?.(id);
+                            }}>
                                     <Edit className="w-4 h-4 mr-2" />
                                     Editar
                                   </Button>
                                 </div>
                               </div>
-                            </Card>
-                          ))}
+                            </Card>)}
                         </div>
-                        {onAddMemory && (
-                          <div className="pt-4 border-t">
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                setIsMemoriesDialogOpen(false);
-                                onAddMemory(id);
-                              }}
-                              className="w-full"
-                            >
+                        {onAddMemory && <div className="pt-4 border-t">
+                            <Button variant="outline" onClick={() => {
+                        setIsMemoriesDialogOpen(false);
+                        onAddMemory(id);
+                      }} className="w-full">
                               <Add className="w-4 h-4 mr-2" />
                               Adicionar nova memória
                             </Button>
-                          </div>
-                        )}
-                      </>
-                    )}
+                          </div>}
+                      </>}
                   </div>
                 </DialogContent>
               </Dialog>
@@ -351,108 +279,56 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 <Mic className="w-4 h-4 mr-2" />
                 <span className="text-xs sm:text-sm">
                   {(() => {
-                    // Primeiro tenta buscar dos audioFiles (tabela), depois do voiceSettings
-                    const audioCount = person?.audioFiles?.length || person?.voiceSettings?.audioFiles?.length || 0;
-                    return audioCount > 0
-                      ? `${audioCount} áudio${audioCount > 1 ? 's' : ''}`
-                      : '0 áudios';
-                  })()}
+                  // Primeiro tenta buscar dos audioFiles (tabela), depois do voiceSettings
+                  const audioCount = person?.audioFiles?.length || person?.voiceSettings?.audioFiles?.length || 0;
+                  return audioCount > 0 ? `${audioCount} áudio${audioCount > 1 ? 's' : ''}` : '0 áudios';
+                })()}
                 </span>
-                {voiceSettings?.hasRecording && voiceSettings?.voiceId && (
-                  <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Clone de voz criado"></span>
-                )}
+                {voiceSettings?.hasRecording && voiceSettings?.voiceId && <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Clone de voz criado"></span>}
               </div>
             </div>
           </div>
         </div>
 
         {/* Botão de adicionar memória */}
-        {onAddMemory && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddMemory(id);
-            }}
-            className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10 mb-4"
-          >
+        {onAddMemory && <Button variant="outline" size="sm" onClick={e => {
+        e.stopPropagation();
+        onAddMemory(id);
+      }} className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10 mb-4">
             <Add className="w-4 h-4 mr-2" />
             <span className="text-xs sm:text-sm">Adicionar Memória</span>
-          </Button>
-        )}
+          </Button>}
 
         {/* CTAs principais com destaque e espaçamento adequado */}
         <div className="grid grid-cols-3 gap-3 sm:gap-4">
-          <Button 
-            onClick={() => onChat(id)}
-            className="w-full h-12 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-            size="lg"
-          >
+          <Button onClick={() => onChat(id)} size="lg" className="w-full h-12 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 mx-0 py-[2px] px-[12px]">
             <Chat className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
             <span className="text-sm font-medium">Chat</span>
           </Button>
 
           {/* Botão de receber áudio */}
-          {person ? (
-          <VoiceMessageGenerator 
-            person={person}
-            trigger={
-              <Button
-                onClick={(e) => e.stopPropagation()}
-                className="w-full h-12 sm:h-14 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                size="lg"
-              >
+          {person ? <VoiceMessageGenerator person={person} trigger={<Button onClick={e => e.stopPropagation()} size="lg" className="w-full h-12 sm:h-14 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 px-[6px] py-[3px]">
                 <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 <span className="text-xs sm:text-sm font-medium">Receber</span>
-              </Button>
-            }
-          />
-          ) : (
-            <Button
-              disabled
-              className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium"
-              size="lg"
-            >
+              </Button>} /> : <Button disabled className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium" size="lg">
               <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               <span className="text-xs sm:text-sm font-medium">Receber</span>
-            </Button>
-          )}
+            </Button>}
 
           {/* Botão de conversa por áudio */}
-          {person ? (
-            <AudioChat 
-              person={person}
-              trigger={
-                <Button
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-full h-12 sm:h-14 bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                  size="lg"
-                >
+          {person ? <AudioChat person={person} trigger={<Button onClick={e => e.stopPropagation()} size="lg" className="w-full h-12 sm:h-14 bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 py-[3px] px-[11px]">
                   <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   <span className="text-sm font-medium">Áudio</span>
-                </Button>
-              }
-            />
-          ) : (
-            <Button
-              disabled
-              className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium"
-              size="lg"
-            >
+                </Button>} /> : <Button disabled className="w-full h-12 sm:h-14 bg-gray-400 text-gray-200 border-0 rounded-xl font-medium" size="lg">
               <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               <span className="text-sm font-medium">Áudio</span>
-            </Button>
-           )}
+            </Button>}
         </div>
 
         {/* Configurações de voz */}
-        {person && person.voiceSettings?.hasRecording && (
-          <div className="mt-4">
+        {person && person.voiceSettings?.hasRecording && <div className="mt-4">
             <VoiceSettings person={person} onUpdate={onDelete} />
-          </div>
-        )}
+          </div>}
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
