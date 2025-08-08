@@ -52,6 +52,27 @@ export type Database = {
           },
         ]
       }
+      config: {
+        Row: {
+          created_at: string
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       conversation_analytics: {
         Row: {
           conversation_date: string
@@ -125,6 +146,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cost_inputs: {
+        Row: {
+          created_at: string
+          elevenlabs_per_min: number | null
+          hosting_per_user_month: number | null
+          id: string
+          openai_per_1k_tokens: number | null
+          target_margin_pct: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          elevenlabs_per_min?: number | null
+          hosting_per_user_month?: number | null
+          id?: string
+          openai_per_1k_tokens?: number | null
+          target_margin_pct?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          elevenlabs_per_min?: number | null
+          hosting_per_user_month?: number | null
+          id?: string
+          openai_per_1k_tokens?: number | null
+          target_margin_pct?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       dynamic_memories: {
         Row: {
@@ -352,11 +403,170 @@ export type Database = {
         }
         Relationships: []
       }
+      plans: {
+        Row: {
+          created_at: string
+          limits: Json | null
+          monthly_price_brl: number | null
+          monthly_price_usd: number | null
+          plan_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          limits?: Json | null
+          monthly_price_brl?: number | null
+          monthly_price_usd?: number | null
+          plan_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          limits?: Json | null
+          monthly_price_brl?: number | null
+          monthly_price_usd?: number | null
+          plan_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      usage_counters: {
+        Row: {
+          created_at: string
+          messages_used: number
+          period: string
+          tts_seconds_used: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          messages_used?: number
+          period: string
+          tts_seconds_used?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          messages_used?: number
+          period?: string
+          tts_seconds_used?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          param_overrides: Json | null
+          plan_id: string
+          preferred_base_voice_id: string | null
+          ui_language: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          param_overrides?: Json | null
+          plan_id?: string
+          preferred_base_voice_id?: string | null
+          ui_language?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          param_overrides?: Json | null
+          plan_id?: string
+          preferred_base_voice_id?: string | null
+          ui_language?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_preferred_base_voice_id_fkey"
+            columns: ["preferred_base_voice_id"]
+            isOneToOne: false
+            referencedRelation: "voices_base"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_voice_assets: {
+        Row: {
+          created_at: string
+          id: string
+          lang: string | null
+          provider_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lang?: string | null
+          provider_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lang?: string | null
+          provider_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      voices_base: {
+        Row: {
+          created_at: string
+          default_params: Json | null
+          gender: string | null
+          id: string
+          lang_supported: string[] | null
+          provider: string
+          style_tags: string[] | null
+          updated_at: string
+          voice_key: string
+        }
+        Insert: {
+          created_at?: string
+          default_params?: Json | null
+          gender?: string | null
+          id?: string
+          lang_supported?: string[] | null
+          provider: string
+          style_tags?: string[] | null
+          updated_at?: string
+          voice_key: string
+        }
+        Update: {
+          created_at?: string
+          default_params?: Json | null
+          gender?: string | null
+          id?: string
+          lang_supported?: string[] | null
+          provider?: string
+          style_tags?: string[] | null
+          updated_at?: string
+          voice_key?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      ensure_usage_row: {
+        Args: { p_user_id: string; p_period: string }
+        Returns: undefined
+      }
       schedule_memory_cleanup: {
         Args: Record<PropertyKey, never>
         Returns: undefined
