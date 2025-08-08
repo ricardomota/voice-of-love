@@ -305,14 +305,16 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           <Button 
             onClick={() => onChat(id)} 
             size="lg" 
-            className="w-full h-14 sm:h-16 bg-primary hover:bg-primary/90 text-primary-foreground border-0 rounded-2xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] text-base sm:text-lg"
+            variant="cta"
+            aria-label={`Conversar com ${name}`}
+            className="w-full h-14 sm:h-16 rounded-2xl text-base sm:text-lg"
           >
             <Chat className="w-5 h-5 sm:w-6 sm:h-6 mr-3" />
             <span className="font-semibold">Conversar</span>
           </Button>
 
           {/* Botões secundários - Grid responsivo */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
             {/* Botão de receber áudio */}
             {person ? (
               <VoiceMessageGenerator 
@@ -322,7 +324,8 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     onClick={e => e.stopPropagation()} 
                     size="lg" 
                     variant="secondary"
-                    className="w-full h-12 sm:h-14 bg-secondary hover:bg-secondary/80 text-secondary-foreground border-0 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.01]"
+                    aria-label={`Gerar mensagem de voz de ${name}`}
+                    className="w-full h-12 sm:h-14 rounded-xl"
                   >
                     <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     <span className="text-sm sm:text-base font-medium">Receber</span>
@@ -332,6 +335,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             ) : (
               <Button 
                 disabled 
+                aria-label="Receber (indisponível)"
                 className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
                 size="lg"
               >
@@ -349,7 +353,8 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     onClick={e => e.stopPropagation()} 
                     size="lg" 
                     variant="secondary"
-                    className="w-full h-12 sm:h-14 bg-secondary hover:bg-secondary/80 text-secondary-foreground border-0 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.01]"
+                    aria-label={`Conversa por áudio com ${name}`}
+                    className="w-full h-12 sm:h-14 rounded-xl"
                   >
                     <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     <span className="text-sm sm:text-base font-medium">Áudio</span>
@@ -359,6 +364,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             ) : (
               <Button 
                 disabled 
+                aria-label="Áudio (indisponível)"
                 className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
                 size="lg"
               >
