@@ -83,7 +83,7 @@ export const useChat = (person: Person) => {
 
       const enhancedPrompt = prompt + memoryContext;
 
-      const { data, error } = await supabase.functions.invoke('openai-chat', {
+      const { data, error } = await supabase.functions.invoke('llm-router', {
         body: {
           messages: [{ role: 'user', content: userMessage }],
           systemPrompt: enhancedPrompt,
