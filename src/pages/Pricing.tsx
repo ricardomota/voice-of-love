@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LandingHeader } from '@/components/landing/LandingHeader';
 import { PricingSection } from '@/components/landing/PricingSection';
 import { PrivacySection } from '@/components/landing/PrivacySection';
@@ -11,9 +12,16 @@ interface PricingPageProps {
 }
 
 export const PricingPage: React.FC<PricingPageProps> = ({ onTryFree, onSignIn }) => {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-background">
-      <LandingHeader onTryFree={onTryFree} onSignIn={onSignIn} />
+      <LandingHeader 
+        onTryFree={onTryFree} 
+        onSignIn={onSignIn} 
+        onHowItWorks={() => navigate('/how-it-works')}
+        onPricing={() => navigate('/pricing')}
+      />
       
       <main className="pt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
