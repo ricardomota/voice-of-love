@@ -1,9 +1,10 @@
 import React from 'react';
 import { LandingHeader } from './LandingHeader';
-import { SimpleHero } from './SimpleHero';
+import { ModernHero } from './ModernHero';
+import { FeaturesShowcase } from './FeaturesShowcase';
 import { PersonalStory } from './PersonalStory';
-import { HomeStats } from './HomeStats';
 import { LandingFooter } from './LandingFooter';
+import { ConversionBand } from './ConversionBand';
 
 interface SimpleLandingPageProps {
   onTryFree: () => void;
@@ -11,21 +12,18 @@ interface SimpleLandingPageProps {
   onLearnMore: () => void;
 }
 
-export const SimpleLandingPage: React.FC<SimpleLandingPageProps> = ({ 
-  onTryFree, 
-  onSignIn, 
-  onLearnMore 
+export const SimpleLandingPage: React.FC<SimpleLandingPageProps> = ({
+  onTryFree,
+  onSignIn,
+  onLearnMore
 }) => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <LandingHeader onTryFree={onTryFree} onSignIn={onSignIn} onHowItWorks={onLearnMore} />
-      
-      <main>
-        <SimpleHero onTryFree={onTryFree} onLearnMore={onLearnMore} />
-        <PersonalStory onGetStarted={onTryFree} />
-        <HomeStats onGetStarted={onTryFree} />
-      </main>
-      
+      <ModernHero onTryFree={onTryFree} onLearnMore={onLearnMore} />
+      <FeaturesShowcase />
+      <PersonalStory onGetStarted={onTryFree} />
+      <ConversionBand onTryFree={onTryFree} />
       <LandingFooter onTryFree={onTryFree} onSignIn={onSignIn} />
     </div>
   );
