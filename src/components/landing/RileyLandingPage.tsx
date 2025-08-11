@@ -14,7 +14,6 @@ import {
   Close, 
   ArrowRight, 
   PlayFilled, 
-  SecurityServices, 
   Time, 
   Star, 
   Flash, 
@@ -25,10 +24,11 @@ import {
   Settings, 
   Share, 
   Code, 
-  DataBase,
+  Db2Database,
   UserProfile,
   CloudUpload,
-  VoiceActivate
+  Microphone as VoiceActivate,
+  Security as SecurityServices
 } from '@carbon/icons-react';
 
 interface RileyLandingPageProps {
@@ -179,7 +179,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
       description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
     },
     {
-      icon: <DataBase size={32} />,
+      icon: <Db2Database size={32} />,
       title: "Supabase Backend",
       description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
     },
