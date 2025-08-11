@@ -304,17 +304,17 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           {/* Botão principal - Chat (destaque máximo) */}
           <Button 
             onClick={() => onChat(id)} 
-            size="lg" 
+            size="xl" 
             variant="cta"
             aria-label={`Conversar com ${name}`}
-            className="w-full h-14 sm:h-16 rounded-2xl text-base sm:text-lg"
+            className="w-full max-w-xs mx-auto md:max-w-full"
           >
             <Chat className="w-5 h-5 sm:w-6 sm:h-6 mr-3" />
-            <span className="font-semibold">Conversar</span>
+            <span>Conversar</span>
           </Button>
 
           {/* Botões secundários - Grid responsivo */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* Botão de receber áudio */}
             {person ? (
               <VoiceMessageGenerator 
@@ -325,10 +325,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     size="lg" 
                     variant="secondary"
                     aria-label={`Gerar mensagem de voz de ${name}`}
-                    className="w-full h-12 sm:h-14 rounded-xl"
+                    className="w-full h-12 md:h-14"
                   >
                     <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    <span className="text-sm sm:text-base font-medium">Receber</span>
+                    <span>Receber</span>
                   </Button>
                 } 
               />
@@ -336,11 +336,12 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <Button 
                 disabled 
                 aria-label="Receber (indisponível)"
-                className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
+                className="w-full h-12 md:h-14" 
                 size="lg"
+                variant="secondary"
               >
                 <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span className="text-sm sm:text-base font-medium">Receber</span>
+                <span>Receber</span>
               </Button>
             )}
 
@@ -354,10 +355,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     size="lg" 
                     variant="secondary"
                     aria-label={`Conversa por áudio com ${name}`}
-                    className="w-full h-12 sm:h-14 rounded-xl"
+                    className="w-full h-12 md:h-14"
                   >
                     <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    <span className="text-sm sm:text-base font-medium">Áudio</span>
+                    <span>Áudio</span>
                   </Button>
                 } 
               />
@@ -365,11 +366,12 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <Button 
                 disabled 
                 aria-label="Áudio (indisponível)"
-                className="w-full h-12 sm:h-14 bg-muted text-muted-foreground border-0 rounded-xl font-medium" 
+                className="w-full h-12 md:h-14" 
                 size="lg"
+                variant="secondary"
               >
                 <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span className="text-sm sm:text-base font-medium">Áudio</span>
+                <span>Áudio</span>
               </Button>
             )}
           </div>

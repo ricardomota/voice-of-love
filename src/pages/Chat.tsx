@@ -311,9 +311,8 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
       {currentAudio && (
         <div className="p-4 border-t">
           <AudioPlayer
-            src={currentAudio}
+            audioSrc={currentAudio}
             onEnded={() => setCurrentAudio(null)}
-            autoPlay={true}
           />
         </div>
       )}

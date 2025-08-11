@@ -122,18 +122,19 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <Button 
             onClick={onUpgrade}
-            className="w-full"
-            size="lg"
+            className="w-full max-w-xs mx-auto md:max-w-full"
+            size="xl"
+            variant="cta"
           >
             {content.ctaPrimary}
           </Button>
           <Button 
-            variant="outline" 
+            variant="secondary" 
             onClick={onClose}
-            className="w-full"
+            className="w-full max-w-xs mx-auto md:max-w-full"
             size="lg"
           >
             {content.ctaSecondary}

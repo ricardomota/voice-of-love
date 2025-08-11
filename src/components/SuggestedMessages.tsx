@@ -47,11 +47,11 @@ export const SuggestedMessages = ({ onSelectMessage, personName }: SuggestedMess
               onClick={() => onSelectMessage(suggestion.text)}
               className={`
                 ${suggestion.color}
-                text-left justify-start h-auto p-3 transition-smooth
-                hover:scale-[1.02] hover:shadow-soft
+                text-left justify-start h-auto p-4 min-h-[44px] transition-all duration-300
+                hover:scale-[1.01] hover:shadow-md
               `}
             >
-              <IconComponent className="w-4 h-4 mr-2 flex-shrink-0" />
+              <IconComponent className="w-4 h-4 mr-3 flex-shrink-0" />
               <span className="text-sm leading-relaxed">
                 {suggestion.text}
               </span>

@@ -49,8 +49,8 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
             <Button 
               onClick={onCreatePerson}
               size="lg"
-              variant="glass"
-              className="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium"
+              variant="default"
+              className="w-full sm:w-auto max-w-xs sm:max-w-none"
             >
               <Add className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
               <span className="whitespace-nowrap">Nova Pessoa</span>
@@ -117,9 +117,9 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
               
               <Button 
                 onClick={onCreatePerson}
-                size="lg"
-                variant="glass"
-                className="w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-sm sm:text-base font-medium"
+                size="xl"
+                variant="cta"
+                className="w-full max-w-xs mx-auto sm:max-w-none"
               >
                 <Add className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
                 <span className="whitespace-nowrap">Criar Primeira Pessoa</span>

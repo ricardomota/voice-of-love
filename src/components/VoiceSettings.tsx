@@ -329,11 +329,12 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
                 </div>
 
                 {/* Ações */}
-                <div className="flex gap-3 pt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                   <Button
                     onClick={generateTestMessage}
                     disabled={isGenerating}
-                    className="flex-1"
+                    size="lg"
+                    className="w-full"
                   >
                     <PlayArrow className="w-4 h-4 mr-2" />
                     {isGenerating ? 'Gerando...' : 'Testar Voz'}
@@ -341,8 +342,9 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
                   
                   <Button
                     onClick={updateVoiceSettings}
-                    variant="outline"
-                    className="flex-1"
+                    variant="secondary"
+                    size="lg"
+                    className="w-full"
                   >
                     Salvar Configurações
                   </Button>

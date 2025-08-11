@@ -29,11 +29,11 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
           
           <Button 
             onClick={onCreatePerson}
-            className="w-full mb-10 min-h-[48px] sm:min-h-[64px] text-xs sm:text-base lg:text-lg px-4 sm:px-6 py-3 sm:py-5 rounded-xl"
-            size="lg"
+            className="w-full max-w-xs mx-auto md:max-w-full mb-10"
+            size="xl"
             variant="cta"
           >
-            <Add className="w-5 h-5 xs:w-6 xs:h-6 mr-3 xs:mr-4 flex-shrink-0" />
+            <Add className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
             <span className="whitespace-nowrap leading-tight text-center">Criar Primeira Pessoa Eterna</span>
           </Button>
           
