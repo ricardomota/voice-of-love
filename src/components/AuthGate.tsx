@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthGateProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export function AuthGate({ children }: AuthGateProps) {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -45,12 +47,15 @@ export function AuthGate({ children }: AuthGateProps) {
 
         if (error) throw error;
 
-        if (type === 'signup') {
-          toast({
-            title: "Sucesso",
-            description: "Conta criada! Verifique seu email para confirmar."
-          });
-        }
+if (type === 'signup') {
+  toast({
+    title: "Sucesso",
+    description: "Conta criada! Verifique seu email para confirmar."
+  });
+} else {
+  // Redireciona para a área principal após login
+  navigate('/auth');
+}
       } catch (error: any) {
         toast({
           title: "Erro",
