@@ -22,13 +22,13 @@ const getContent = (language: string) => {
       },
       cta: "Start Now",
       hero: {
-        badge: "❤️ Made for Alzheimer's families",
-        title: "Keep Their Voice Forever",
-        subtitle: "AI-Powered Memory Preservation",
-        description: "Eterna turns cherished memories into living conversations. Preserve your loved one's voice and personality with AI that understands what matters most to families facing memory loss.",
-        buttonPrimary: "Try Eterna Free",
-        buttonSecondary: "See How It Works",
-        note: "No credit card required • 5 messages to start"
+        badge: "❤️ Feito especialmente para famílias",
+        title: "Preserve a Voz de Quem Você Ama",
+        subtitle: "Para Sempre",
+        description: "Transforme memórias preciosas em conversas reais. Com inteligência artificial avançada, você pode ouvir a voz e sentir a presença de quem mais ama, mesmo quando as memórias começam a desaparecer.",
+        buttonPrimary: "Começar Agora - É Grátis",
+        buttonSecondary: "Ver Como Funciona",
+        note: "✨ Sem cartão de crédito • Primeiras 5 conversas gratuitas"
       },
       features: {
         title: "Everything You Need",
@@ -147,117 +147,117 @@ const getContent = (language: string) => {
       },
       cta: "Começar Agora",
       hero: {
-        badge: "❤️ Feito para famílias com Alzheimer",
-        title: "Mantenha Sua Voz Para Sempre",
-        subtitle: "Preservação de Memórias com IA",
-        description: "O Eterna transforma memórias queridas em conversas vivas. Preserve a voz e personalidade do seu ente querido com IA que entende o que mais importa para famílias enfrentando perda de memória.",
-        buttonPrimary: "Experimente o Eterna Grátis",
-        buttonSecondary: "Veja Como Funciona",
-        note: "Não precisa de cartão de crédito • 5 mensagens para começar"
+        badge: "❤️ Feito especialmente para famílias",
+        title: "Preserve a Voz de Quem Você Ama",
+        subtitle: "Para Sempre",
+        description: "Transforme memórias preciosas em conversas reais. Com inteligência artificial avançada, você pode ouvir a voz e sentir a presença de quem mais ama, mesmo quando as memórias começam a desaparecer.",
+        buttonPrimary: "Começar Agora - É Grátis",
+        buttonSecondary: "Ver Como Funciona",
+        note: "✨ Sem cartão de crédito • Primeiras 5 conversas gratuitas"
       },
       features: {
-        title: "Tudo Que Você Precisa",
-        subtitle: "Preserve Memórias, Conecte Corações",
+        title: "Criado para Momentos que Importam",
+        subtitle: "Tecnologia que preserva o essencial: a conexão humana",
         items: [
           {
             icon: "🎤",
-            title: "Clonagem de Voz",
-            description: "IA avançada captura padrões únicos de fala e personalidade",
+            title: "Voz Autêntica",
+            description: "Capture cada nuance da voz que você ama. Nossa IA preserva não apenas as palavras, mas a essência de como elas eram ditas.",
             color: "card-voice-cloning"
           },
           {
             icon: "👨‍👩‍👧‍👦",
-            title: "Perfis de Família",
-            description: "Crie perfis detalhados para cada ente querido com fotos e memórias", 
+            title: "Memórias de Família",
+            description: "Organize fotos, histórias e momentos especiais em um só lugar. Cada perfil conta uma história única e pessoal.", 
             color: "card-family-profiles"
           },
           {
             icon: "💬",
-            title: "Conversas Naturais",
-            description: "Converse naturalmente com IA que responde como seu ente querido",
+            title: "Conversas Reais",
+            description: "Não é apenas texto na tela. É uma conversa genuína que traz de volta a sensação de estar presente com quem você ama.",
             color: "card-conversations"
           },
           {
             icon: "🔒",
-            title: "Privacidade em Primeiro Lugar",
-            description: "Os dados da sua família são criptografados e nunca compartilhados",
+            title: "Totalmente Privado",
+            description: "Suas memórias são sagradas. Todos os dados são criptografados e nunca compartilhados. Apenas sua família tem acesso.",
             color: "card-privacy"
           },
           {
             icon: "🧠",
-            title: "Preservação de Memórias",
-            description: "Especialmente projetado para famílias enfrentando Alzheimer e demência",
+            title: "Feito para Durar",
+            description: "Especialmente criado para famílias enfrentando o Alzheimer. Preservamos o que é mais importante: a pessoa por trás das palavras.",
             color: "card-memory"
           },
           {
             icon: "❤️",
-            title: "Feito com Amor",
-            description: "Criado por alguém que entende a dor da perda de memória",
+            title: "Criado com Propósito",
+            description: "Nasceu da necessidade real de uma filha que queria preservar a voz da mãe. Cada feature foi pensada com amor e cuidado.",
             color: "card-love"
           }
         ]
       },
       howItWorks: {
-        title: "Como Funciona",
+        title: "Simples Como uma Conversa",
         steps: [
           {
             icon: "1️⃣",
-            title: "Crie o Perfil",
-            description: "Adicione fotos, gravações de voz e memórias do seu ente querido"
+            title: "Compartilhe as Memórias",
+            description: "Envie fotos, áudios da voz e conte as histórias que vocês viveram juntos. Cada detalhe importa para recriar a essência única da pessoa."
           },
           {
             icon: "2️⃣",
-            title: "Treine a IA", 
-            description: "Nossa IA aprende a personalidade, padrões de fala e maneirismos"
+            title: "A IA Aprende com Amor", 
+            description: "Nossa tecnologia estuda com carinho cada palavra, tom de voz e jeito de falar. É como ensinar a alguém especial sobre quem você mais ama."
           },
           {
             icon: "3️⃣",
-            title: "Inicie Conversas",
-            description: "Converse naturalmente e ouça a voz responder com amor e memórias"
+            title: "Converse Quando Quiser",
+            description: "Abra o app, faça uma pergunta ou apenas diga 'oi'. A voz familiar responderá com todo o amor e sabedoria que você sempre conheceu."
           }
         ]
       },
       finalCta: {
-        title: "Pronto para ouvir uma memória ganhar vida?",
-        subtitle: "Preserve memórias preciosas com tecnologia de IA avançada.",
-        button: "Experimente o Eterna Grátis",
+        title: "Sua Primeira Conversa Está a Um Clique de Distância",
+        subtitle: "Não deixe que as memórias mais preciosas se percam. Preserve hoje a voz de quem você ama.",
+        button: "Criar Minha Primeira Conversa",
         features: [
-          "Não precisa de cartão de crédito",
-          "5 mensagens para começar",
-          "1 minuto de geração de voz"
+          "Totalmente gratuito para começar",
+          "5 conversas incluídas", 
+          "Configuração em 5 minutos"
         ]
       },
       pricing: {
-        title: "Escolha Seu Plano",
-        subtitle: "Comece grátis e desbloqueie recursos premium conforme precisar",
+        title: "Planos Feitos para Sua Família",
+        subtitle: "Comece gratuitamente e cresça conforme sua família precisa",
         free: {
-          name: "Gratuito",
+          name: "Descoberta",
           price: "R$0",
           period: "/mês",
-          description: "Perfeito para começar",
+          description: "Perfeito para suas primeiras conversas",
           features: [
-            "5 mensagens/mês",
+            "5 conversas/mês",
             "1 minuto de voz/mês", 
             "1 perfil de pessoa",
-            "Suporte básico"
+            "Suporte por email"
           ],
-          button: "Começar Grátis",
+          button: "Começar Agora",
           popular: false
         },
         paid: {
-          name: "Plano Família",
+          name: "Família Conectada",
           price: "R$29",
           period: "/mês",
-          description: "Para famílias que querem preservar mais memórias",
+          description: "Para famílias que querem preservar mais histórias",
           features: [
-            "300 mensagens/mês",
+            "Conversas ilimitadas",
             "15 minutos de voz/mês",
             "Perfis ilimitados",
-            "Clone de voz personalizado",
+            "Voz personalizada premium",
             "Suporte prioritário",
-            "Backup na nuvem"
+            "Backup automático"
           ],
-          button: "Começar Teste",
+          button: "Experimentar 7 Dias Grátis",
           popular: true
         }
       }
