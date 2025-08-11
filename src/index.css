@@ -589,7 +589,7 @@ html {
   }
 
   .pricing-card.popular {
-    border-color: hsl(var(--primary-purple));
+    border-color: hsl(var(--primary));
     transform: scale(1.05);
   }
 
