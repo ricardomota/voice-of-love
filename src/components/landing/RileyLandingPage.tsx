@@ -2,197 +2,129 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Favorite, 
-  Security, 
-  Watson, 
-  Microphone, 
-  Group, 
-  Chat, 
-  Checkmark, 
-  Menu, 
-  Close, 
-  ArrowRight, 
-  PlayFilled, 
-  Time, 
-  Star, 
-  Flash, 
-  Globe, 
-  Headphones, 
-  Camera, 
-  Document, 
-  Settings, 
-  Share, 
-  Code, 
-  Db2Database,
-  UserProfile,
-  CloudUpload,
-  Microphone as VoiceActivate,
-  Security as SecurityServices
-} from '@carbon/icons-react';
+import { Favorite, Security, Watson, Microphone, Group, Chat, Checkmark, Menu, Close, ArrowRight, PlayFilled, Time, Star, Flash, Globe, Headphones, Camera, Document, Settings, Share, Code, Db2Database, UserProfile, CloudUpload, Microphone as VoiceActivate, Security as SecurityServices } from '@carbon/icons-react';
 import EternaMatrixReveal from './EternaMatrixReveal';
-
 interface RileyLandingPageProps {
   onTryFree: () => void;
   onSignIn: () => void;
   onLearnMore: () => void;
   onSeePricing?: () => void;
 }
-
-export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: RileyLandingPageProps) {
+export default function RileyLandingPage({
+  onTryFree,
+  onSignIn,
+  onLearnMore
+}: RileyLandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  const features = [
-    {
-      icon: <VoiceActivate size={24} />,
-      title: "Clonagem de Voz",
-      description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
-    },
-    {
-      icon: <Group size={24} />,
-      title: "Perfis da Família",
-      description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
-    },
-    {
-      icon: <Chat size={24} />,
-      title: "Conversas Naturais",
-      description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
-    },
-    {
-      icon: <Security size={24} />,
-      title: "Privacidade Primeiro",
-      description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
-    },
-    {
-      icon: <Watson size={24} />,
-      title: "Preservação de Memória",
-      description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
-    },
-    {
-      icon: <Favorite size={24} />,
-      title: "Feito com Amor",
-      description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
-    }
-  ];
-
-  const steps = [
-    {
-      icon: <Microphone size={24} />,
-      title: "Grave a Voz",
-      description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
-      detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
-    },
-    {
-      icon: <Settings size={24} />,
-      title: "Configure o Perfil",
-      description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
-      detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
-    },
-    {
-      icon: <Chat size={24} />,
-      title: "Converse Naturalmente",
-      description: "Inicie conversas significativas que se sentem reais e emocionalmente conectadas.",
-      detail: "Fale sobre lembranças, peça conselhos ou simplesmente desfrute de uma conversa casual."
-    },
-    {
-      icon: <Share size={24} />,
-      title: "Compartilhe com a Família",
-      description: "Convide outros membros da família para preservar memórias juntos.",
-      detail: "Múltiplos usuários podem interagir e adicionar suas próprias memórias e histórias."
-    }
-  ];
-
-  const whyEternaPoints = [
-    {
-      icon: <Watson size={24} />,
-      title: "Preservação Inteligente",
-      description: "Nossa IA não apenas grava - ela aprende padrões de fala, preferências e memórias."
-    },
-    {
-      icon: <Favorite size={24} />,
-      title: "Conexão Emocional",
-      description: "Criado por quem entende a dor da perda de memória. Cada recurso foi pensado com amor."
-    },
-    {
-      icon: <SecurityServices size={24} />,
-      title: "Privacidade Absoluta",
-      description: "Suas memórias familiares são sagradas. Criptografia militar protege cada lembrança."
-    },
-    {
-      icon: <Group size={24} />,
-      title: "Para Toda a Família",
-      description: "Múltiplos perfis, acesso compartilhado, e recursos pensados para todas as gerações."
-    }
-  ];
-
-  const pricingPlans = [
-    {
-      name: "Gratuito",
-      price: "R$ 0",
-      period: "/mês",
-      description: "Perfeito para começar",
-      features: [
-        "1 perfil familiar",
-        "10 minutos de conversas por mês",
-        "Clonagem básica de voz",
-        "Memórias essenciais",
-        "Suporte por email"
-      ],
-      buttonText: "Começar Grátis",
-      isPopular: false
-    },
-    {
-      name: "Família",
-      price: "R$ 29",
-      period: "/mês",
-      description: "Para famílias que querem mais",
-      features: [
-        "5 perfis familiares",
-        "Conversas ilimitadas",
-        "Clonagem avançada de voz",
-        "Todas as funcionalidades",
-        "Upload de fotos e vídeos",
-        "Suporte prioritário"
-      ],
-      buttonText: "Começar Teste",
-      isPopular: true
-    }
-  ];
+  const features = [{
+    icon: <VoiceActivate size={24} />,
+    title: "Clonagem de Voz",
+    description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
+  }, {
+    icon: <Group size={24} />,
+    title: "Perfis da Família",
+    description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
+  }, {
+    icon: <Chat size={24} />,
+    title: "Conversas Naturais",
+    description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
+  }, {
+    icon: <Security size={24} />,
+    title: "Privacidade Primeiro",
+    description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
+  }, {
+    icon: <Watson size={24} />,
+    title: "Preservação de Memória",
+    description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
+  }, {
+    icon: <Favorite size={24} />,
+    title: "Feito com Amor",
+    description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
+  }];
+  const steps = [{
+    icon: <Microphone size={24} />,
+    title: "Grave a Voz",
+    description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
+    detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
+  }, {
+    icon: <Settings size={24} />,
+    title: "Configure o Perfil",
+    description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
+    detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
+  }, {
+    icon: <Chat size={24} />,
+    title: "Converse Naturalmente",
+    description: "Inicie conversas significativas que se sentem reais e emocionalmente conectadas.",
+    detail: "Fale sobre lembranças, peça conselhos ou simplesmente desfrute de uma conversa casual."
+  }, {
+    icon: <Share size={24} />,
+    title: "Compartilhe com a Família",
+    description: "Convide outros membros da família para preservar memórias juntos.",
+    detail: "Múltiplos usuários podem interagir e adicionar suas próprias memórias e histórias."
+  }];
+  const whyEternaPoints = [{
+    icon: <Watson size={24} />,
+    title: "Preservação Inteligente",
+    description: "Nossa IA não apenas grava - ela aprende padrões de fala, preferências e memórias."
+  }, {
+    icon: <Favorite size={24} />,
+    title: "Conexão Emocional",
+    description: "Criado por quem entende a dor da perda de memória. Cada recurso foi pensado com amor."
+  }, {
+    icon: <SecurityServices size={24} />,
+    title: "Privacidade Absoluta",
+    description: "Suas memórias familiares são sagradas. Criptografia militar protege cada lembrança."
+  }, {
+    icon: <Group size={24} />,
+    title: "Para Toda a Família",
+    description: "Múltiplos perfis, acesso compartilhado, e recursos pensados para todas as gerações."
+  }];
+  const pricingPlans = [{
+    name: "Gratuito",
+    price: "R$ 0",
+    period: "/mês",
+    description: "Perfeito para começar",
+    features: ["1 perfil familiar", "10 minutos de conversas por mês", "Clonagem básica de voz", "Memórias essenciais", "Suporte por email"],
+    buttonText: "Começar Grátis",
+    isPopular: false
+  }, {
+    name: "Família",
+    price: "R$ 29",
+    period: "/mês",
+    description: "Para famílias que querem mais",
+    features: ["5 perfis familiares", "Conversas ilimitadas", "Clonagem avançada de voz", "Todas as funcionalidades", "Upload de fotos e vídeos", "Suporte prioritário"],
+    buttonText: "Começar Teste",
+    isPopular: true
+  }];
 
   // Removed fake stats and testimonials
 
-  const techPoints = [
-    {
-      icon: <Code size={24} />,
-      title: "GPT Open Source",
-      description: "Construído com modelos de linguagem de código aberto, garantindo transparência e controle total sobre o processamento."
-    },
-    {
-      icon: <SecurityServices size={24} />,
-      title: "React + TypeScript",
-      description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
-    },
-    {
-      icon: <Db2Database size={24} />,
-      title: "Supabase Backend",
-      description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
-    },
-    {
-      icon: <Flash size={24} />,
-      title: "Edge Functions",
-      description: "Processamento de IA distribuído para respostas rápidas e experiência fluida."
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background text-foreground">
+  const techPoints = [{
+    icon: <Code size={24} />,
+    title: "GPT Open Source",
+    description: "Construído com modelos de linguagem de código aberto, garantindo transparência e controle total sobre o processamento."
+  }, {
+    icon: <SecurityServices size={24} />,
+    title: "React + TypeScript",
+    description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
+  }, {
+    icon: <Db2Database size={24} />,
+    title: "Supabase Backend",
+    description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
+  }, {
+    icon: <Flash size={24} />,
+    title: "Edge Functions",
+    description: "Processamento de IA distribuído para respostas rápidas e experiência fluida."
+  }];
+  return <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -220,23 +152,31 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
               </Button>
             </div>
 
-            <button
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
+            <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <Close size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
+        {isMenuOpen && <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
             <div className="px-4 py-6 space-y-4">
-              <button onClick={() => { scrollToSection('como-funciona'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Como Funciona</button>
-              <button onClick={() => { scrollToSection('por-que-eterna'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Por Que Eterna</button>
-              <button onClick={() => { scrollToSection('precos'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Preços</button>
-              <button onClick={() => { scrollToSection('privacidade'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Privacidade</button>
+              <button onClick={() => {
+            scrollToSection('como-funciona');
+            setIsMenuOpen(false);
+          }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Como Funciona</button>
+              <button onClick={() => {
+            scrollToSection('por-que-eterna');
+            setIsMenuOpen(false);
+          }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Por Que Eterna</button>
+              <button onClick={() => {
+            scrollToSection('precos');
+            setIsMenuOpen(false);
+          }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Preços</button>
+              <button onClick={() => {
+            scrollToSection('privacidade');
+            setIsMenuOpen(false);
+          }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Privacidade</button>
               <div className="pt-4 space-y-2">
                 <Button variant="outline" onClick={onSignIn} className="w-full">
                   Entrar
@@ -246,16 +186,13 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                 </Button>
               </div>
             </div>
-          </div>
-        )}
+          </div>}
       </header>
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="outline" className="mb-6 px-4 py-2">
-            Feito para Famílias com Alzheimer
-          </Badge>
+          <Badge variant="outline" className="mb-6 px-4 py-2">Feito com ❤️ para Famílias enfrentando o Alzheimer</Badge>
           
           <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight">
             Preserve a Voz
@@ -315,8 +252,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((step, index) => (
-              <Card key={index} className="relative border hover:shadow-lg transition-all duration-300">
+            {steps.map((step, index) => <Card key={index} className="relative border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
                     {index + 1}
@@ -334,8 +270,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                     <p className="text-xs text-muted-foreground/80">{step.detail}</p>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
           
           <div className="text-center mt-12">
@@ -368,8 +303,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {whyEternaPoints.map((point, index) => (
-              <Card key={index} className="border hover:shadow-lg transition-all duration-300">
+            {whyEternaPoints.map((point, index) => <Card key={index} className="border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 p-2 bg-muted rounded-lg">
@@ -381,8 +315,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -400,8 +333,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="border hover:shadow-lg transition-all duration-300">
+            {features.map((feature, index) => <Card key={index} className="border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="mb-4 text-foreground">
                     {feature.icon}
@@ -409,8 +341,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                   <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -430,13 +361,10 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <Card key={index} className={`relative border ${plan.isPopular ? 'border-foreground shadow-lg' : ''}`}>
-                {plan.isPopular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            {pricingPlans.map((plan, index) => <Card key={index} className={`relative border ${plan.isPopular ? 'border-foreground shadow-lg' : ''}`}>
+                {plan.isPopular && <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-foreground text-background">Mais Popular</Badge>
-                  </div>
-                )}
+                  </div>}
                 <CardContent className="p-6">
                   <div className="text-center mb-6">
                     <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
@@ -448,24 +376,17 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                   </div>
                   
                   <ul className="space-y-3 mb-6">
-                     {plan.features.map((feature, featureIndex) => (
-                       <li key={featureIndex} className="flex items-center gap-2">
+                     {plan.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center gap-2">
                          <Checkmark size={16} className="text-foreground flex-shrink-0" />
                          <span className="text-sm">{feature}</span>
-                       </li>
-                     ))}
+                       </li>)}
                   </ul>
                   
-                  <Button 
-                    onClick={onTryFree} 
-                    className={`w-full ${plan.isPopular ? '' : 'variant="outline"'}`}
-                    variant={plan.isPopular ? 'default' : 'outline'}
-                  >
+                  <Button onClick={onTryFree} className={`w-full ${plan.isPopular ? '' : 'variant="outline"'}`} variant={plan.isPopular ? 'default' : 'outline'}>
                     {plan.buttonText}
                   </Button>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
           
           <div className="text-center mt-12">
@@ -492,8 +413,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {techPoints.map((point, index) => (
-              <Card key={index} className="border hover:shadow-lg transition-all duration-300">
+            {techPoints.map((point, index) => <Card key={index} className="border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center text-center gap-4">
                     <div className="p-4 bg-muted rounded-xl">
@@ -505,8 +425,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
           
           <div className="text-center mt-12">
@@ -591,6 +510,5 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 }
