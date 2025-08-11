@@ -201,65 +201,72 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen bg-gradient-hero relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div className="absolute top-20 right-20 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float"></div>
+        <div className="absolute bottom-20 left-20 w-48 h-48 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float" style={{animationDelay: '2s'}}></div>
+      </div>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur">
-        <div className="flex items-center space-x-3">
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      <div className="relative z-10 glass-card border-0 border-b border-border/20 backdrop-blur-xl">
+        <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
-            {person.avatar && (
-              <img 
-                src={person.avatar} 
-                alt={person.name}
-                className="w-10 h-10 rounded-full object-cover"
-              />
-            )}
-            <div>
-              <h2 className="font-semibold">{person.name}</h2>
-              <p className="text-sm text-muted-foreground">{person.relationship}</p>
+            <Button variant="ghost" size="icon" onClick={onBack}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center space-x-3">
+              {person.avatar && (
+                <img 
+                  src={person.avatar} 
+                  alt={person.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <h2 className="font-semibold">{person.name}</h2>
+                <p className="text-sm text-muted-foreground">{person.relationship}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          {currentAnalysis && (
+          <div className="flex items-center space-x-2">
+            {currentAnalysis && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowInsights(true)}
+                className="flex items-center gap-2"
+              >
+                <Brain className="h-4 w-4" />
+                Insights
+              </Button>
+            )}
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setShowInsights(true)}
+              onClick={() => analyzeAndLearn(messages)}
+              disabled={messages.length < 4 || isLearning}
               className="flex items-center gap-2"
             >
-              <Brain className="h-4 w-4" />
-              Insights
+              {isLearning ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                  Learning
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4" />
+                  Analyze & Learn
+                </>
+              )}
             </Button>
-          )}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => analyzeAndLearn(messages)}
-            disabled={messages.length < 4 || isLearning}
-            className="flex items-center gap-2"
-          >
-            {isLearning ? (
-              <>
-                <div className="w-4 h-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
-                Learning
-              </>
-            ) : (
-              <>
-                <Sparkles className="h-4 w-4" />
-                Analyze & Learn
-              </>
-            )}
-          </Button>
+          </div>
         </div>
       </div>
 
       {/* Usage Bar */}
       {!usageLoading && (
-        <div className="px-4 py-2 border-b">
-          <UsageBar 
+        <div className="relative z-10 px-4 py-2 glass-card border-0 border-b border-border/20">
+          <UsageBar
             messagesUsed={usage.messagesUsed}
             messagesLimit={usage.messagesLimit}
             ttsUsed={usage.ttsUsed}
@@ -270,7 +277,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="relative z-10 flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-transparent via-background/50 to-background">
         {messages.map((message) => (
           <div key={message.id} className="space-y-2">
             <MessageBubble
@@ -309,7 +316,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
 
       {/* Audio Player */}
       {currentAudio && (
-        <div className="p-4 border-t">
+        <div className="relative z-10 p-4 glass-card border-0 border-t border-border/20">
           <AudioPlayer
             audioSrc={currentAudio}
             onEnded={() => setCurrentAudio(null)}
@@ -318,7 +325,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
       )}
 
       {/* Input */}
-      <div className="p-4 border-t bg-background/95 backdrop-blur">
+      <div className="relative z-10 p-4 glass-card border-0 border-t border-border/20 backdrop-blur-xl">
         <div className="flex items-center space-x-2">
           <div className="flex-1 relative">
             <InputWithVoice

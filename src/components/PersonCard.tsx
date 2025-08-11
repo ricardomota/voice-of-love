@@ -113,20 +113,28 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       color: 'bg-gray-500'
     };
   };
-  return <Card className={cn("group cursor-pointer parallax-slow ios-focus overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-accent/20", className)}>
-      <CardContent className="p-4 sm:p-8 relative">
+  return <div className={cn("glass-card hover-lift fade-in-up cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl", className)}>
+      <div className="p-6 relative">
         <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center space-x-3 sm:space-x-5 flex-1 min-w-0">
-            <Avatar className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-white/50 shadow-lg backdrop-blur-sm flex-shrink-0">
+          <div className="flex items-center space-x-4 flex-1 min-w-0">
+            <Avatar className="w-20 h-20 border-2 border-white/50 shadow-lg backdrop-blur-sm flex-shrink-0">
               <AvatarImage src={avatar} alt={name} />
-              <AvatarFallback className="bg-gradient-to-br from-accent/20 to-accent/10 text-accent-foreground font-semibold text-lg sm:text-xl backdrop-blur-sm">
+              <AvatarFallback className="bg-gradient-to-br from-purple-100 to-purple-50 text-primary font-semibold text-xl backdrop-blur-sm">
                 {name.split(' ').map(n => n[0]).join('').slice(0, 2)}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-lg sm:text-xl text-foreground leading-tight mb-2 truncate">{name}</h3>
-              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                <Badge variant="secondary" className={cn("backdrop-blur-sm border border-white/30 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm", getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600", getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600", getRelationshipColor(relationship) === 'accent' && "bg-accent-soft/60 text-accent")}>
+              <h3 className="text-xl font-zilla font-medium italic text-foreground leading-tight mb-2 truncate">{name}</h3>
+              <div className="flex items-center gap-3 flex-wrap">
+                <Badge 
+                  variant="secondary" 
+                  className={cn(
+                    "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full text-sm font-work",
+                    getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
+                    getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
+                    getRelationshipColor(relationship) === 'accent' && "bg-purple-50/60 text-primary"
+                  )}
+                >
                   {relationship}
                 </Badge>
                 
@@ -155,19 +163,22 @@ export const PersonCard: React.FC<PersonCardProps> = ({
             </div>
           </div>
           
-          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            <Button variant="ghost" size="icon" onClick={e => {
-            e.stopPropagation();
-            onSettings(id);
-          }} className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10">
-              <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                onSettings(id);
+              }} 
+              className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-xl w-10 h-10 flex items-center justify-center hover-lift"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="opacity-50 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-2xl w-8 h-8 sm:w-10 sm:h-10">
-                  <MoreVert className="w-4 h-4 sm:w-5 sm:h-5" />
-                </Button>
+                <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-xl w-10 h-10 flex items-center justify-center hover-lift">
+                  <MoreVert className="w-5 h-5" />
+                </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <AlertDialog>
@@ -302,16 +313,14 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
         <div className="space-y-4">
           {/* Botão principal - Chat (destaque máximo) */}
-          <Button 
+          <button 
             onClick={() => onChat(id)} 
-            size="xl" 
-            variant="cta"
+            className="btn-primary btn-large hover-lift hover-glow w-full px-8 py-4 rounded-xl font-semibold text-lg"
             aria-label={`Conversar com ${name}`}
-            className="w-full max-w-xs mx-auto md:max-w-full"
           >
-            <Chat className="w-5 h-5 sm:w-6 sm:h-6 mr-3" />
-            <span>Conversar</span>
-          </Button>
+            <Chat className="w-6 h-6 mr-3" />
+            Conversar
+          </button>
 
           {/* Botões secundários - Grid responsivo */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -378,9 +387,11 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         </div>
 
         {/* Configurações de voz */}
-        {person && person.voiceSettings?.hasRecording && <div className="mt-4">
+        {person && person.voiceSettings?.hasRecording && (
+          <div className="mt-4">
             <VoiceSettings person={person} onUpdate={onDelete} />
-          </div>}
-      </CardContent>
-    </Card>;
+          </div>
+        )}
+      </div>
+    </div>;
 };

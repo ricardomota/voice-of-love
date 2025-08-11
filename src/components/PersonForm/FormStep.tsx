@@ -28,48 +28,50 @@ export const FormStep: React.FC<FormStepProps> = ({
   backText = "Voltar"
 }) => {
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-3">
-        <h2 className="text-2xl font-bold text-foreground">{title}</h2>
+    <div className="glass-card p-8 fade-in-up hover-lift">
+      <div className="text-center space-y-4 mb-8">
+        <h2 className="text-3xl font-zilla font-medium italic text-foreground">{title}</h2>
         {subtitle && (
-          <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl mx-auto">
+          <p className="text-muted-foreground text-lg font-work leading-relaxed max-w-3xl mx-auto">
             {subtitle}
           </p>
         )}
       </div>
 
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto mb-8">
         {children}
       </div>
 
       <div className="flex items-center justify-between pt-8">
-        <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
+        <button 
+          onClick={onBack} 
+          className="btn-secondary px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2"
+        >
           <ArrowLeft className="w-4 h-4" />
           {backText}
-        </Button>
+        </button>
 
         <div className="flex gap-3">
           {onUpdate && (
-            <Button 
+            <button 
               onClick={onUpdate}
-              variant="outline"
-              className="flex items-center gap-2"
+              className="btn-secondary px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
               Atualizar
-            </Button>
+            </button>
           )}
           
           {onNext && (
-            <Button 
+            <button 
               onClick={onNext}
               disabled={!canNext}
-              className="flex items-center gap-2"
+              className="btn-primary px-6 py-3 rounded-xl font-semibold hover-lift disabled:opacity-50 flex items-center gap-2"
             >
               {nextText || (isLast ? "Finalizar" : "Continuar")}
               {!isLast && <ArrowRight className="w-4 h-4" />}
               {isLast && <Check className="w-4 h-4" />}
-            </Button>
+            </button>
           )}
         </div>
       </div>

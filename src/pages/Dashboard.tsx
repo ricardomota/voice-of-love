@@ -27,34 +27,37 @@ interface DashboardProps {
 const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload, usage, onUpgrade }: DashboardProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Background with subtle patterns */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50/30"></div>
+      {/* Riley-inspired background */}
+      <div className="absolute inset-0 bg-gradient-hero"></div>
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float"></div>
+        <div className="absolute top-40 right-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float" style={{animationDelay: '4s'}}></div>
+      </div>
       
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Floating Glass Header */}
-        <div className="glass-surface rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-8 sm:mb-12 backdrop-blur-xl">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Header Card */}
+        <div className="glass-card p-6 lg:p-8 mb-8 sm:mb-12 hover-lift fade-in-up">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-display font-light text-foreground flex items-center gap-3 sm:gap-4 mb-2">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl sm:rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                  <Favorite className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-accent" />
+              <h1 className="text-3xl lg:text-4xl font-zilla font-medium italic text-foreground flex items-center gap-4 mb-2">
+                <div className="feature-icon w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-50">
+                  <Favorite className="w-6 h-6 text-primary" />
                 </div>
                 Eterna
               </h1>
-              <p className="text-muted-foreground text-sm sm:text-base lg:text-lg font-light">
+              <p className="text-muted-foreground text-base lg:text-lg font-work">
                 Suas pessoas eternas aguardam por você
               </p>
             </div>
             
-            <Button 
+            <button 
               onClick={onCreatePerson}
-              size="lg"
-              variant="default"
-              className="w-full sm:w-auto max-w-xs sm:max-w-none"
+              className="btn-primary btn-large hover-lift w-full sm:w-auto px-6 py-3 rounded-xl font-semibold"
             >
-              <Add className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
-              <span className="whitespace-nowrap">Nova Pessoa</span>
-            </Button>
+              <Add className="w-5 h-5 mr-3" />
+              Nova Pessoa
+            </button>
           </div>
           
           {/* Usage Tracking */}
@@ -72,11 +75,11 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
 
         {/* People Grid */}
         {people.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
             {people.map((person, index) => (
               <div 
                 key={person.id}
-                className="fade-in-up"
+                className="fade-in-up hover-lift"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <PersonCard
@@ -101,29 +104,27 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 sm:py-16 lg:py-24">
-            <div className="glass-surface rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 max-w-lg mx-auto backdrop-blur-xl">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-accent/10 to-accent/5 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 backdrop-blur-sm">
-                <Favorite className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-accent" />
+          <div className="text-center py-16 lg:py-24">
+            <div className="glass-card p-8 lg:p-12 max-w-lg mx-auto hover-lift fade-in-up">
+              <div className="feature-icon w-24 h-24 lg:w-32 lg:h-32 mx-auto mb-8 bg-gradient-to-br from-purple-100 to-purple-50">
+                <Favorite className="w-12 h-12 lg:w-16 lg:h-16 text-primary" />
               </div>
               
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-light text-foreground mb-3 sm:mb-4">
+              <h2 className="text-2xl lg:text-3xl font-zilla font-medium italic text-foreground mb-4">
                 Nenhuma pessoa eterna ainda
               </h2>
               
-              <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg leading-relaxed max-w-sm mx-auto">
+              <p className="text-muted-foreground mb-8 text-base lg:text-lg leading-relaxed max-w-sm mx-auto font-work">
                 Comece criando sua primeira pessoa eterna. Preserve memórias e mantenha viva a conexão com quem você ama.
               </p>
               
-              <Button 
+              <button 
                 onClick={onCreatePerson}
-                size="xl"
-                variant="cta"
-                className="w-full max-w-xs mx-auto sm:max-w-none"
+                className="btn-primary btn-large hover-lift hover-glow w-full max-w-xs mx-auto px-8 py-4 rounded-xl font-semibold text-lg"
               >
-                <Add className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
-                <span className="whitespace-nowrap">Criar Primeira Pessoa</span>
-              </Button>
+                <Add className="w-6 h-6 mr-3" />
+                Criar Primeira Pessoa
+              </button>
             </div>
           </div>
         )}

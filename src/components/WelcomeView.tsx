@@ -8,80 +8,84 @@ interface WelcomeViewProps {
 
 export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden gap-8">
-      {/* Ambient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-gray-50/20"></div>
-      
-      {/* Card principal */}
-      <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
-        <CardContent className="p-12 text-center">
-          <div className="w-24 h-24 bg-gradient-to-br from-accent/15 to-accent/5 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm shadow-lg">
-            <span className="text-5xl">💖</span>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Riley-inspired background */}
+      <div className="absolute inset-0 bg-gradient-hero"></div>
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+        <div className="absolute top-40 right-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '4s'}}></div>
+      </div>
+
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8 gap-8">
+        {/* Main Welcome Card */}
+        <div className="glass-card max-w-xl w-full p-12 text-center fade-in-up hover-lift">
+          <div className="alzheimer-badge mx-auto mb-8">
+            ❤️ Made for Alzheimer's families
           </div>
           
-          <CardTitle className="text-4xl font-light text-foreground mb-4">
-            Bem-vindo ao Eterna
-          </CardTitle>
+          <div className="feature-icon mx-auto mb-8 bg-gradient-to-br from-purple-100 to-purple-50">
+            💖
+          </div>
           
-          <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto">
+          <h1 className="text-4xl font-zilla font-medium italic text-foreground mb-4">
+            Bem-vindo ao Eterna
+          </h1>
+          
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto font-work">
             Preserve memórias e mantenha conversas com pessoas queridas através de uma experiência única com inteligência artificial.
           </p>
           
-          <Button 
+          <button 
             onClick={onCreatePerson}
-            className="w-full max-w-xs mx-auto md:max-w-full mb-10"
-            size="xl"
-            variant="cta"
+            className="btn-primary btn-large hover-lift hover-glow w-full max-w-xs mx-auto mb-10 px-8 py-4 rounded-xl font-semibold text-lg"
           >
-            <Add className="w-5 h-5 sm:w-6 sm:h-6 mr-3 flex-shrink-0" />
-            <span className="whitespace-nowrap leading-tight text-center">Criar Primeira Pessoa Eterna</span>
-          </Button>
+            <Add className="w-5 h-5 mr-3" />
+            Criar Primeira Pessoa Eterna
+          </button>
           
-          <div className="pt-8 border-t border-white/20">
+          <div className="pt-8 border-t border-border/20">
             <h3 className="font-medium text-foreground mb-6 text-lg">Como funciona:</h3>
             
             <div className="space-y-6 text-left">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-sm font-semibold text-accent">1</span>
+                <div className="feature-icon w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-50 text-lg">
+                  1
                 </div>
                 <p className="text-muted-foreground leading-relaxed">Adicione memórias, traços de personalidade e frases marcantes</p>
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-sm font-semibold text-accent">2</span>
+                <div className="feature-icon w-12 h-12 bg-gradient-to-br from-pink-100 to-pink-50 text-lg">
+                  2
                 </div>
                 <p className="text-muted-foreground leading-relaxed">A IA aprende e recria a personalidade única da pessoa</p>
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
-                  <span className="text-sm font-semibold text-accent">3</span>
+                <div className="feature-icon w-12 h-12 bg-gradient-to-br from-green-100 to-green-50 text-lg">
+                  3
                 </div>
                 <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas a qualquer momento</p>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Card separado para a história */}
-      <Card className="max-w-xl w-full relative backdrop-blur-xl fade-in-up">
-        <CardContent className="p-8 text-center">
-          <h3 className="text-lg font-medium text-foreground mb-3">Por que criei o Eterna?</h3>
-          <p className="text-muted-foreground leading-relaxed text-sm mb-4">
+        {/* Mission Card */}
+        <div className="mission-section max-w-xl w-full p-8 text-center fade-in-up hover-lift" style={{animationDelay: '0.2s'}}>
+          <h3 className="text-lg font-semibold text-foreground mb-4">Por que criei o Eterna?</h3>
+          <p className="text-muted-foreground leading-relaxed text-sm mb-6">
             Criei esta ferramenta com amor usando o <span className="inline-flex items-center gap-1">Lovable <Favorite className="w-3 h-3 text-red-500" /></span>, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. 
             Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.
           </p>
           
-          {/* Logo e link da Alzheimer's Association */}
           <div className="flex items-center justify-center pt-4 border-t border-border/20">
             <a 
               href="https://www.alz.org/?form=FUNDHYMMBXU" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity hover-lift"
             >
               <img 
                 src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
@@ -90,8 +94,8 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
               />
             </a>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

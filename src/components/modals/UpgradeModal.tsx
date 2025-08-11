@@ -71,51 +71,49 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md glass-card border-border/20">
         <DialogHeader className="space-y-4">
           <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="feature-icon w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-50">
               <Sparkles className="w-6 h-6 text-primary" />
             </div>
-            <Button 
-              variant="ghost" 
-              size="icon"
+            <button 
               onClick={onClose}
-              className="h-8 w-8"
+              className="hover-lift w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100"
             >
               <X className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
           
           <div className="text-center">
-            <DialogTitle className="text-xl font-semibold mb-2">
+            <DialogTitle className="text-xl font-zilla font-medium italic mb-2">
               {content.title}
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription className="text-muted-foreground font-work">
               {content.body}
             </DialogDescription>
           </div>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          <div className="text-sm font-medium text-center mb-4">
+          <div className="text-sm font-semibold text-center mb-4 alzheimer-badge mx-auto">
             Upgrade to Paid Plan - R$29/month
           </div>
           
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <MessageSquare className="w-4 h-4 text-primary" />
               {content.features.messages}
             </div>
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Mic className="w-4 h-4 text-primary" />
               {content.features.voice}
             </div>
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Clock className="w-4 h-4 text-primary" />
               {content.features.memories}
             </div>
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Sparkles className="w-4 h-4 text-primary" />
               {content.features.clone}
             </div>
@@ -123,22 +121,18 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
         </div>
 
         <div className="flex flex-col gap-4">
-          <Button 
+          <button 
             onClick={onUpgrade}
-            className="w-full max-w-xs mx-auto md:max-w-full"
-            size="xl"
-            variant="cta"
+            className="btn-primary btn-large hover-lift hover-glow w-full px-8 py-4 rounded-xl font-semibold text-lg"
           >
             {content.ctaPrimary}
-          </Button>
-          <Button 
-            variant="secondary" 
+          </button>
+          <button 
             onClick={onClose}
-            className="w-full max-w-xs mx-auto md:max-w-full"
-            size="lg"
+            className="btn-secondary hover-lift w-full px-6 py-3 rounded-xl font-semibold"
           >
             {content.ctaSecondary}
-          </Button>
+          </button>
         </div>
       </DialogContent>
     </Dialog>

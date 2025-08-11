@@ -43,16 +43,16 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
   const content = getContent(currentLanguage);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed top-0 z-50 w-full glass-card border-0 border-b border-border/20 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">
-            <Heart className="w-6 h-6 text-primary fill-current" />
+        <div className="flex items-center gap-3">
+          <div className="feature-icon w-10 h-10 bg-gradient-to-br from-purple-100 to-purple-50">
+            <Heart className="w-5 h-5 text-primary fill-current" />
           </div>
           <div className="flex flex-col">
-            <h1 className="text-xl font-bold tracking-tight">Eterna</h1>
-            <p className="text-xs text-muted-foreground">Preserving memories</p>
+            <h1 className="text-xl font-zilla font-medium italic tracking-tight">Eterna</h1>
+            <p className="text-xs text-muted-foreground font-work">Preserving memories</p>
           </div>
         </div>
 
@@ -63,15 +63,13 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9">
-                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-medium text-primary">
-                      {user.email?.[0]?.toUpperCase() || 'U'}
-                    </span>
-                  </div>
-                </Button>
+                <button className="hover-lift w-9 h-9 rounded-lg bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
+                  <span className="text-sm font-semibold text-primary">
+                    {user.email?.[0]?.toUpperCase() || 'U'}
+                  </span>
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-48 glass-card border border-border/20">
                 <div className="px-2 py-1.5 text-sm text-muted-foreground">
                   {user.email}
                 </div>
