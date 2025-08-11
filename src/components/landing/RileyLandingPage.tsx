@@ -403,29 +403,29 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-sm z-50 py-4" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
+      <header className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-sm z-50 py-4" style={{backgroundColor: 'rgba(253, 251, 203, 0.95)'}}>
         <nav className="container flex items-center justify-between">
-          <a href="#" className="text-xl font-bold hover:scale-105 transition-transform" style={{color: '#000000'}}>
+          <a href="#" className="text-xl font-bold hover:scale-105 transition-transform" style={{color: '#441632'}}>
             {content.logo}
           </a>
           <ul className="hidden md:flex items-center gap-8">
             <li>
-              <a href="#features" className="transition-colors font-medium hover:opacity-70" style={{color: '#404040'}}>
+              <a href="#features" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.features}
               </a>
             </li>
             <li>
-              <a href="#how-it-works" className="transition-colors font-medium hover:opacity-70" style={{color: '#404040'}}>
+              <a href="#how-it-works" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.howItWorks}
               </a>
             </li>
             <li>
-              <a href="#pricing" className="transition-colors font-medium hover:opacity-70" style={{color: '#404040'}}>
+              <a href="#pricing" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.pricing}
               </a>
             </li>
             <li>
-              <a href="#download" className="transition-colors font-medium hover:opacity-70" style={{color: '#404040'}}>
+              <a href="#download" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.download}
               </a>
             </li>
@@ -447,19 +447,19 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="hero-content container">
           {/* Left Column - Content */}
           <div className="hero-left">
-            <div className="alzheimer-badge mb-xl" style={{backgroundColor: '#ffffff', color: '#000000'}}>
+            <div className="alzheimer-badge mb-xl">
               {content.hero.badge}
             </div>
             
-            <h1 className="hero-title font-serif mb-lg" style={{color: '#ffffff'}}>
+            <h1 className="hero-title font-serif mb-lg" style={{color: '#441632'}}>
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle mb-xl" style={{color: '#ffffff', opacity: 0.9}}>
+            <h2 className="hero-subtitle mb-xl" style={{color: '#441632', opacity: 0.8}}>
               {content.hero.subtitle}
             </h2>
             
-            <p className="text-large mb-2xl leading-relaxed" style={{color: '#ffffff', opacity: 0.8}}>
+            <p className="text-large mb-2xl leading-relaxed text-gray-600">
               {content.hero.description}
             </p>
 
@@ -467,32 +467,30 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               <button 
                 onClick={onTryFree}
                 className="btn btn-primary btn-large"
-                style={{backgroundColor: '#ffffff', color: '#000000'}}
               >
                 {content.hero.buttonPrimary}
               </button>
               <button 
                 onClick={onLearnMore}
                 className="btn btn-secondary btn-large"
-                style={{backgroundColor: 'transparent', color: '#ffffff', border: '2px solid #ffffff'}}
               >
                 {content.hero.buttonSecondary}
               </button>
             </div>
             
-            <p className="text-small flex items-center gap-2" style={{color: '#ffffff', opacity: 0.7}}>
-              <span className="w-2 h-2 bg-white rounded-full"></span>
+            <p className="text-small flex items-center gap-2 text-gray-500">
+              <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
               {content.hero.note}
             </p>
           </div>
 
           {/* Right Column - Image Placeholder */}
           <div className="hero-right">
-            <div className="w-full h-96 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20">
+            <div className="w-full h-96 bg-white rounded-2xl flex items-center justify-center border-2 border-gray-200 shadow-lg">
               <div className="text-center p-8">
-                <Heart className="w-20 h-20 mx-auto mb-6 text-white opacity-70" />
-                <p className="font-medium text-white">Sua imagem aqui</p>
-                <p className="text-sm text-white/70 mt-2">500x400px recomendado</p>
+                <Heart className="w-20 h-20 mx-auto mb-6" style={{color: '#441632'}} />
+                <p className="font-medium" style={{color: '#441632'}}>Sua imagem aqui</p>
+                <p className="text-sm text-gray-500 mt-2">500x400px recomendado</p>
               </div>
             </div>
           </div>
@@ -503,8 +501,8 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="features" className="py-28">
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-black">{content.features.title}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed text-gray-600">{content.features.subtitle}</p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.features.title}</h2>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>{content.features.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
