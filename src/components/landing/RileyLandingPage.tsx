@@ -471,7 +471,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               {content.hero.subtitle}
             </h2>
             
-            <p className="text-large mb-2xl leading-relaxed" style={{color: '#441632', opacity: 0.7}}>
+            <p className="text-large mb-2xl leading-relaxed" style={{color: '#331122'}}>
               {content.hero.description}
             </p>
 
@@ -490,7 +490,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               </button>
             </div>
             
-            <p className="text-small flex items-center gap-2" style={{color: '#441632', opacity: 0.6}}>
+            <p className="text-small flex items-center gap-2" style={{color: '#331122'}}>
               <span className="w-2 h-2 rounded-full" style={{backgroundColor: '#441632'}}></span>
               {content.hero.note}
             </p>
@@ -498,11 +498,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
 
           {/* Right Column - Image Placeholder */}
           <div className="hero-right">
-            <div className="w-full h-96 rounded-2xl flex items-center justify-center border-2 shadow-lg" style={{backgroundColor: 'rgba(68, 22, 50, 0.05)', borderColor: '#441632'}}>
+            <div className="w-full h-96 rounded-2xl flex items-center justify-center border-2 shadow-lg" style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8'}}>
               <div className="text-center p-8">
                 <Heart className="w-20 h-20 mx-auto mb-6" style={{color: '#441632'}} />
                 <p className="font-medium" style={{color: '#441632'}}>Sua imagem aqui</p>
-                <p className="text-sm mt-2" style={{color: '#441632', opacity: 0.6}}>500x400px recomendado</p>
+                <p className="text-sm mt-2" style={{color: '#331122'}}>500x400px recomendado</p>
               </div>
             </div>
           </div>
@@ -544,7 +544,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{renderTextWithBold(content.howItWorks.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#331122'}}>
               Em apenas 3 passos simples, você pode começar a preservar memórias preciosas
             </p>
           </div>
@@ -553,10 +553,10 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             {content.howItWorks.steps.map((step, index) => (
               <div 
                 key={index}
-                className="p-8 rounded-2xl text-center hover-lift transition-all duration-300 border-2 shadow-sm"
+                className="p-8 rounded-2xl text-center hover-lift transition-all duration-300 border-2 shadow-lg hover:shadow-xl"
                 style={{
-                  backgroundColor: 'rgba(68, 22, 50, 0.05)', 
-                  borderColor: '#441632',
+                  backgroundColor: index % 2 === 0 ? '#F8F4E6' : '#F0EDD7',
+                  borderColor: '#E8E3C8',
                   animationDelay: `${index * 0.2}s`
                 }}
               >
@@ -564,7 +564,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                   {index + 1}
                 </div>
                 <h4 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{renderTextWithBold(step.title)}</h4>
-                <p className="leading-relaxed" style={{color: '#441632', opacity: 0.7}}>{step.description}</p>
+                <p className="leading-relaxed" style={{color: '#331122'}}>{step.description}</p>
               </div>
             ))}
           </div>
@@ -576,24 +576,24 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{renderTextWithBold(content.pricing.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.subtitle}</p>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#F8F4E6'}}>{content.pricing.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="p-8 rounded-2xl text-center border-2 shadow-sm hover:shadow-md transition-all" style={{backgroundColor: 'rgba(253, 251, 203, 0.1)', borderColor: 'rgba(253, 251, 203, 0.3)'}}>
-              <h3 className="text-2xl font-bold mb-4" style={{color: '#FDFBCB'}}>{content.pricing.free.name}</h3>
-              <div className="text-5xl font-bold mb-4" style={{color: '#FDFBCB'}}>
+            <div className="p-8 rounded-2xl text-center border-2 shadow-lg hover:shadow-xl transition-all" style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8'}}>
+              <h3 className="text-2xl font-bold mb-4" style={{color: '#441632'}}>{content.pricing.free.name}</h3>
+              <div className="text-5xl font-bold mb-4" style={{color: '#441632'}}>
                 {content.pricing.free.price}
-                <span className="text-lg" style={{color: '#FDFBCB', opacity: 0.7}}>{content.pricing.free.period}</span>
+                <span className="text-lg" style={{color: '#331122'}}>{content.pricing.free.period}</span>
               </div>
-              <p className="mb-8 text-lg" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.free.description}</p>
+              <p className="mb-8 text-lg" style={{color: '#331122'}}>{content.pricing.free.description}</p>
               
               <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.free.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#FDFBCB'}} />
-                    <span style={{color: '#FDFBCB', opacity: 0.9}}>{feature}</span>
+                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#441632'}} />
+                    <span style={{color: '#331122'}}>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -601,31 +601,31 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               <button 
                 onClick={onTryFree}
                 className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all border-2"
-                style={{backgroundColor: '#FDFBCB', color: '#441632', borderColor: '#FDFBCB'}}
+                style={{backgroundColor: '#441632', color: '#FDFBCB', borderColor: '#441632'}}
               >
                 {content.pricing.free.button}
               </button>
             </div>
 
             {/* Paid Plan */}
-            <div className="p-8 rounded-2xl text-center border-2 shadow-sm hover:shadow-md transition-all relative" style={{backgroundColor: 'rgba(253, 251, 203, 0.15)', borderColor: '#FDFBCB'}}>
+            <div className="p-8 rounded-2xl text-center border-2 shadow-lg hover:shadow-xl transition-all relative" style={{backgroundColor: '#F0EDD7', borderColor: '#E8E3C8'}}>
               {content.pricing.paid.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full text-sm font-medium" style={{backgroundColor: '#FDFBCB', color: '#441632'}}>
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full text-sm font-medium" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
                   Mais Popular
                 </div>
               )}
-              <h3 className="text-2xl font-bold mb-4" style={{color: '#FDFBCB'}}>{content.pricing.paid.name}</h3>
-              <div className="text-5xl font-bold mb-4" style={{color: '#FDFBCB'}}>
+              <h3 className="text-2xl font-bold mb-4" style={{color: '#441632'}}>{content.pricing.paid.name}</h3>
+              <div className="text-5xl font-bold mb-4" style={{color: '#441632'}}>
                 {content.pricing.paid.price}
-                <span className="text-lg" style={{color: '#FDFBCB', opacity: 0.7}}>{content.pricing.paid.period}</span>
+                <span className="text-lg" style={{color: '#331122'}}>{content.pricing.paid.period}</span>
               </div>
-              <p className="mb-8 text-lg" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.paid.description}</p>
+              <p className="mb-8 text-lg" style={{color: '#331122'}}>{content.pricing.paid.description}</p>
               
               <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.paid.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#FDFBCB'}} />
-                    <span className="font-medium" style={{color: '#FDFBCB', opacity: 0.9}}>{feature}</span>
+                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#441632'}} />
+                    <span className="font-medium" style={{color: '#331122'}}>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -633,35 +633,35 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               <button 
                 onClick={onSeePricing || onTryFree}
                 className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all"
-                style={{backgroundColor: '#FDFBCB', color: '#441632'}}
+                style={{backgroundColor: '#441632', color: '#FDFBCB'}}
               >
                 {content.pricing.paid.button}
               </button>
               
-              <p className="text-xs mt-4" style={{color: '#FDFBCB', opacity: 0.6}}>7 dias grátis • Cancele a qualquer momento</p>
+              <p className="text-xs mt-4" style={{color: '#331122'}}>7 dias grátis • Cancele a qualquer momento</p>
             </div>
           </div>
           
           {/* Support guarantee */}
           <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-8 px-8 py-6 rounded-2xl border-2" style={{backgroundColor: 'rgba(253, 251, 203, 0.1)', borderColor: 'rgba(253, 251, 203, 0.3)'}}>
+            <div className="inline-flex items-center gap-8 px-8 py-6 rounded-2xl border-2" style={{backgroundColor: '#F0EDD7', borderColor: '#E8E3C8'}}>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: 'rgba(253, 251, 203, 0.2)'}}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: '#441632'}}>
                   <Shield className="w-6 h-6" style={{color: '#FDFBCB'}} />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold" style={{color: '#FDFBCB'}}>Garantia de 30 dias</p>
-                  <p className="text-sm" style={{color: '#FDFBCB', opacity: 0.8}}>100% do seu dinheiro de volta</p>
+                  <p className="font-semibold" style={{color: '#441632'}}>Garantia de 30 dias</p>
+                  <p className="text-sm" style={{color: '#331122'}}>100% do seu dinheiro de volta</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: 'rgba(253, 251, 203, 0.2)'}}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: '#441632'}}>
                   <Heart className="w-6 h-6" style={{color: '#FDFBCB'}} />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold" style={{color: '#FDFBCB'}}>Suporte 24/7</p>
-                  <p className="text-sm" style={{color: '#FDFBCB', opacity: 0.8}}>Sempre aqui para ajudar</p>
+                  <p className="font-semibold" style={{color: '#441632'}}>Suporte 24/7</p>
+                  <p className="text-sm" style={{color: '#331122'}}>Sempre aqui para ajudar</p>
                 </div>
               </div>
             </div>
@@ -674,7 +674,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.finalCta.title}</h2>
-            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" style={{color: '#331122'}}>
               Preserve as memórias mais preciosas com tecnologia de IA avançada.
             </p>
             
@@ -695,7 +695,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
               {content.finalCta.features.map((feature, index) => (
-                <div key={index} className="flex items-center justify-center gap-2 rounded-lg px-4 py-3 border-2" style={{backgroundColor: 'rgba(68, 22, 50, 0.05)', borderColor: '#441632'}}>
+                <div key={index} className="flex items-center justify-center gap-2 rounded-lg px-4 py-3 border-2" style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8'}}>
                   <span className="w-2 h-2 rounded-full" style={{backgroundColor: '#441632'}}></span>
                   <p className="text-sm font-medium" style={{color: '#441632'}}>{feature}</p>
                 </div>
@@ -714,7 +714,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <Heart className="w-6 h-6 fill-current" style={{color: '#FDFBCB'}} />
                 <span className="text-xl font-bold" style={{color: '#FDFBCB'}}>Eterna</span>
               </div>
-              <p className="text-small mb-md" style={{color: '#FDFBCB', opacity: 0.8}}>
+              <p className="text-small mb-md" style={{color: '#F8F4E6'}}>
                 Preserving memories with AI-powered conversations
               </p>
             </div>
@@ -735,7 +735,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
           </div>
           
           <div className="flex-between pt-lg" style={{borderTop: '1px solid rgba(253, 251, 203, 0.3)'}}>
-            <p className="text-small" style={{color: '#FDFBCB', opacity: 0.8}}>
+            <p className="text-small" style={{color: '#F8F4E6'}}>
               © 2024 Eterna. All rights reserved.
             </p>
             <div className="flex gap-md">
