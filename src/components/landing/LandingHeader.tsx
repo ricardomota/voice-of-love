@@ -8,26 +8,22 @@ interface LandingHeaderProps {
   onTryFree: () => void;
   onSignIn: () => void;
   onHowItWorks?: () => void;
-  onPricing?: () => void;
 }
 
 const getContent = (language: string) => {
   const content = {
     en: {
       howItWorks: "How it Works",
-      pricing: "Pricing", 
       tryFree: "Try Eterna Free",
       signIn: "Sign In"
     },
     'pt-BR': {
       howItWorks: "Como Funciona",
-      pricing: "Preços",
       tryFree: "Testar Grátis", 
       signIn: "Entrar"
     },
     es: {
       howItWorks: "Cómo Funciona",
-      pricing: "Precios",
       tryFree: "Probar Gratis",
       signIn: "Iniciar Sesión" 
     }
@@ -35,7 +31,7 @@ const getContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
-export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignIn, onHowItWorks, onPricing }) => {
+export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignIn, onHowItWorks }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { currentLanguage } = useLanguage();
@@ -59,8 +55,9 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
   const handleNavigation = (section: string) => {
     if (section === 'how-it-works' && onHowItWorks) {
       onHowItWorks();
-    } else if (section === 'pricing' && onPricing) {
-      onPricing();
+    } else if (section === 'pricing') {
+      // Scroll to pricing section on same page
+      scrollToSection('pricing');
     } else {
       // Fallback to scroll for same-page sections
       scrollToSection(section);
@@ -94,10 +91,10 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               onClick={() => handleNavigation('pricing')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              {content.pricing}
+              Preços
             </button>
             <LanguageSelector />
-            <button 
+            <button
               onClick={onSignIn}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -135,7 +132,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                 onClick={() => handleNavigation('pricing')}
                 className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors py-2"
               >
-                {content.pricing}
+                Preços
               </button>
               <button 
                 onClick={onSignIn}

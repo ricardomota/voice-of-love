@@ -21,7 +21,6 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onTryFree, onSig
         onTryFree={onTryFree} 
         onSignIn={onSignIn}
         onHowItWorks={() => navigate('/how-it-works')}
-        onPricing={() => navigate('/pricing')}
       />
       
       <main className="pt-20">
