@@ -439,34 +439,6 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         </div>
       </section>
 
-      {/* Stories Section */}
-      <section id="stories" className="py-20">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in-up brand-gradient-text">
-              {content.stories.title}
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {content.stories.items.map((story, idx) => (
-              <article key={idx} className="glass-card hover-scale animate-fade-in-up" style={{animationDelay: `${idx * 100}ms`}}>
-                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mb-4">
-                  <Quote className="w-6 h-6 text-accent-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">{story.title}</h3>
-                <p className="text-muted-foreground mb-4">{story.excerpt}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">{story.author}</span>
-                  <a href="#" className="story-link text-sm">
-                    {content.stories.readMore}
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20">
