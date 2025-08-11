@@ -636,8 +636,54 @@ html {
   .animate-float-medium {
     animation: float 6s ease-in-out infinite;
   }
-
+ 
   .animate-float-fast {
     animation: float 4s ease-in-out infinite;
+  }
+
+  /* Alternating Section Themes (No white sections) */
+  main > section {
+    /* Local theme tokens for beige (odd sections) */
+    --section-beige-h: 54; /* approx for #FDFBCB */
+    --section-beige-s: 96%;
+    --section-beige-l: 88%;
+    --section-wine-h: 323; /* approx for #441632 */
+    --section-wine-s: 51%;
+    --section-wine-l: 18%;
+
+    /* Base background & theme for odd sections */
+    background: hsl(var(--section-beige-h) var(--section-beige-s) var(--section-beige-l));
+
+    /* Override semantic tokens so Tailwind classes adapt */
+    --background: var(--section-beige-h) var(--section-beige-s) var(--section-beige-l);
+    --foreground: var(--section-wine-h) var(--section-wine-s) var(--section-wine-l);
+    --muted: 54 96% 92%;
+    --muted-foreground: 323 25% 32%;
+    --card: 54 96% 98%;
+    --card-foreground: var(--foreground);
+    --border: 323 25% 40%;
+    --accent: 54 96% 90%;
+  }
+
+  main > section:nth-of-type(even) {
+    /* Wine background with beige text */
+    background: hsl(var(--section-wine-h) var(--section-wine-s) var(--section-wine-l));
+
+    /* Flip semantic tokens for dark section */
+    --background: var(--section-wine-h) var(--section-wine-s) var(--section-wine-l);
+    --foreground: var(--section-beige-h) var(--section-beige-s) var(--section-beige-l);
+    --muted: 323 40% 22%;
+    --muted-foreground: 54 60% 86%;
+    --card: 323 51% 22%;
+    --card-foreground: var(--foreground);
+    --border: 323 35% 32%;
+    --accent: 323 51% 28%;
+  }
+
+  /* Make cards harmonize in wine sections */
+  main > section:nth-of-type(even) .glass-card {
+    background: hsla(0, 0%, 100%, 0.06);
+    border-color: hsla(0, 0%, 100%, 0.18);
+    color: hsl(var(--foreground));
   }
 }
