@@ -155,33 +155,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
     }
   ];
 
-  const stats = [
-    { number: "50K+", label: "Famílias Conectadas" },
-    { number: "1M+", label: "Memórias Preservadas" },
-    { number: "99.9%", label: "Tempo de Atividade" },
-    { number: "4.9/5", label: "Avaliação Média" }
-  ];
-
-  const testimonials = [
-    {
-      name: "Maria Silva",
-      role: "Filha, cuidando da mãe com Alzheimer",
-      content: "O Eterna me deu minha mãe de volta. Mesmo com o Alzheimer avançado, posso conversar com a versão dela de antes da doença. É como um milagre.",
-      rating: 5
-    },
-    {
-      name: "João Santos",
-      role: "Neto preservando memórias do avô",
-      content: "Meu avô faleceu ano passado, mas suas histórias e conselhos continuam vivos através do Eterna. Meus filhos podem conhecer seu bisavô.",
-      rating: 5
-    },
-    {
-      name: "Ana Costa",
-      role: "Esposa cuidando do marido",
-      content: "Nos momentos difíceis quando meu marido não me reconhece, posso conversar com ele através do Eterna e lembrar do nosso amor.",
-      rating: 5
-    }
-  ];
+  // Removed fake stats and testimonials
 
   const privacyPoints = [
     {
@@ -313,19 +287,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <div key={index}>
-                <div className="text-2xl sm:text-3xl font-bold mb-2">{stat.number}</div>
-                <div className="text-muted-foreground text-sm sm:text-base">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Removed stats section with fake data */}
 
       {/* How It Works Section */}
       <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8">
@@ -429,38 +391,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Histórias que Tocam o Coração
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Veja como o Eterna está transformando a vida de famílias pelo Brasil.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border">
-                <CardContent className="p-6">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-foreground" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
-                  <div>
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Removed testimonials section with fake data */}
 
       {/* Pricing Section */}
       <section id="precos" className="py-20 px-4 sm:px-6 lg:px-8">
