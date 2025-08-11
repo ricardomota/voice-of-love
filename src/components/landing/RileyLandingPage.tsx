@@ -514,25 +514,25 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{renderTextWithBold(content.features.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{content.features.subtitle}</p>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#F8F4E6'}}>{content.features.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {content.features.items.map((feature, index) => (
               <div 
                 key={index}
-                className="p-8 rounded-2xl hover-lift text-center transition-all duration-300 border-2 shadow-sm hover:shadow-md"
+                className="p-8 rounded-2xl hover-lift text-center transition-all duration-300 border-2 shadow-lg hover:shadow-xl"
                 style={{
-                  backgroundColor: 'rgba(253, 251, 203, 0.1)', 
-                  borderColor: 'rgba(253, 251, 203, 0.3)',
+                  backgroundColor: index % 2 === 0 ? '#F8F4E6' : '#F0EDD7',
+                  borderColor: '#E8E3C8',
                   animationDelay: `${index * 0.1}s`
                 }}
               >
                 <div className="text-4xl mb-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-4" style={{color: '#FDFBCB'}}>{renderTextWithBold(feature.title)}</h3>
-                <p className="leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{feature.description}</p>
+                <h3 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{renderTextWithBold(feature.title)}</h3>
+                <p className="leading-relaxed" style={{color: '#331122'}}>{feature.description}</p>
               </div>
             ))}
           </div>
