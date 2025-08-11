@@ -13,6 +13,12 @@ export const useLanguage = () => {
   useEffect(() => {
     const loadLanguage = async () => {
       try {
+        // First check localStorage for immediate language preference
+        const savedLanguage = localStorage.getItem('eterna_language') as Language;
+        if (savedLanguage && ['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+          setCurrentLanguage(savedLanguage);
+        }
+
         const { data: user } = await supabase.auth.getUser();
         
         if (user.user) {
@@ -24,18 +30,30 @@ export const useLanguage = () => {
 
           if (settings?.ui_language) {
             setCurrentLanguage(settings.ui_language as Language);
+            // Sync with localStorage
+            localStorage.setItem('eterna_language', settings.ui_language);
           }
-        } else {
-          // For non-authenticated users, try to detect browser language
+        } else if (!savedLanguage) {
+          // For non-authenticated users, try to detect browser language only if no saved preference
           const browserLang = navigator.language.toLowerCase();
           if (browserLang.startsWith('pt')) {
             setCurrentLanguage('pt-BR');
+            localStorage.setItem('eterna_language', 'pt-BR');
           } else if (browserLang.startsWith('es')) {
             setCurrentLanguage('es');
+            localStorage.setItem('eterna_language', 'es');
+          } else {
+            setCurrentLanguage('en');
+            localStorage.setItem('eterna_language', 'en');
           }
         }
       } catch (error) {
         console.error('Error loading language preference:', error);
+        // Fallback to localStorage or default
+        const savedLanguage = localStorage.getItem('eterna_language') as Language;
+        if (savedLanguage && ['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+          setCurrentLanguage(savedLanguage);
+        }
       }
     };
 
