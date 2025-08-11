@@ -592,6 +592,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 src="/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png" 
                 alt="Alzheimer's Association" 
                 className="h-12 object-contain"
+                style={{filter: 'brightness(0) saturate(100%) invert(95%) sepia(6%) saturate(407%) hue-rotate(14deg) brightness(103%) contrast(96%)'}}
               />
               <Heart className="w-12 h-12" style={{color: '#FDFBCB'}} />
             </div>
