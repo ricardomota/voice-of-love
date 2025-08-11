@@ -156,63 +156,63 @@ const getContent = (language: string) => {
         note: "✨ Sem cartão de crédito • Primeiras 5 conversas gratuitas"
       },
       features: {
-        title: "Criado para Momentos que Importam",
+        title: "Criado para **momentos que importam**",
         subtitle: "Tecnologia que preserva o essencial: a conexão humana",
         items: [
           {
             icon: "🎤",
-            title: "Voz Autêntica",
+            title: "Voz autêntica",
             description: "Capture cada nuance da voz que você ama. Nossa IA preserva não apenas as palavras, mas a essência de como elas eram ditas.",
             color: "card-voice-cloning"
           },
           {
             icon: "👨‍👩‍👧‍👦",
-            title: "Memórias de Família",
+            title: "Memórias de família",
             description: "Organize fotos, histórias e momentos especiais em um só lugar. Cada perfil conta uma história única e pessoal.", 
             color: "card-family-profiles"
           },
           {
             icon: "💬",
-            title: "Conversas Reais",
+            title: "Conversas reais",
             description: "Não é apenas texto na tela. É uma conversa genuína que traz de volta a sensação de estar presente com quem você ama.",
             color: "card-conversations"
           },
           {
             icon: "🔒",
-            title: "Totalmente Privado",
+            title: "Totalmente **privado**",
             description: "Suas memórias são sagradas. Todos os dados são criptografados e nunca compartilhados. Apenas sua família tem acesso.",
             color: "card-privacy"
           },
           {
             icon: "🧠",
-            title: "Feito para Durar",
+            title: "**Feito para durar**",
             description: "Especialmente criado para famílias enfrentando o Alzheimer. Preservamos o que é mais importante: a pessoa por trás das palavras.",
             color: "card-memory"
           },
           {
             icon: "❤️",
-            title: "Criado com Propósito",
+            title: "Criado com **propósito**",
             description: "Nasceu da necessidade real de uma filha que queria preservar a voz da mãe. Cada feature foi pensada com amor e cuidado.",
             color: "card-love"
           }
         ]
       },
       howItWorks: {
-        title: "Simples Como uma Conversa",
+        title: "**Simples como uma conversa**",
         steps: [
           {
             icon: "1️⃣",
-            title: "Compartilhe as Memórias",
+            title: "Compartilhe as memórias",
             description: "Envie fotos, áudios da voz e conte as histórias que vocês viveram juntos. Cada detalhe importa para recriar a essência única da pessoa."
           },
           {
             icon: "2️⃣",
-            title: "A IA Aprende com Amor", 
+            title: "A IA **aprende com amor**", 
             description: "Nossa tecnologia estuda com carinho cada palavra, tom de voz e jeito de falar. É como ensinar a alguém especial sobre quem você mais ama."
           },
           {
             icon: "3️⃣",
-            title: "Converse Quando Quiser",
+            title: "Converse quando quiser",
             description: "Abra o app, faça uma pergunta ou apenas diga 'oi'. A voz familiar responderá com todo o amor e sabedoria que você sempre conheceu."
           }
         ]
@@ -228,7 +228,7 @@ const getContent = (language: string) => {
         ]
       },
       pricing: {
-        title: "Planos Feitos para Sua Família",
+        title: "Planos feitos para **sua família**",
         subtitle: "Comece gratuitamente e cresça conforme sua família precisa",
         free: {
           name: "Descoberta",
@@ -245,7 +245,7 @@ const getContent = (language: string) => {
           popular: false
         },
         paid: {
-          name: "Família Conectada",
+          name: "Família conectada",
           price: "R$29",
           period: "/mês",
           description: "Para famílias que querem preservar mais histórias",
@@ -391,6 +391,17 @@ const getContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
+// Helper function to render text with markdown bold
+const renderTextWithBold = (text: string) => {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+};
+
 export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   onTryFree,
   onSignIn,
@@ -502,7 +513,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="features" className="py-28" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{content.features.title}</h2>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{renderTextWithBold(content.features.title)}</h2>
             <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{content.features.subtitle}</p>
           </div>
           
@@ -520,7 +531,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <div className="text-4xl mb-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-4" style={{color: '#FDFBCB'}}>{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-4" style={{color: '#FDFBCB'}}>{renderTextWithBold(feature.title)}</h3>
                 <p className="leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{feature.description}</p>
               </div>
             ))}
@@ -532,7 +543,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="how-it-works" className="py-28" style={{backgroundColor: '#FDFBCB'}}>
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.howItWorks.title}</h2>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{renderTextWithBold(content.howItWorks.title)}</h2>
             <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>
               Em apenas 3 passos simples, você pode começar a preservar memórias preciosas
             </p>
@@ -552,7 +563,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
                   {index + 1}
                 </div>
-                <h4 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{step.title}</h4>
+                <h4 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{renderTextWithBold(step.title)}</h4>
                 <p className="leading-relaxed" style={{color: '#441632', opacity: 0.7}}>{step.description}</p>
               </div>
             ))}
@@ -564,7 +575,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="pricing" className="py-28" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{content.pricing.title}</h2>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{renderTextWithBold(content.pricing.title)}</h2>
             <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.subtitle}</p>
           </div>
           
