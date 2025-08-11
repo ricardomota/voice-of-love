@@ -445,40 +445,54 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content container">
-          <div className="alzheimer-badge mb-lg">
-            {content.hero.badge}
-          </div>
-          
-          <h1 className="hero-title font-serif">
-            {content.hero.title}
-          </h1>
-          
-          <h2 className="hero-subtitle">
-            {content.hero.subtitle}
-          </h2>
-          
-          <p className="text-large mb-xl" style={{maxWidth: '700px', margin: '0 auto var(--space-xl) auto'}}>
-            {content.hero.description}
-          </p>
+          {/* Left Column - Content */}
+          <div className="hero-left">
+            <div className="alzheimer-badge mb-lg">
+              {content.hero.badge}
+            </div>
+            
+            <h1 className="hero-title font-serif">
+              {content.hero.title}
+            </h1>
+            
+            <h2 className="hero-subtitle">
+              {content.hero.subtitle}
+            </h2>
+            
+            <p className="text-large mb-xl">
+              {content.hero.description}
+            </p>
 
-          <div className="flex-center gap-md mb-lg" style={{flexWrap: 'wrap'}}>
-            <button 
-              onClick={onTryFree}
-              className="btn btn-primary btn-large"
-            >
-              {content.hero.buttonPrimary}
-            </button>
-            <button 
-              onClick={onLearnMore}
-              className="btn btn-secondary btn-large"
-            >
-              {content.hero.buttonSecondary}
-            </button>
+            <div className="flex gap-md mb-lg" style={{flexWrap: 'wrap'}}>
+              <button 
+                onClick={onTryFree}
+                className="btn btn-primary btn-large"
+              >
+                {content.hero.buttonPrimary}
+              </button>
+              <button 
+                onClick={onLearnMore}
+                className="btn btn-secondary btn-large"
+              >
+                {content.hero.buttonSecondary}
+              </button>
+            </div>
+            
+            <p className="text-small" style={{color: 'var(--gray-500)'}}>
+              {content.hero.note}
+            </p>
           </div>
-          
-          <p className="text-small" style={{color: 'var(--gray-500)'}}>
-            {content.hero.note}
-          </p>
+
+          {/* Right Column - Image Placeholder */}
+          <div className="hero-right">
+            <div className="w-full h-96 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="text-center p-8">
+                <Heart className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
+                <p className="text-gray-500">Sua imagem aqui</p>
+                <p className="text-sm text-gray-400 mt-2">500x400px recomendado</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
