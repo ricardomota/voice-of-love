@@ -235,7 +235,7 @@ html {
     background: hsl(249, 59%, 49%);
     color: hsl(var(--white));
     box-shadow: var(--shadow-md);
-    transition: all 0.3s var(--ease-smooth);
+    transition: all 0.6s var(--ease-smooth);
     position: relative;
     overflow: hidden;
     border-radius: 2rem;
@@ -249,7 +249,7 @@ html {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s;
+    transition: left 0.8s;
   }
 
   .btn-primary:hover::before {
@@ -257,7 +257,7 @@ html {
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     background: hsl(249, 59%, 45%);
     box-shadow: 0 10px 25px -5px rgba(89, 52, 197, 0.3);
   }
@@ -266,13 +266,14 @@ html {
     background: hsl(var(--white));
     color: hsl(var(--primary-purple));
     border: 2px solid hsl(var(--primary-purple));
-    transition: all 0.3s var(--ease-smooth);
+    transition: all 0.6s var(--ease-smooth);
+    border-radius: 2rem;
   }
 
   .btn-secondary:hover {
     background: hsl(var(--primary-purple));
     color: hsl(var(--white));
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
   .btn-large {
