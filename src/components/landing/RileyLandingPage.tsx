@@ -167,6 +167,84 @@ const getContent = (language: string) => {
         subtitle: "Não deixe que memórias preciosas se percam. Preserve hoje a voz de quem você ama.",
         button: "Criar Minha Primeira Conversa"
       }
+    },
+    'es': {
+      logo: "Eterna",
+      nav: {
+        features: "Características",
+        howItWorks: "Cómo Funciona",
+        pricing: "Precios",
+      },
+      cta: "Comenzar",
+      hero: {
+        title: "Preserva las voces que amas para siempre",
+        subtitle: "Preservación de memorias con IA para familias que enfrentan Alzheimer",
+        description: "Transforma recuerdos preciosos en conversaciones reales. Con inteligencia artificial avanzada, puedes escuchar la voz y sentir la presencia de quienes más amas, incluso cuando los recuerdos comienzan a desvanecerse.",
+        buttonPrimary: "Comenzar Gratis",
+        buttonSecondary: "Saber Más",
+        features: ["Sin tarjeta de crédito", "5 conversaciones gratuitas", "Configuración en minutos"]
+      },
+      features: {
+        title: "Creado para lo que realmente importa",
+        items: [{
+          icon: Brain,
+          title: "Preservación de Voz",
+          description: "IA avanzada captura la esencia única de los patrones de habla y personalidad, preservando no solo palabras sino la forma en que se dicen."
+        }, {
+          icon: Heart,
+          title: "Memorias Familiares",
+          description: "Organiza fotos, historias y momentos especiales en un solo lugar. Cada perfil cuenta una historia única y personal."
+        }, {
+          icon: Shield,
+          title: "Privado y Seguro",
+          description: "Tus memorias son sagradas. Todos los datos están encriptados y nunca se comparten. Solo tu familia tiene acceso."
+        }, {
+          icon: Smartphone,
+          title: "Fácil de Usar",
+          description: "Interfaz simple diseñada para todas las edades. Inicia conversaciones con solo unos toques."
+        }]
+      },
+      howItWorks: {
+        title: "Simple como tener una conversación",
+        steps: [{
+          number: "01",
+          title: "Comparte Memorias",
+          description: "Sube fotos, grabaciones de voz e historias que capturen su esencia."
+        }, {
+          number: "02",
+          title: "IA Aprende",
+          description: "Nuestra tecnología estudia cuidadosamente los patrones de habla y rasgos de personalidad."
+        }, {
+          number: "03",
+          title: "Comienza a Hablar",
+          description: "Ten conversaciones naturales cuando necesites sentirte cerca de ellos."
+        }]
+      },
+      pricing: {
+        title: "Elige tu plan",
+        free: {
+          name: "Gratuito",
+          price: "$0",
+          period: "/mes",
+          description: "Perfecto para empezar",
+          features: ["5 conversaciones/mes", "1 perfil de voz", "Soporte básico"],
+          button: "Comenzar Gratis"
+        },
+        paid: {
+          name: "Familia",
+          price: "$29",
+          period: "/mes",
+          description: "Para familias que quieren más",
+          features: ["Conversaciones ilimitadas", "Perfiles ilimitados", "Soporte prioritario", "Respaldo en la nube"],
+          button: "Prueba 7 Días Gratis",
+          popular: true
+        }
+      },
+      finalCta: {
+        title: "Tu primera conversación está a un clic de distancia",
+        subtitle: "No dejes que los recuerdos preciosos se desvanezcan. Preserva hoy la voz de quienes amas.",
+        button: "Crear Mi Primera Conversación"
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
