@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Heart, Play } from 'lucide-react';
+import { Favorite, PlayFilled } from '@carbon/icons-react';
 
 interface HeroSectionProps {
   onTryFree: () => void;
@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                 variant="cta"
                 className="w-full sm:w-auto min-w-[200px]"
               >
-                <Play className="w-5 h-5 mr-2" />
+                <PlayFilled size={16} className="mr-2" />
                 {content.tryFree}
               </Button>
               
@@ -95,7 +95,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                   <span>Private by default</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-primary" />
+                  <Favorite size={16} className="text-primary" />
                   <span>Family-first design</span>
                 </div>
               </div>
@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center space-y-4 p-8">
                   <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <Heart className="w-12 h-12 text-primary" />
+                    <Favorite size={24} className="text-primary" />
                   </div>
                   <div className="space-y-2">
                     <div className="h-4 bg-gradient-to-r from-primary/30 to-transparent rounded-full mx-auto w-48" />

@@ -50,32 +50,32 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const features = [
     {
-      icon: <VoiceActivate size={32} />,
+      icon: <VoiceActivate size={24} />,
       title: "Clonagem de Voz",
       description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
     },
     {
-      icon: <Group size={32} />,
+      icon: <Group size={24} />,
       title: "Perfis da Família",
       description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
     },
     {
-      icon: <Chat size={32} />,
+      icon: <Chat size={24} />,
       title: "Conversas Naturais",
       description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
     },
     {
-      icon: <Security size={32} />,
+      icon: <Security size={24} />,
       title: "Privacidade Primeiro",
       description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
     },
     {
-      icon: <Watson size={32} />,
+      icon: <Watson size={24} />,
       title: "Preservação de Memória",
       description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
     },
     {
-      icon: <Favorite size={32} />,
+      icon: <Favorite size={24} />,
       title: "Feito com Amor",
       description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
     }
@@ -83,25 +83,25 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const steps = [
     {
-      icon: <Microphone size={32} />,
+      icon: <Microphone size={24} />,
       title: "Grave a Voz",
       description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
       detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
     },
     {
-      icon: <Settings size={32} />,
+      icon: <Settings size={24} />,
       title: "Configure o Perfil",
       description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
       detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
     },
     {
-      icon: <Chat size={32} />,
+      icon: <Chat size={24} />,
       title: "Converse Naturalmente",
       description: "Inicie conversas significativas que se sentem reais e emocionalmente conectadas.",
       detail: "Fale sobre lembranças, peça conselhos ou simplesmente desfrute de uma conversa casual."
     },
     {
-      icon: <Share size={32} />,
+      icon: <Share size={24} />,
       title: "Compartilhe com a Família",
       description: "Convide outros membros da família para preservar memórias juntos.",
       detail: "Múltiplos usuários podem interagir e adicionar suas próprias memórias e histórias."
@@ -169,22 +169,22 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const techPoints = [
     {
-      icon: <Code size={32} />,
+      icon: <Code size={24} />,
       title: "GPT Open Source",
       description: "Construído com modelos de linguagem de código aberto, garantindo transparência e controle total sobre o processamento."
     },
     {
-      icon: <SecurityServices size={32} />,
+      icon: <SecurityServices size={24} />,
       title: "React + TypeScript",
       description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
     },
     {
-      icon: <Db2Database size={32} />,
+      icon: <Db2Database size={24} />,
       title: "Supabase Backend",
       description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
     },
     {
-      icon: <Flash size={32} />,
+      icon: <Flash size={24} />,
       title: "Edge Functions",
       description: "Processamento de IA distribuído para respostas rápidas e experiência fluida."
     }
@@ -223,7 +223,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <Close size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <Close size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -508,7 +508,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-background border rounded-lg px-4 py-2">
-              <Code size={20} />
+              <Code size={16} />
               <span className="font-medium">Open Source</span>
               <span className="text-muted-foreground">• Transparente • Controlado</span>
             </div>

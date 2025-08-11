@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Lock, Mic, Zap, Globe } from 'lucide-react';
+import { Security, Microphone, Flash, Globe } from '@carbon/icons-react';
 
 const getContent = (language: string) => {
   const content = {
@@ -11,19 +11,19 @@ const getContent = (language: string) => {
         {
           title: "Private by Default",
           description: "Secure, private storage that keeps your family's voices and memories safe.",
-          icon: Lock,
+          icon: Security,
           highlight: "End-to-end encrypted"
         },
         {
           title: "Hybrid Voices", 
           description: "Base voices for all users, personal voice cloning for paid users when capacity allows.",
-          icon: Mic,
+          icon: Microphone,
           highlight: "ElevenLabs powered"
         },
         {
           title: "Cost-Smart AI",
           description: "Together.ai (OSS-20B) for free users, OpenAI GPT-4o for premium conversations.",
-          icon: Zap,
+          icon: Flash,
           highlight: "Optimized for families"
         },
         {
@@ -40,19 +40,19 @@ const getContent = (language: string) => {
         {
           title: "Privado por Padrão",
           description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas.",
-          icon: Lock,
+          icon: Security,
           highlight: "Criptografado ponta a ponta"
         },
         {
           title: "Vozes Híbridas",
           description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite.",
-          icon: Mic,
+          icon: Microphone,
           highlight: "Alimentado por ElevenLabs"
         },
         {
           title: "IA Econômica",
           description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-4o para conversas premium.",
-          icon: Zap,
+          icon: Flash,
           highlight: "Otimizado para famílias"
         },
         {
@@ -69,19 +69,19 @@ const getContent = (language: string) => {
         {
           title: "Privado por Defecto",
           description: "Almacenamiento seguro y privado que mantiene las voces y memorias de tu familia protegidas.",
-          icon: Lock,
+          icon: Security,
           highlight: "Cifrado extremo a extremo"
         },
         {
           title: "Voces Híbridas",
           description: "Voces base para todos los usuarios, clonación de voz personal para usuarios pagos cuando la capacidad lo permite.",
-          icon: Mic,
+          icon: Microphone,
           highlight: "Impulsado por ElevenLabs"
         },
         {
           title: "IA Económica",
           description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-4o para conversaciones premium.",
-          icon: Zap,
+          icon: Flash,
           highlight: "Optimizado para familias"
         },
         {
@@ -122,7 +122,7 @@ export const FeaturesSection: React.FC = () => {
                   {/* Icon and Highlight */}
                   <div className="flex items-center justify-between">
                     <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <IconComponent className="w-8 h-8 text-primary" />
+                      <IconComponent size={20} />
                     </div>
                     <div className="text-right">
                       <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">

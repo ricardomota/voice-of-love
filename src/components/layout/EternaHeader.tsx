@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Settings, LogOut } from 'lucide-react';
+import { Favorite, Settings, Logout } from '@carbon/icons-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { useAuth } from '@/hooks/useAuth';
@@ -48,7 +48,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-foreground flex items-center justify-center">
-            <Heart className="w-5 h-5 fill-current text-background" />
+            <Favorite size={16} className="fill-current text-background" />
           </div>
           <div className="flex flex-col">
             <h1 className="text-xl font-bold tracking-tight text-foreground">Eterna</h1>
@@ -78,7 +78,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                   onClick={onSettingsClick}
                   className="flex items-center gap-2"
                 >
-                  <Settings className="w-4 h-4" />
+                  <Settings size={16} />
                   {content.settings}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -86,7 +86,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                   onClick={() => signOut()}
                   className="flex items-center gap-2 text-destructive"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <Logout size={16} />
                   {content.signOut}
                 </DropdownMenuItem>
               </DropdownMenuContent>
