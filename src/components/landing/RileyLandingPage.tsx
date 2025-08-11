@@ -50,15 +50,15 @@ export default function RileyLandingPage({
     description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
   }];
   const steps = [{
-    icon: <Microphone size={24} />,
-    title: "Grave a Voz",
-    description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
-    detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
-  }, {
     icon: <Settings size={24} />,
     title: "Configure o Perfil",
     description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
     detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
+  }, {
+    icon: <Microphone size={24} />,
+    title: "Grave a Voz",
+    description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
+    detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
   }, {
     icon: <Chat size={24} />,
     title: "Converse Naturalmente",
