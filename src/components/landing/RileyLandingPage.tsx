@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X, ArrowRight, Play, Shield, Clock, Star, Zap, Globe, Headphones, Camera, FileText, Settings, Share2, ChevronDown, Code, Database } from 'lucide-react';
+import InteractiveHowItWorks from './InteractiveHowItWorks';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -289,46 +290,9 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
       {/* Removed stats section with fake data */}
 
-      {/* How It Works Section */}
-      <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Como Funciona
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Em apenas 4 passos simples, você pode preservar as vozes e memórias dos seus entes queridos para sempre.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((step, index) => (
-              <Card key={index} className="relative border hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="absolute -top-4 left-6 w-8 h-8 bg-foreground text-background rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
-                  </div>
-                  <div className="mb-4 text-foreground mt-4">
-                    {step.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                  <p className="text-muted-foreground mb-3">{step.description}</p>
-                  <p className="text-sm text-muted-foreground">{step.detail}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-6">
-              * Clonagem de voz personalizada disponível após completar o perfil
-            </p>
-            <Button onClick={onTryFree} size="lg">
-              Começar Agora
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        </div>
+      {/* Interactive How It Works Section */}
+      <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/30">
+        <InteractiveHowItWorks steps={steps} onTryFree={onTryFree} />
       </section>
 
       {/* Why Eterna Section */}
