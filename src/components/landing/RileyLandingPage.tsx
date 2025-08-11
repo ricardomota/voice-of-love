@@ -584,46 +584,40 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Personal Story Section */}
-      <section className="py-28" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
+      <section className="py-16" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
         <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center items-center gap-6 mb-12">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="flex justify-center items-center gap-4 mb-8">
               <img 
                 src="/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png" 
                 alt="Alzheimer's Association" 
-                className="h-16 object-contain"
+                className="h-12 object-contain"
               />
-              <div className="w-px h-16 bg-gradient-to-b from-transparent via-current to-transparent opacity-30"></div>
-              <Heart className="w-16 h-16" style={{color: '#FDFBCB'}} />
+              <Heart className="w-12 h-12" style={{color: '#FDFBCB'}} />
             </div>
             
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8" style={{color: '#FDFBCB'}}>
-              {renderTextWithBold("Uma história **pessoal**")}
+            <h2 className="font-serif text-3xl font-bold mb-6" style={{color: '#FDFBCB'}}>
+              {renderTextWithBold("Preservando **memórias**")}
             </h2>
             
-            <div className="text-left max-w-3xl mx-auto space-y-6">
-              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
-                O Eterna nasceu de uma necessidade real e dolorosa. Como muitas famílias, vivenciamos o Alzheimer de perto 
-                - vendo alguém que amamos gradualmente perdendo as memórias que nos conectam.
+            <div className="max-w-2xl mx-auto">
+              <p className="text-lg leading-relaxed mb-4" style={{color: '#F8F4E6'}}>
+                O Eterna nasceu da necessidade real de preservar as {renderTextWithBold("**memórias preciosas**")} de quem amamos, 
+                especialmente quando enfrentamos o Alzheimer.
               </p>
               
-              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
-                A tecnologia existe para preservar fotos e vídeos, mas {renderTextWithBold("**a voz**")} - essa assinatura única de cada pessoa, 
-                com suas expressões, risadas e jeito particular de falar - sempre se perdia para sempre.
+              <p className="leading-relaxed" style={{color: '#F8F4E6'}}>
+                Nossa missão é manter viva a essência, personalidade e lembranças de quem mais importa, 
+                criando uma ponte entre o passado e o presente através da tecnologia.
               </p>
-              
-              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
-                Criamos o Eterna não apenas como uma empresa, mas como uma {renderTextWithBold("**missão**")}: dar às famílias a chance de manter 
-                viva a essência de quem mais amam, mesmo quando a memória biológica já não consegue mais.
+            </div>
+            
+            <div className="flex items-center justify-center gap-3 mt-8 p-6 rounded-xl border-2" 
+                 style={{backgroundColor: '#F0EDD7', borderColor: '#E8E3C8'}}>
+              <Heart className="w-8 h-8" style={{color: '#441632'}} />
+              <p className="font-medium text-lg" style={{color: '#441632'}}>
+                "Cada conversa é uma oportunidade de reconexão com quem amamos"
               </p>
-              
-              <div className="flex items-center justify-center gap-3 mt-8 p-6 rounded-xl border-2" 
-                   style={{backgroundColor: '#F0EDD7', borderColor: '#E8E3C8'}}>
-                <Heart className="w-8 h-8" style={{color: '#441632'}} />
-                <p className="font-medium text-lg" style={{color: '#441632'}}>
-                  "Cada conversa é uma oportunidade de reconexão com quem amamos"
-                </p>
-              </div>
             </div>
           </div>
         </div>
