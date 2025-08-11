@@ -1,394 +1,224 @@
 import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { LanguageSelector } from '@/components/ui/language-selector';
-import { Heart, Target, Zap, Rocket, Shield, Smartphone, Brain, Download, Apple, Play, Check, Cloud } from 'lucide-react';
+import { Heart, Brain, Shield, Smartphone, Check, ArrowRight } from 'lucide-react';
+
 interface RileyLandingPageProps {
   onTryFree: () => void;
   onSignIn: () => void;
   onLearnMore: () => void;
   onSeePricing?: () => void;
 }
+
 const getContent = (language: string) => {
   const content = {
     en: {
-      logo: "❤️ Eterna",
+      logo: "Eterna",
       nav: {
         features: "Features",
         howItWorks: "How It Works",
         pricing: "Pricing",
-        download: "Download"
       },
-      cta: "Start Now",
+      cta: "Get Started",
       hero: {
-        badge: "❤️ Feito especialmente para famílias",
-        title: "Preserve a Voz de Quem Você Ama",
-        subtitle: "Para Sempre",
-        description: "Transforme memórias preciosas em conversas reais. Com inteligência artificial avançada, você pode ouvir a voz e sentir a presença de quem mais ama, mesmo quando as memórias começam a desaparecer.",
-        buttonPrimary: "Começar Agora - É Grátis",
-        buttonSecondary: "Ver Como Funciona",
-        note: "✨ Sem cartão de crédito • Primeiras 5 conversas gratuitas"
+        title: "Preserve the voices you love forever",
+        subtitle: "AI-powered memory preservation for families facing Alzheimer's",
+        description: "Transform precious memories into real conversations. Using advanced AI, you can hear the voice and feel the presence of those you love most, even as memories begin to fade.",
+        buttonPrimary: "Start Free",
+        buttonSecondary: "Learn More",
+        features: ["No credit card required", "5 free conversations", "Setup in minutes"]
       },
       features: {
-        title: "Everything You Need",
-        subtitle: "Preserve Memories, Connect Hearts",
+        title: "Built for what matters most",
         items: [{
-          icon: "🎤",
-          title: "Voice Cloning",
-          description: "Advanced AI captures unique speech patterns and personality",
-          color: "card-voice-cloning"
+          icon: Brain,
+          title: "Voice Preservation",
+          description: "Advanced AI captures the unique essence of speech patterns and personality, preserving not just words but the way they're spoken."
         }, {
-          icon: "👨‍👩‍👧‍👦",
-          title: "Family Profiles",
-          description: "Create detailed profiles for each loved one with photos and memories",
-          color: "card-family-profiles"
+          icon: Heart,
+          title: "Family Memories",
+          description: "Organize photos, stories, and special moments in one place. Each profile tells a unique and personal story."
         }, {
-          icon: "💬",
-          title: "Natural Conversations",
-          description: "Chat naturally with AI that responds like your loved one",
-          color: "card-conversations"
+          icon: Shield,
+          title: "Private & Secure",
+          description: "Your memories are sacred. All data is encrypted and never shared. Only your family has access."
         }, {
-          icon: "🔒",
-          title: "Privacy First",
-          description: "Your family's data is encrypted and never shared with third parties",
-          color: "card-privacy"
-        }, {
-          icon: "🧠",
-          title: "Memory Preservation",
-          description: "Specially designed for families facing Alzheimer's and dementia",
-          color: "card-memory"
-        }, {
-          icon: "❤️",
-          title: "Built with Love",
-          description: "Created by someone who understands the pain of memory loss",
-          color: "card-love"
+          icon: Smartphone,
+          title: "Easy to Use",
+          description: "Simple interface designed for all ages. Start conversations with just a few taps."
         }]
       },
       howItWorks: {
-        title: "How It Works",
+        title: "Simple as having a conversation",
         steps: [{
-          icon: "1️⃣",
-          title: "Create Profile",
-          description: "Add photos, voice recordings, and memories of your loved one"
+          number: "01",
+          title: "Share Memories",
+          description: "Upload photos, voice recordings, and stories that capture their essence."
         }, {
-          icon: "2️⃣",
-          title: "Train AI",
-          description: "Our AI learns their personality, speech patterns, and mannerisms"
+          number: "02",
+          title: "AI Learns",
+          description: "Our technology carefully studies speech patterns and personality traits."
         }, {
-          icon: "3️⃣",
-          title: "Start Conversations",
-          description: "Chat naturally and hear their voice respond with love and memories"
+          number: "03",
+          title: "Start Talking",
+          description: "Have natural conversations whenever you need to feel close to them."
         }]
       },
-      finalCta: {
-        title: "Ready to hear a memory come alive?",
-        subtitle: "Start preserving precious memories with advanced AI technology.",
-        button: "Try Eterna Free",
-        features: ["No credit card required", "5 messages to start", "1 minute of voice generation"]
-      },
-      donation: {
-        text: "Support Alzheimer's Research",
-        subtitle: "Donate if you can"
-      },
       pricing: {
-        title: "Choose Your Plan",
-        subtitle: "Start free and unlock premium features as you need them",
+        title: "Choose your plan",
         free: {
           name: "Free",
           price: "$0",
           period: "/month",
           description: "Perfect to get started",
-          features: ["5 messages/month", "1 minute voice/month", "1 person profile", "Basic support"],
-          button: "Start Free",
-          popular: false
+          features: ["5 conversations/month", "1 voice profile", "Basic support"],
+          button: "Start Free"
         },
         paid: {
-          name: "Family Plan",
+          name: "Family",
           price: "$29",
           period: "/month",
-          description: "For families who want to preserve more memories",
-          features: ["300 messages/month", "15 minutes voice/month", "Unlimited profiles", "Personal voice clone", "Priority support", "Cloud backup"],
-          button: "Start Trial",
+          description: "For families who want more",
+          features: ["Unlimited conversations", "Unlimited profiles", "Priority support", "Cloud backup"],
+          button: "Try Free for 7 Days",
           popular: true
         }
+      },
+      finalCta: {
+        title: "Your first conversation is just one click away",
+        subtitle: "Don't let precious memories fade. Preserve the voice of those you love today.",
+        button: "Create My First Conversation"
       }
     },
     'pt-BR': {
-      logo: "❤️ Eterna",
+      logo: "Eterna",
       nav: {
         features: "Funcionalidades",
         howItWorks: "Como Funciona",
         pricing: "Preços",
-        download: "Download"
       },
-      cta: "Começar Agora",
+      cta: "Começar",
       hero: {
-        badge: "❤️ Feito especialmente para famílias",
-        title: "Preserve a voz de quem você ama",
-        subtitle: "Para sempre",
+        title: "Preserve a voz de quem você ama para sempre",
+        subtitle: "Preservação de memórias com IA para famílias enfrentando o Alzheimer",
         description: "Transforme memórias preciosas em conversas reais. Com inteligência artificial avançada, você pode ouvir a voz e sentir a presença de quem mais ama, mesmo quando as memórias começam a desaparecer.",
-        buttonPrimary: "Começar Agora - É Grátis",
-        buttonSecondary: "Ver Como Funciona",
-        note: "✨ Sem cartão de crédito • Primeiras 5 conversas gratuitas"
+        buttonPrimary: "Começar Grátis",
+        buttonSecondary: "Saiba Mais",
+        features: ["Sem cartão de crédito", "5 conversas gratuitas", "Configuração em minutos"]
       },
       features: {
-        title: "Criado para **momentos que importam**",
-        subtitle: "Tecnologia que preserva o essencial: a conexão humana",
+        title: "Criado para o que realmente importa",
         items: [{
-          icon: "🎤",
-          title: "Voz autêntica",
-          description: "Capture cada nuance da voz que você ama. Nossa IA preserva não apenas as palavras, mas a essência de como elas eram ditas.",
-          color: "card-voice-cloning"
+          icon: Brain,
+          title: "Preservação da Voz",
+          description: "IA avançada captura a essência única dos padrões de fala e personalidade, preservando não apenas palavras, mas a forma como são ditas."
         }, {
-          icon: "👨‍👩‍👧‍👦",
-          title: "Memórias de família",
-          description: "Organize fotos, histórias e momentos especiais em um só lugar. Cada perfil conta uma história única e pessoal.",
-          color: "card-family-profiles"
+          icon: Heart,
+          title: "Memórias da Família",
+          description: "Organize fotos, histórias e momentos especiais em um só lugar. Cada perfil conta uma história única e pessoal."
         }, {
-          icon: "💬",
-          title: "Conversas reais",
-          description: "Não é apenas texto na tela. É uma conversa genuína que traz de volta a sensação de estar presente com quem você ama.",
-          color: "card-conversations"
+          icon: Shield,
+          title: "Privado e Seguro",
+          description: "Suas memórias são sagradas. Todos os dados são criptografados e nunca compartilhados. Apenas sua família tem acesso."
         }, {
-          icon: "🔒",
-          title: "Totalmente **privado**",
-          description: "Suas memórias são sagradas. Todos os dados são criptografados e nunca compartilhados. Apenas sua família tem acesso.",
-          color: "card-privacy"
-        }, {
-          icon: "🧠",
-          title: "**Feito para durar**",
-          description: "Especialmente criado para famílias enfrentando o Alzheimer. Preservamos o que é mais importante: a pessoa por trás das palavras.",
-          color: "card-memory"
-        }, {
-          icon: "❤️",
-          title: "Criado com **propósito**",
-          description: "Nasceu da necessidade real de uma filha que queria preservar a voz da mãe. Cada feature foi pensada com amor e cuidado.",
-          color: "card-love"
+          icon: Smartphone,
+          title: "Fácil de Usar",
+          description: "Interface simples projetada para todas as idades. Inicie conversas com apenas alguns toques."
         }]
       },
       howItWorks: {
-        title: "**Simples como uma conversa**",
+        title: "Simples como ter uma conversa",
         steps: [{
-          icon: "1️⃣",
-          title: "Compartilhe as memórias",
-          description: "Envie fotos, áudios da voz e conte as histórias que vocês viveram juntos. Cada detalhe importa para recriar a essência única da pessoa."
+          number: "01",
+          title: "Compartilhe Memórias",
+          description: "Envie fotos, gravações de voz e histórias que capturam sua essência."
         }, {
-          icon: "2️⃣",
-          title: "A IA **aprende com amor**",
-          description: "Nossa tecnologia estuda com carinho cada palavra, tom de voz e jeito de falar. É como ensinar a alguém especial sobre quem você mais ama."
+          number: "02",
+          title: "IA Aprende",
+          description: "Nossa tecnologia estuda cuidadosamente padrões de fala e traços de personalidade."
         }, {
-          icon: "3️⃣",
-          title: "Converse quando quiser",
-          description: "Abra o app, faça uma pergunta ou apenas diga 'oi'. A voz familiar responderá com todo o amor e sabedoria que você sempre conheceu."
+          number: "03",
+          title: "Comece a Conversar",
+          description: "Tenha conversas naturais sempre que precisar se sentir próximo a eles."
         }]
+      },
+      pricing: {
+        title: "Escolha seu plano",
+        free: {
+          name: "Gratuito",
+          price: "R$0",
+          period: "/mês",
+          description: "Perfeito para começar",
+          features: ["5 conversas/mês", "1 perfil de voz", "Suporte básico"],
+          button: "Começar Grátis"
+        },
+        paid: {
+          name: "Família",
+          price: "R$29",
+          period: "/mês",
+          description: "Para famílias que querem mais",
+          features: ["Conversas ilimitadas", "Perfis ilimitados", "Suporte prioritário", "Backup na nuvem"],
+          button: "Teste 7 Dias Grátis",
+          popular: true
+        }
       },
       finalCta: {
         title: "Sua primeira conversa está a um clique de distância",
-        subtitle: "Não deixe que as memórias mais preciosas se percam. Preserve hoje a voz de quem você ama.",
-        button: "Criar minha primeira conversa",
-        features: ["Totalmente gratuito para começar", "5 conversas incluídas", "Configuração em 5 minutos"]
-      },
-      donation: {
-        text: "Apoie a pesquisa sobre Alzheimer",
-        subtitle: "Doe se puder"
-      },
-      pricing: {
-        title: "Planos feitos para **sua família**",
-        subtitle: "Comece gratuitamente e cresça conforme sua família precisa",
-        free: {
-          name: "Descoberta",
-          price: "R$0",
-          period: "/mês",
-          description: "Perfeito para suas primeiras conversas",
-          features: ["5 conversas/mês", "1 minuto de voz/mês", "1 perfil de pessoa", "Suporte por email"],
-          button: "Começar Agora",
-          popular: false
-        },
-        paid: {
-          name: "Família conectada",
-          price: "R$29",
-          period: "/mês",
-          description: "Para famílias que querem preservar mais histórias",
-          features: ["Conversas ilimitadas", "15 minutos de voz/mês", "Perfis ilimitados", "Voz personalizada premium", "Suporte prioritário", "Backup automático"],
-          button: "Experimentar 7 Dias Grátis",
-          popular: true
-        }
-      }
-    },
-    es: {
-      logo: "❤️ Eterna",
-      nav: {
-        features: "Características",
-        howItWorks: "Cómo Funciona",
-        pricing: "Precios",
-        download: "Descargar"
-      },
-      cta: "Empezar Ahora",
-      hero: {
-        badge: "❤️ Hecho para familias con Alzheimer",
-        title: "Mantén Su Voz Para Siempre",
-        subtitle: "Preservación de Memorias con IA",
-        description: "Eterna convierte memorias queridas en conversaciones vivas. Preserva la voz y personalidad de tu ser querido con IA que entiende lo que más importa a familias enfrentando pérdida de memoria.",
-        buttonPrimary: "Prueba Eterna Gratis",
-        buttonSecondary: "Ve Cómo Funciona",
-        note: "No se requiere tarjeta de crédito • 5 mensajes para empezar"
-      },
-      features: {
-        title: "Todo Lo Que Necesitas",
-        subtitle: "Preserva Memorias, Conecta Corazones",
-        items: [{
-          icon: "🎤",
-          title: "Clonación de Voz",
-          description: "IA avanzada captura patrones únicos de habla y personalidad",
-          color: "card-voice-cloning"
-        }, {
-          icon: "👨‍👩‍👧‍👦",
-          title: "Perfiles de Familia",
-          description: "Crea perfiles detallados para cada ser querido con fotos y memorias",
-          color: "card-family-profiles"
-        }, {
-          icon: "💬",
-          title: "Conversaciones Naturales",
-          description: "Chatea naturalmente con IA que responde como tu ser querido",
-          color: "card-conversations"
-        }, {
-          icon: "🔒",
-          title: "Privacidad Primero",
-          description: "Los datos de tu familia están encriptados y nunca se comparten",
-          color: "card-privacy"
-        }, {
-          icon: "🧠",
-          title: "Preservación de Memorias",
-          description: "Especialmente diseñado para familias enfrentando Alzheimer y demencia",
-          color: "card-memory"
-        }, {
-          icon: "❤️",
-          title: "Hecho con Amor",
-          description: "Creado por alguien que entiende el dolor de la pérdida de memoria",
-          color: "card-love"
-        }]
-      },
-      howItWorks: {
-        title: "Cómo Funciona",
-        steps: [{
-          icon: "1️⃣",
-          title: "Crea el Perfil",
-          description: "Añade fotos, grabaciones de voz y memorias de tu ser querido"
-        }, {
-          icon: "2️⃣",
-          title: "Entrena la IA",
-          description: "Nuestra IA aprende su personalidad, patrones de habla y gestos"
-        }, {
-          icon: "3️⃣",
-          title: "Inicia Conversaciones",
-          description: "Conversa naturalmente y escucha su voz responder con amor y memorias"
-        }]
-      },
-      finalCta: {
-        title: "¿Listo para escuchar una memoria cobrar vida?",
-        subtitle: "Preserva memorias preciosas con tecnología de IA avanzada.",
-        button: "Prueba Eterna Gratis",
-        features: ["No se requiere tarjeta de crédito", "5 mensajes para empezar", "1 minuto de generación de voz"]
-      },
-      donation: {
-        text: "Apoya la investigación del Alzheimer",
-        subtitle: "Dona si puedes"
-      },
-      pricing: {
-        title: "Elige Tu Plan",
-        subtitle: "Empieza gratis y desbloquea características premium según necesites",
-        free: {
-          name: "Gratuito",
-          price: "$0",
-          period: "/mes",
-          description: "Perfecto para empezar",
-          features: ["5 mensajes/mes", "1 minuto de voz/mes", "1 perfil de persona", "Soporte básico"],
-          button: "Empezar Gratis",
-          popular: false
-        },
-        paid: {
-          name: "Plan Familiar",
-          price: "$29",
-          period: "/mes",
-          description: "Para familias que quieren preservar más memorias",
-          features: ["300 mensajes/mes", "15 minutos de voz/mes", "Perfiles ilimitados", "Clon de voz personalizado", "Soporte prioritario", "Respaldo en la nube"],
-          button: "Empezar Prueba",
-          popular: true
-        }
+        subtitle: "Não deixe que memórias preciosas se percam. Preserve hoje a voz de quem você ama.",
+        button: "Criar Minha Primeira Conversa"
       }
     }
   };
   return content[language as keyof typeof content] || content.en;
 };
 
-// Helper function to render text with markdown bold
-const renderTextWithBold = (text: string) => {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, index) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={index}>{part.slice(2, -2)}</strong>;
-    }
-    return part;
-  });
-};
 export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   onTryFree,
   onSignIn,
   onLearnMore,
   onSeePricing
 }) => {
-  const {
-    currentLanguage
-  } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  return <div className="min-h-screen bg-background">
-      {/* Header - OpenAI Inspired */}
-      <header className="fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300" style={{
-      backgroundColor: 'rgba(253, 251, 203, 0.85)',
-      backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid rgba(68, 22, 50, 0.08)'
-    }}>
-        <nav className="container flex items-center justify-between">
-          <div className="flex items-center gap-3 hover-lift">
-            <div className="p-2 rounded-xl" style={{background: 'linear-gradient(135deg, #441632 0%, #553344 100%)'}}>
-              <Heart className="w-5 h-5 fill-current text-white" />
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <nav className="container flex items-center justify-between py-4">
+          <div className="flex items-center gap-2">
+            <div className="p-2 rounded-lg bg-primary">
+              <Heart className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent">
-              Eterna
+            <span className="text-xl font-semibold text-foreground">
+              {content.logo}
             </span>
           </div>
-          <ul className="hidden md:flex items-center gap-1">
+
+          <ul className="hidden md:flex items-center gap-8">
             <li>
-              <a href="#features" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
-              color: '#441632'
-            }}>
+              <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
                 {content.nav.features}
               </a>
             </li>
             <li>
-              <a href="#how-it-works" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
-              color: '#441632'
-            }}>
+              <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
                 {content.nav.howItWorks}
               </a>
             </li>
             <li>
-              <a href="#pricing" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
-              color: '#441632'
-            }}>
+              <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
                 {content.nav.pricing}
               </a>
             </li>
-            <li>
-              <a href="#download" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
-              color: '#441632'
-            }}>
-                {content.nav.download}
-              </a>
-            </li>
           </ul>
+
           <div className="flex items-center gap-4">
             <LanguageSelector />
-            <button onClick={onTryFree} className="btn-primary px-6 py-3 rounded-xl font-semibold hover-lift shadow-lg">
+            <button 
+              onClick={onTryFree} 
+              className="btn-primary"
+            >
               {content.cta}
             </button>
           </div>
@@ -396,505 +226,218 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </header>
 
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content container">
-          {/* Left Column - Content */}
-          <div className="hero-left animate-fade-in-up">
-            <div className="alzheimer-badge mb-xl animate-scale-up">
-              {content.hero.badge}
-            </div>
-            
-            <h1 className="hero-title font-serif mb-lg">
+      <section className="pt-32 pb-20">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle mb-xl">
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
               {content.hero.subtitle}
-            </h2>
+            </p>
             
-            <p className="text-large mb-2xl leading-relaxed" style={{
-            color: '#331122'
-          }}>
+            <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
               {content.hero.description}
             </p>
 
-            <div className="flex gap-lg mb-xl" style={{
-            flexWrap: 'wrap'
-          }}>
-              <button onClick={onTryFree} className="btn btn-primary btn-large">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <button 
+                onClick={onTryFree} 
+                className="btn-primary text-lg px-8 py-4"
+              >
                 {content.hero.buttonPrimary}
               </button>
-              <button onClick={onLearnMore} className="btn btn-secondary btn-large">
+              <button 
+                onClick={onLearnMore} 
+                className="btn-secondary text-lg px-8 py-4"
+              >
                 {content.hero.buttonSecondary}
               </button>
             </div>
-            
-            <p className="text-small flex items-center gap-2" style={{
-            color: '#331122'
-          }}>
-              <span className="w-2 h-2 rounded-full" style={{
-              backgroundColor: '#441632'
-            }}></span>
-              {content.hero.note}
-            </p>
-          </div>
 
-          {/* Right Column - Modern Visual */}
-          <div className="hero-right animate-slide-up">
-            <div className="relative w-full h-96 rounded-3xl overflow-hidden" style={{
-            background: 'var(--gradient-card)',
-            backdropFilter: 'blur(12px)',
-            boxShadow: 'var(--shadow-hover)'
-          }}>
-              {/* Animated Background Pattern */}
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-100/20 to-transparent"></div>
-                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-200/10 rounded-full blur-xl animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-pink-200/10 rounded-full blur-lg animate-pulse delay-300"></div>
-              </div>
-              
-              {/* Floating Elements with Modern Design */}
-              <div className="relative w-full h-full flex items-center justify-center">
-                <div className="absolute top-12 left-12 p-4 rounded-2xl backdrop-blur-sm animate-pulse" style={{
-                background: 'rgba(68, 22, 50, 0.9)',
-                boxShadow: 'var(--shadow-md)'
-              }}>
-                  <Brain className="w-6 h-6 text-white" />
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+              {content.hero.features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary" />
+                  {feature}
                 </div>
-                <div className="absolute top-16 right-16 p-3 rounded-xl backdrop-blur-sm animate-pulse delay-300" style={{
-                background: 'rgba(102, 51, 68, 0.9)',
-                boxShadow: 'var(--shadow-md)'
-              }}>
-                  <Heart className="w-5 h-5 text-white fill-current" />
-                </div>
-                <div className="absolute bottom-12 left-16 p-3 rounded-xl backdrop-blur-sm animate-pulse delay-700" style={{
-                background: 'rgba(85, 51, 68, 0.9)',
-                boxShadow: 'var(--shadow-md)'
-              }}>
-                  <Target className="w-5 h-5 text-white" />
-                </div>
-                
-                {/* Center Content - Modern Phone Mockup */}
-                <div className="text-center z-10">
-                  <div className="w-40 h-40 rounded-3xl mx-auto mb-6 flex items-center justify-center border backdrop-blur-sm hover-lift" style={{
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  borderColor: 'rgba(68, 22, 50, 0.1)',
-                  boxShadow: 'var(--shadow-card)'
-                }}>
-                    <Smartphone className="w-20 h-20" style={{
-                    color: '#441632'
-                  }} />
-                  </div>
-                  <p className="text-xl font-semibold bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent">
-                    Coming Soon
-                  </p>
-                  <p className="text-sm opacity-75 mt-2" style={{color: '#553344'}}>
-                    Beautiful mobile experience
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-28" style={{
-      backgroundColor: '#441632',
-      color: '#FDFBCB'
-    }}>
+      <section id="features" className="py-20">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{
-            color: '#FDFBCB'
-          }}>{renderTextWithBold(content.features.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{
-            color: '#F8F4E6'
-          }}>{content.features.subtitle}</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              {content.features.title}
+            </h2>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {content.features.items.map((feature, index) => <div key={index} className="p-8 rounded-2xl hover-lift text-center transition-all duration-300 border-2 shadow-lg hover:shadow-xl" style={{
-            backgroundColor: index % 2 === 0 ? '#F8F4E6' : '#F0EDD7',
-            borderColor: '#E8E3C8',
-            animationDelay: `${index * 0.1}s`
-          }}>
-                <div className="text-4xl mb-6">
-                  {feature.icon}
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {content.features.items.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <div key={index} className="glass-card text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-accent flex items-center justify-center">
+                    <IconComponent className="w-6 h-6 text-accent-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>{renderTextWithBold(feature.title)}</h3>
-                <p className="leading-relaxed" style={{
-              color: '#331122'
-            }}>{feature.description}</p>
-              </div>)}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-28" style={{
-      backgroundColor: '#FDFBCB'
-    }}>
+      <section id="how-it-works" className="py-20">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{
-            color: '#441632'
-          }}>{renderTextWithBold(content.howItWorks.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{
-            color: '#331122'
-          }}>
-              Em apenas 3 passos simples, você pode começar a preservar memórias preciosas
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              {content.howItWorks.title}
+            </h2>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {content.howItWorks.steps.map((step, index) => <div key={index} className="p-8 rounded-2xl text-center hover-lift transition-all duration-300 border-2 shadow-lg hover:shadow-xl" style={{
-            backgroundColor: index % 2 === 0 ? '#F8F4E6' : '#F0EDD7',
-            borderColor: '#E8E3C8',
-            animationDelay: `${index * 0.2}s`
-          }}>
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold" style={{
-              backgroundColor: '#441632',
-              color: '#FDFBCB'
-            }}>
-                  {index + 1}
-                </div>
-                <h4 className="text-xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>{renderTextWithBold(step.title)}</h4>
-                <p className="leading-relaxed" style={{
-              color: '#331122'
-            }}>{step.description}</p>
-              </div>)}
-          </div>
-        </div>
-      </section>
 
-      {/* Personal Story Section */}
-      <section className="py-16" style={{
-      backgroundColor: '#441632',
-      color: '#FDFBCB'
-    }}>
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex justify-center items-center gap-4 mb-8">
-              <img src="/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png" alt="Alzheimer's Association" className="h-12 object-contain" style={{
-              filter: 'brightness(0) saturate(100%) invert(95%) sepia(6%) saturate(407%) hue-rotate(14deg) brightness(103%) contrast(96%)'
-            }} />
-              
-            </div>
-            
-            
-            
-            <div className="max-w-2xl mx-auto">
-              <p className="text-lg leading-relaxed mb-4" style={{
-              color: '#F8F4E6'
-            }}>
-                O Eterna nasceu da necessidade real de preservar as {renderTextWithBold("**memórias preciosas**")} de quem amamos, 
-                especialmente quando enfrentamos o Alzheimer.
-              </p>
-              
-              <p className="leading-relaxed" style={{
-              color: '#F8F4E6'
-            }}>
-                Nossa missão é manter viva a essência, personalidade e lembranças de quem mais importa, 
-                criando uma ponte entre o passado e o presente através da tecnologia.
-              </p>
-            </div>
-            
-            
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {content.howItWorks.steps.map((step, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">
+                  {step.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-28" style={{
-      backgroundColor: '#441632',
-      color: '#FDFBCB'
-    }}>
+      <section id="pricing" className="py-20">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{
-            color: '#FDFBCB'
-          }}>{renderTextWithBold(content.pricing.title)}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{
-            color: '#F8F4E6'
-          }}>{content.pricing.subtitle}</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              {content.pricing.title}
+            </h2>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Free Plan */}
-            <div className="p-8 rounded-2xl text-center border-2 shadow-lg hover:shadow-xl transition-all" style={{
-            backgroundColor: '#F8F4E6',
-            borderColor: '#E8E3C8'
-          }}>
-              <h3 className="text-2xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>{content.pricing.free.name}</h3>
-              <div className="text-5xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>
-                {content.pricing.free.price}
-                <span className="text-lg" style={{
-                color: '#331122'
-              }}>{content.pricing.free.period}</span>
+            <div className="glass-card">
+              <h3 className="text-2xl font-semibold text-foreground mb-2">
+                {content.pricing.free.name}
+              </h3>
+              <div className="mb-4">
+                <span className="text-4xl font-bold text-foreground">
+                  {content.pricing.free.price}
+                </span>
+                <span className="text-muted-foreground">
+                  {content.pricing.free.period}
+                </span>
               </div>
-              <p className="mb-8 text-lg" style={{
-              color: '#331122'
-            }}>{content.pricing.free.description}</p>
-              
-              <ul className="space-y-4 mb-10 text-left">
-                {content.pricing.free.features.map((feature, index) => <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 flex-shrink-0" style={{
-                  color: '#441632'
-                }} />
-                    <span style={{
-                  color: '#331122'
-                }}>{feature}</span>
-                  </li>)}
+              <p className="text-muted-foreground mb-6">
+                {content.pricing.free.description}
+              </p>
+              <ul className="space-y-3 mb-8">
+                {content.pricing.free.features.map((feature, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-primary" />
+                    <span className="text-foreground">{feature}</span>
+                  </li>
+                ))}
               </ul>
-              
-              <button onClick={onTryFree} className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all border-2" style={{
-              backgroundColor: '#441632',
-              color: '#FDFBCB',
-              borderColor: '#441632'
-            }}>
+              <button 
+                onClick={onTryFree} 
+                className="btn-secondary w-full"
+              >
                 {content.pricing.free.button}
               </button>
             </div>
 
             {/* Paid Plan */}
-            <div className="p-8 rounded-2xl text-center border-2 shadow-lg hover:shadow-xl transition-all relative" style={{
-            backgroundColor: '#F0EDD7',
-            borderColor: '#E8E3C8'
-          }}>
-              {content.pricing.paid.popular && <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full text-sm font-medium" style={{
-              backgroundColor: '#441632',
-              color: '#FDFBCB'
-            }}>
-                  Mais Popular
-                </div>}
-              <h3 className="text-2xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>{content.pricing.paid.name}</h3>
-              <div className="text-5xl font-bold mb-4" style={{
-              color: '#441632'
-            }}>
-                {content.pricing.paid.price}
-                <span className="text-lg" style={{
-                color: '#331122'
-              }}>{content.pricing.paid.period}</span>
+            <div className="glass-card relative">
+              {content.pricing.paid.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                    Popular
+                  </span>
+                </div>
+              )}
+              <h3 className="text-2xl font-semibold text-foreground mb-2">
+                {content.pricing.paid.name}
+              </h3>
+              <div className="mb-4">
+                <span className="text-4xl font-bold text-foreground">
+                  {content.pricing.paid.price}
+                </span>
+                <span className="text-muted-foreground">
+                  {content.pricing.paid.period}
+                </span>
               </div>
-              <p className="mb-8 text-lg" style={{
-              color: '#331122'
-            }}>{content.pricing.paid.description}</p>
-              
-              <ul className="space-y-4 mb-10 text-left">
-                {content.pricing.paid.features.map((feature, index) => <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 flex-shrink-0" style={{
-                  color: '#441632'
-                }} />
-                    <span className="font-medium" style={{
-                  color: '#331122'
-                }}>{feature}</span>
-                  </li>)}
+              <p className="text-muted-foreground mb-6">
+                {content.pricing.paid.description}
+              </p>
+              <ul className="space-y-3 mb-8">
+                {content.pricing.paid.features.map((feature, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-primary" />
+                    <span className="text-foreground">{feature}</span>
+                  </li>
+                ))}
               </ul>
-              
-              <button onClick={onSeePricing || onTryFree} className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all" style={{
-              backgroundColor: '#441632',
-              color: '#FDFBCB'
-            }}>
+              <button 
+                onClick={onTryFree} 
+                className="btn-primary w-full"
+              >
                 {content.pricing.paid.button}
               </button>
-              
-              <p className="text-xs mt-4" style={{
-              color: '#331122'
-            }}>7 dias grátis • Cancele a qualquer momento</p>
-            </div>
-          </div>
-          
-          {/* Support guarantee */}
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-8 px-8 py-6 rounded-2xl border-2" style={{
-            backgroundColor: '#F0EDD7',
-            borderColor: '#E8E3C8'
-          }}>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
-                backgroundColor: '#441632'
-              }}>
-                  <Shield className="w-6 h-6" style={{
-                  color: '#FDFBCB'
-                }} />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold" style={{
-                  color: '#441632'
-                }}>Garantia de 30 dias</p>
-                  <p className="text-sm" style={{
-                  color: '#331122'
-                }}>100% do seu dinheiro de volta</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{
-                backgroundColor: '#441632'
-              }}>
-                  <Heart className="w-6 h-6" style={{
-                  color: '#FDFBCB'
-                }} />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold" style={{
-                  color: '#441632'
-                }}>Suporte 24/7</p>
-                  <p className="text-sm" style={{
-                  color: '#331122'
-                }}>Sempre aqui para ajudar</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="py-28" style={{
-      backgroundColor: '#FDFBCB'
-    }}>
-        <div className="container text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{
-            color: '#441632'
-          }}>{content.finalCta.title}</h2>
-            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" style={{
-            color: '#331122'
-          }}>
-              Preserve as memórias mais preciosas com tecnologia de IA avançada.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <button onClick={onTryFree} className="btn btn-primary btn-large hover-lift px-12 py-4 text-lg">
-                {content.finalCta.button}
-              </button>
-              <button onClick={onLearnMore} className="btn btn-secondary btn-large px-12 py-4 text-lg">
-                Ver Demonstração
-              </button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-              {content.finalCta.features.map((feature, index) => <div key={index} className="flex items-center justify-center gap-2 rounded-lg px-4 py-3 border-2" style={{
-              backgroundColor: '#F8F4E6',
-              borderColor: '#E8E3C8'
-            }}>
-                  <span className="w-2 h-2 rounded-full" style={{
-                backgroundColor: '#441632'
-              }}></span>
-                  <p className="text-sm font-medium" style={{
-                color: '#441632'
-              }}>{feature}</p>
-                </div>)}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Donation Section */}
-      <section className="py-sm" style={{
-      backgroundColor: '#F8F4E6',
-      borderTop: '1px solid #E8E3C8'
-    }}>
+      <section className="py-20">
         <div className="container">
-          <div className="flex items-center justify-center gap-sm opacity-75 hover:opacity-100 transition-opacity">
-            <img src="/alzheimers-logo.png" alt="Alzheimer's research support" className="w-6 h-6 rounded-sm" style={{
-            filter: 'sepia(100%) hue-rotate(280deg) saturate(0.5)'
-          }} />
-            <a href="https://www.alz.org/donate" target="_blank" rel="noopener noreferrer" className="text-xs transition-colors hover:underline flex items-center gap-1" style={{
-            color: '#441632'
-          }}>
-              <span>{content.donation.text}</span>
-              <span style={{
-              color: '#331122'
-            }}>• {content.donation.subtitle}</span>
-            </a>
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold text-foreground mb-6">
+              {content.finalCta.title}
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              {content.finalCta.subtitle}
+            </p>
+            <button 
+              onClick={onTryFree} 
+              className="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2"
+            >
+              {content.finalCta.button}
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="section" style={{
-      backgroundColor: '#441632',
-      color: '#FDFBCB'
-    }}>
-        <div className="container">
-          <div className="grid grid-3 gap-lg mb-xl">
-            <div>
-              <div className="flex items-center gap-2 mb-md">
-                <Heart className="w-6 h-6 fill-current" style={{
-                color: '#FDFBCB'
-              }} />
-                <span className="text-xl font-bold" style={{
-                color: '#FDFBCB'
-              }}>Eterna</span>
-              </div>
-              <p className="text-small mb-md" style={{
-              color: '#F8F4E6'
-            }}>
-                Preserving memories with AI-powered conversations
-              </p>
-            </div>
-            
-            <div>
-              <h6 className="font-bold mb-md" style={{
-              color: '#FDFBCB'
-            }}>Product</h6>
-              <div className="space-y-2">
-                <a href="#features" className="block text-small transition-colors hover:opacity-80" style={{
-                color: '#FDFBCB'
-              }}>Features</a>
-                <a href="#pricing" className="block text-small transition-colors hover:opacity-80" style={{
-                color: '#FDFBCB'
-              }}>Pricing</a>
-                <a href="#how-it-works" className="block text-small transition-colors hover:opacity-80" style={{
-                color: '#FDFBCB'
-              }}>How it Works</a>
-              </div>
-            </div>
-            
-            <div>
-              <h6 className="font-bold mb-md" style={{
-              color: '#FDFBCB'
-            }}>Language</h6>
-              <LanguageSelector />
-            </div>
-          </div>
-          
-          <div className="flex-between pt-lg" style={{
-          borderTop: '1px solid rgba(253, 251, 203, 0.3)'
-        }}>
-            <p className="text-small" style={{
-            color: '#F8F4E6'
-          }}>
-              © 2024 Eterna. All rights reserved.
-            </p>
-            <div className="flex gap-md">
-              <button onClick={onTryFree} className="btn btn-secondary" style={{
-              backgroundColor: '#FDFBCB',
-              color: '#441632'
-            }}>
-                Try Free
-              </button>
-              <button onClick={onSignIn} className="text-small transition-colors hover:opacity-80" style={{
-              color: '#FDFBCB'
-            }}>
-                Sign In
-              </button>
-            </div>
-          </div>
+      <footer className="py-8 border-t border-border">
+        <div className="container text-center">
+          <p className="text-muted-foreground">
+            © 2024 Eterna. Built with love for families.
+          </p>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
