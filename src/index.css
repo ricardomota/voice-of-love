@@ -170,72 +170,54 @@ html {
 @layer components {
   /* Enhanced Card System - Bento Box Style */
   .glass-card {
-    @apply relative bg-card border border-border rounded-lg p-6;
-    background: hsl(var(--card));
-    box-shadow: var(--shadow-md);
-    transition: all 0.4s var(--ease-smooth);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-
-  .glass-card:hover::before {
-    transform: scaleX(1);
+    @apply relative bg-white border border-gray-200 rounded-xl p-6;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+    border-color: hsl(220, 13%, 85%);
   }
 
-  /* Bento Box Feature Cards */
+  /* Subtle Pastel Feature Cards - OpenAI Style */
   .card-voice-cloning {
-    background: linear-gradient(135deg, hsl(270 100% 98%) 0%, hsl(270 100% 95%) 100%);
-    border-color: hsl(var(--primary-purple-light));
+    background: linear-gradient(135deg, hsl(249, 100%, 98%) 0%, hsl(249, 100%, 97%) 100%);
+    border-color: hsl(249, 30%, 92%);
   }
 
   .card-family-profiles {
-    background: linear-gradient(135deg, hsl(329 100% 98%) 0%, hsl(329 100% 95%) 100%);
-    border-color: hsl(var(--secondary-pink));
+    background: linear-gradient(135deg, hsl(340, 100%, 98%) 0%, hsl(340, 100%, 97%) 100%);
+    border-color: hsl(340, 30%, 92%);
   }
 
   .card-conversations {
-    background: linear-gradient(135deg, hsl(43 100% 96%) 0%, hsl(43 100% 90%) 100%);
-    border-color: hsl(var(--secondary-yellow));
+    background: linear-gradient(135deg, hsl(48, 100%, 98%) 0%, hsl(48, 100%, 97%) 100%);
+    border-color: hsl(48, 30%, 90%);
   }
 
   .card-privacy {
-    background: linear-gradient(135deg, hsl(142 100% 96%) 0%, hsl(142 100% 90%) 100%);
-    border-color: hsl(var(--secondary-green));
+    background: linear-gradient(135deg, hsl(142, 100%, 98%) 0%, hsl(142, 100%, 97%) 100%);
+    border-color: hsl(142, 30%, 90%);
   }
 
   .card-memory {
-    background: linear-gradient(135deg, hsl(213 100% 96%) 0%, hsl(213 100% 90%) 100%);
-    border-color: hsl(var(--secondary-blue));
+    background: linear-gradient(135deg, hsl(213, 100%, 98%) 0%, hsl(213, 100%, 97%) 100%);
+    border-color: hsl(213, 30%, 90%);
   }
 
   .card-love {
-    background: linear-gradient(135deg, hsl(347 100% 96%) 0%, hsl(347 100% 90%) 100%);
-    border-color: hsl(var(--secondary-rose));
+    background: linear-gradient(135deg, hsl(347, 100%, 98%) 0%, hsl(347, 100%, 97%) 100%);
+    border-color: hsl(347, 30%, 90%);
   }
 
   /* Enhanced Button System */
   .btn-primary {
     background: hsl(249, 59%, 49%);
     color: hsl(var(--white));
-    box-shadow: var(--shadow-md);
-    transition: all 0.6s var(--ease-smooth);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     border-radius: 2rem;
@@ -249,7 +231,7 @@ html {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.8s;
+    transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .btn-primary:hover::before {
@@ -257,23 +239,24 @@ html {
   }
 
   .btn-primary:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     background: hsl(249, 59%, 45%);
-    box-shadow: 0 10px 25px -5px rgba(89, 52, 197, 0.3);
+    box-shadow: 0 4px 12px 0 rgba(89, 52, 197, 0.15);
   }
 
   .btn-secondary {
     background: hsl(var(--white));
-    color: hsl(var(--primary-purple));
-    border: 2px solid hsl(var(--primary-purple));
-    transition: all 0.6s var(--ease-smooth);
+    color: hsl(249, 59%, 49%);
+    border: 1px solid hsl(220, 13%, 91%);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 2rem;
   }
 
   .btn-secondary:hover {
-    background: hsl(var(--primary-purple));
-    color: hsl(var(--white));
-    transform: translateY(-3px);
+    background: hsl(220, 13%, 97%);
+    border-color: hsl(249, 59%, 49%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
   }
 
   .btn-large {

@@ -444,11 +444,10 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
 
       {/* Hero Section */}
       <section className="hero pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-white"></div>
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full opacity-30">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-2xl animate-float"></div>
+          <div className="absolute top-40 right-20 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-2xl animate-float" style={{animationDelay: '2s'}}></div>
         </div>
         
         <div className="container relative z-10 text-center">
@@ -605,8 +604,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary-pink/10 to-primary/10"></div>
+      <section id="download" className="py-20 relative overflow-hidden bg-slate-50">
         <div className="container relative z-10 text-center">
           <h2 className="font-serif text-4xl font-bold mb-4">{content.finalCta.title}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
