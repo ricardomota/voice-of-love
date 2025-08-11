@@ -273,7 +273,7 @@ html {
   /* Hero Section - Two Column Layout */
   .hero {
     background: #FDFBCB;
-    padding: calc(var(--space-3xl) + 60px) 0 var(--space-3xl) 0;
+    padding: calc(var(--space-4xl) + 60px) 0 var(--space-4xl) 0;
     position: relative;
     overflow: hidden;
     min-height: 100vh;
@@ -299,7 +299,7 @@ html {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: var(--space-3xl);
+    gap: var(--space-4xl);
   }
 
   .hero-left {
@@ -317,7 +317,7 @@ html {
   .hero-title {
     font-size: var(--font-size-6xl);
     font-weight: var(--font-weight-extrabold);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
     line-height: 1.1;
     color: hsl(var(--gray-900));
   }
@@ -326,7 +326,8 @@ html {
     font-size: var(--font-size-xl);
     color: hsl(var(--gray-600));
     margin-bottom: var(--space-xl);
-    max-width: 500px;
+    line-height: 1.7;
+    max-width: 640px;
   }
 
   /* Mobile Hero Layout */
@@ -338,7 +339,7 @@ html {
     
     .hero-content {
       flex-direction: column;
-      gap: var(--space-xl);
+      gap: var(--space-2xl);
     }
     
     .hero-left {
@@ -352,13 +353,15 @@ html {
 
   /* Layout Utilities */
   .container {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 var(--space-md);
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
   }
 
-  .section {
-    padding: var(--space-3xl) 0;
+  .section,
+  main > section {
+    padding: var(--space-4xl) 0;
   }
 
   /* Flex Utilities */
@@ -386,6 +389,18 @@ html {
    .mb-xl { margin-bottom: var(--space-xl); }
    .mb-2xl { margin-bottom: var(--space-2xl); }
 
+   /* Layout helpers */
+   .py-section { padding-top: var(--space-4xl); padding-bottom: var(--space-4xl); }
+   .container-narrow { max-width: 960px; margin: 0 auto; padding-left: var(--space-md); padding-right: var(--space-md); }
+   .stack-y { display: flex; flex-direction: column; gap: var(--space-lg); }
+   .grid-gap-lg { gap: var(--space-2xl); }
+   .section-header { margin-bottom: var(--space-2xl); }
+
+   @media (max-width: 768px) {
+     .py-section { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+     .stack-y { gap: var(--space-md); }
+     .grid-gap-lg { gap: var(--space-lg); }
+   }
    /* Grid Utilities */
    .grid {
      display: grid;
@@ -434,6 +449,8 @@ html {
      .grid-4 {
        grid-template-columns: 1fr;
      }
+     .section, main > section { padding: var(--space-2xl) 0; }
+     .container { padding-left: var(--space-md); padding-right: var(--space-md); }
    }
 
    .animate-fade-in-up {
