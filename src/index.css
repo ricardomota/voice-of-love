@@ -197,11 +197,11 @@ html {
 
 /* ===== ETERNA RILEY COMPONENTS ===== */
 @layer components {
-  /* Enhanced Card System - Bento Box Style */
+  /* Enhanced Card System - Minimal Style */
   .glass-card {
     @apply relative bg-white border border-gray-200 rounded-xl p-6;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-card:hover {
@@ -210,80 +210,43 @@ html {
     border-color: hsl(220, 13%, 85%);
   }
 
-  /* Subtle Pastel Feature Cards - OpenAI Style */
-  .card-voice-cloning {
-    background: linear-gradient(135deg, hsl(249, 100%, 98%) 0%, hsl(249, 100%, 97%) 100%);
-    border-color: hsl(249, 30%, 92%);
-  }
-
-  .card-family-profiles {
-    background: linear-gradient(135deg, hsl(340, 100%, 98%) 0%, hsl(340, 100%, 97%) 100%);
-    border-color: hsl(340, 30%, 92%);
-  }
-
-  .card-conversations {
-    background: linear-gradient(135deg, hsl(48, 100%, 98%) 0%, hsl(48, 100%, 97%) 100%);
-    border-color: hsl(48, 30%, 90%);
-  }
-
-  .card-privacy {
-    background: linear-gradient(135deg, hsl(142, 100%, 98%) 0%, hsl(142, 100%, 97%) 100%);
-    border-color: hsl(142, 30%, 90%);
-  }
-
-  .card-memory {
-    background: linear-gradient(135deg, hsl(213, 100%, 98%) 0%, hsl(213, 100%, 97%) 100%);
-    border-color: hsl(213, 30%, 90%);
-  }
-
+  /* Minimal Feature Cards - All same style */
+  .card-voice-cloning,
+  .card-family-profiles,
+  .card-conversations,
+  .card-privacy,
+  .card-memory,
   .card-love {
-    background: linear-gradient(135deg, hsl(347, 100%, 98%) 0%, hsl(347, 100%, 97%) 100%);
-    border-color: hsl(347, 30%, 90%);
+    background: hsl(var(--white));
+    border-color: hsl(220, 13%, 91%);
   }
 
-  /* Enhanced Button System */
+  /* Minimal Button System */
   .btn-primary {
-    background: hsl(249, 59%, 49%);
+    background: hsl(220, 18%, 16%);
     color: hsl(var(--white));
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border-radius: 2rem;
-  }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .btn-primary:hover::before {
-    left: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0.75rem;
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    background: hsl(249, 59%, 45%);
-    box-shadow: 0 4px 12px 0 rgba(89, 52, 197, 0.15);
+    background: hsl(220, 18%, 12%);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
   }
 
   .btn-secondary {
     background: hsl(var(--white));
-    color: hsl(249, 59%, 49%);
+    color: hsl(220, 18%, 16%);
     border: 1px solid hsl(220, 13%, 91%);
-    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0.75rem;
   }
 
   .btn-secondary:hover {
     background: hsl(220, 13%, 97%);
-    border-color: hsl(249, 59%, 49%);
+    border-color: hsl(220, 18%, 16%);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
   }
