@@ -12,26 +12,37 @@ export function useAuth() {
     if (initialized.current) return;
     initialized.current = true;
 
+    let initialCheckComplete = false;
+
     // 1) Listen for auth changes FIRST (prevents missed events)
     const { data: { subscription } } = authService.onAuthStateChange((event, newSession) => {
-      // Only synchronous state updates here per best practices
+      console.log('Auth state change:', event, newSession ? 'has session' : 'no session');
       setSession(newSession);
       setUser(newSession?.user ?? null);
-      setLoading(false);
+      if (initialCheckComplete) {
+        setLoading(false);
+      }
     });
 
     // 2) THEN check existing session
     authService
       .getCurrentUser()
       .then(({ user, session: initialSession }) => {
-        setSession(initialSession ?? null);
-        setUser(user);
+        console.log('Initial user check:', user ? 'has user' : 'no user');
+        if (!initialCheckComplete) {
+          setSession(initialSession ?? null);
+          setUser(user);
+        }
+        initialCheckComplete = true;
         setLoading(false);
       })
       .catch((error) => {
         console.error('useAuth: Exception getting initial user:', error);
-        setUser(null);
-        setSession(null);
+        if (!initialCheckComplete) {
+          setUser(null);
+          setSession(null);
+        }
+        initialCheckComplete = true;
         setLoading(false);
       });
 
