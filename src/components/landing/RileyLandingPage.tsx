@@ -460,7 +460,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               {content.hero.subtitle}
             </h2>
             
-            <p className="text-large mb-2xl leading-relaxed text-gray-600">
+            <p className="text-large mb-2xl leading-relaxed" style={{color: '#441632', opacity: 0.7}}>
               {content.hero.description}
             </p>
 
@@ -479,19 +479,19 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               </button>
             </div>
             
-            <p className="text-small flex items-center gap-2 text-gray-500">
-              <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+            <p className="text-small flex items-center gap-2" style={{color: '#441632', opacity: 0.6}}>
+              <span className="w-2 h-2 rounded-full" style={{backgroundColor: '#441632'}}></span>
               {content.hero.note}
             </p>
           </div>
 
           {/* Right Column - Image Placeholder */}
           <div className="hero-right">
-            <div className="w-full h-96 bg-white rounded-2xl flex items-center justify-center border-2 border-gray-200 shadow-lg">
+            <div className="w-full h-96 rounded-2xl flex items-center justify-center border-2 shadow-lg" style={{backgroundColor: 'rgba(68, 22, 50, 0.05)', borderColor: '#441632'}}>
               <div className="text-center p-8">
                 <Heart className="w-20 h-20 mx-auto mb-6" style={{color: '#441632'}} />
                 <p className="font-medium" style={{color: '#441632'}}>Sua imagem aqui</p>
-                <p className="text-sm text-gray-500 mt-2">500x400px recomendado</p>
+                <p className="text-sm mt-2" style={{color: '#441632', opacity: 0.6}}>500x400px recomendado</p>
               </div>
             </div>
           </div>
@@ -510,14 +510,18 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             {content.features.items.map((feature, index) => (
               <div 
                 key={index}
-                className="bg-white p-8 rounded-2xl hover-lift text-center transition-all duration-300 border border-gray-200 shadow-sm hover:shadow-md"
-                style={{animationDelay: `${index * 0.1}s`}}
+                className="p-8 rounded-2xl hover-lift text-center transition-all duration-300 border-2 shadow-sm hover:shadow-md"
+                style={{
+                  backgroundColor: 'rgba(253, 251, 203, 0.1)', 
+                  borderColor: 'rgba(253, 251, 203, 0.3)',
+                  animationDelay: `${index * 0.1}s`
+                }}
               >
                 <div className="text-4xl mb-6">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-800">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold mb-4" style={{color: '#FDFBCB'}}>{feature.title}</h3>
+                <p className="leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{feature.description}</p>
               </div>
             ))}
           </div>
@@ -525,7 +529,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-28" style={{backgroundColor: '#F8F4E6'}}>
+      <section id="how-it-works" className="py-28" style={{backgroundColor: '#FDFBCB'}}>
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.howItWorks.title}</h2>
@@ -538,14 +542,18 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             {content.howItWorks.steps.map((step, index) => (
               <div 
                 key={index}
-                className="bg-white p-8 rounded-2xl text-center hover-lift transition-all duration-300 border border-gray-200 shadow-sm"
-                style={{animationDelay: `${index * 0.2}s`}}
+                className="p-8 rounded-2xl text-center hover-lift transition-all duration-300 border-2 shadow-sm"
+                style={{
+                  backgroundColor: 'rgba(68, 22, 50, 0.05)', 
+                  borderColor: '#441632',
+                  animationDelay: `${index * 0.2}s`
+                }}
               >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{backgroundColor: '#441632'}}>
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
                   {index + 1}
                 </div>
                 <h4 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{step.title}</h4>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <p className="leading-relaxed" style={{color: '#441632', opacity: 0.7}}>{step.description}</p>
               </div>
             ))}
           </div>
@@ -562,85 +570,87 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="bg-white p-8 rounded-2xl text-center border border-gray-200 shadow-sm hover:shadow-md transition-all">
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">{content.pricing.free.name}</h3>
-              <div className="text-5xl font-bold text-gray-800 mb-4">
+            <div className="p-8 rounded-2xl text-center border-2 shadow-sm hover:shadow-md transition-all" style={{backgroundColor: 'rgba(253, 251, 203, 0.1)', borderColor: 'rgba(253, 251, 203, 0.3)'}}>
+              <h3 className="text-2xl font-bold mb-4" style={{color: '#FDFBCB'}}>{content.pricing.free.name}</h3>
+              <div className="text-5xl font-bold mb-4" style={{color: '#FDFBCB'}}>
                 {content.pricing.free.price}
-                <span className="text-lg text-gray-500">{content.pricing.free.period}</span>
+                <span className="text-lg" style={{color: '#FDFBCB', opacity: 0.7}}>{content.pricing.free.period}</span>
               </div>
-              <p className="text-gray-600 mb-8 text-lg">{content.pricing.free.description}</p>
+              <p className="mb-8 text-lg" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.free.description}</p>
               
               <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.free.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                    <span className="text-gray-700">{feature}</span>
+                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#FDFBCB'}} />
+                    <span style={{color: '#FDFBCB', opacity: 0.9}}>{feature}</span>
                   </li>
                 ))}
               </ul>
               
               <button 
                 onClick={onTryFree}
-                className="btn-secondary w-full py-4 rounded-xl font-semibold hover-lift text-lg"
+                className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all border-2"
+                style={{backgroundColor: '#FDFBCB', color: '#441632', borderColor: '#FDFBCB'}}
               >
                 {content.pricing.free.button}
               </button>
             </div>
 
             {/* Paid Plan */}
-            <div className="bg-white p-8 rounded-2xl text-center border-2 border-gray-800 shadow-sm hover:shadow-md transition-all relative">
+            <div className="p-8 rounded-2xl text-center border-2 shadow-sm hover:shadow-md transition-all relative" style={{backgroundColor: 'rgba(253, 251, 203, 0.15)', borderColor: '#FDFBCB'}}>
               {content.pricing.paid.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-2 rounded-full text-sm font-medium">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full text-sm font-medium" style={{backgroundColor: '#FDFBCB', color: '#441632'}}>
                   Mais Popular
                 </div>
               )}
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">{content.pricing.paid.name}</h3>
-              <div className="text-5xl font-bold text-gray-800 mb-4">
+              <h3 className="text-2xl font-bold mb-4" style={{color: '#FDFBCB'}}>{content.pricing.paid.name}</h3>
+              <div className="text-5xl font-bold mb-4" style={{color: '#FDFBCB'}}>
                 {content.pricing.paid.price}
-                <span className="text-lg text-gray-500">{content.pricing.paid.period}</span>
+                <span className="text-lg" style={{color: '#FDFBCB', opacity: 0.7}}>{content.pricing.paid.period}</span>
               </div>
-              <p className="text-gray-600 mb-8 text-lg">{content.pricing.paid.description}</p>
+              <p className="mb-8 text-lg" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.paid.description}</p>
               
               <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.paid.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                    <span className="text-gray-700 font-medium">{feature}</span>
+                    <Check className="w-5 h-5 flex-shrink-0" style={{color: '#FDFBCB'}} />
+                    <span className="font-medium" style={{color: '#FDFBCB', opacity: 0.9}}>{feature}</span>
                   </li>
                 ))}
               </ul>
               
               <button 
                 onClick={onSeePricing || onTryFree}
-                className="btn-primary w-full py-4 rounded-xl font-semibold hover-lift text-lg"
+                className="w-full py-4 rounded-xl font-semibold hover-lift text-lg transition-all"
+                style={{backgroundColor: '#FDFBCB', color: '#441632'}}
               >
                 {content.pricing.paid.button}
               </button>
               
-              <p className="text-xs text-gray-500 mt-4">7 dias grátis • Cancele a qualquer momento</p>
+              <p className="text-xs mt-4" style={{color: '#FDFBCB', opacity: 0.6}}>7 dias grátis • Cancele a qualquer momento</p>
             </div>
           </div>
           
           {/* Support guarantee */}
           <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-8 px-8 py-6 bg-white rounded-2xl border border-gray-200">
+            <div className="inline-flex items-center gap-8 px-8 py-6 rounded-2xl border-2" style={{backgroundColor: 'rgba(253, 251, 203, 0.1)', borderColor: 'rgba(253, 251, 203, 0.3)'}}>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-gray-600" />
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: 'rgba(253, 251, 203, 0.2)'}}>
+                  <Shield className="w-6 h-6" style={{color: '#FDFBCB'}} />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold text-gray-800">Garantia de 30 dias</p>
-                  <p className="text-sm text-gray-600">100% do seu dinheiro de volta</p>
+                  <p className="font-semibold" style={{color: '#FDFBCB'}}>Garantia de 30 dias</p>
+                  <p className="text-sm" style={{color: '#FDFBCB', opacity: 0.8}}>100% do seu dinheiro de volta</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-gray-600" />
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: 'rgba(253, 251, 203, 0.2)'}}>
+                  <Heart className="w-6 h-6" style={{color: '#FDFBCB'}} />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold text-gray-800">Suporte 24/7</p>
-                  <p className="text-sm text-gray-600">Sempre aqui para ajudar</p>
+                  <p className="font-semibold" style={{color: '#FDFBCB'}}>Suporte 24/7</p>
+                  <p className="text-sm" style={{color: '#FDFBCB', opacity: 0.8}}>Sempre aqui para ajudar</p>
                 </div>
               </div>
             </div>
@@ -649,7 +659,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="py-28" style={{backgroundColor: '#F8F4E6'}}>
+      <section id="download" className="py-28" style={{backgroundColor: '#FDFBCB'}}>
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.finalCta.title}</h2>
@@ -674,7 +684,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
               {content.finalCta.features.map((feature, index) => (
-                <div key={index} className="flex items-center justify-center gap-2 bg-white rounded-lg px-4 py-3 border border-gray-200">
+                <div key={index} className="flex items-center justify-center gap-2 rounded-lg px-4 py-3 border-2" style={{backgroundColor: 'rgba(68, 22, 50, 0.05)', borderColor: '#441632'}}>
                   <span className="w-2 h-2 rounded-full" style={{backgroundColor: '#441632'}}></span>
                   <p className="text-sm font-medium" style={{color: '#441632'}}>{feature}</p>
                 </div>
