@@ -152,7 +152,7 @@ export const WhyEternaSection: React.FC = () => {
 
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">
-                    Voice waveform blending into a portrait
+                    {currentLanguage === 'pt-BR' ? 'Forma de onda de voz se transformando em retrato' : currentLanguage === 'es' ? 'Forma de onda de voz transformándose en retrato' : 'Voice waveform blending into a portrait'}
                   </p>
                   <div className="h-2 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-full mx-auto w-48" />
                 </div>

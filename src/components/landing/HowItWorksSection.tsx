@@ -30,6 +30,7 @@ const getContent = (language: string) => {
           detail: "Create lasting audio keepsakes for future generations."
         }
       ],
+      notePrefix: "Note:",
       note: "Personal voice cloning available on paid plans and only when capacity allows."
     },
     'pt-BR': {
@@ -57,6 +58,7 @@ const getContent = (language: string) => {
           detail: "Crie recordações em áudio duradouras para as próximas gerações."
         }
       ],
+      notePrefix: "Nota:",
       note: "Clone de voz pessoal disponível em planos pagos e apenas quando a capacidade permite."
     },
     es: {
@@ -84,6 +86,7 @@ const getContent = (language: string) => {
           detail: "Crea recuerdos de audio duraderos para futuras generaciones."
         }
       ],
+      notePrefix: "Nota:",
       note: "Clonación de voz personal disponible en planes pagos y solo cuando la capacidad lo permite."
     }
   };
@@ -152,7 +155,7 @@ export const HowItWorksSection: React.FC = () => {
         {/* Note */}
         <div className="text-center">
           <p className="text-sm text-muted-foreground/80 bg-muted/50 rounded-xl px-6 py-4 inline-block max-w-2xl">
-            <span className="font-medium">Note:</span> {content.note}
+            <span className="font-medium">{content.notePrefix}</span> {content.note}
           </p>
         </div>
 
