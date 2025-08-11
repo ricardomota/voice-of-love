@@ -232,12 +232,13 @@ html {
 
   /* Enhanced Button System */
   .btn-primary {
-    background: var(--gradient-primary);
+    background: hsl(249, 59%, 49%);
     color: hsl(var(--white));
     box-shadow: var(--shadow-md);
     transition: all 0.3s var(--ease-smooth);
     position: relative;
     overflow: hidden;
+    border-radius: 2rem;
   }
 
   .btn-primary::before {
@@ -247,7 +248,7 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: left 0.5s;
   }
 
@@ -257,7 +258,8 @@ html {
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-purple);
+    background: hsl(249, 59%, 45%);
+    box-shadow: 0 10px 25px -5px rgba(89, 52, 197, 0.3);
   }
 
   .btn-secondary {
