@@ -2,126 +2,146 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apple Liquid Glass Design System
-Clean, minimal, translucent - inspired by iOS and Apple's Liquid Glass
-All colors MUST be HSL.
-*/
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* ========== ETERNA - RILEY DESIGN SYSTEM ADAPTADO ========== */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base CSS Variables - Eterna Riley Adapted */
 @layer base {
   :root {
-    /* Base Colors - Warm cream background */
-    --background: 47 96% 87%; /* FDFBCB - cream/yellow */
-    --foreground: 311 48% 15%; /* Dark purple text for contrast */
-
-    /* Glass surfaces - Translucent with warm tones */
-    --card: 47 96% 92%; /* Lighter version of background */
-    --card-foreground: 311 48% 15%;
-    --card-glass: 47 96% 87% / 0.7;
-
-    /* Popover system - Frosted glass with warmth */
-    --popover: 47 96% 95%;
-    --popover-foreground: 311 48% 15%;
-
-    /* Primary - Dark purple/maroon brand color */
-    --primary: 311 48% 15%; /* 441632 - dark purple/maroon */
-    --primary-foreground: 47 96% 95%; /* Light cream for text */
-    --primary-soft: 311 30% 85%;
-    --primary-glass: 311 48% 15% / 0.8;
-
-    /* Secondary - Light purple for secondary actions */
-    --secondary: 311 30% 85%;
-    --secondary-foreground: 311 48% 15%;
-
-    /* Muted - Subtle cream variations */
-    --muted: 47 60% 80%;
-    --muted-foreground: 311 30% 25%;
-
-    /* Accent - Warm pink accent */
-    --accent: 340 75% 55%;
-    --accent-foreground: 47 96% 95%;
-    --accent-soft: 340 50% 75%;
-    --accent-glass: 340 75% 55% / 0.1;
-
-    /* Themed colors for emotions */
-    --love: 340 75% 55%; /* Warm pink */
-    --memory: 280 65% 60%; /* Soft purple */
-
-    /* System colors */
+    /* Core Tailwind Variables */
+    --background: 0 0% 100%;
+    --foreground: 215 16% 22%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 16% 22%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 16% 22%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 9% 46%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 9% 46%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 47 96% 95%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262 83% 58%;
+    --radius: 0.75rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
 
-    --border: 311 20% 75%; /* Soft purple border */
-    --input: 311 20% 70%;
-    --ring: 311 48% 15%; /* Same as primary */
+    /* Eterna Core Colors - HSL format */
+    --primary-purple: 262 83% 58%;
+    --primary-purple-dark: 250 91% 57%;
+    --primary-purple-light: 263 70% 68%;
+    
+    /* Riley Inspired Secondary Colors */
+    --secondary-pink: 329 73% 68%;
+    --secondary-rose: 347 77% 68%;
+    --secondary-orange: 25 95% 62%;
+    --secondary-yellow: 43 86% 57%;
+    --secondary-green: 142 71% 65%;
+    --secondary-blue: 213 93% 68%;
+    
+    /* Neutral Colors */
+    --white: 0 0% 100%;
+    --cream: 33 100% 96%;
+    --gray-50: 210 20% 98%;
+    --gray-100: 220 14% 96%;
+    --gray-200: 220 13% 91%;
+    --gray-300: 216 12% 84%;
+    --gray-400: 218 11% 65%;
+    --gray-500: 220 9% 46%;
+    --gray-600: 215 14% 34%;
+    --gray-700: 215 16% 22%;
+    --gray-800: 220 18% 16%;
+    --gray-900: 224 71% 4%;
+    
+    /* Enhanced Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary-purple)) 0%, hsl(var(--secondary-pink)) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(var(--secondary-orange)) 0%, hsl(var(--secondary-yellow)) 100%);
+    --gradient-cool: linear-gradient(135deg, hsl(var(--secondary-blue)) 0%, hsl(var(--secondary-green)) 100%);
+    --gradient-rose: linear-gradient(135deg, hsl(var(--secondary-rose)) 0%, hsl(var(--secondary-pink)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--cream)) 0%, hsl(43 100% 88%) 50%, hsl(var(--white)) 100%);
+    
+    /* Enhanced Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-purple: 0 10px 25px -5px rgba(139, 92, 246, 0.3);
+    --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.4);
+    
+    /* Enhanced Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-2xl: 32px;
+    --radius-full: 9999px;
+    
+    /* Animation Curves */
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --radius: 1.125rem;
-
-    /* Liquid Glass effects */
-    --glass-blur: blur(20px);
-    --glass-blur-light: blur(10px);
-    --glass-backdrop: blur(40px) saturate(180%);
-
-    /* Gradients - Soft and minimal */
-    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.7), hsl(220 14% 96% / 0.4));
-    --gradient-accent: linear-gradient(135deg, hsl(213 94% 68% / 0.1), hsl(213 94% 85% / 0.05));
-    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
-
-    /* Shadows - Soft and layered */
-    --shadow-glass: 0 8px 32px hsl(220 13% 18% / 0.04), 0 1px 3px hsl(220 13% 18% / 0.02);
-    --shadow-floating: 0 20px 40px hsl(220 13% 18% / 0.06), 0 4px 16px hsl(220 13% 18% / 0.04);
-    --shadow-modal: 0 32px 64px hsl(220 13% 18% / 0.08), 0 8px 24px hsl(220 13% 18% / 0.06);
-    --shadow-inset: inset 0 1px 0 hsl(0 0% 100% / 0.6);
-
-    /* Animations - Gentle and fluid */
-    --transition-glass: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 224 71% 4%;
+    --foreground: 210 20% 98%;
+    --card: 224 71% 4%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 217 10% 65%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 263 70% 50%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Dark gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(224 71% 4%) 0%, hsl(215 28% 17%) 50%, hsl(224 71% 4%) 100%);
+    
+    /* Dark sidebar */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -131,130 +151,264 @@ All colors MUST be HSL.
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    background: radial-gradient(ellipse 120% 80% at 50% 0%, hsl(213 94% 68% / 0.03), transparent 70%),
-                linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98.5%));
+    background: var(--gradient-hero);
     min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Roboto, sans-serif;
-    letter-spacing: -0.01em;
+    font-family: 'Inter', 'Work Sans', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
   }
 }
 
+/* ===== ETERNA RILEY COMPONENTS ===== */
 @layer components {
-  /* Liquid Glass Components */
+  /* Enhanced Card System - Bento Box Style */
   .glass-card {
-    @apply relative backdrop-blur-xl bg-card border border-white/20;
+    @apply relative bg-card border border-border rounded-lg p-6;
     background: hsl(var(--card));
-    box-shadow: var(--shadow-glass), var(--shadow-inset);
-    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
   }
 
-  .glass-surface {
-    @apply backdrop-blur-3xl bg-white/75 border border-white/40;
-    box-shadow: var(--shadow-floating), 
-                0 0 0 1px hsl(0 0% 100% / 0.5) inset,
-                0 1px 0 hsl(0 0% 100% / 0.8) inset;
-    position: relative;
-  }
-  
-  .glass-surface::before {
+  .glass-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, hsl(0 0% 100% / 0.1), transparent);
-    border-radius: inherit;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .glass-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Bento Box Feature Cards */
+  .card-voice-cloning {
+    background: linear-gradient(135deg, hsl(270 100% 98%) 0%, hsl(270 100% 95%) 100%);
+    border-color: hsl(var(--primary-purple-light));
+  }
+
+  .card-family-profiles {
+    background: linear-gradient(135deg, hsl(329 100% 98%) 0%, hsl(329 100% 95%) 100%);
+    border-color: hsl(var(--secondary-pink));
+  }
+
+  .card-conversations {
+    background: linear-gradient(135deg, hsl(43 100% 96%) 0%, hsl(43 100% 90%) 100%);
+    border-color: hsl(var(--secondary-yellow));
+  }
+
+  .card-privacy {
+    background: linear-gradient(135deg, hsl(142 100% 96%) 0%, hsl(142 100% 90%) 100%);
+    border-color: hsl(var(--secondary-green));
+  }
+
+  .card-memory {
+    background: linear-gradient(135deg, hsl(213 100% 96%) 0%, hsl(213 100% 90%) 100%);
+    border-color: hsl(var(--secondary-blue));
+  }
+
+  .card-love {
+    background: linear-gradient(135deg, hsl(347 100% 96%) 0%, hsl(347 100% 90%) 100%);
+    border-color: hsl(var(--secondary-rose));
+  }
+
+  /* Enhanced Button System */
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: hsl(var(--white));
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-purple);
+  }
+
+  .btn-secondary {
+    background: hsl(var(--white));
+    color: hsl(var(--primary-purple));
+    border: 2px solid hsl(var(--primary-purple));
+    transition: all 0.3s var(--ease-smooth);
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--primary-purple));
+    color: hsl(var(--white));
+    transform: translateY(-2px);
+  }
+
+  .btn-large {
+    @apply px-8 py-4 text-lg;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Special Badges */
+  .alzheimer-badge {
+    background: var(--gradient-rose);
+    color: hsl(var(--white));
+    @apply px-4 py-2 text-sm font-medium inline-flex items-center gap-2;
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+  }
+
+  /* Mission Section */
+  .mission-section {
+    background: linear-gradient(135deg, hsl(var(--gray-50)) 0%, hsl(var(--white)) 100%);
+    border-radius: var(--radius-2xl);
+    @apply p-8 my-8;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .glass-modal {
-    @apply backdrop-blur-3xl bg-white/80 border border-white/40;
-    box-shadow: var(--shadow-modal);
+  /* Enhanced Feature Icons */
+  .feature-icon {
+    @apply w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
   }
 
-  .floating-button {
-    @apply relative backdrop-blur-xl bg-white/70 border border-white/40 hover:bg-white/85;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: var(--shadow-glass), 
-                0 0 0 1px hsl(0 0% 100% / 0.6) inset;
+  .feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
   }
 
-  .floating-button:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: var(--shadow-floating),
-                0 0 0 1px hsl(0 0% 100% / 0.8) inset,
-                0 0 20px hsl(213 94% 68% / 0.1);
-  }
-  
-  .floating-button:active {
-    transform: translateY(-1px) scale(0.98);
-    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .ios-button {
-    @apply rounded-2xl font-semibold text-sm px-6 py-3;
-    @apply bg-accent text-accent-foreground;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 16px hsl(var(--accent) / 0.25),
-                0 1px 0 hsl(0 0% 100% / 0.6) inset;
+  /* Pricing Cards */
+  .pricing-card {
+    @apply bg-white border-2 border-gray-100 rounded-xl p-8;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s ease;
     position: relative;
-    overflow: hidden;
-  }
-  
-  .ios-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px hsl(var(--accent) / 0.3),
-                0 1px 0 hsl(0 0% 100% / 0.8) inset;
-  }
-  
-  .ios-button:active {
-    transform: translateY(0) scale(0.97);
-    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .ios-button-cta {
-    @apply rounded-2xl font-semibold text-sm;
-    background: linear-gradient(135deg, hsl(210 100% 56%), hsl(210 100% 48%));
-    color: white;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 16px hsl(210 100% 56% / 0.4),
-                0 8px 32px hsl(210 100% 56% / 0.2),
-                0 1px 0 hsl(0 0% 100% / 0.6) inset;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .ios-button-cta:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 24px hsl(210 100% 56% / 0.5),
-                0 12px 40px hsl(210 100% 56% / 0.3),
-                0 1px 0 hsl(0 0% 100% / 0.8) inset;
-  }
-  
-  .ios-button-cta:active {
-    transform: translateY(-1px) scale(0.98);
-    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  .pricing-card.popular {
+    border-color: hsl(var(--primary-purple));
+    transform: scale(1.05);
   }
 
-  .ios-button-secondary {
-    @apply rounded-2xl font-medium text-sm px-6 py-3 transition-all duration-300;
-    @apply bg-white/60 text-foreground hover:bg-white/80 backdrop-blur-lg border border-white/30;
-    box-shadow: var(--shadow-glass);
+  .pricing-card.popular::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-primary);
+    color: hsl(var(--white));
+    @apply px-4 py-1 text-sm font-medium;
+    border-radius: var(--radius-full);
   }
 
-  /* Gentle glow effect */
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Enhanced Hover Effects */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Enhanced Animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s var(--ease-smooth) forwards;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   .gentle-glow {
     position: relative;
   }
@@ -263,7 +417,7 @@ All colors MUST be HSL.
     content: '';
     position: absolute;
     inset: -2px;
-    background: linear-gradient(135deg, hsl(var(--accent) / 0.1), transparent);
+    background: linear-gradient(135deg, hsl(var(--primary-purple) / 0.1), transparent);
     border-radius: inherit;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -272,57 +426,5 @@ All colors MUST be HSL.
 
   .gentle-glow:hover::before {
     opacity: 1;
-  }
-
-  /* Minimal animations */
-  .fade-in-up {
-    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .parallax-slow {
-    transform: translateZ(0);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .parallax-slow:hover {
-    transform: translateY(-6px) scale(1.01) translateZ(0);
-    box-shadow: var(--shadow-floating),
-                0 0 30px hsl(213 94% 68% / 0.08);
-  }
-  
-  /* Enhanced focus states for accessibility */
-  .ios-focus {
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
-  .ios-focus:focus-visible {
-    outline: 2px solid hsl(var(--accent));
-    outline-offset: 2px;
-    transform: scale(1.02);
-  }
-  
-  /* Subtle pulse animation for interactive elements */
-  .gentle-pulse {
-    animation: gentlePulse 3s ease-in-out infinite;
-  }
-  
-  @keyframes gentlePulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 hsl(var(--accent) / 0.3);
-    }
-    50% {
-      box-shadow: 0 0 0 4px hsl(var(--accent) / 0.1);
-    }
   }
 }
