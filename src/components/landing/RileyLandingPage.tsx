@@ -358,7 +358,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             <LanguageSelector />
             <button 
               onClick={onTryFree} 
-              className="btn-primary"
+              className="btn-primary btn-large hover-glow gentle-glow"
             >
               {content.cta}
             </button>
@@ -370,7 +370,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section className="pt-32 pb-20">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold brand-gradient-text mb-6 leading-tight">
               {content.hero.title}
             </h1>
             
@@ -385,13 +385,13 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <button 
                 onClick={onTryFree} 
-                className="btn-primary text-lg px-8 py-4"
+                className="btn-primary text-lg px-8 py-4 hover-glow gentle-glow"
               >
                 {content.hero.buttonPrimary}
               </button>
               <button 
                 onClick={onLearnMore} 
-                className="btn-secondary text-lg px-8 py-4"
+                className="btn-secondary text-lg px-8 py-4 hover-glow gentle-glow"
               >
                 {content.hero.buttonSecondary}
               </button>
@@ -422,7 +422,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             {content.features.items.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <div key={index} className="glass-card text-center">
+                <div key={index} className="glass-card text-center hover-scale gentle-glow">
                   <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-accent flex items-center justify-center">
                     <IconComponent className="w-6 h-6 text-accent-foreground" />
                   </div>
@@ -443,7 +443,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="stories" className="py-20">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in-up">
+            <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in-up brand-gradient-text">
               {content.stories.title}
             </h2>
           </div>
