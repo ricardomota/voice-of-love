@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X, ArrowRight, Play, Shield, Clock, Star, Zap, Globe, Headphones, Camera, FileText, Settings, Share2, ChevronDown } from 'lucide-react';
+import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X, ArrowRight, Play, Shield, Clock, Star, Zap, Globe, Headphones, Camera, FileText, Settings, Share2, ChevronDown, Code, Database } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -157,26 +157,26 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   // Removed fake stats and testimonials
 
-  const privacyPoints = [
+  const techPoints = [
     {
-      icon: <Lock className="w-8 h-8" />,
-      title: "Criptografia de Ponta",
-      description: "Todas as suas memórias são protegidas com criptografia AES-256, o mesmo padrão usado por bancos e governos."
+      icon: <Code className="w-8 h-8" />,
+      title: "GPT Open Source",
+      description: "Construído com modelos de linguagem de código aberto, garantindo transparência e controle total sobre o processamento."
     },
     {
       icon: <Shield className="w-8 h-8" />,
-      title: "Seus Dados, Suas Regras",
-      description: "Você mantém propriedade completa. Exporte, delete ou transfira seus dados quando quiser."
+      title: "React + TypeScript",
+      description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
     },
     {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Servidores no Brasil",
-      description: "Todos os dados ficam em território nacional, seguindo rigorosamente a LGPD."
+      icon: <Database className="w-8 h-8" />,
+      title: "Supabase Backend",
+      description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
     },
     {
-      icon: <Clock className="w-8 h-8" />,
-      title: "Backup Automático",
-      description: "Suas memórias são automaticamente backup em múltiplas localizações seguras."
+      icon: <Zap className="w-8 h-8" />,
+      title: "Edge Functions",
+      description: "Processamento de IA distribuído para respostas rápidas e experiência fluida."
     }
   ];
 
@@ -455,20 +455,20 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
         </div>
       </section>
 
-      {/* Privacy Section */}
+      {/* Technology Section */}
       <section id="privacidade" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Suas Memórias são Suas
+              Tecnologia Confiável
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Privacidade e segurança são fundamentais. Suas memórias familiares merecem a máxima proteção.
+              Construído com tecnologias modernas e transparentes para preservar suas memórias com segurança.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
-            {privacyPoints.map((point, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {techPoints.map((point, index) => (
               <Card key={index} className="border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
@@ -487,9 +487,9 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-background border rounded-lg px-4 py-2">
-              <Shield className="w-5 h-5" />
-              <span className="font-medium">Certificado LGPD</span>
-              <span className="text-muted-foreground">• ISO 27001 • SOC 2</span>
+              <Code className="w-5 h-5" />
+              <span className="font-medium">Open Source</span>
+              <span className="text-muted-foreground">• Transparente • Controlado</span>
             </div>
           </div>
         </div>
