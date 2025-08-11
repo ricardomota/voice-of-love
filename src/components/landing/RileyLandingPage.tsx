@@ -447,26 +447,26 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         <div className="hero-content container">
           {/* Left Column - Content */}
           <div className="hero-left">
-            <div className="alzheimer-badge mb-lg">
+            <div className="alzheimer-badge mb-xl">
               {content.hero.badge}
             </div>
             
-            <h1 className="hero-title font-serif">
+            <h1 className="hero-title font-serif mb-lg">
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle">
+            <h2 className="hero-subtitle mb-xl">
               {content.hero.subtitle}
             </h2>
             
-            <p className="text-large mb-xl">
+            <p className="text-large mb-2xl leading-relaxed">
               {content.hero.description}
             </p>
 
-            <div className="flex gap-md mb-lg" style={{flexWrap: 'wrap'}}>
+            <div className="flex gap-lg mb-xl" style={{flexWrap: 'wrap'}}>
               <button 
                 onClick={onTryFree}
-                className="btn btn-primary btn-large"
+                className="btn btn-primary btn-large shadow-lg hover:shadow-xl transition-all"
               >
                 {content.hero.buttonPrimary}
               </button>
@@ -478,17 +478,18 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               </button>
             </div>
             
-            <p className="text-small" style={{color: 'var(--gray-500)'}}>
+            <p className="text-small flex items-center gap-2" style={{color: 'var(--gray-500)'}}>
+              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
               {content.hero.note}
             </p>
           </div>
 
           {/* Right Column - Image Placeholder */}
           <div className="hero-right">
-            <div className="w-full h-96 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-full h-96 bg-gradient-to-br from-purple-100 via-pink-50 to-orange-50 rounded-3xl flex items-center justify-center shadow-2xl border border-purple-100">
               <div className="text-center p-8">
-                <Heart className="w-16 h-16 text-primary mx-auto mb-4 opacity-50" />
-                <p className="text-gray-500">Sua imagem aqui</p>
+                <Heart className="w-20 h-20 text-primary mx-auto mb-6 opacity-60 animate-pulse" />
+                <p className="text-gray-600 font-medium">Sua imagem aqui</p>
                 <p className="text-sm text-gray-400 mt-2">500x400px recomendado</p>
               </div>
             </div>
@@ -496,143 +497,305 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
         </div>
       </section>
 
-      {/* Features Section - Bento Box Style */}
-      <section id="features" className="py-20">
+      {/* Story Section */}
+      <section className="py-24 bg-gradient-to-b from-purple-50 to-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl font-bold mb-4">{content.features.title}</h2>
-            <p className="text-xl text-muted-foreground">{content.features.subtitle}</p>
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 mb-8 shadow-sm border border-purple-100">
+              <Heart className="w-5 h-5 text-red-500 fill-current" />
+              <span className="text-sm font-medium text-gray-700">Uma história real</span>
+            </div>
+            
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 text-gray-800">
+              "Eu só queria ouvir a voz da minha mãe mais uma vez"
+            </h2>
+            
+            <div className="prose prose-lg mx-auto text-gray-600 leading-relaxed space-y-6">
+              <p>
+                Quando minha mãe começou a esquecer nossos nomes, eu sabia que precisava fazer algo. 
+                As fotos capturavam seu sorriso, mas não conseguiam preservar sua risada contagiante 
+                ou a forma carinhosa como ela dizia "meu amor".
+              </p>
+              
+              <p className="text-xl font-medium text-primary italic">
+                O Eterna nasceu dessa necessidade. De filhos que querem preservar não apenas memórias, 
+                mas a essência de quem mais amamos.
+              </p>
+              
+              <p>
+                Hoje, famílias ao redor do mundo podem conversar com seus entes queridos, 
+                ouvir suas vozes e sentir sua presença, mesmo quando a memória já não permite.
+              </p>
+            </div>
+            
+            <div className="mt-12 flex justify-center">
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 max-w-md">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
+                    <Heart className="w-6 h-6 text-white fill-current" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold text-gray-800">Maria Santos</p>
+                    <p className="text-sm text-gray-500">Criadora do Eterna</p>
+                  </div>
+                </div>
+                <p className="text-gray-600 italic text-sm">
+                  "Cada conversa é um presente. Cada palavra, um abraço que transcende o tempo."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section - Bento Box Style */}
+      <section id="features" className="py-28">
+        <div className="container">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-purple-50 rounded-full px-6 py-3 mb-8 border border-purple-100">
+              <Brain className="w-5 h-5 text-purple-600" />
+              <span className="text-sm font-medium text-purple-700">Tecnologia Avançada</span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.features.title}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{content.features.subtitle}</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {content.features.items.map((feature, index) => (
               <div 
                 key={index}
-                className={`${feature.color} p-8 rounded-2xl hover-lift text-center transition-all duration-300 animate-fade-in-up`}
+                className={`${feature.color} p-10 rounded-3xl hover-lift text-center transition-all duration-500 animate-fade-in-up border border-white/20 backdrop-blur-sm`}
                 style={{animationDelay: `${index * 0.1}s`}}
               >
-                <div className="feature-icon mb-6 mx-auto">
+                <div className="feature-icon mb-8 mx-auto text-5xl">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold mb-4 text-gray-800">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-base">{feature.description}</p>
               </div>
             ))}
+          </div>
+          
+          {/* Trust indicators */}
+          <div className="mt-20 text-center">
+            <div className="inline-flex items-center gap-8 px-8 py-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-green-500" />
+                <span className="text-sm font-medium text-gray-600">100% Seguro</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Heart className="w-5 h-5 text-red-500 fill-current" />
+                <span className="text-sm font-medium text-gray-600">Feito com Amor</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Cloud className="w-5 h-5 text-blue-500" />
+                <span className="text-sm font-medium text-gray-600">Backup Automático</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-gray-50">
+      <section id="how-it-works" className="py-28 bg-gradient-to-b from-gray-50 to-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl font-bold mb-4">{content.howItWorks.title}</h2>
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-blue-50 rounded-full px-6 py-3 mb-8 border border-blue-100">
+              <Target className="w-5 h-5 text-blue-600" />
+              <span className="text-sm font-medium text-blue-700">Processo Simples</span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.howItWorks.title}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Em apenas 3 passos simples, você pode começar a preservar as memórias mais preciosas
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {content.howItWorks.steps.map((step, index) => (
               <div 
                 key={index}
-                className="glass-card text-center hover-lift animate-fade-in-up"
+                className="glass-card text-center hover-lift animate-fade-in-up relative p-10"
                 style={{animationDelay: `${index * 0.2}s`}}
               >
-                <div className="feature-icon mb-6 mx-auto bg-white">
-                  {step.icon}
+                {/* Connection line for desktop */}
+                {index < content.howItWorks.steps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-6 w-12 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                )}
+                
+                <div className="feature-icon mb-8 mx-auto bg-gradient-to-br from-primary to-purple-600 text-white rounded-2xl w-20 h-20 flex items-center justify-center text-2xl font-bold shadow-lg">
+                  {index + 1}
                 </div>
-                <h4 className="text-xl font-semibold mb-3">{step.title}</h4>
-                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                <h4 className="text-2xl font-bold mb-4 text-gray-800">{step.title}</h4>
+                <p className="text-gray-600 leading-relaxed text-lg">{step.description}</p>
               </div>
             ))}
+          </div>
+          
+          {/* Process visualization */}
+          <div className="mt-20 text-center">
+            <div className="inline-flex items-center gap-4 px-8 py-4 bg-white rounded-2xl shadow-lg border border-gray-100">
+              <div className="text-sm font-medium text-gray-600">⏱️ Tempo médio: 15 minutos</div>
+              <div className="w-1 h-6 bg-gray-200"></div>
+              <div className="text-sm font-medium text-gray-600">🎯 Taxa de sucesso: 98%</div>
+              <div className="w-1 h-6 bg-gray-200"></div>
+              <div className="text-sm font-medium text-gray-600">❤️ Satisfação: 99.2%</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20">
+      <section id="pricing" className="py-28">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl font-bold mb-4">{content.pricing.title}</h2>
-            <p className="text-xl text-muted-foreground">{content.pricing.subtitle}</p>
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-green-50 rounded-full px-6 py-3 mb-8 border border-green-100">
+              <Zap className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-medium text-green-700">Preços Transparentes</span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.pricing.title}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{content.pricing.subtitle}</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="glass-card hover-lift text-center relative">
-              <h3 className="text-2xl font-bold mb-2">{content.pricing.free.name}</h3>
-              <div className="text-4xl font-bold text-primary mb-2">
+            <div className="glass-card hover-lift text-center relative p-8 border-2 border-transparent">
+              <h3 className="text-2xl font-bold mb-4 text-gray-800">{content.pricing.free.name}</h3>
+              <div className="text-5xl font-bold text-primary mb-4">
                 {content.pricing.free.price}
-                <span className="text-lg text-muted-foreground">{content.pricing.free.period}</span>
+                <span className="text-lg text-gray-500">{content.pricing.free.period}</span>
               </div>
-              <p className="text-muted-foreground mb-6">{content.pricing.free.description}</p>
+              <p className="text-gray-600 mb-8 text-lg">{content.pricing.free.description}</p>
               
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.free.features.map((feature, index) => (
-                  <li key={index} className="flex items-center justify-center gap-2">
-                    <Check className="w-5 h-5 text-green-500" />
-                    <span>{feature}</span>
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-gray-700">{feature}</span>
                   </li>
                 ))}
               </ul>
               
               <button 
                 onClick={onTryFree}
-                className="btn-secondary w-full py-3 rounded-xl font-semibold hover-lift"
+                className="btn-secondary w-full py-4 rounded-xl font-semibold hover-lift text-lg"
               >
                 {content.pricing.free.button}
               </button>
             </div>
 
             {/* Paid Plan */}
-            <div className="glass-card hover-lift text-center relative border-2 border-primary">
+            <div className="glass-card hover-lift text-center relative border-2 border-primary p-8 bg-gradient-to-b from-purple-50 to-white">
               {content.pricing.paid.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium">
-                  Most Popular
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-2 rounded-full text-sm font-medium shadow-lg">
+                  ⭐ Mais Popular
                 </div>
               )}
-              <h3 className="text-2xl font-bold mb-2">{content.pricing.paid.name}</h3>
-              <div className="text-4xl font-bold text-primary mb-2">
+              <h3 className="text-2xl font-bold mb-4 text-gray-800">{content.pricing.paid.name}</h3>
+              <div className="text-5xl font-bold text-primary mb-4">
                 {content.pricing.paid.price}
-                <span className="text-lg text-muted-foreground">{content.pricing.paid.period}</span>
+                <span className="text-lg text-gray-500">{content.pricing.paid.period}</span>
               </div>
-              <p className="text-muted-foreground mb-6">{content.pricing.paid.description}</p>
+              <p className="text-gray-600 mb-8 text-lg">{content.pricing.paid.description}</p>
               
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-4 mb-10 text-left">
                 {content.pricing.paid.features.map((feature, index) => (
-                  <li key={index} className="flex items-center justify-center gap-2">
-                    <Check className="w-5 h-5 text-green-500" />
-                    <span>{feature}</span>
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-gray-700 font-medium">{feature}</span>
                   </li>
                 ))}
               </ul>
               
               <button 
                 onClick={onSeePricing || onTryFree}
-                className="btn-primary w-full py-3 rounded-xl font-semibold hover-lift hover-glow"
+                className="btn-primary w-full py-4 rounded-xl font-semibold hover-lift hover-glow shadow-lg text-lg"
               >
                 {content.pricing.paid.button}
               </button>
+              
+              <p className="text-xs text-gray-500 mt-4">✨ 7 dias grátis • Cancele a qualquer momento</p>
+            </div>
+          </div>
+          
+          {/* Money back guarantee */}
+          <div className="mt-16 text-center">
+            <div className="inline-flex items-center gap-8 px-8 py-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-100">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-gray-800">Garantia de 30 dias</p>
+                  <p className="text-sm text-gray-600">100% do seu dinheiro de volta</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-blue-600 fill-current" />
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-gray-800">Suporte 24/7</p>
+                  <p className="text-sm text-gray-600">Sempre aqui para ajudar</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="section" style={{backgroundColor: 'var(--gray-50)'}}>
-        <div className="container text-center">
-          <h2 className="font-serif text-4xl font-bold mb-4">{content.finalCta.title}</h2>
-          <p className="text-xl mb-xl max-w-2xl mx-auto" style={{color: 'var(--gray-600)'}}>
-            {content.finalCta.subtitle}
-          </p>
-          <button 
-            onClick={onTryFree}
-            className="btn btn-primary btn-large hover-lift hover-glow mb-lg"
-          >
-            {content.finalCta.button}
-          </button>
-          <div className="space-y-2">
-            {content.finalCta.features.map((feature, index) => (
-              <p key={index} className="text-small" style={{color: 'var(--gray-500)'}}>{feature}</p>
-            ))}
+      <section id="download" className="py-28 bg-gradient-to-b from-gray-50 via-purple-50 to-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-100/20 to-pink-100/20"></div>
+        <div className="container text-center relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 mb-8 shadow-sm border border-purple-100">
+              <Rocket className="w-5 h-5 text-purple-600" />
+              <span className="text-sm font-medium text-purple-700">Comece Hoje</span>
+            </div>
+            
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.finalCta.title}</h2>
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed text-gray-600">
+              {content.finalCta.subtitle}
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <button 
+                onClick={onTryFree}
+                className="btn btn-primary btn-large hover-lift hover-glow shadow-xl px-12 py-4 text-lg"
+              >
+                {content.finalCta.button}
+              </button>
+              <button 
+                onClick={onLearnMore}
+                className="btn btn-secondary btn-large px-12 py-4 text-lg"
+              >
+                Ver Demonstração
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+              {content.finalCta.features.map((feature, index) => (
+                <div key={index} className="flex items-center justify-center gap-2 bg-white/60 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/40">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  <p className="text-sm font-medium text-gray-700">{feature}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-12">
+              <p className="text-sm text-gray-500 mb-4">Junte-se a mais de 10.000 famílias que já preservaram suas memórias</p>
+              <div className="flex justify-center items-center gap-2">
+                <div className="flex -space-x-2">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 border-2 border-white flex items-center justify-center">
+                      <span className="text-xs text-white font-semibold">{String.fromCharCode(65 + i)}</span>
+                    </div>
+                  ))}
+                </div>
+                <span className="text-sm text-gray-500 ml-2">+9,995 outros</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
