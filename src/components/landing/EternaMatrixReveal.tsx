@@ -87,6 +87,11 @@ export default function EternaMatrixReveal({
       const fontSize = Math.round(baseFontSize * scale);
       ctx.clearRect(0, 0, width, height);
 
+      // Black background fill per request
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "hsl(0 0% 0%)";
+      ctx.fillRect(0, 0, width, height);
+
       ctx.font = `${fontSize}px ${fontFamily}`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -130,8 +135,8 @@ export default function EternaMatrixReveal({
             if (Math.random() < 0.25) cell.ch = randChar();
           }
 
-          ctx.globalAlpha = inWord ? 0.9 : cell.alpha;
-          ctx.fillStyle = inWord ? "#0f172a" : "#6b6ea3"; // slate-900 vs soft violet
+          ctx.globalAlpha = inWord ? 1 : 0.15;
+          ctx.fillStyle = "hsl(0 0% 100%)";
 
           // Word reveal behavior
           if (inWord) {
