@@ -6,6 +6,8 @@ import { EternaHeader } from "@/components/layout/EternaHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Landing } from "./pages/Landing";
+import { HowItWorksPage } from "./pages/HowItWorks";
+import { PricingPage } from "./pages/Pricing";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -25,7 +27,9 @@ const AppRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
+      <Route path="/" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} />} />
+      <Route path="/how-it-works" element={<HowItWorksPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
+      <Route path="/pricing" element={<PricingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
       <Route path="/auth" element={
         <div className="min-h-screen bg-background">
           <EternaHeader />

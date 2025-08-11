@@ -7,6 +7,8 @@ import { Menu, X, Heart } from 'lucide-react';
 interface LandingHeaderProps {
   onTryFree: () => void;
   onSignIn: () => void;
+  onHowItWorks?: () => void;
+  onPricing?: () => void;
 }
 
 const getContent = (language: string) => {
@@ -33,7 +35,7 @@ const getContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
-export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignIn }) => {
+export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignIn, onHowItWorks, onPricing }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { currentLanguage } = useLanguage();
@@ -51,6 +53,17 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNavigation = (section: string) => {
+    if (section === 'how-it-works' && onHowItWorks) {
+      onHowItWorks();
+    } else if (section === 'pricing' && onPricing) {
+      onPricing();
+    } else {
+      // Fallback to scroll for same-page sections
+      scrollToSection(section);
     }
     setIsMobileMenuOpen(false);
   };
@@ -72,13 +85,13 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             <button 
-              onClick={() => scrollToSection('how-it-works')}
+              onClick={() => handleNavigation('how-it-works')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               {content.howItWorks}
             </button>
             <button 
-              onClick={() => scrollToSection('pricing')}
+              onClick={() => handleNavigation('pricing')}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               {content.pricing}
@@ -113,13 +126,13 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-t border-border/50 shadow-lg">
             <nav className="px-4 py-6 space-y-4">
               <button 
-                onClick={() => scrollToSection('how-it-works')}
+                onClick={() => handleNavigation('how-it-works')}
                 className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors py-2"
               >
                 {content.howItWorks}
               </button>
               <button 
-                onClick={() => scrollToSection('pricing')}
+                onClick={() => handleNavigation('pricing')}
                 className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors py-2"
               >
                 {content.pricing}

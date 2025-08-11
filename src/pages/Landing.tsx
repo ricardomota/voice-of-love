@@ -1,10 +1,11 @@
-import { LandingPage } from '@/components/landing/LandingPage';
+import { SimpleLandingPage } from '@/components/landing/SimpleLandingPage';
 
 interface LandingProps {
   onTryFree: () => void;
   onSignIn: () => void;
+  onLearnMore: () => void;
 }
 
-export const Landing = ({ onTryFree, onSignIn }: LandingProps) => {
-  return <LandingPage onTryFree={onTryFree} onSignIn={onSignIn} />;
+export const Landing = ({ onTryFree, onSignIn, onLearnMore }: LandingProps) => {
+  return <SimpleLandingPage onTryFree={onTryFree} onSignIn={onSignIn} onLearnMore={onLearnMore} />;
 };

@@ -9,53 +9,50 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base - Pure, airy whites */
-    --background: 0 0% 100%;
-    --foreground: 220 13% 18%;
+    /* Base Colors - Warm cream background */
+    --background: 47 96% 87%; /* FDFBCB - cream/yellow */
+    --foreground: 311 48% 15%; /* Dark purple text for contrast */
 
-    /* Glass surfaces - Translucent and elevated */
-    --card: 0 0% 100% / 0.85;
-    --card-foreground: 220 13% 18%;
-    --card-glass: 0 0% 100% / 0.7;
+    /* Glass surfaces - Translucent with warm tones */
+    --card: 47 96% 92%; /* Lighter version of background */
+    --card-foreground: 311 48% 15%;
+    --card-glass: 47 96% 87% / 0.7;
 
-    /* Popover system - Frosted glass */
-    --popover: 0 0% 100% / 0.9;
-    --popover-foreground: 220 13% 18%;
+    /* Popover system - Frosted glass with warmth */
+    --popover: 47 96% 95%;
+    --popover-foreground: 311 48% 15%;
 
-    /* Primary - Soft blue-gray iOS system */
-    --primary: 220 13% 18%;
-    --primary-foreground: 0 0% 100%;
-    --primary-soft: 220 13% 91%;
-    --primary-glass: 220 13% 18% / 0.8;
+    /* Primary - Dark purple/maroon brand color */
+    --primary: 311 48% 15%; /* 441632 - dark purple/maroon */
+    --primary-foreground: 47 96% 95%; /* Light cream for text */
+    --primary-soft: 311 30% 85%;
+    --primary-glass: 311 48% 15% / 0.8;
 
-    /* Secondary - Ultra light */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 13% 18%;
+    /* Secondary - Light purple for secondary actions */
+    --secondary: 311 30% 85%;
+    --secondary-foreground: 311 48% 15%;
 
-    /* Muted - Whisper light */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    /* Muted - Subtle cream variations */
+    --muted: 47 60% 80%;
+    --muted-foreground: 311 30% 25%;
 
-    /* Accent - Gentle system blue */
-    --accent: 213 94% 68%;
-    --accent-foreground: 0 0% 100%;
-    --accent-soft: 213 94% 95%;
-    --accent-glass: 213 94% 68% / 0.1;
+    /* Accent - Warm pink accent */
+    --accent: 340 75% 55%;
+    --accent-foreground: 47 96% 95%;
+    --accent-soft: 340 50% 75%;
+    --accent-glass: 340 75% 55% / 0.1;
 
-    /* iOS system colors */
-    --ios-blue: 213 94% 68%;
-    --ios-green: 142 76% 36%;
-    --ios-red: 4 90% 58%;
-    --ios-orange: 28 87% 67%;
-    --ios-purple: 266 85% 58%;
+    /* Themed colors for emotions */
+    --love: 340 75% 55%; /* Warm pink */
+    --memory: 280 65% 60%; /* Soft purple */
 
     /* System colors */
-    --destructive: 4 90% 58%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 47 96% 95%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 213 94% 68%;
+    --border: 311 20% 75%; /* Soft purple border */
+    --input: 311 20% 70%;
+    --ring: 311 48% 15%; /* Same as primary */
 
     --radius: 1.125rem;
 
