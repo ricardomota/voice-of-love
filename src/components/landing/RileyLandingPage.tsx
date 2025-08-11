@@ -551,11 +551,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               
             </div>
             
-            <h2 className="font-serif text-3xl font-bold mb-6" style={{
-            color: '#FDFBCB'
-          }}>
-              {renderTextWithBold("Preservando **memórias**")}
-            </h2>
+            
             
             <div className="max-w-2xl mx-auto">
               <p className="text-lg leading-relaxed mb-4" style={{
@@ -573,19 +569,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               </p>
             </div>
             
-            <div className="flex items-center justify-center gap-3 mt-8 p-6 rounded-xl border-2" style={{
-            backgroundColor: '#F0EDD7',
-            borderColor: '#E8E3C8'
-          }}>
-              <Heart className="w-8 h-8" style={{
-              color: '#441632'
-            }} />
-              <p className="font-medium text-lg" style={{
-              color: '#441632'
-            }}>
-                "Cada conversa é uma oportunidade de reconexão com quem amamos"
-              </p>
-            </div>
+            
           </div>
         </div>
       </section>
