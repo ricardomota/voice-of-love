@@ -405,11 +405,9 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-sm z-50 py-4" style={{backgroundColor: 'rgba(253, 251, 203, 0.95)'}}>
         <nav className="container flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-[#441632] to-[#331122] rounded-xl flex items-center justify-center shadow-lg">
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-[#FDFBCB]" />
-            </div>
-            <span className="text-xl sm:text-2xl font-semibold" style={{color: '#441632'}}>Eterna</span>
+          <div className="flex items-center gap-2">
+            <Heart className="w-6 h-6 fill-current" style={{color: '#441632'}} />
+            <span className="text-xl font-bold" style={{color: '#441632'}}>Eterna</span>
           </div>
           <ul className="hidden md:flex items-center gap-8">
             <li>
