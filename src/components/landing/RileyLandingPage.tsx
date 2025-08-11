@@ -443,118 +443,42 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </header>
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen overflow-hidden bg-white">
-        {/* Layered Cloud Background */}
-        <div className="absolute inset-0 w-full">
-          {/* Background Layer - Slowest */}
-          <div className="absolute inset-0 -z-50">
-            <div className="cloud-wrapper animate-float-slow absolute -left-40 top-20">
-              <Cloud className="w-96 h-60 text-gray-100 opacity-40" />
-            </div>
-            <div className="cloud-wrapper animate-float-slow absolute -right-32 top-32">
-              <Cloud className="w-80 h-48 text-gray-100 opacity-30" />
-            </div>
+      <section className="hero">
+        <div className="hero-content container">
+          <div className="alzheimer-badge mb-lg">
+            {content.hero.badge}
           </div>
           
-          {/* Middle Layer - Medium Speed */}
-          <div className="absolute inset-0 -z-30">
-            <div className="cloud-wrapper animate-float-medium absolute -left-20 bottom-32">
-              <Cloud className="w-72 h-44 text-gray-50 opacity-50" />
-            </div>
-            <div className="cloud-wrapper animate-float-medium cloud-alt absolute -right-20 top-1/2">
-              <Cloud className="w-64 h-40 text-gray-50 opacity-40" />
-            </div>
+          <h1 className="hero-title font-serif">
+            {content.hero.title}
+          </h1>
+          
+          <h2 className="hero-subtitle">
+            {content.hero.subtitle}
+          </h2>
+          
+          <p className="text-large mb-xl" style={{maxWidth: '700px', margin: '0 auto var(--space-xl) auto'}}>
+            {content.hero.description}
+          </p>
+
+          <div className="flex-center gap-md mb-lg" style={{flexWrap: 'wrap'}}>
+            <button 
+              onClick={onTryFree}
+              className="btn btn-primary btn-large"
+            >
+              {content.hero.buttonPrimary}
+            </button>
+            <button 
+              onClick={onLearnMore}
+              className="btn btn-secondary btn-large"
+            >
+              {content.hero.buttonSecondary}
+            </button>
           </div>
           
-          {/* Front Layer - Fastest */}
-          <div className="absolute inset-0 -z-10">
-            <div className="cloud-wrapper animate-float-fast absolute -left-16 top-40">
-              <Cloud className="w-56 h-36 text-slate-100 opacity-60" />
-            </div>
-            <div className="cloud-wrapper animate-float-fast cloud-alt absolute -right-24 bottom-40">
-              <Cloud className="w-48 h-32 text-slate-100 opacity-50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-50 mx-auto flex w-full max-w-7xl flex-col items-center px-8 py-8 pb-32 lg:flex-row lg:py-20 min-h-screen">
-          {/* Left Content */}
-          <div className="flex flex-1 flex-col items-center gap-10 lg:items-start lg:pr-12">
-            <div className="alzheimer-badge mb-6">
-              {content.hero.badge}
-            </div>
-            
-            <div className="flex flex-col items-center gap-6 lg:items-start">
-              <div className="flex items-center lg:hidden mb-4">
-                <Heart className="w-16 h-16 text-primary fill-current" />
-              </div>
-              
-              <h1 className="font-serif text-center text-5xl md:text-6xl lg:text-7xl font-bold leading-none lg:text-left text-slate-900">
-                <span className="block mb-2">{content.hero.title.split(' ')[0]} {content.hero.title.split(' ')[1]}</span>
-                <span className="inline-flex items-baseline gap-3">
-                  <span>{content.hero.title.split(' ')[2]}</span>
-                  <Heart className="hidden lg:inline-block w-16 h-16 text-primary fill-current translate-y-1" />
-                  <span className="text-primary">Eterna</span>
-                </span>
-              </h1>
-              
-              <h2 className="text-xl md:text-2xl text-slate-600 mb-4 text-center lg:text-left">
-                {content.hero.subtitle}
-              </h2>
-              
-              <p className="text-lg text-slate-600 mb-8 max-w-2xl text-center lg:text-left leading-relaxed">
-                {content.hero.description}
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-6 w-full lg:w-auto">
-              <button 
-                onClick={onTryFree}
-                className="btn-primary px-8 py-4 rounded-full font-semibold text-lg w-full sm:w-auto max-w-60"
-              >
-                {content.hero.buttonPrimary}
-              </button>
-              <button 
-                onClick={onLearnMore}
-                className="btn-secondary px-8 py-4 rounded-full font-semibold text-lg w-full sm:w-auto"
-              >
-                {content.hero.buttonSecondary}
-              </button>
-            </div>
-            
-            <p className="text-sm text-slate-500 text-center lg:text-left">
-              {content.hero.note}
-            </p>
-          </div>
-
-          {/* Right Content - Mockup/Illustration */}
-          <div className="flex-1 flex justify-center lg:justify-end items-center relative">
-            <div className="relative w-full max-w-lg">
-              <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-12 shadow-2xl">
-                <div className="bg-white rounded-2xl p-8 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                      <Heart className="w-6 h-6 text-white fill-current" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-800">Chat com Vovó</h3>
-                      <p className="text-sm text-slate-500">Online agora</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="bg-slate-100 rounded-2xl p-4 max-w-xs">
-                      <p className="text-slate-700">Oi querida! Como foi seu dia?</p>
-                    </div>
-                    <div className="bg-primary text-white rounded-2xl p-4 max-w-xs ml-auto">
-                      <p>Foi ótimo, vovó! Senti sua falta ❤️</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p className="text-small" style={{color: 'var(--gray-500)'}}>
+            {content.hero.note}
+          </p>
         </div>
       </section>
 
@@ -679,25 +603,87 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="py-20 relative overflow-hidden bg-slate-50">
-        <div className="container relative z-10 text-center">
+      <section id="download" className="section" style={{backgroundColor: 'var(--gray-50)'}}>
+        <div className="container text-center">
           <h2 className="font-serif text-4xl font-bold mb-4">{content.finalCta.title}</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl mb-xl max-w-2xl mx-auto" style={{color: 'var(--gray-600)'}}>
             {content.finalCta.subtitle}
           </p>
           <button 
             onClick={onTryFree}
-            className="btn-primary btn-large hover-lift hover-glow px-12 py-4 rounded-xl font-semibold text-lg mb-6"
+            className="btn btn-primary btn-large hover-lift hover-glow mb-lg"
           >
             {content.finalCta.button}
           </button>
           <div className="space-y-2">
             {content.finalCta.features.map((feature, index) => (
-              <p key={index} className="text-sm text-muted-foreground">{feature}</p>
+              <p key={index} className="text-small" style={{color: 'var(--gray-500)'}}>{feature}</p>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="section" style={{backgroundColor: 'var(--gray-800)', color: 'var(--white)'}}>
+        <div className="container">
+          <div className="grid grid-4 gap-lg mb-xl">
+            <div>
+              <div className="flex items-center gap-2 mb-md">
+                <Heart className="w-6 h-6 text-primary fill-current" />
+                <span className="text-xl font-bold">Eterna</span>
+              </div>
+              <p className="text-small mb-md" style={{color: 'var(--gray-400)'}}>
+                Preserving memories with AI-powered conversations
+              </p>
+            </div>
+            
+            <div>
+              <h6 className="font-bold mb-md text-white">Product</h6>
+              <div className="space-y-2">
+                <a href="#features" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Features</a>
+                <a href="#pricing" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Pricing</a>
+                <a href="#how-it-works" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>How it Works</a>
+              </div>
+            </div>
+            
+            <div>
+              <h6 className="font-bold mb-md text-white">Support</h6>
+              <div className="space-y-2">
+                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Help Center</a>
+                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Contact</a>
+                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Privacy Policy</a>
+                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Terms of Service</a>
+              </div>
+            </div>
+            
+            <div>
+              <h6 className="font-bold mb-md text-white">Language</h6>
+              <LanguageSelector />
+            </div>
+          </div>
+          
+          <div className="flex-between pt-lg" style={{borderTop: '1px solid var(--gray-700)'}}>
+            <p className="text-small" style={{color: 'var(--gray-400)'}}>
+              © 2024 Eterna. All rights reserved.
+            </p>
+            <div className="flex gap-md">
+              <button 
+                onClick={onTryFree}
+                className="btn btn-primary"
+              >
+                Try Free
+              </button>
+              <button 
+                onClick={onSignIn}
+                className="text-small hover:text-primary transition-colors"
+                style={{color: 'var(--gray-400)'}}
+              >
+                Sign In
+              </button>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
