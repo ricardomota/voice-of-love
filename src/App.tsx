@@ -26,7 +26,14 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
-      <Route path="/auth" element={<Index />} />
+      <Route path="/auth" element={
+        <div className="min-h-screen bg-background">
+          <EternaHeader />
+          <main>
+            <Index />
+          </main>
+        </div>
+      } />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -41,12 +48,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-background">
-              <EternaHeader />
-              <main>
-                <AppRoutes />
-              </main>
-            </div>
+            <AppRoutes />
           </BrowserRouter>
         </QueryClientProvider>
       </TooltipProvider>
