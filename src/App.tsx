@@ -27,7 +27,7 @@ const AppRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} />} />
+      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} onSeePricing={() => navigate('/auth')} />} />
       <Route path="/landing-original" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} />} />
       <Route path="/how-it-works" element={<HowItWorksPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
       <Route path="/auth" element={

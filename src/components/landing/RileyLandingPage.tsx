@@ -1,11 +1,13 @@
 import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Heart, Target, Zap, Rocket, Shield, Smartphone, Brain, Download, Apple, Play } from 'lucide-react';
+import { LanguageSelector } from '@/components/ui/language-selector';
+import { Heart, Target, Zap, Rocket, Shield, Smartphone, Brain, Download, Apple, Play, Check } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
   onSignIn: () => void;
   onLearnMore: () => void;
+  onSeePricing?: () => void;
 }
 
 const getContent = (language: string) => {
@@ -15,6 +17,7 @@ const getContent = (language: string) => {
       nav: {
         features: "Features",
         howItWorks: "How It Works",
+        pricing: "Pricing",
         download: "Download"
       },
       cta: "Start Now",
@@ -98,13 +101,48 @@ const getContent = (language: string) => {
           "5 messages to start", 
           "1 minute of voice generation"
         ]
+      },
+      pricing: {
+        title: "Choose Your Plan",
+        subtitle: "Start free and unlock premium features as you need them",
+        free: {
+          name: "Free",
+          price: "$0",
+          period: "/month",
+          description: "Perfect to get started",
+          features: [
+            "5 messages/month",
+            "1 minute voice/month",
+            "1 person profile",
+            "Basic support"
+          ],
+          button: "Start Free",
+          popular: false
+        },
+        paid: {
+          name: "Family Plan",
+          price: "$29",
+          period: "/month",
+          description: "For families who want to preserve more memories",
+          features: [
+            "300 messages/month",
+            "15 minutes voice/month",
+            "Unlimited profiles",
+            "Personal voice clone",
+            "Priority support",
+            "Cloud backup"
+          ],
+          button: "Start Trial",
+          popular: true
+        }
       }
     },
     'pt-BR': {
       logo: "❤️ Eterna",
       nav: {
         features: "Funcionalidades",
-        howItWorks: "Como Funciona", 
+        howItWorks: "Como Funciona",
+        pricing: "Preços", 
         download: "Download"
       },
       cta: "Começar Agora",
@@ -188,6 +226,40 @@ const getContent = (language: string) => {
           "5 mensagens para começar",
           "1 minuto de geração de voz"
         ]
+      },
+      pricing: {
+        title: "Escolha Seu Plano",
+        subtitle: "Comece grátis e desbloqueie recursos premium conforme precisar",
+        free: {
+          name: "Gratuito",
+          price: "R$0",
+          period: "/mês",
+          description: "Perfeito para começar",
+          features: [
+            "5 mensagens/mês",
+            "1 minuto de voz/mês", 
+            "1 perfil de pessoa",
+            "Suporte básico"
+          ],
+          button: "Começar Grátis",
+          popular: false
+        },
+        paid: {
+          name: "Plano Família",
+          price: "R$29",
+          period: "/mês",
+          description: "Para famílias que querem preservar mais memórias",
+          features: [
+            "300 mensagens/mês",
+            "15 minutos de voz/mês",
+            "Perfis ilimitados",
+            "Clone de voz personalizado",
+            "Suporte prioritário",
+            "Backup na nuvem"
+          ],
+          button: "Começar Teste",
+          popular: true
+        }
       }
     },
     es: {
@@ -195,6 +267,7 @@ const getContent = (language: string) => {
       nav: {
         features: "Características",
         howItWorks: "Cómo Funciona",
+        pricing: "Precios",
         download: "Descargar"
       },
       cta: "Empezar Ahora", 
@@ -278,6 +351,40 @@ const getContent = (language: string) => {
           "5 mensajes para empezar",
           "1 minuto de generación de voz"
         ]
+      },
+      pricing: {
+        title: "Elige Tu Plan",
+        subtitle: "Empieza gratis y desbloquea características premium según necesites",
+        free: {
+          name: "Gratuito",
+          price: "$0",
+          period: "/mes",
+          description: "Perfecto para empezar",
+          features: [
+            "5 mensajes/mes",
+            "1 minuto de voz/mes",
+            "1 perfil de persona", 
+            "Soporte básico"
+          ],
+          button: "Empezar Gratis",
+          popular: false
+        },
+        paid: {
+          name: "Plan Familiar",
+          price: "$29",
+          period: "/mes", 
+          description: "Para familias que quieren preservar más memorias",
+          features: [
+            "300 mensajes/mes",
+            "15 minutos de voz/mes",
+            "Perfiles ilimitados",
+            "Clon de voz personalizado",
+            "Soporte prioritario",
+            "Respaldo en la nube"
+          ],
+          button: "Empezar Prueba",
+          popular: true
+        }
       }
     }
   };
@@ -287,7 +394,8 @@ const getContent = (language: string) => {
 export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   onTryFree,
   onSignIn,
-  onLearnMore
+  onLearnMore,
+  onSeePricing
 }) => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
@@ -312,17 +420,25 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               </a>
             </li>
             <li>
+              <a href="#pricing" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                {content.nav.pricing}
+              </a>
+            </li>
+            <li>
               <a href="#download" className="text-muted-foreground hover:text-primary transition-colors font-medium">
                 {content.nav.download}
               </a>
             </li>
           </ul>
-          <button 
-            onClick={onTryFree}
-            className="btn-primary px-6 py-3 rounded-lg font-medium hover-lift"
-          >
-            {content.cta}
-          </button>
+          <div className="flex items-center gap-4">
+            <LanguageSelector />
+            <button 
+              onClick={onTryFree}
+              className="btn-primary px-6 py-3 rounded-lg font-medium hover-lift"
+            >
+              {content.cta}
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -415,6 +531,75 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">{content.pricing.title}</h2>
+            <p className="text-xl text-muted-foreground">{content.pricing.subtitle}</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Free Plan */}
+            <div className="glass-card hover-lift text-center relative">
+              <h3 className="text-2xl font-bold mb-2">{content.pricing.free.name}</h3>
+              <div className="text-4xl font-bold text-primary mb-2">
+                {content.pricing.free.price}
+                <span className="text-lg text-muted-foreground">{content.pricing.free.period}</span>
+              </div>
+              <p className="text-muted-foreground mb-6">{content.pricing.free.description}</p>
+              
+              <ul className="space-y-3 mb-8">
+                {content.pricing.free.features.map((feature, index) => (
+                  <li key={index} className="flex items-center justify-center gap-2">
+                    <Check className="w-5 h-5 text-green-500" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <button 
+                onClick={onTryFree}
+                className="btn-secondary w-full py-3 rounded-xl font-semibold hover-lift"
+              >
+                {content.pricing.free.button}
+              </button>
+            </div>
+
+            {/* Paid Plan */}
+            <div className="glass-card hover-lift text-center relative border-2 border-primary">
+              {content.pricing.paid.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium">
+                  Most Popular
+                </div>
+              )}
+              <h3 className="text-2xl font-bold mb-2">{content.pricing.paid.name}</h3>
+              <div className="text-4xl font-bold text-primary mb-2">
+                {content.pricing.paid.price}
+                <span className="text-lg text-muted-foreground">{content.pricing.paid.period}</span>
+              </div>
+              <p className="text-muted-foreground mb-6">{content.pricing.paid.description}</p>
+              
+              <ul className="space-y-3 mb-8">
+                {content.pricing.paid.features.map((feature, index) => (
+                  <li key={index} className="flex items-center justify-center gap-2">
+                    <Check className="w-5 h-5 text-green-500" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <button 
+                onClick={onSeePricing || onTryFree}
+                className="btn-primary w-full py-3 rounded-xl font-semibold hover-lift hover-glow"
+              >
+                {content.pricing.paid.button}
+              </button>
+            </div>
           </div>
         </div>
       </section>
