@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { LanguageSelector } from '@/components/ui/language-selector';
-import { Heart, Target, Zap, Rocket, Shield, Smartphone, Brain, Download, Apple, Play, Check } from 'lucide-react';
+import { Heart, Target, Zap, Rocket, Shield, Smartphone, Brain, Download, Apple, Play, Check, Cloud } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -443,43 +443,118 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </header>
 
       {/* Hero Section */}
-      <section className="hero pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50"></div>
-        <div className="absolute top-0 left-0 w-full h-full opacity-30">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-2xl animate-float"></div>
-          <div className="absolute top-40 right-20 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-2xl animate-float" style={{animationDelay: '2s'}}></div>
+      <section className="relative w-full min-h-screen overflow-hidden bg-white">
+        {/* Layered Cloud Background */}
+        <div className="absolute inset-0 w-full">
+          {/* Background Layer - Slowest */}
+          <div className="absolute inset-0 -z-50">
+            <div className="cloud-wrapper animate-float-slow absolute -left-40 top-20">
+              <Cloud className="w-96 h-60 text-gray-100 opacity-40" />
+            </div>
+            <div className="cloud-wrapper animate-float-slow absolute -right-32 top-32">
+              <Cloud className="w-80 h-48 text-gray-100 opacity-30" />
+            </div>
+          </div>
+          
+          {/* Middle Layer - Medium Speed */}
+          <div className="absolute inset-0 -z-30">
+            <div className="cloud-wrapper animate-float-medium absolute -left-20 bottom-32">
+              <Cloud className="w-72 h-44 text-gray-50 opacity-50" />
+            </div>
+            <div className="cloud-wrapper animate-float-medium cloud-alt absolute -right-20 top-1/2">
+              <Cloud className="w-64 h-40 text-gray-50 opacity-40" />
+            </div>
+          </div>
+          
+          {/* Front Layer - Fastest */}
+          <div className="absolute inset-0 -z-10">
+            <div className="cloud-wrapper animate-float-fast absolute -left-16 top-40">
+              <Cloud className="w-56 h-36 text-slate-100 opacity-60" />
+            </div>
+            <div className="cloud-wrapper animate-float-fast cloud-alt absolute -right-24 bottom-40">
+              <Cloud className="w-48 h-32 text-slate-100 opacity-50" />
+            </div>
+          </div>
         </div>
-        
-        <div className="container relative z-10 text-center">
-          <div className="alzheimer-badge mx-auto mb-6">
-            {content.hero.badge}
+
+        {/* Content Container */}
+        <div className="relative z-50 mx-auto flex w-full max-w-7xl flex-col items-center px-8 py-8 pb-32 lg:flex-row lg:py-20 min-h-screen">
+          {/* Left Content */}
+          <div className="flex flex-1 flex-col items-center gap-10 lg:items-start lg:pr-12">
+            <div className="alzheimer-badge mb-6">
+              {content.hero.badge}
+            </div>
+            
+            <div className="flex flex-col items-center gap-6 lg:items-start">
+              <div className="flex items-center lg:hidden mb-4">
+                <Heart className="w-16 h-16 text-primary fill-current" />
+              </div>
+              
+              <h1 className="font-serif text-center text-5xl md:text-6xl lg:text-7xl font-bold leading-none lg:text-left text-slate-900">
+                <span className="block mb-2">{content.hero.title.split(' ')[0]} {content.hero.title.split(' ')[1]}</span>
+                <span className="inline-flex items-baseline gap-3">
+                  <span>{content.hero.title.split(' ')[2]}</span>
+                  <Heart className="hidden lg:inline-block w-16 h-16 text-primary fill-current translate-y-1" />
+                  <span className="text-primary">Eterna</span>
+                </span>
+              </h1>
+              
+              <h2 className="text-xl md:text-2xl text-slate-600 mb-4 text-center lg:text-left">
+                {content.hero.subtitle}
+              </h2>
+              
+              <p className="text-lg text-slate-600 mb-8 max-w-2xl text-center lg:text-left leading-relaxed">
+                {content.hero.description}
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-6 w-full lg:w-auto">
+              <button 
+                onClick={onTryFree}
+                className="btn-primary px-8 py-4 rounded-full font-semibold text-lg w-full sm:w-auto max-w-60"
+              >
+                {content.hero.buttonPrimary}
+              </button>
+              <button 
+                onClick={onLearnMore}
+                className="btn-secondary px-8 py-4 rounded-full font-semibold text-lg w-full sm:w-auto"
+              >
+                {content.hero.buttonSecondary}
+              </button>
+            </div>
+            
+            <p className="text-sm text-slate-500 text-center lg:text-left">
+              {content.hero.note}
+            </p>
           </div>
-          <h1 className="font-serif text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-primary via-secondary-pink to-primary bg-clip-text text-transparent animate-fade-in-up leading-none">
-            {content.hero.title}
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-muted-foreground mb-6 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-            {content.hero.subtitle}
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '0.4s'}}>
-            {content.hero.description}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
-            <button 
-              onClick={onTryFree}
-              className="btn-primary btn-large hover-lift hover-glow px-8 py-4 rounded-xl font-semibold text-lg"
-            >
-              {content.hero.buttonPrimary}
-            </button>
-            <button 
-              onClick={onLearnMore}
-              className="btn-secondary btn-large hover-lift px-8 py-4 rounded-xl font-semibold text-lg"
-            >
-              {content.hero.buttonSecondary}
-            </button>
+
+          {/* Right Content - Mockup/Illustration */}
+          <div className="flex-1 flex justify-center lg:justify-end items-center relative">
+            <div className="relative w-full max-w-lg">
+              <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-12 shadow-2xl">
+                <div className="bg-white rounded-2xl p-8 space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                      <Heart className="w-6 h-6 text-white fill-current" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-800">Chat com Vovó</h3>
+                      <p className="text-sm text-slate-500">Online agora</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-slate-100 rounded-2xl p-4 max-w-xs">
+                      <p className="text-slate-700">Oi querida! Como foi seu dia?</p>
+                    </div>
+                    <div className="bg-primary text-white rounded-2xl p-4 max-w-xs ml-auto">
+                      <p>Foi ótimo, vovó! Senti sua falta ❤️</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground animate-fade-in-up" style={{animationDelay: '0.8s'}}>
-            {content.hero.note}
-          </p>
         </div>
       </section>
 

@@ -413,4 +413,25 @@ html {
   .gentle-glow:hover::before {
     opacity: 1;
   }
+
+  /* Cloud Animation Utilities */
+  .cloud-wrapper {
+    opacity: 0.8;
+  }
+
+  .cloud-alt {
+    animation-delay: 2s;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: float 4s ease-in-out infinite;
+  }
 }
