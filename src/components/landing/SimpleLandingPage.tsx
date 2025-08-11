@@ -3,8 +3,9 @@ import { LandingHeader } from './LandingHeader';
 import { ModernHero } from './ModernHero';
 import { FeaturesShowcase } from './FeaturesShowcase';
 import { PersonalStory } from './PersonalStory';
-import { LandingFooter } from './LandingFooter';
+import { PricingSection } from './PricingSection';
 import { ConversionBand } from './ConversionBand';
+import { LandingFooter } from './LandingFooter';
 
 interface SimpleLandingPageProps {
   onTryFree: () => void;
@@ -23,6 +24,7 @@ export const SimpleLandingPage: React.FC<SimpleLandingPageProps> = ({
       <ModernHero onTryFree={onTryFree} onLearnMore={onLearnMore} />
       <FeaturesShowcase />
       <PersonalStory onGetStarted={onTryFree} />
+      <PricingSection onTryFree={onTryFree} onSeePricing={() => {}} />
       <ConversionBand onTryFree={onTryFree} />
       <LandingFooter onTryFree={onTryFree} onSignIn={onSignIn} />
     </div>
