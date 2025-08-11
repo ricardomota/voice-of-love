@@ -553,11 +553,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-28">
+      <section id="pricing" className="py-28" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.pricing.title}</h2>
-            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>{content.pricing.subtitle}</p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#FDFBCB'}}>{content.pricing.title}</h2>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#FDFBCB', opacity: 0.8}}>{content.pricing.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
