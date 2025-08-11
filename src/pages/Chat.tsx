@@ -201,14 +201,9 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-hero relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-20 right-20 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float"></div>
-        <div className="absolute bottom-20 left-20 w-48 h-48 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-float" style={{animationDelay: '2s'}}></div>
-      </div>
+    <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <div className="relative z-10 glass-card border-0 border-b border-border/20 backdrop-blur-xl">
+      <div className="bg-card border-b border-border">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
             <Button variant="ghost" size="icon" onClick={onBack}>
@@ -265,7 +260,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
 
       {/* Usage Bar */}
       {!usageLoading && (
-        <div className="relative z-10 px-4 py-2 glass-card border-0 border-b border-border/20">
+        <div className="px-4 py-2 bg-card border-b border-border">
           <UsageBar
             messagesUsed={usage.messagesUsed}
             messagesLimit={usage.messagesLimit}
@@ -277,7 +272,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
       )}
 
       {/* Messages */}
-      <div className="relative z-10 flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-transparent via-background/50 to-background">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-muted/30">
         {messages.map((message) => (
           <div key={message.id} className="space-y-2">
             <MessageBubble
@@ -316,7 +311,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
 
       {/* Audio Player */}
       {currentAudio && (
-        <div className="relative z-10 p-4 glass-card border-0 border-t border-border/20">
+        <div className="p-4 bg-card border-t border-border">
           <AudioPlayer
             audioSrc={currentAudio}
             onEnded={() => setCurrentAudio(null)}
@@ -325,7 +320,7 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
       )}
 
       {/* Input */}
-      <div className="relative z-10 p-4 glass-card border-0 border-t border-border/20 backdrop-blur-xl">
+      <div className="p-4 bg-card border-t border-border">
         <div className="flex items-center space-x-2">
           <div className="flex-1 relative">
             <InputWithVoice

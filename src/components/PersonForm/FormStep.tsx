@@ -28,11 +28,11 @@ export const FormStep: React.FC<FormStepProps> = ({
   backText = "Voltar"
 }) => {
   return (
-    <div className="glass-card p-8 fade-in-up hover-lift">
+    <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
       <div className="text-center space-y-4 mb-8">
-        <h2 className="text-3xl font-zilla font-medium italic" style={{color: '#441632'}}>{title}</h2>
+        <h2 className="text-3xl font-bold text-foreground">{title}</h2>
         {subtitle && (
-          <p className="text-lg font-work leading-relaxed max-w-3xl mx-auto" style={{color: '#331122'}}>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             {subtitle}
           </p>
         )}
@@ -43,38 +43,37 @@ export const FormStep: React.FC<FormStepProps> = ({
       </div>
 
       <div className="flex items-center justify-between pt-8">
-        <button 
-          onClick={onBack} 
-          className="px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2 transition-all border-2"
-          style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8', color: '#441632'}}
+        <Button 
+          onClick={onBack}
+          variant="outline"
+          className="px-6 py-3 flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           {backText}
-        </button>
+        </Button>
 
         <div className="flex gap-3">
           {onUpdate && (
-            <button 
+            <Button 
               onClick={onUpdate}
-              className="px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2 transition-all border-2"
-              style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8', color: '#441632'}}
+              variant="outline"
+              className="px-6 py-3 flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
               Atualizar
-            </button>
+            </Button>
           )}
           
           {onNext && (
-            <button 
+            <Button 
               onClick={onNext}
               disabled={!canNext}
-              className="px-6 py-3 rounded-xl font-semibold hover-lift disabled:opacity-50 flex items-center gap-2 transition-all"
-              style={{backgroundColor: canNext ? '#441632' : '#D4CBA0', color: canNext ? '#FDFBCB' : '#331122'}}
+              className="px-6 py-3 flex items-center gap-2"
             >
               {nextText || (isLast ? "Finalizar" : "Continuar")}
               {!isLast && <ArrowRight className="w-4 h-4" />}
               {isLast && <Check className="w-4 h-4" />}
-            </button>
+            </Button>
           )}
         </div>
       </div>

@@ -67,10 +67,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
     toast
   } = useToast();
   const getRelationshipColor = (rel: string) => {
-    const lowerRel = rel.toLowerCase();
-    if (lowerRel.includes('mãe') || lowerRel.includes('pai')) return 'love';
-    if (lowerRel.includes('avô') || lowerRel.includes('avó')) return 'memory';
-    return 'accent';
+    return 'default'; // Usar cor padrão para design minimalista
   };
   const handleDelete = async () => {
     try {
@@ -113,27 +110,22 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       color: 'bg-gray-500'
     };
   };
-  return <div className={cn("glass-card hover-lift fade-in-up cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl", className)}>
+  return <div className={cn("bg-card border border-border rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden", className)}>
       <div className="p-6 relative">
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-4 flex-1 min-w-0">
-            <Avatar className="w-20 h-20 border-2 border-white/50 shadow-lg backdrop-blur-sm flex-shrink-0">
+            <Avatar className="w-20 h-20 border-2 border-border shadow-sm flex-shrink-0">
               <AvatarImage src={avatar} alt={name} />
-              <AvatarFallback className="bg-gradient-to-br from-purple-100 to-purple-50 text-primary font-semibold text-xl backdrop-blur-sm">
+              <AvatarFallback className="bg-muted text-foreground font-semibold text-xl">
                 {name.split(' ').map(n => n[0]).join('').slice(0, 2)}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <h3 className="text-xl font-zilla font-medium italic text-foreground leading-tight mb-2 truncate">{name}</h3>
+              <h3 className="text-xl font-bold text-foreground leading-tight mb-2 truncate">{name}</h3>
               <div className="flex items-center gap-3 flex-wrap">
                 <Badge 
                   variant="secondary" 
-                  className={cn(
-                    "backdrop-blur-sm border border-white/30 px-3 py-1 rounded-full text-sm font-work",
-                    getRelationshipColor(relationship) === 'love' && "bg-red-50/60 text-red-600",
-                    getRelationshipColor(relationship) === 'memory' && "bg-blue-50/60 text-blue-600",
-                    getRelationshipColor(relationship) === 'accent' && "bg-purple-50/60 text-primary"
-                  )}
+                  className="border border-border px-3 py-1 rounded-full text-sm"
                 >
                   {relationship}
                 </Badge>
@@ -169,14 +161,14 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 e.stopPropagation();
                 onSettings(id);
               }} 
-              className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-xl w-10 h-10 flex items-center justify-center hover-lift"
+              className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-muted rounded-xl w-10 h-10 flex items-center justify-center"
             >
               <Settings className="w-5 h-5" />
             </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/30 backdrop-blur-sm rounded-xl w-10 h-10 flex items-center justify-center hover-lift">
+                <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-muted rounded-xl w-10 h-10 flex items-center justify-center">
                   <MoreVert className="w-5 h-5" />
                 </button>
               </DropdownMenuTrigger>
@@ -209,7 +201,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         </div>
 
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-          <div className="flex items-center justify-between text-sm text-muted-foreground bg-white/30 rounded-2xl px-3 sm:px-4 py-2 backdrop-blur-sm">
+          <div className="flex items-center justify-between text-sm text-muted-foreground bg-muted rounded-2xl px-3 sm:px-4 py-2">
             <div className="flex items-center">
               {(() => {
               const age = calculateAge();
@@ -305,7 +297,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         {onAddMemory && <Button variant="outline" size="sm" onClick={e => {
         e.stopPropagation();
         onAddMemory(id);
-      }} className="w-full bg-white/20 border-white/30 text-accent hover:bg-accent/10 hover:border-accent/30 backdrop-blur-sm rounded-xl transition-all duration-200 h-9 sm:h-10 mb-4">
+      }} className="w-full mb-4">
             <Add className="w-4 h-4 mr-2" />
             <span className="text-xs sm:text-sm">Adicionar Memória</span>
           </Button>}
@@ -313,14 +305,15 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
         <div className="space-y-4">
           {/* Botão principal - Chat (destaque máximo) */}
-          <button 
+          <Button 
             onClick={() => onChat(id)} 
-            className="btn-primary btn-large hover-lift hover-glow w-full px-8 py-4 rounded-xl font-semibold text-lg"
+            className="w-full mb-4"
+            size="lg"
             aria-label={`Conversar com ${name}`}
           >
             <Chat className="w-6 h-6 mr-3" />
             Conversar
-          </button>
+          </Button>
 
           {/* Botões secundários - Grid responsivo */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

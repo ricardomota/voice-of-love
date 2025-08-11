@@ -39,16 +39,16 @@ export const MessageBubble = ({
       className
     )}>
       {!isUser && (
-        <Avatar className="w-8 h-8 shadow-soft">
+        <Avatar className="w-8 h-8 shadow-sm">
           <AvatarImage src={personAvatar} alt={personName} />
-          <AvatarFallback className="bg-memory text-memory-foreground text-xs">
+          <AvatarFallback className="bg-muted text-muted-foreground text-xs">
             {personName?.charAt(0) || "E"}
           </AvatarFallback>
         </Avatar>
       )}
       
       <div className={cn(
-        "rounded-2xl px-4 py-3 shadow-soft transition-smooth",
+        "rounded-2xl px-4 py-3 shadow-sm transition-all duration-200",
         isUser 
           ? "bg-primary text-primary-foreground rounded-br-lg" 
           : "bg-card text-card-foreground border border-border rounded-bl-lg"
@@ -63,7 +63,7 @@ export const MessageBubble = ({
               variant="ghost"
               size="sm"
               onClick={handlePlayAudio}
-              className="h-6 px-2 text-xs text-muted-foreground hover:text-accent-gold"
+              className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
             >
               {isPlaying ? (
                 <VolumeX className="w-3 h-3" />
