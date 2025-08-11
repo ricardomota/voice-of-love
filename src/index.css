@@ -197,17 +197,18 @@ html {
 
 /* ===== ETERNA RILEY COMPONENTS ===== */
 @layer components {
-  /* Enhanced Card System - Minimal Style */
+  /* Enhanced Card System - Solid Style */
   .glass-card {
-    @apply relative bg-white border border-gray-200 rounded-xl p-6;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    @apply relative p-6 rounded-xl border-2 shadow-lg;
+    background-color: #F8F4E6;
+    border-color: #E8E3C8;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
-    border-color: hsl(220, 13%, 85%);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px 0 rgba(68, 22, 50, 0.15);
+    border-color: #D4CBA0;
   }
 
   /* Minimal Feature Cards - All same style */

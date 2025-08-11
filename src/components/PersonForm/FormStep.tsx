@@ -30,9 +30,9 @@ export const FormStep: React.FC<FormStepProps> = ({
   return (
     <div className="glass-card p-8 fade-in-up hover-lift">
       <div className="text-center space-y-4 mb-8">
-        <h2 className="text-3xl font-zilla font-medium italic text-foreground">{title}</h2>
+        <h2 className="text-3xl font-zilla font-medium italic" style={{color: '#441632'}}>{title}</h2>
         {subtitle && (
-          <p className="text-muted-foreground text-lg font-work leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg font-work leading-relaxed max-w-3xl mx-auto" style={{color: '#331122'}}>
             {subtitle}
           </p>
         )}
@@ -45,7 +45,8 @@ export const FormStep: React.FC<FormStepProps> = ({
       <div className="flex items-center justify-between pt-8">
         <button 
           onClick={onBack} 
-          className="btn-secondary px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2"
+          className="px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2 transition-all border-2"
+          style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8', color: '#441632'}}
         >
           <ArrowLeft className="w-4 h-4" />
           {backText}
@@ -55,7 +56,8 @@ export const FormStep: React.FC<FormStepProps> = ({
           {onUpdate && (
             <button 
               onClick={onUpdate}
-              className="btn-secondary px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2"
+              className="px-6 py-3 rounded-xl font-semibold hover-lift flex items-center gap-2 transition-all border-2"
+              style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8', color: '#441632'}}
             >
               <Check className="w-4 h-4" />
               Atualizar
@@ -66,7 +68,8 @@ export const FormStep: React.FC<FormStepProps> = ({
             <button 
               onClick={onNext}
               disabled={!canNext}
-              className="btn-primary px-6 py-3 rounded-xl font-semibold hover-lift disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-3 rounded-xl font-semibold hover-lift disabled:opacity-50 flex items-center gap-2 transition-all"
+              style={{backgroundColor: canNext ? '#441632' : '#D4CBA0', color: canNext ? '#FDFBCB' : '#331122'}}
             >
               {nextText || (isLast ? "Finalizar" : "Continuar")}
               {!isLast && <ArrowRight className="w-4 h-4" />}

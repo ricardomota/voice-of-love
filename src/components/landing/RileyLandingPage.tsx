@@ -148,8 +148,8 @@ const getContent = (language: string) => {
       cta: "Começar Agora",
       hero: {
         badge: "❤️ Feito especialmente para famílias",
-        title: "Preserve a Voz de Quem Você Ama",
-        subtitle: "Para Sempre",
+        title: "Preserve a voz de quem você ama",
+        subtitle: "Para sempre",
         description: "Transforme memórias preciosas em conversas reais. Com inteligência artificial avançada, você pode ouvir a voz e sentir a presença de quem mais ama, mesmo quando as memórias começam a desaparecer.",
         buttonPrimary: "Começar Agora - É Grátis",
         buttonSecondary: "Ver Como Funciona",
@@ -218,9 +218,9 @@ const getContent = (language: string) => {
         ]
       },
       finalCta: {
-        title: "Sua Primeira Conversa Está a Um Clique de Distância",
+        title: "Sua primeira conversa está a um clique de distância",
         subtitle: "Não deixe que as memórias mais preciosas se percam. Preserve hoje a voz de quem você ama.",
-        button: "Criar Minha Primeira Conversa",
+        button: "Criar minha primeira conversa",
         features: [
           "Totalmente gratuito para começar",
           "5 conversas incluídas", 
@@ -467,7 +467,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle mb-xl" style={{color: '#441632', opacity: 0.8}}>
+            <h2 className="hero-subtitle mb-xl" style={{color: '#331122'}}>
               {content.hero.subtitle}
             </h2>
             
@@ -567,6 +567,52 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <p className="leading-relaxed" style={{color: '#331122'}}>{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Personal Story Section */}
+      <section className="py-28" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex justify-center items-center gap-6 mb-12">
+              <img 
+                src="/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png" 
+                alt="Alzheimer's Association" 
+                className="h-16 object-contain"
+              />
+              <div className="w-px h-16 bg-gradient-to-b from-transparent via-current to-transparent opacity-30"></div>
+              <Heart className="w-16 h-16" style={{color: '#FDFBCB'}} />
+            </div>
+            
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8" style={{color: '#FDFBCB'}}>
+              {renderTextWithBold("Uma história **pessoal**")}
+            </h2>
+            
+            <div className="text-left max-w-3xl mx-auto space-y-6">
+              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
+                O Eterna nasceu de uma necessidade real e dolorosa. Como muitas famílias, vivenciamos o Alzheimer de perto 
+                - vendo alguém que amamos gradualmente perdendo as memórias que nos conectam.
+              </p>
+              
+              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
+                A tecnologia existe para preservar fotos e vídeos, mas {renderTextWithBold("**a voz**")} - essa assinatura única de cada pessoa, 
+                com suas expressões, risadas e jeito particular de falar - sempre se perdia para sempre.
+              </p>
+              
+              <p className="text-lg leading-relaxed" style={{color: '#F8F4E6'}}>
+                Criamos o Eterna não apenas como uma empresa, mas como uma {renderTextWithBold("**missão**")}: dar às famílias a chance de manter 
+                viva a essência de quem mais amam, mesmo quando a memória biológica já não consegue mais.
+              </p>
+              
+              <div className="flex items-center justify-center gap-3 mt-8 p-6 rounded-xl border-2" 
+                   style={{backgroundColor: '#F0EDD7', borderColor: '#E8E3C8'}}>
+                <Heart className="w-8 h-8" style={{color: '#441632'}} />
+                <p className="font-medium text-lg" style={{color: '#441632'}}>
+                  "Cada conversa é uma oportunidade de reconexão com quem amamos"
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

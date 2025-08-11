@@ -984,7 +984,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             onBack={handleBack}
             canNext={canProceed(currentStep)}
             isLast={true}
-            nextText={person ? "✨ Atualizar Pessoa" : "🎉 Criar Pessoa"}
+            nextText={person ? "✨ Atualizar pessoa" : "🎉 Criar pessoa"}
           >
             <ArrayField
               values={formData.commonPhrases}
@@ -1004,12 +1004,12 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden" style={{backgroundColor: '#FDFBCB'}}>
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-        <div className="absolute top-40 right-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-20 left-20 w-72 h-72 rounded-full animate-float" style={{backgroundColor: '#F8F4E6'}}></div>
+        <div className="absolute top-40 right-20 w-72 h-72 rounded-full animate-float" style={{backgroundColor: '#F0EDD7', animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 rounded-full animate-float" style={{backgroundColor: '#E8E3C8', animationDelay: '4s'}}></div>
       </div>
       
       <div className="relative z-10 max-w-4xl mx-auto p-4 py-8">
@@ -1026,9 +1026,10 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
               <Button
                 variant="outline"
                 onClick={handleSaveAndExit}
-                className="flex items-center gap-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm"
+                className="flex items-center gap-2 border-2"
+                style={{backgroundColor: '#F8F4E6', borderColor: '#E8E3C8', color: '#441632'}}
               >
-                💾 Salvar e Sair
+                💾 Salvar e sair
               </Button>
             </div>
           )}
