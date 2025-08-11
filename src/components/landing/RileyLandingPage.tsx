@@ -30,6 +30,7 @@ import {
   Microphone as VoiceActivate,
   Security as SecurityServices
 } from '@carbon/icons-react';
+import WordSearchSection from './WordSearchSection';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -296,6 +297,9 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           </div>
         </div>
       </section>
+
+      {/* Word Search Section */}
+      <WordSearchSection />
 
       {/* Removed stats section with fake data */}
 
