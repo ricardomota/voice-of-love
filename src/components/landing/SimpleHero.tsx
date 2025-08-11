@@ -54,11 +54,11 @@ export const SimpleHero: React.FC<SimpleHeroProps> = ({ onTryFree, onLearnMore }
 
         {/* Main Content */}
         <div className="space-y-8">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-zilla font-medium italic text-foreground leading-tight">
             {content.headline}
           </h1>
           
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl font-work text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {content.subhead}
           </p>
         </div>
@@ -68,7 +68,7 @@ export const SimpleHero: React.FC<SimpleHeroProps> = ({ onTryFree, onLearnMore }
           <Button 
             onClick={onTryFree} 
             size="xl" 
-            className="min-w-[250px] bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg h-16 rounded-2xl shadow-2xl hover:shadow-accent/20 hover:scale-105 transition-all duration-300"
+            className="min-w-[250px] bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg h-16 rounded-2xl shadow-2xl hover:shadow-accent/20 hover:scale-105 transition-all duration-300 font-work"
           >
             <Play className="w-6 h-6 mr-3" />
             {content.tryFree}
@@ -78,7 +78,7 @@ export const SimpleHero: React.FC<SimpleHeroProps> = ({ onTryFree, onLearnMore }
             onClick={onLearnMore}
             variant="ghost" 
             size="xl"
-            className="min-w-[250px] text-primary hover:text-primary/80 border-2 border-primary/20 hover:border-primary/40 h-16 rounded-2xl font-semibold text-lg hover:bg-primary/5"
+            className="min-w-[250px] text-primary hover:text-primary/80 border-2 border-primary/20 hover:border-primary/40 h-16 rounded-2xl font-semibold text-lg hover:bg-primary/5 font-work"
           >
             {content.learnMore}
             <ArrowRight className="w-5 h-5 ml-3" />

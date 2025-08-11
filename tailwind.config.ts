@@ -10,6 +10,11 @@ export default {
 	],
 	prefix: "",
 	theme: {
+		fontFamily: {
+			'zilla': ['Zilla Slab', 'serif'],
+			'work': ['Work Sans', 'sans-serif'],
+			'sans': ['Work Sans', 'sans-serif'],
+		},
 		container: {
 			center: true,
 			padding: "1rem",

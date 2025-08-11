@@ -1,6 +1,7 @@
 import React from 'react';
 import { LandingHeader } from './LandingHeader';
 import { SimpleHero } from './SimpleHero';
+import { PersonalStory } from './PersonalStory';
 import { HomeStats } from './HomeStats';
 import { LandingFooter } from './LandingFooter';
 
@@ -21,6 +22,7 @@ export const SimpleLandingPage: React.FC<SimpleLandingPageProps> = ({
       
       <main>
         <SimpleHero onTryFree={onTryFree} onLearnMore={onLearnMore} />
+        <PersonalStory onGetStarted={onTryFree} />
         <HomeStats onGetStarted={onTryFree} />
       </main>
       
