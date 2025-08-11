@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { LanguageSelector } from '@/components/ui/language-selector';
-import { Heart, Brain, Shield, Smartphone, Check, ArrowRight } from 'lucide-react';
+import { Heart, Brain, Shield, Smartphone, Check, ArrowRight, Quote } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -63,6 +63,27 @@ const getContent = (language: string) => {
           title: "Start Talking",
           description: "Have natural conversations whenever you need to feel close to them."
         }]
+      },
+      stories: {
+        title: "Stories that keep us close",
+        readMore: "Read full story",
+        items: [
+          {
+            title: "Grandma Anna's Sunday songs",
+            excerpt: "Every Sunday, her voice would fill the house with warmth. We captured that feeling so the family can revisit it together.",
+            author: "Lucas, grandson"
+          },
+          {
+            title: "Dad's advice on tough days",
+            excerpt: "When decisions get hard, hearing his tone brings clarity and calm—just like it used to.",
+            author: "Marina, daughter"
+          },
+          {
+            title: "The story behind the old photo",
+            excerpt: "We discovered the meaning of a faded photograph through a conversation that felt real and present.",
+            author: "Diego, nephew"
+          }
+        ]
       },
       pricing: {
         title: "Choose your plan",
@@ -142,6 +163,27 @@ const getContent = (language: string) => {
           description: "Tenha conversas naturais sempre que precisar se sentir próximo a eles."
         }]
       },
+      stories: {
+        title: "Histórias que nos mantêm próximos",
+        readMore: "Ler história completa",
+        items: [
+          {
+            title: "Os cantos de domingo da Vó Maria",
+            excerpt: "Todo domingo, a voz dela enchia a casa de calor. Registramos esse sentimento para a família reviver junta.",
+            author: "Lucas, neto"
+          },
+          {
+            title: "Os conselhos do pai nos dias difíceis",
+            excerpt: "Quando as decisões ficam difíceis, ouvir o tom de voz dele traz clareza e calma — como sempre foi.",
+            author: "Marina, filha"
+          },
+          {
+            title: "A história por trás da foto antiga",
+            excerpt: "Descobrimos o significado de uma fotografia desbotada em uma conversa que pareceu real e presente.",
+            author: "Diego, sobrinho"
+          }
+        ]
+      },
       pricing: {
         title: "Escolha seu plano",
         free: {
@@ -219,6 +261,27 @@ const getContent = (language: string) => {
           title: "Comienza a Hablar",
           description: "Ten conversaciones naturales cuando necesites sentirte cerca de ellos."
         }]
+      },
+      stories: {
+        title: "Historias que nos mantienen cerca",
+        readMore: "Leer historia completa",
+        items: [
+          {
+            title: "Las canciones de los domingos de la abuela Ana",
+            excerpt: "Cada domingo, su voz llenaba la casa de calidez. Capturamos esa sensación para que la familia la reviva junta.",
+            author: "Lucas, nieto"
+          },
+          {
+            title: "Los consejos de papá en días difíciles",
+            excerpt: "Cuando las decisiones se vuelven duras, escuchar su tono trae claridad y calma—como siempre.",
+            author: "Marina, hija"
+          },
+          {
+            title: "La historia detrás de la foto antigua",
+            excerpt: "Descubrimos el significado de una fotografía desvanecida en una conversación que se sintió real y presente.",
+            author: "Diego, sobrino"
+          }
+        ]
       },
       pricing: {
         title: "Elige tu plan",
@@ -372,6 +435,35 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Stories Section */}
+      <section id="stories" className="py-20">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in-up">
+              {content.stories.title}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {content.stories.items.map((story, idx) => (
+              <article key={idx} className="glass-card hover-scale animate-fade-in-up" style={{animationDelay: `${idx * 100}ms`}}>
+                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mb-4">
+                  <Quote className="w-6 h-6 text-accent-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">{story.title}</h3>
+                <p className="text-muted-foreground mb-4">{story.excerpt}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">{story.author}</span>
+                  <a href="#" className="story-link text-sm">
+                    {content.stories.readMore}
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
