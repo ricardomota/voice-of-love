@@ -4,7 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { EternaHeader } from "@/components/layout/EternaHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Landing } from "./pages/Landing";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -19,6 +20,19 @@ const queryClient = new QueryClient({
   },
 });
 
+const AppRoutes = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
+      <Route path="/auth" element={<Index />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 const App = () => {
   return (
     <ErrorBoundary>
@@ -30,11 +44,7 @@ const App = () => {
             <div className="min-h-screen bg-background">
               <EternaHeader />
               <main>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <AppRoutes />
               </main>
             </div>
           </BrowserRouter>
