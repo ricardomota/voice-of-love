@@ -522,6 +522,30 @@ export type Database = {
         }
         Relationships: []
       }
+      voice_clone_waitlist: {
+        Row: {
+          created_at: string
+          id: string
+          language: string
+          notified_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          language: string
+          notified_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          language?: string
+          notified_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       voices_base: {
         Row: {
           created_at: string

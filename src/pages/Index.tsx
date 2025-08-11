@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { WelcomeView } from "@/components/WelcomeView";
 import { Dashboard } from "@/pages/Dashboard";
 import { CreatePerson } from "@/pages/CreatePerson";
@@ -7,10 +7,12 @@ import { Chat } from "@/pages/Chat";
 import { Person } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
 import { AuthGate } from "@/components/AuthGate";
+import { UpgradeModal } from "@/components/modals/UpgradeModal";
 import { peopleService } from "@/services/peopleService";
 import { useAuth } from "@/hooks/useAuth";
 import { usePeople } from "@/hooks/usePeople";
 import { useAppState } from "@/hooks/useAppState";
+import { useUsageTracking } from "@/hooks/useUsageTracking";
 import { Loader2 } from "lucide-react";
 
 const Index = () => {
@@ -35,6 +37,9 @@ const Index = () => {
     goToCreate,
     goToDashboard
   } = useAppState('welcome');
+  
+  const { usage, refreshUsage } = useUsageTracking();
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Load people from Supabase only after authentication is confirmed
   useEffect(() => {
@@ -134,9 +139,20 @@ const Index = () => {
     );
   }
 
+  const handleUpgrade = () => {
+    // TODO: Implement Stripe checkout
+    console.log('Navigate to Stripe checkout');
+    setShowUpgradeModal(false);
+  };
+
   // Render based on app state
   return (
     <AuthGate>
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        onUpgrade={handleUpgrade}
+      />
       {(() => {
         switch (appState) {
           case 'welcome':
@@ -151,6 +167,8 @@ const Index = () => {
                 onSettings={goToSettings}
                 onAddMemory={goToAddMemory}
                 onReload={loadPeople}
+                usage={usage}
+                onUpgrade={() => setShowUpgradeModal(true)}
               />
             );
           

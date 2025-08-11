@@ -1,8 +1,17 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/PersonCard";
+import { UsageBar } from "@/components/ui/usage-bar";
 import { Add, Favorite } from "@mui/icons-material";
 import { Person } from "@/types/person";
+
+interface UsageData {
+  messagesUsed: number;
+  messagesLimit: number;
+  ttsUsed: number;
+  ttsLimit: number;
+  planId: string;
+}
 
 interface DashboardProps {
   people: Person[];
@@ -11,9 +20,11 @@ interface DashboardProps {
   onSettings: (personId: string) => void;
   onAddMemory?: (personId: string) => void;
   onReload?: () => void;
+  usage?: UsageData;
+  onUpgrade?: () => void;
 }
 
-const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload }: DashboardProps) => {
+const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload, usage, onUpgrade }: DashboardProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background with subtle patterns */}
@@ -45,6 +56,18 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
               <span className="whitespace-nowrap">Nova Pessoa</span>
             </Button>
           </div>
+          
+          {/* Usage Tracking */}
+          {usage && onUpgrade && (
+            <UsageBar
+              messagesUsed={usage.messagesUsed}
+              messagesLimit={usage.messagesLimit}
+              ttsUsed={usage.ttsUsed}
+              ttsLimit={usage.ttsLimit}
+              onUpgrade={onUpgrade}
+              className="mt-6"
+            />
+          )}
         </div>
 
         {/* People Grid */}
