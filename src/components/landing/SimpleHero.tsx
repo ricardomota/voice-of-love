@@ -48,11 +48,11 @@ export const SimpleHero: React.FC<SimpleHeroProps> = ({
 
         {/* Main Content */}
         <div className="space-y-8">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-zilla font-medium italic text-foreground leading-tight">
             {content.headline}
           </h1>
           
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl font-work text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {content.subhead}
           </p>
         </div>

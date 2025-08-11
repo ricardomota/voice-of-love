@@ -97,41 +97,59 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
   const content = getContent(currentLanguage);
 
   return (
-    <section className="py-20 sm:py-32">
+    <section className="py-20 sm:py-32 bg-gradient-to-b from-background to-accent/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Personal Story Header */}
-        <div className="max-w-4xl mx-auto text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground mb-8">
-            {content.title}
-          </h2>
+        <div className="max-w-6xl mx-auto mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground mb-6">
+              {content.title}
+            </h2>
+          </div>
           
-          <Card className="bg-gradient-to-r from-accent/5 to-primary/5 border-2 border-accent/20 shadow-xl">
-            <CardContent className="p-8 sm:p-12">
-              <blockquote className="text-xl sm:text-2xl font-work text-muted-foreground leading-relaxed italic mb-8">
-                "{content.personalStory}"
-              </blockquote>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <p className="text-xl sm:text-2xl font-work text-muted-foreground leading-relaxed">
+                {content.personalStory}
+              </p>
               
               {/* Alzheimer's Association Logo */}
-              <div className="flex items-center justify-center pt-6 border-t border-border/20">
+              <div className="pt-6">
                 <a 
                   href="https://www.alz.org/?form=FUNDHYMMBXU" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:opacity-80 transition-opacity flex items-center gap-3"
+                  className="hover:opacity-80 transition-opacity flex items-center gap-3 w-fit"
                 >
                   <img 
                     src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
                     alt="Alzheimer's Association" 
-                    className="h-8 opacity-80"
+                    className="h-10 opacity-80"
                   />
                   <span className="text-sm font-work text-muted-foreground">
                     Supporting Alzheimer's awareness
                   </span>
                 </a>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            
+            <div className="lg:pl-8">
+              <Card className="bg-card/80 backdrop-blur-sm border-2 border-accent/20 shadow-xl">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <Heart className="w-8 h-8 text-accent" />
+                    <h3 className="text-2xl font-zilla font-medium italic text-foreground">
+                      {content.mission.title}
+                    </h3>
+                  </div>
+                  <p className="text-lg font-work text-muted-foreground leading-relaxed">
+                    {content.mission.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
 
         {/* Mission Statement */}
