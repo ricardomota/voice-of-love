@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { LanguageSelector } from '@/components/ui/language-selector';
-import { Heart, Brain, Shield, Smartphone, Check, ArrowRight, Quote } from 'lucide-react';
+import { Heart, Brain, Shield, Smartphone, Check, ArrowRight } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -63,27 +63,6 @@ const getContent = (language: string) => {
           title: "Start Talking",
           description: "Have natural conversations whenever you need to feel close to them."
         }]
-      },
-      stories: {
-        title: "Stories that keep us close",
-        readMore: "Read full story",
-        items: [
-          {
-            title: "Grandma Anna's Sunday songs",
-            excerpt: "Every Sunday, her voice would fill the house with warmth. We captured that feeling so the family can revisit it together.",
-            author: "Lucas, grandson"
-          },
-          {
-            title: "Dad's advice on tough days",
-            excerpt: "When decisions get hard, hearing his tone brings clarity and calm—just like it used to.",
-            author: "Marina, daughter"
-          },
-          {
-            title: "The story behind the old photo",
-            excerpt: "We discovered the meaning of a faded photograph through a conversation that felt real and present.",
-            author: "Diego, nephew"
-          }
-        ]
       },
       pricing: {
         title: "Choose your plan",
@@ -163,27 +142,6 @@ const getContent = (language: string) => {
           description: "Tenha conversas naturais sempre que precisar se sentir próximo a eles."
         }]
       },
-      stories: {
-        title: "Histórias que nos mantêm próximos",
-        readMore: "Ler história completa",
-        items: [
-          {
-            title: "Os cantos de domingo da Vó Maria",
-            excerpt: "Todo domingo, a voz dela enchia a casa de calor. Registramos esse sentimento para a família reviver junta.",
-            author: "Lucas, neto"
-          },
-          {
-            title: "Os conselhos do pai nos dias difíceis",
-            excerpt: "Quando as decisões ficam difíceis, ouvir o tom de voz dele traz clareza e calma — como sempre foi.",
-            author: "Marina, filha"
-          },
-          {
-            title: "A história por trás da foto antiga",
-            excerpt: "Descobrimos o significado de uma fotografia desbotada em uma conversa que pareceu real e presente.",
-            author: "Diego, sobrinho"
-          }
-        ]
-      },
       pricing: {
         title: "Escolha seu plano",
         free: {
@@ -208,105 +166,6 @@ const getContent = (language: string) => {
         title: "Sua primeira conversa está a um clique de distância",
         subtitle: "Não deixe que memórias preciosas se percam. Preserve hoje a voz de quem você ama.",
         button: "Criar Minha Primeira Conversa"
-      }
-    },
-    'es': {
-      logo: "Eterna",
-      nav: {
-        features: "Características",
-        howItWorks: "Cómo Funciona",
-        pricing: "Precios",
-      },
-      cta: "Comenzar",
-      hero: {
-        title: "Preserva las voces que amas para siempre",
-        subtitle: "Preservación de memorias con IA para familias que enfrentan Alzheimer",
-        description: "Transforma recuerdos preciosos en conversaciones reales. Con inteligencia artificial avanzada, puedes escuchar la voz y sentir la presencia de quienes más amas, incluso cuando los recuerdos comienzan a desvanecerse.",
-        buttonPrimary: "Comenzar Gratis",
-        buttonSecondary: "Saber Más",
-        features: ["Sin tarjeta de crédito", "5 conversaciones gratuitas", "Configuración en minutos"]
-      },
-      features: {
-        title: "Creado para lo que realmente importa",
-        items: [{
-          icon: Brain,
-          title: "Preservación de Voz",
-          description: "IA avanzada captura la esencia única de los patrones de habla y personalidad, preservando no solo palabras sino la forma en que se dicen."
-        }, {
-          icon: Heart,
-          title: "Memorias Familiares",
-          description: "Organiza fotos, historias y momentos especiales en un solo lugar. Cada perfil cuenta una historia única y personal."
-        }, {
-          icon: Shield,
-          title: "Privado y Seguro",
-          description: "Tus memorias son sagradas. Todos los datos están encriptados y nunca se comparten. Solo tu familia tiene acceso."
-        }, {
-          icon: Smartphone,
-          title: "Fácil de Usar",
-          description: "Interfaz simple diseñada para todas las edades. Inicia conversaciones con solo unos toques."
-        }]
-      },
-      howItWorks: {
-        title: "Simple como tener una conversación",
-        steps: [{
-          number: "01",
-          title: "Comparte Memorias",
-          description: "Sube fotos, grabaciones de voz e historias que capturen su esencia."
-        }, {
-          number: "02",
-          title: "IA Aprende",
-          description: "Nuestra tecnología estudia cuidadosamente los patrones de habla y rasgos de personalidad."
-        }, {
-          number: "03",
-          title: "Comienza a Hablar",
-          description: "Ten conversaciones naturales cuando necesites sentirte cerca de ellos."
-        }]
-      },
-      stories: {
-        title: "Historias que nos mantienen cerca",
-        readMore: "Leer historia completa",
-        items: [
-          {
-            title: "Las canciones de los domingos de la abuela Ana",
-            excerpt: "Cada domingo, su voz llenaba la casa de calidez. Capturamos esa sensación para que la familia la reviva junta.",
-            author: "Lucas, nieto"
-          },
-          {
-            title: "Los consejos de papá en días difíciles",
-            excerpt: "Cuando las decisiones se vuelven duras, escuchar su tono trae claridad y calma—como siempre.",
-            author: "Marina, hija"
-          },
-          {
-            title: "La historia detrás de la foto antigua",
-            excerpt: "Descubrimos el significado de una fotografía desvanecida en una conversación que se sintió real y presente.",
-            author: "Diego, sobrino"
-          }
-        ]
-      },
-      pricing: {
-        title: "Elige tu plan",
-        free: {
-          name: "Gratuito",
-          price: "$0",
-          period: "/mes",
-          description: "Perfecto para empezar",
-          features: ["5 conversaciones/mes", "1 perfil de voz", "Soporte básico"],
-          button: "Comenzar Gratis"
-        },
-        paid: {
-          name: "Familia",
-          price: "$29",
-          period: "/mes",
-          description: "Para familias que quieren más",
-          features: ["Conversaciones ilimitadas", "Perfiles ilimitados", "Soporte prioritario", "Respaldo en la nube"],
-          button: "Prueba 7 Días Gratis",
-          popular: true
-        }
-      },
-      finalCta: {
-        title: "Tu primera conversación está a un clic de distancia",
-        subtitle: "No dejes que los recuerdos preciosos se desvanezcan. Preserva hoy la voz de quienes amas.",
-        button: "Crear Mi Primera Conversación"
       }
     }
   };
@@ -358,7 +217,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             <LanguageSelector />
             <button 
               onClick={onTryFree} 
-              className="btn-primary btn-large hover-glow gentle-glow"
+              className="btn-primary"
             >
               {content.cta}
             </button>
@@ -370,7 +229,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section className="pt-32 pb-20">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold brand-gradient-text mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               {content.hero.title}
             </h1>
             
@@ -385,13 +244,13 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <button 
                 onClick={onTryFree} 
-                className="btn-primary text-lg px-8 py-4 hover-glow gentle-glow"
+                className="btn-primary text-lg px-8 py-4"
               >
                 {content.hero.buttonPrimary}
               </button>
               <button 
                 onClick={onLearnMore} 
-                className="btn-secondary text-lg px-8 py-4 hover-glow gentle-glow"
+                className="btn-secondary text-lg px-8 py-4"
               >
                 {content.hero.buttonSecondary}
               </button>
@@ -422,7 +281,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             {content.features.items.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <div key={index} className="glass-card text-center hover-scale gentle-glow">
+                <div key={index} className="glass-card text-center">
                   <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-accent flex items-center justify-center">
                     <IconComponent className="w-6 h-6 text-accent-foreground" />
                   </div>
@@ -438,7 +297,6 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
           </div>
         </div>
       </section>
-
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20">

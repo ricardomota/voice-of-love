@@ -6,7 +6,7 @@ import { EternaHeader } from "@/components/layout/EternaHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Landing } from "./pages/Landing";
-import RileyStyledLanding from "./components/landing/RileyStyledLanding";
+import { RileyLandingPage } from "./components/landing/RileyLandingPage";
 import { HowItWorksPage } from "./pages/HowItWorks";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -27,7 +27,7 @@ const AppRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/" element={<RileyStyledLanding onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} />} />
+      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} onSeePricing={() => navigate('/auth')} />} />
       <Route path="/landing-original" element={<Landing onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/how-it-works')} />} />
       <Route path="/how-it-works" element={<HowItWorksPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} />} />
       <Route path="/auth" element={

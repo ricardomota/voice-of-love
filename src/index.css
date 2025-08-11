@@ -479,52 +479,13 @@ html {
      }
    }
 
-    .hover-lift {
-      transition: all var(--transition-normal);
-    }
+   .hover-lift {
+     transition: all var(--transition-normal);
+   }
 
-    .hover-lift:hover {
-      transform: translateY(-4px) scale(1.02);
-    }
-
-    /* Story Link underline animation */
-    .story-link {
-      position: relative;
-      display: inline-block;
-      padding-bottom: 2px;
-    }
-
-    .story-link::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      background: hsl(var(--primary));
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s var(--ease-smooth);
-    }
-
-    .story-link:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-
-    /* Hover scale utility */
-    .hover-scale {
-      transition: transform 0.2s var(--ease-smooth);
-    }
-
-    .hover-scale:hover {
-      transform: scale(1.03);
-    }
-
-    /* Fade-in utility */
-    .animate-fade-in {
-      animation: fadeInUp 0.4s var(--ease-out);
-    }
+   .hover-lift:hover {
+     transform: translateY(-4px) scale(1.02);
+   }
 
   /* Typography Utilities */
   .text-large {
@@ -589,7 +550,7 @@ html {
   }
 
   .pricing-card.popular {
-    border-color: hsl(var(--primary));
+    border-color: hsl(var(--primary-purple));
     transform: scale(1.05);
   }
 
@@ -608,65 +569,6 @@ html {
   .pricing-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
-  }
-
-  /* Features Grid - Riley Bento Style */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-lg);
-    margin-top: var(--space-xl);
-  }
-
-  .features-grid-2 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-  }
-
-  .features-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-lg);
-  }
-
-  /* Specific Eterna Cards */
-  .card-voice-cloning { 
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-    color: hsl(var(--primary-foreground));
-    border: 1px solid hsl(var(--primary) / 0.2);
-  }
-  .card-family-profiles { 
-    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 100%);
-    color: hsl(var(--accent-foreground));
-    border: 1px solid hsl(var(--accent) / 0.2);
-  }
-  .card-conversations { 
-    background: linear-gradient(135deg, hsl(var(--warning, 48 96% 53%)) 0%, hsl(var(--accent)) 100%);
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--warning, 48 96% 53%) / 0.25);
-  }
-  .card-privacy { 
-    background: linear-gradient(135deg, hsl(var(--success, 142 76% 36%)) 0%, hsl(var(--accent)) 100%);
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--success, 142 76% 36%) / 0.25);
-  }
-  .card-memory { 
-    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--accent) / 0.25);
-  }
-  .card-love { 
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--destructive)) 100%);
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--destructive) / 0.25);
-  }
-
-  @media (max-width: 1024px) {
-    .features-grid-3 { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 768px) {
-    .features-grid-2, .features-grid-3 { grid-template-columns: 1fr; }
   }
 
   /* Enhanced Hover Effects */
@@ -777,53 +679,5 @@ html {
 
   main > section:nth-of-type(even) {
     background: hsl(var(--neutral-50));
-  }
-}
-
-/* Brand tokens and gradients for personality touches */
-@layer base {
-  :root {
-    /* Brand Colors (HSL) */
-    --primary-purple: 263 70% 50%;
-    --primary-purple-dark: 258 45% 40%;
-    --primary-purple-light: 258 90% 75%;
-
-    --secondary-orange: 14 100% 66%;
-    --secondary-pink: 330 100% 71%;
-    --secondary-yellow: 51 100% 50%;
-    --secondary-green: 146 65% 57%;
-    --secondary-blue: 217 91% 60%;
-
-    /* Neutrals for compatibility */
-    --white: 0 0% 100%;
-    --gray-50: 210 25% 98%;
-    --gray-100: 210 17% 96%;
-    --gray-200: 220 13% 91%;
-    --gray-300: 220 9% 81%;
-    --gray-400: 220 9% 56%;
-    --gray-500: 220 9% 46%;
-    --gray-600: 215 15% 35%;
-    --gray-700: 215 20% 25%;
-    --gray-800: 215 20% 15%;
-    --gray-900: 215 28% 8%;
-
-    /* Brand Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary-purple)) 0%, hsl(var(--secondary-pink)) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(var(--secondary-orange)) 0%, hsl(var(--secondary-yellow)) 100%);
-    --gradient-cool: linear-gradient(135deg, hsl(var(--secondary-blue)) 0%, hsl(var(--secondary-green)) 100%);
-
-    /* Glow Shadow */
-    --shadow-glow: 0 0 32px hsl(var(--primary-purple) / 0.35);
-  }
-}
-
-/* Brand gradient text utility */
-@layer components {
-  .brand-gradient-text {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
   }
 }
