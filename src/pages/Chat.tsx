@@ -428,7 +428,7 @@ Responda como ${currentPerson.name} de forma ÚNICA, NATURAL e PERSONALIZADA, in
 
       const enhancedPrompt = prompt + memoryContext;
 
-      const { data, error } = await supabase.functions.invoke('openai-chat', {
+      const { data, error } = await supabase.functions.invoke('llm-router', {
         body: {
           messages: [{ role: 'user', content: userMessage }],
           systemPrompt: enhancedPrompt,
