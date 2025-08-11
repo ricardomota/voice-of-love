@@ -640,7 +640,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       {/* Footer */}
       <footer className="section" style={{backgroundColor: 'var(--gray-800)', color: 'var(--white)'}}>
         <div className="container">
-          <div className="grid grid-4 gap-lg mb-xl">
+          <div className="grid grid-3 gap-lg mb-xl">
             <div>
               <div className="flex items-center gap-2 mb-md">
                 <Heart className="w-6 h-6 text-primary fill-current" />
@@ -657,16 +657,6 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 <a href="#features" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Features</a>
                 <a href="#pricing" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Pricing</a>
                 <a href="#how-it-works" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>How it Works</a>
-              </div>
-            </div>
-            
-            <div>
-              <h6 className="font-bold mb-md text-white">Support</h6>
-              <div className="space-y-2">
-                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Help Center</a>
-                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Contact</a>
-                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Privacy Policy</a>
-                <a href="#" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Terms of Service</a>
               </div>
             </div>
             
