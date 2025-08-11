@@ -455,7 +455,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
           <div className="alzheimer-badge mx-auto mb-6">
             {content.hero.badge}
           </div>
-          <h1 className="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-primary via-secondary-pink to-primary bg-clip-text text-transparent animate-fade-in-up">
+          <h1 className="font-serif text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-primary via-secondary-pink to-primary bg-clip-text text-transparent animate-fade-in-up leading-none">
             {content.hero.title}
           </h1>
           <h2 className="text-2xl md:text-3xl text-muted-foreground mb-6 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
@@ -488,7 +488,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="features" className="py-20">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">{content.features.title}</h2>
+            <h2 className="font-serif text-4xl font-bold mb-4">{content.features.title}</h2>
             <p className="text-xl text-muted-foreground">{content.features.subtitle}</p>
           </div>
           
@@ -514,7 +514,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="how-it-works" className="py-20 bg-gray-50">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">{content.howItWorks.title}</h2>
+            <h2 className="font-serif text-4xl font-bold mb-4">{content.howItWorks.title}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -539,7 +539,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="pricing" className="py-20">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">{content.pricing.title}</h2>
+            <h2 className="font-serif text-4xl font-bold mb-4">{content.pricing.title}</h2>
             <p className="text-xl text-muted-foreground">{content.pricing.subtitle}</p>
           </div>
           
@@ -608,7 +608,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="download" className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary-pink/10 to-primary/10"></div>
         <div className="container relative z-10 text-center">
-          <h2 className="text-4xl font-bold mb-4">{content.finalCta.title}</h2>
+          <h2 className="font-serif text-4xl font-bold mb-4">{content.finalCta.title}</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             {content.finalCta.subtitle}
           </p>

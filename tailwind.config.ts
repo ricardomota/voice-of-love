@@ -11,9 +11,11 @@ export default {
 	prefix: "",
 	theme: {
 		fontFamily: {
+			'playfair': ['Playfair Display', 'serif'],
 			'zilla': ['Zilla Slab', 'serif'],
 			'work': ['Work Sans', 'sans-serif'],
 			'sans': ['Work Sans', 'sans-serif'],
+			'serif': ['Playfair Display', 'serif'],
 		},
 		container: {
 			center: true,
