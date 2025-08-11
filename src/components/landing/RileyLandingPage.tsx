@@ -30,7 +30,7 @@ import {
   Microphone as VoiceActivate,
   Security as SecurityServices
 } from '@carbon/icons-react';
-import WordSearchSection from './WordSearchSection';
+import EternaMatrixReveal from './EternaMatrixReveal';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -298,9 +298,8 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
         </div>
       </section>
 
-      {/* Word Search Section */}
-      <WordSearchSection />
-
+      {/* Eterna Matrix Reveal Section */}
+      <EternaMatrixReveal />
       {/* Removed stats section with fake data */}
 
       {/* Simple How It Works Section */}
