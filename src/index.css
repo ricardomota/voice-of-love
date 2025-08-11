@@ -51,39 +51,23 @@ html {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    /* Eterna Core Colors - Custom Theme */
-    --primary-purple: 262 83% 58%;
-    --primary-purple-dark: #441632;
-    --primary-purple-light: 263 70% 68%;
-    --cream-bg: #FDFBCB;
-    
-    /* Riley Inspired Secondary Colors */
-    --secondary-dark: #441632;
-    --secondary-pink: 329 73% 68%;
-    --secondary-rose: 347 77% 68%;
-    --secondary-orange: 25 95% 62%;
-    --secondary-yellow: 43 86% 57%;
-    --secondary-green: 142 71% 65%;
-    --secondary-blue: 213 93% 68%;
-    
-    /* Neutral Colors */
-    --white: 0 0% 100%;
-    --cream: #FDFBCB;
-    --gray-50: #FDFBCB;
-    --gray-100: #F8F4E6;
-    --gray-200: #F0EDD7;
-    --gray-300: #E8E3C8;
-    --gray-400: #D4CBA0;
-    --gray-500: #B8A872;
-    --gray-600: #8B7E4A;
-    --gray-700: #441632;
-    --gray-800: #331122;
-    --gray-900: #221111;
+    /* Black & White Theme */
+    --black: #000000;
+    --white: #ffffff;
+    --gray-50: #f9f9f9;
+    --gray-100: #f1f1f1;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
     
     /* Enhanced Gradients */
-    --gradient-primary: linear-gradient(135deg, #441632 0%, #663344 100%);
-    --gradient-warm: linear-gradient(135deg, #FDFBCB 0%, #F8F4E6 100%);
-    --gradient-hero: linear-gradient(135deg, #FDFBCB 0%, #F8F4E6 50%, #FDFBCB 100%);
+    --gradient-hero-black: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+    --gradient-subtle: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
     
     /* Enhanced Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -187,7 +171,7 @@ html {
 
   body {
     @apply bg-background text-foreground antialiased;
-    background: #FDFBCB;
+    background: #ffffff;
     min-height: 100vh;
     font-family: 'Inter', 'Work Sans', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -221,34 +205,34 @@ html {
     border-color: hsl(220, 13%, 91%);
   }
 
-  /* Updated Button System with #441632 */
+  /* Black & White Button System */
   .btn-primary {
-    background: #441632;
-    color: #FDFBCB;
-    box-shadow: 0 2px 8px 0 rgba(68, 22, 50, 0.2);
+    background: var(--black);
+    color: var(--white);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 0.75rem;
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    background: #331122;
-    box-shadow: 0 4px 16px 0 rgba(68, 22, 50, 0.3);
+    background: var(--gray-900);
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
   }
 
   .btn-secondary {
-    background: hsl(var(--white));
-    color: hsl(220, 18%, 16%);
-    border: 1px solid hsl(220, 13%, 91%);
+    background: var(--white);
+    color: var(--black);
+    border: 2px solid var(--black);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 0.75rem;
   }
 
   .btn-secondary:hover {
-    background: hsl(220, 13%, 97%);
-    border-color: hsl(220, 18%, 16%);
+    background: var(--black);
+    color: var(--white);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   }
 
   .btn-large {
@@ -270,9 +254,9 @@ html {
     gap: var(--space-xs);
   }
 
-  /* Hero Section - Two Column Layout */
+  /* Hero Section - Black Background */
   .hero {
-    background: #FDFBCB;
+    background: var(--gradient-hero-black);
     padding: calc(var(--space-3xl) + 60px) 0 var(--space-3xl) 0;
     position: relative;
     overflow: hidden;
@@ -288,8 +272,8 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(68, 22, 50, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(248, 244, 230, 0.8) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
     pointer-events: none;
   }
 
@@ -455,11 +439,12 @@ html {
 
   /* Special Badges */
   .alzheimer-badge {
-    background: #441632;
-    color: #FDFBCB;
+    background: var(--white);
+    color: var(--black);
     @apply px-4 py-2 text-sm font-medium inline-flex items-center gap-2;
     border-radius: var(--radius-full);
     margin-bottom: 1rem;
+    border: 2px solid var(--black);
   }
 
   /* Mission Section */
