@@ -4,7 +4,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X } from 'lucide-react';
 
-export default function RileyLandingPage() {
+interface RileyLandingPageProps {
+  onTryFree: () => void;
+  onSignIn: () => void;
+  onLearnMore: () => void;
+  onSeePricing?: () => void;
+}
+
+export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: RileyLandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const features = [
@@ -60,11 +67,11 @@ export default function RileyLandingPage() {
             </nav>
 
             <div className="hidden md:flex items-center space-x-4">
-              <Button variant="outline" asChild>
-                <a href="/auth">Entrar</a>
+              <Button variant="outline" onClick={onSignIn}>
+                Entrar
               </Button>
-              <Button asChild>
-                <a href="/auth">Experimente Grátis</a>
+              <Button onClick={onTryFree}>
+                Experimente Grátis
               </Button>
             </div>
 
@@ -99,11 +106,11 @@ export default function RileyLandingPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <a href="/auth">Começar Gratuitamente</a>
+            <Button size="lg" onClick={onTryFree}>
+              Começar Gratuitamente
             </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a href="#como-funciona">Saiba Mais</a>
+            <Button size="lg" variant="outline" onClick={onLearnMore}>
+              Saiba Mais
             </Button>
           </div>
         </div>

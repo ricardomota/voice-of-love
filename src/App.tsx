@@ -6,7 +6,7 @@ import { EternaHeader } from "@/components/layout/EternaHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Landing } from "./pages/Landing";
-import { RileyLandingPage } from "./components/landing/RileyLandingPage";
+import RileyLandingPage from "./components/landing/RileyLandingPage";
 import { HowItWorksPage } from "./pages/HowItWorks";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
