@@ -102,6 +102,10 @@ const getContent = (language: string) => {
           "1 minute of voice generation"
         ]
       },
+      donation: {
+        text: "Support Alzheimer's Research",
+        subtitle: "Donate if you can"
+      },
       pricing: {
         title: "Choose Your Plan",
         subtitle: "Start free and unlock premium features as you need them",
@@ -227,6 +231,10 @@ const getContent = (language: string) => {
           "Configuração em 5 minutos"
         ]
       },
+      donation: {
+        text: "Apoie a pesquisa sobre Alzheimer",
+        subtitle: "Doe se puder"
+      },
       pricing: {
         title: "Planos feitos para **sua família**",
         subtitle: "Comece gratuitamente e cresça conforme sua família precisa",
@@ -351,6 +359,10 @@ const getContent = (language: string) => {
           "5 mensajes para empezar",
           "1 minuto de generación de voz"
         ]
+      },
+      donation: {
+        text: "Apoya la investigación del Alzheimer",
+        subtitle: "Dona si puedes"
       },
       pricing: {
         title: "Elige Tu Plan",
@@ -747,6 +759,30 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Donation Section */}
+      <section className="py-sm" style={{backgroundColor: '#F8F4E6', borderTop: '1px solid #E8E3C8'}}>
+        <div className="container">
+          <div className="flex items-center justify-center gap-sm opacity-75 hover:opacity-100 transition-opacity">
+            <img 
+              src="/alzheimers-logo.png" 
+              alt="Alzheimer's research support" 
+              className="w-6 h-6 rounded-sm"
+              style={{filter: 'sepia(100%) hue-rotate(280deg) saturate(0.5)'}}
+            />
+            <a 
+              href="https://www.alz.org/donate" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs transition-colors hover:underline flex items-center gap-1"
+              style={{color: '#441632'}}
+            >
+              <span>{content.donation.text}</span>
+              <span style={{color: '#331122'}}>• {content.donation.subtitle}</span>
+            </a>
           </div>
         </div>
       </section>
