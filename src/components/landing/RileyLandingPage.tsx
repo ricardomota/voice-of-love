@@ -1,8 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X, ArrowRight, Play, Shield, Clock, Star, Zap, Globe, Headphones, Camera, FileText, Settings, Share2, ChevronDown, Code, Database, ArrowDown } from 'lucide-react';
+import { 
+  Favorite, 
+  Security, 
+  Watson, 
+  Microphone, 
+  Group, 
+  Chat, 
+  Checkmark, 
+  Menu, 
+  Close, 
+  ArrowRight, 
+  PlayFilled, 
+  SecurityServices, 
+  Time, 
+  Star, 
+  Flash, 
+  Globe, 
+  Headphones, 
+  Camera, 
+  Document, 
+  Settings, 
+  Share, 
+  Code, 
+  DataBase,
+  UserProfile,
+  CloudUpload,
+  VoiceActivate
+} from '@carbon/icons-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -14,76 +41,6 @@ interface RileyLandingPageProps {
 export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: RileyLandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Scroll animation hooks inlined to avoid import issues
-  const useScrollAnimation = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
-    const elementRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setIsVisible(true);
-            setHasAnimated(true);
-          }
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-      );
-
-      if (elementRef.current) {
-        observer.observe(elementRef.current);
-      }
-
-      return () => {
-        if (elementRef.current) {
-          observer.unobserve(elementRef.current);
-        }
-      };
-    }, [hasAnimated]);
-
-    return { elementRef, isVisible };
-  };
-
-  const useStaggeredAnimation = (itemsCount: number, delay: number = 200) => {
-    const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(itemsCount).fill(false));
-    const [hasStarted, setHasStarted] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !hasStarted) {
-            setHasStarted(true);
-            
-            for (let i = 0; i < itemsCount; i++) {
-              setTimeout(() => {
-                setVisibleItems(prev => {
-                  const newState = [...prev];
-                  newState[i] = true;
-                  return newState;
-                });
-              }, i * delay);
-            }
-          }
-        },
-        { threshold: 0.1 }
-      );
-
-      if (containerRef.current) {
-        observer.observe(containerRef.current);
-      }
-
-      return () => {
-        if (containerRef.current) {
-          observer.unobserve(containerRef.current);
-        }
-      };
-    }, [itemsCount, delay, hasStarted]);
-
-    return { containerRef, visibleItems };
-  };
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -93,32 +50,32 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const features = [
     {
-      icon: <Mic className="w-8 h-8" />,
+      icon: <VoiceActivate size={32} />,
       title: "Clonagem de Voz",
       description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Group size={32} />,
       title: "Perfis da Família",
       description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
     },
     {
-      icon: <MessageCircle className="w-8 h-8" />,
+      icon: <Chat size={32} />,
       title: "Conversas Naturais",
       description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
     },
     {
-      icon: <Lock className="w-8 h-8" />,
+      icon: <Security size={32} />,
       title: "Privacidade Primeiro",
       description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
     },
     {
-      icon: <Brain className="w-8 h-8" />,
+      icon: <Watson size={32} />,
       title: "Preservação de Memória",
       description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
     },
     {
-      icon: <Heart className="w-8 h-8" />,
+      icon: <Favorite size={32} />,
       title: "Feito com Amor",
       description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
     }
@@ -126,25 +83,25 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const steps = [
     {
-      icon: <Mic className="w-8 h-8" />,
+      icon: <Microphone size={32} />,
       title: "Grave a Voz",
       description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
       detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
     },
     {
-      icon: <Settings className="w-8 h-8" />,
+      icon: <Settings size={32} />,
       title: "Configure o Perfil",
       description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
       detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
     },
     {
-      icon: <MessageCircle className="w-8 h-8" />,
+      icon: <Chat size={32} />,
       title: "Converse Naturalmente",
       description: "Inicie conversas significativas que se sentem reais e emocionalmente conectadas.",
       detail: "Fale sobre lembranças, peça conselhos ou simplesmente desfrute de uma conversa casual."
     },
     {
-      icon: <Share2 className="w-8 h-8" />,
+      icon: <Share size={32} />,
       title: "Compartilhe com a Família",
       description: "Convide outros membros da família para preservar memórias juntos.",
       detail: "Múltiplos usuários podem interagir e adicionar suas próprias memórias e histórias."
@@ -153,22 +110,22 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const whyEternaPoints = [
     {
-      icon: <Brain className="w-6 h-6" />,
+      icon: <Watson size={24} />,
       title: "Preservação Inteligente",
       description: "Nossa IA não apenas grava - ela aprende padrões de fala, preferências e memórias."
     },
     {
-      icon: <Heart className="w-6 h-6" />,
+      icon: <Favorite size={24} />,
       title: "Conexão Emocional",
       description: "Criado por quem entende a dor da perda de memória. Cada recurso foi pensado com amor."
     },
     {
-      icon: <Shield className="w-6 h-6" />,
+      icon: <SecurityServices size={24} />,
       title: "Privacidade Absoluta",
       description: "Suas memórias familiares são sagradas. Criptografia militar protege cada lembrança."
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <Group size={24} />,
       title: "Para Toda a Família",
       description: "Múltiplos perfis, acesso compartilhado, e recursos pensados para todas as gerações."
     }
@@ -205,23 +162,6 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
       ],
       buttonText: "Começar Teste",
       isPopular: true
-    },
-    {
-      name: "Legado",
-      price: "R$ 99",
-      period: "/mês",
-      description: "Para preservação completa",
-      features: [
-        "Perfis ilimitados",
-        "Conversas ilimitadas",
-        "IA premium",
-        "Backup na nuvem",
-        "Acesso familiar completo",
-        "Suporte 24/7",
-        "Consultoria personalizada"
-      ],
-      buttonText: "Falar com Especialista",
-      isPopular: false
     }
   ];
 
@@ -229,22 +169,22 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
   const techPoints = [
     {
-      icon: <Code className="w-8 h-8" />,
+      icon: <Code size={32} />,
       title: "GPT Open Source",
       description: "Construído com modelos de linguagem de código aberto, garantindo transparência e controle total sobre o processamento."
     },
     {
-      icon: <Shield className="w-8 h-8" />,
+      icon: <SecurityServices size={32} />,
       title: "React + TypeScript",
       description: "Interface moderna e robusta desenvolvida com as melhores práticas de desenvolvimento web."
     },
     {
-      icon: <Database className="w-8 h-8" />,
+      icon: <DataBase size={32} />,
       title: "Supabase Backend",
       description: "Banco de dados PostgreSQL com autenticação segura e APIs em tempo real."
     },
     {
-      icon: <Zap className="w-8 h-8" />,
+      icon: <Flash size={32} />,
       title: "Edge Functions",
       description: "Processamento de IA distribuído para respostas rápidas e experiência fluida."
     }
@@ -283,7 +223,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <Close size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -334,7 +274,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
               Começar Gratuitamente
             </Button>
             <Button size="lg" variant="outline" onClick={onLearnMore}>
-              <Play className="w-4 h-4 mr-2" />
+              <PlayFilled size={16} className="mr-2" />
               Ver Como Funciona
             </Button>
           </div>
@@ -342,15 +282,15 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           {/* Trust Indicators */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
+              <SecurityServices size={16} />
               <span>Privado por padrão</span>
             </div>
             <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4" />
+              <Favorite size={16} />
               <span>Feito para famílias</span>
             </div>
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4" />
+              <Flash size={16} />
               <span>Configuração em minutos</span>
             </div>
           </div>
@@ -359,10 +299,56 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
 
       {/* Removed stats section with fake data */}
 
-      {/* Interactive How It Works Section */}
+      {/* Simple How It Works Section */}
       <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/30">
         <div className="max-w-7xl mx-auto">
-          <InteractiveHowItWorksSection steps={steps} onTryFree={onTryFree} useScrollAnimation={useScrollAnimation} useStaggeredAnimation={useStaggeredAnimation} />
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Como Funciona
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Transforme memórias em conversas eternas em apenas 4 passos simples
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step, index) => (
+              <Card key={index} className="relative border hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                    {index + 1}
+                  </div>
+                  
+                  <div className="mb-4 text-primary flex justify-center">
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                      {step.icon}
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                    <p className="text-muted-foreground text-sm mb-3">{step.description}</p>
+                    <p className="text-xs text-muted-foreground/80">{step.detail}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-lg p-6 border border-primary/20">
+              <p className="text-muted-foreground mb-4">
+                <span className="text-primary font-semibold">*</span> Clonagem de voz personalizada disponível após completar o perfil
+              </p>
+              <Button size="lg" onClick={onTryFree}>
+                Começar Sua Jornada Agora
+                <ArrowRight size={16} className="ml-2" />
+              </Button>
+              <p className="text-sm text-muted-foreground mt-3">
+                Gratuito para sempre • Sem cartão de crédito
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -440,7 +426,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <Card key={index} className={`relative border ${plan.isPopular ? 'border-foreground shadow-lg' : ''}`}>
                 {plan.isPopular && (
@@ -459,12 +445,12 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
                   </div>
                   
                   <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-foreground flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
+                     {plan.features.map((feature, featureIndex) => (
+                       <li key={featureIndex} className="flex items-center gap-2">
+                         <Checkmark size={16} className="text-foreground flex-shrink-0" />
+                         <span className="text-sm">{feature}</span>
+                       </li>
+                     ))}
                   </ul>
                   
                   <Button 
@@ -502,17 +488,17 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {techPoints.map((point, index) => (
               <Card key={index} className="border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 p-3 bg-muted rounded-lg">
+                  <div className="flex flex-col items-center text-center gap-4">
+                    <div className="p-4 bg-muted rounded-xl">
                       {point.icon}
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">{point.title}</h3>
-                      <p className="text-muted-foreground">{point.description}</p>
+                      <h3 className="text-xl font-semibold mb-3">{point.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{point.description}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -522,7 +508,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-2 bg-background border rounded-lg px-4 py-2">
-              <Code className="w-5 h-5" />
+              <Code size={20} />
               <span className="font-medium">Open Source</span>
               <span className="text-muted-foreground">• Transparente • Controlado</span>
             </div>
@@ -543,7 +529,7 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={onTryFree}>
               Experimente Grátis Agora
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight size={16} className="ml-2" />
             </Button>
             <Button size="lg" variant="outline" onClick={() => scrollToSection('precos')}>
               Ver Preços
@@ -605,150 +591,3 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
     </div>
   );
 }
-
-// Inline InteractiveHowItWorks component to avoid import issues
-const InteractiveHowItWorksSection = ({ steps, onTryFree, useScrollAnimation, useStaggeredAnimation }: {
-  steps: any[];
-  onTryFree: () => void;
-  useScrollAnimation: () => { elementRef: React.RefObject<HTMLDivElement>; isVisible: boolean };
-  useStaggeredAnimation: (count: number, delay?: number) => { containerRef: React.RefObject<HTMLDivElement>; visibleItems: boolean[] };
-}) => {
-  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
-  const { containerRef, visibleItems } = useStaggeredAnimation(steps.length, 300);
-  const { elementRef: ctaRef, isVisible: ctaVisible } = useScrollAnimation();
-
-  return (
-    <>
-      {/* Animated Title */}
-      <div 
-        ref={titleRef}
-        className={`text-center mb-20 transition-all duration-1000 ${
-          titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-      >
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-          Como Funciona
-        </h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Transforme memórias em conversas eternas em apenas 4 passos simples
-        </p>
-      </div>
-
-      {/* Interactive Steps with Connecting Lines */}
-      <div ref={containerRef} className="relative">
-        {/* Vertical Connecting Line for Mobile */}
-        <div className="absolute left-1/2 transform -translate-x-0.5 top-20 bottom-20 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent lg:hidden" />
-        
-        {/* Horizontal Connecting Line for Desktop */}
-        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform -translate-y-1/2" />
-
-        <div className="grid lg:grid-cols-4 gap-8 lg:gap-12">
-          {steps.map((step, index) => {
-            const isVisible = visibleItems[index];
-            
-            return (
-              <div key={index} className="relative">
-                {/* Step Card */}
-                <Card 
-                  className={`relative border-2 transition-all duration-700 hover:shadow-2xl hover:scale-105 ${
-                    isVisible 
-                      ? 'opacity-100 translate-y-0 border-primary/20 shadow-lg' 
-                      : 'opacity-0 translate-y-12 border-transparent'
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <CardContent className="p-8">
-                    {/* Step Number */}
-                    <div className={`absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${
-                      isVisible 
-                        ? 'bg-primary text-primary-foreground scale-100 rotate-0' 
-                        : 'bg-muted text-muted-foreground scale-75 rotate-12'
-                    }`}>
-                      {index + 1}
-                    </div>
-
-                    {/* Icon with Pulse Animation */}
-                    <div className={`mb-6 text-primary transition-all duration-500 flex justify-center ${
-                      isVisible ? 'scale-100' : 'scale-75'
-                    }`}>
-                      <div className={`p-4 rounded-xl bg-primary/10 ${isVisible ? 'animate-pulse' : ''}`}>
-                        {React.cloneElement(step.icon as React.ReactElement, { 
-                          className: "w-8 h-8",
-                          strokeWidth: 1.5 
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="text-center">
-                      <h3 className={`text-xl font-bold mb-3 transition-all duration-500 ${
-                        isVisible ? 'text-foreground' : 'text-muted-foreground'
-                      }`}>
-                        {step.title}
-                      </h3>
-                      <p className={`text-muted-foreground mb-4 transition-all duration-500 ${
-                        isVisible ? 'opacity-100' : 'opacity-60'
-                      }`}>
-                        {step.description}
-                      </p>
-                      <p className={`text-sm text-muted-foreground/80 transition-all duration-500 ${
-                        isVisible ? 'opacity-100' : 'opacity-40'
-                      }`}>
-                        {step.detail}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Arrow Connector for Desktop */}
-                {index < steps.length - 1 && (
-                  <div className={`hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2 transition-all duration-700 ${
-                    isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                  }`}>
-                    <ArrowRight className="w-6 h-6 text-primary animate-pulse" />
-                  </div>
-                )}
-
-                {/* Arrow Connector for Mobile */}
-                {index < steps.length - 1 && (
-                  <div className={`lg:hidden flex justify-center mt-6 mb-2 transition-all duration-700 ${
-                    isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                  }`}>
-                    <ArrowDown className="w-6 h-6 text-primary animate-pulse" />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Animated CTA Section */}
-      <div 
-        ref={ctaRef}
-        className={`text-center mt-20 transition-all duration-1000 ${
-          ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-      >
-        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-8 border border-primary/20">
-          <p className="text-muted-foreground mb-8 text-lg">
-            <span className="text-primary font-semibold">*</span> Clonagem de voz personalizada disponível após completar o perfil
-          </p>
-          
-          <Button 
-            onClick={onTryFree} 
-            size="lg" 
-            className="text-lg px-8 py-4 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
-          >
-            Começar Sua Jornada Agora
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
-          
-          <p className="text-sm text-muted-foreground mt-4">
-            Gratuito para sempre • Sem cartão de crédito
-          </p>
-        </div>
-      </div>
-    </>
-  );
-};
