@@ -451,11 +451,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
               {content.hero.badge}
             </div>
             
-            <h1 className="hero-title font-serif mb-lg">
+            <h1 className="hero-title font-serif mb-lg" style={{color: '#441632'}}>
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle mb-xl">
+            <h2 className="hero-subtitle mb-xl" style={{color: '#441632', opacity: 0.8}}>
               {content.hero.subtitle}
             </h2>
             
