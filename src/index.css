@@ -610,6 +610,65 @@ html {
     box-shadow: var(--shadow-xl);
   }
 
+  /* Features Grid - Riley Bento Style */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .features-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .features-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* Specific Eterna Cards */
+  .card-voice-cloning { 
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    color: hsl(var(--primary-foreground));
+    border: 1px solid hsl(var(--primary) / 0.2);
+  }
+  .card-family-profiles { 
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 100%);
+    color: hsl(var(--accent-foreground));
+    border: 1px solid hsl(var(--accent) / 0.2);
+  }
+  .card-conversations { 
+    background: linear-gradient(135deg, hsl(var(--warning, 48 96% 53%)) 0%, hsl(var(--accent)) 100%);
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--warning, 48 96% 53%) / 0.25);
+  }
+  .card-privacy { 
+    background: linear-gradient(135deg, hsl(var(--success, 142 76% 36%)) 0%, hsl(var(--accent)) 100%);
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--success, 142 76% 36%) / 0.25);
+  }
+  .card-memory { 
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--accent) / 0.25);
+  }
+  .card-love { 
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--destructive)) 100%);
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--destructive) / 0.25);
+  }
+
+  @media (max-width: 1024px) {
+    .features-grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .features-grid-2, .features-grid-3 { grid-template-columns: 1fr; }
+  }
+
   /* Enhanced Hover Effects */
   .hover-lift {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
