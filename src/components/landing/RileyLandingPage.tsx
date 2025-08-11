@@ -403,29 +403,29 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50 py-4">
+      <header className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-sm z-50 py-4" style={{backgroundColor: 'rgba(253, 251, 203, 0.95)'}}>
         <nav className="container flex items-center justify-between">
-          <a href="#" className="text-xl font-bold text-primary hover:scale-105 transition-transform">
+          <a href="#" className="text-xl font-bold hover:scale-105 transition-transform" style={{color: '#441632'}}>
             {content.logo}
           </a>
           <ul className="hidden md:flex items-center gap-8">
             <li>
-              <a href="#features" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              <a href="#features" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.features}
               </a>
             </li>
             <li>
-              <a href="#how-it-works" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              <a href="#how-it-works" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.howItWorks}
               </a>
             </li>
             <li>
-              <a href="#pricing" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              <a href="#pricing" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.pricing}
               </a>
             </li>
             <li>
-              <a href="#download" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              <a href="#download" className="transition-colors font-medium hover:opacity-80" style={{color: '#441632'}}>
                 {content.nav.download}
               </a>
             </li>
@@ -501,8 +501,8 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="features" className="py-28">
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.features.title}</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{content.features.subtitle}</p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.features.title}</h2>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>{content.features.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -555,8 +555,8 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section id="pricing" className="py-28">
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.pricing.title}</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{content.pricing.subtitle}</p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.pricing.title}</h2>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>{content.pricing.subtitle}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -684,49 +684,50 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Footer */}
-      <footer className="section" style={{backgroundColor: 'var(--gray-800)', color: 'var(--white)'}}>
+      <footer className="section" style={{backgroundColor: '#441632', color: '#FDFBCB'}}>
         <div className="container">
           <div className="grid grid-3 gap-lg mb-xl">
             <div>
               <div className="flex items-center gap-2 mb-md">
-                <Heart className="w-6 h-6 text-primary fill-current" />
-                <span className="text-xl font-bold">Eterna</span>
+                <Heart className="w-6 h-6 fill-current" style={{color: '#FDFBCB'}} />
+                <span className="text-xl font-bold" style={{color: '#FDFBCB'}}>Eterna</span>
               </div>
-              <p className="text-small mb-md" style={{color: 'var(--gray-400)'}}>
+              <p className="text-small mb-md" style={{color: '#FDFBCB', opacity: 0.8}}>
                 Preserving memories with AI-powered conversations
               </p>
             </div>
             
             <div>
-              <h6 className="font-bold mb-md text-white">Product</h6>
+              <h6 className="font-bold mb-md" style={{color: '#FDFBCB'}}>Product</h6>
               <div className="space-y-2">
-                <a href="#features" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Features</a>
-                <a href="#pricing" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>Pricing</a>
-                <a href="#how-it-works" className="block text-small hover:text-primary transition-colors" style={{color: 'var(--gray-400)'}}>How it Works</a>
+                <a href="#features" className="block text-small transition-colors hover:opacity-80" style={{color: '#FDFBCB'}}>Features</a>
+                <a href="#pricing" className="block text-small transition-colors hover:opacity-80" style={{color: '#FDFBCB'}}>Pricing</a>
+                <a href="#how-it-works" className="block text-small transition-colors hover:opacity-80" style={{color: '#FDFBCB'}}>How it Works</a>
               </div>
             </div>
             
             <div>
-              <h6 className="font-bold mb-md text-white">Language</h6>
+              <h6 className="font-bold mb-md" style={{color: '#FDFBCB'}}>Language</h6>
               <LanguageSelector />
             </div>
           </div>
           
-          <div className="flex-between pt-lg" style={{borderTop: '1px solid var(--gray-700)'}}>
-            <p className="text-small" style={{color: 'var(--gray-400)'}}>
+          <div className="flex-between pt-lg" style={{borderTop: '1px solid rgba(253, 251, 203, 0.3)'}}>
+            <p className="text-small" style={{color: '#FDFBCB', opacity: 0.8}}>
               © 2024 Eterna. All rights reserved.
             </p>
             <div className="flex gap-md">
               <button 
                 onClick={onTryFree}
-                className="btn btn-primary"
+                className="btn btn-secondary"
+                style={{backgroundColor: '#FDFBCB', color: '#441632'}}
               >
                 Try Free
               </button>
               <button 
                 onClick={onSignIn}
-                className="text-small hover:text-primary transition-colors"
-                style={{color: 'var(--gray-400)'}}
+                className="text-small transition-colors hover:opacity-80"
+                style={{color: '#FDFBCB'}}
               >
                 Sign In
               </button>
