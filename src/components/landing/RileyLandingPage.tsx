@@ -341,43 +341,45 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
   } = useLanguage();
   const content = getContent(currentLanguage);
   return <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-sm z-50 py-4" style={{
-      backgroundColor: 'rgba(253, 251, 203, 0.95)'
+      {/* Header - OpenAI Inspired */}
+      <header className="fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300" style={{
+      backgroundColor: 'rgba(253, 251, 203, 0.85)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(68, 22, 50, 0.08)'
     }}>
         <nav className="container flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Heart className="w-6 h-6 fill-current" style={{
-            color: '#441632'
-          }} />
-            <span className="text-xl font-bold" style={{
-            color: '#441632'
-          }}>Eterna</span>
+          <div className="flex items-center gap-3 hover-lift">
+            <div className="p-2 rounded-xl" style={{background: 'linear-gradient(135deg, #441632 0%, #553344 100%)'}}>
+              <Heart className="w-5 h-5 fill-current text-white" />
+            </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent">
+              Eterna
+            </span>
           </div>
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-1">
             <li>
-              <a href="#features" className="transition-colors font-medium hover:opacity-80" style={{
+              <a href="#features" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
               color: '#441632'
             }}>
                 {content.nav.features}
               </a>
             </li>
             <li>
-              <a href="#how-it-works" className="transition-colors font-medium hover:opacity-80" style={{
+              <a href="#how-it-works" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
               color: '#441632'
             }}>
                 {content.nav.howItWorks}
               </a>
             </li>
             <li>
-              <a href="#pricing" className="transition-colors font-medium hover:opacity-80" style={{
+              <a href="#pricing" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
               color: '#441632'
             }}>
                 {content.nav.pricing}
               </a>
             </li>
             <li>
-              <a href="#download" className="transition-colors font-medium hover:opacity-80" style={{
+              <a href="#download" className="px-4 py-2 rounded-lg transition-all duration-200 font-medium hover:bg-white/50 hover:backdrop-blur-sm" style={{
               color: '#441632'
             }}>
                 {content.nav.download}
@@ -386,7 +388,7 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
           </ul>
           <div className="flex items-center gap-4">
             <LanguageSelector />
-            <button onClick={onTryFree} className="btn-primary px-6 py-3 rounded-lg font-medium hover-lift">
+            <button onClick={onTryFree} className="btn-primary px-6 py-3 rounded-xl font-semibold hover-lift shadow-lg">
               {content.cta}
             </button>
           </div>
@@ -397,20 +399,16 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       <section className="hero">
         <div className="hero-content container">
           {/* Left Column - Content */}
-          <div className="hero-left">
-            <div className="alzheimer-badge mb-xl">
+          <div className="hero-left animate-fade-in-up">
+            <div className="alzheimer-badge mb-xl animate-scale-up">
               {content.hero.badge}
             </div>
             
-            <h1 className="hero-title font-serif mb-lg" style={{
-            color: '#441632'
-          }}>
+            <h1 className="hero-title font-serif mb-lg">
               {content.hero.title}
             </h1>
             
-            <h2 className="hero-subtitle mb-xl" style={{
-            color: '#331122'
-          }}>
+            <h2 className="hero-subtitle mb-xl">
               {content.hero.subtitle}
             </h2>
             
@@ -441,22 +439,59 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             </p>
           </div>
 
-          {/* Right Column - Image Placeholder */}
-          <div className="hero-right">
-            <div className="w-full h-96 rounded-2xl flex items-center justify-center border-2 shadow-lg" style={{
-            backgroundColor: '#F8F4E6',
-            borderColor: '#E8E3C8'
+          {/* Right Column - Modern Visual */}
+          <div className="hero-right animate-slide-up">
+            <div className="relative w-full h-96 rounded-3xl overflow-hidden" style={{
+            background: 'var(--gradient-card)',
+            backdropFilter: 'blur(12px)',
+            boxShadow: 'var(--shadow-hover)'
           }}>
-              <div className="text-center p-8">
-                <Heart className="w-20 h-20 mx-auto mb-6" style={{
-                color: '#441632'
-              }} />
-                <p className="font-medium" style={{
-                color: '#441632'
-              }}>Sua imagem aqui</p>
-                <p className="text-sm mt-2" style={{
-                color: '#331122'
-              }}>500x400px recomendado</p>
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-100/20 to-transparent"></div>
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-200/10 rounded-full blur-xl animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-pink-200/10 rounded-full blur-lg animate-pulse delay-300"></div>
+              </div>
+              
+              {/* Floating Elements with Modern Design */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <div className="absolute top-12 left-12 p-4 rounded-2xl backdrop-blur-sm animate-pulse" style={{
+                background: 'rgba(68, 22, 50, 0.9)',
+                boxShadow: 'var(--shadow-md)'
+              }}>
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute top-16 right-16 p-3 rounded-xl backdrop-blur-sm animate-pulse delay-300" style={{
+                background: 'rgba(102, 51, 68, 0.9)',
+                boxShadow: 'var(--shadow-md)'
+              }}>
+                  <Heart className="w-5 h-5 text-white fill-current" />
+                </div>
+                <div className="absolute bottom-12 left-16 p-3 rounded-xl backdrop-blur-sm animate-pulse delay-700" style={{
+                background: 'rgba(85, 51, 68, 0.9)',
+                boxShadow: 'var(--shadow-md)'
+              }}>
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                
+                {/* Center Content - Modern Phone Mockup */}
+                <div className="text-center z-10">
+                  <div className="w-40 h-40 rounded-3xl mx-auto mb-6 flex items-center justify-center border backdrop-blur-sm hover-lift" style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  borderColor: 'rgba(68, 22, 50, 0.1)',
+                  boxShadow: 'var(--shadow-card)'
+                }}>
+                    <Smartphone className="w-20 h-20" style={{
+                    color: '#441632'
+                  }} />
+                  </div>
+                  <p className="text-xl font-semibold bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent">
+                    Coming Soon
+                  </p>
+                  <p className="text-sm opacity-75 mt-2" style={{color: '#553344'}}>
+                    Beautiful mobile experience
+                  </p>
+                </div>
               </div>
             </div>
           </div>
