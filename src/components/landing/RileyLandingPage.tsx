@@ -486,11 +486,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
 
           {/* Right Column - Image Placeholder */}
           <div className="hero-right">
-            <div className="w-full h-96 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-200">
+            <div className="w-full h-96 bg-white rounded-2xl flex items-center justify-center border-2 border-gray-200 shadow-lg">
               <div className="text-center p-8">
-                <Heart className="w-20 h-20 text-gray-400 mx-auto mb-6" />
-                <p className="text-gray-500 font-medium">Sua imagem aqui</p>
-                <p className="text-sm text-gray-400 mt-2">500x400px recomendado</p>
+                <Heart className="w-20 h-20 mx-auto mb-6" style={{color: '#441632'}} />
+                <p className="font-medium" style={{color: '#441632'}}>Sua imagem aqui</p>
+                <p className="text-sm text-gray-500 mt-2">500x400px recomendado</p>
               </div>
             </div>
           </div>
@@ -524,11 +524,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-28 bg-gray-50">
+      <section id="how-it-works" className="py-28" style={{backgroundColor: '#F8F4E6'}}>
         <div className="container">
           <div className="text-center mb-20">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.howItWorks.title}</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.howItWorks.title}</h2>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>
               Em apenas 3 passos simples, você pode começar a preservar memórias preciosas
             </p>
           </div>
@@ -540,10 +540,10 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
                 className="bg-white p-8 rounded-2xl text-center hover-lift transition-all duration-300 border border-gray-200 shadow-sm"
                 style={{animationDelay: `${index * 0.2}s`}}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center text-2xl font-bold">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{backgroundColor: '#441632'}}>
                   {index + 1}
                 </div>
-                <h4 className="text-xl font-bold mb-4 text-gray-800">{step.title}</h4>
+                <h4 className="text-xl font-bold mb-4" style={{color: '#441632'}}>{step.title}</h4>
                 <p className="text-gray-600 leading-relaxed">{step.description}</p>
               </div>
             ))}
@@ -648,11 +648,11 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
       </section>
 
       {/* Final CTA Section */}
-      <section id="download" className="py-28 bg-gray-50">
+      <section id="download" className="py-28" style={{backgroundColor: '#F8F4E6'}}>
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-800">{content.finalCta.title}</h2>
-            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed text-gray-600">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6" style={{color: '#441632'}}>{content.finalCta.title}</h2>
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" style={{color: '#441632', opacity: 0.8}}>
               Preserve as memórias mais preciosas com tecnologia de IA avançada.
             </p>
             
@@ -674,8 +674,8 @@ export const RileyLandingPage: React.FC<RileyLandingPageProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
               {content.finalCta.features.map((feature, index) => (
                 <div key={index} className="flex items-center justify-center gap-2 bg-white rounded-lg px-4 py-3 border border-gray-200">
-                  <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                  <p className="text-sm font-medium text-gray-700">{feature}</p>
+                  <span className="w-2 h-2 rounded-full" style={{backgroundColor: '#441632'}}></span>
+                  <p className="text-sm font-medium" style={{color: '#441632'}}>{feature}</p>
                 </div>
               ))}
             </div>
