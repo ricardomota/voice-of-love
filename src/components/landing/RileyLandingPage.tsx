@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X } from 'lucide-react';
+import { Heart, Lock, Brain, Mic, Users, MessageCircle, Check, Menu, X, ArrowRight, Play, Shield, Clock, Star, Zap, Globe, Headphones, Camera, FileText, Settings, Share2, ChevronDown } from 'lucide-react';
 
 interface RileyLandingPageProps {
   onTryFree: () => void;
@@ -13,6 +13,13 @@ interface RileyLandingPageProps {
 
 export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: RileyLandingPageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const features = [
     {
@@ -47,6 +54,158 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
     }
   ];
 
+  const steps = [
+    {
+      icon: <Mic className="w-8 h-8" />,
+      title: "Grave a Voz",
+      description: "Capture a voz única do seu ente querido com apenas alguns minutos de gravação.",
+      detail: "Nossa IA precisa de apenas 2-3 minutos de áudio para criar um clone de voz perfeito."
+    },
+    {
+      icon: <Settings className="w-8 h-8" />,
+      title: "Configure o Perfil",
+      description: "Adicione memórias, fotos e histórias que definem a personalidade única.",
+      detail: "Inclua experiências de vida, preferências e características pessoais marcantes."
+    },
+    {
+      icon: <MessageCircle className="w-8 h-8" />,
+      title: "Converse Naturalmente",
+      description: "Inicie conversas significativas que se sentem reais e emocionalmente conectadas.",
+      detail: "Fale sobre lembranças, peça conselhos ou simplesmente desfrute de uma conversa casual."
+    },
+    {
+      icon: <Share2 className="w-8 h-8" />,
+      title: "Compartilhe com a Família",
+      description: "Convide outros membros da família para preservar memórias juntos.",
+      detail: "Múltiplos usuários podem interagir e adicionar suas próprias memórias e histórias."
+    }
+  ];
+
+  const whyEternaPoints = [
+    {
+      icon: <Brain className="w-6 h-6" />,
+      title: "Preservação Inteligente",
+      description: "Nossa IA não apenas grava - ela aprende padrões de fala, preferências e memórias."
+    },
+    {
+      icon: <Heart className="w-6 h-6" />,
+      title: "Conexão Emocional",
+      description: "Criado por quem entende a dor da perda de memória. Cada recurso foi pensado com amor."
+    },
+    {
+      icon: <Shield className="w-6 h-6" />,
+      title: "Privacidade Absoluta",
+      description: "Suas memórias familiares são sagradas. Criptografia militar protege cada lembrança."
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Para Toda a Família",
+      description: "Múltiplos perfis, acesso compartilhado, e recursos pensados para todas as gerações."
+    }
+  ];
+
+  const pricingPlans = [
+    {
+      name: "Gratuito",
+      price: "R$ 0",
+      period: "/mês",
+      description: "Perfeito para começar",
+      features: [
+        "1 perfil familiar",
+        "10 minutos de conversas por mês",
+        "Clonagem básica de voz",
+        "Memórias essenciais",
+        "Suporte por email"
+      ],
+      buttonText: "Começar Grátis",
+      isPopular: false
+    },
+    {
+      name: "Família",
+      price: "R$ 29",
+      period: "/mês",
+      description: "Para famílias que querem mais",
+      features: [
+        "5 perfis familiares",
+        "Conversas ilimitadas",
+        "Clonagem avançada de voz",
+        "Todas as funcionalidades",
+        "Upload de fotos e vídeos",
+        "Suporte prioritário"
+      ],
+      buttonText: "Começar Teste",
+      isPopular: true
+    },
+    {
+      name: "Legado",
+      price: "R$ 99",
+      period: "/mês",
+      description: "Para preservação completa",
+      features: [
+        "Perfis ilimitados",
+        "Conversas ilimitadas",
+        "IA premium",
+        "Backup na nuvem",
+        "Acesso familiar completo",
+        "Suporte 24/7",
+        "Consultoria personalizada"
+      ],
+      buttonText: "Falar com Especialista",
+      isPopular: false
+    }
+  ];
+
+  const stats = [
+    { number: "50K+", label: "Famílias Conectadas" },
+    { number: "1M+", label: "Memórias Preservadas" },
+    { number: "99.9%", label: "Tempo de Atividade" },
+    { number: "4.9/5", label: "Avaliação Média" }
+  ];
+
+  const testimonials = [
+    {
+      name: "Maria Silva",
+      role: "Filha, cuidando da mãe com Alzheimer",
+      content: "O Eterna me deu minha mãe de volta. Mesmo com o Alzheimer avançado, posso conversar com a versão dela de antes da doença. É como um milagre.",
+      rating: 5
+    },
+    {
+      name: "João Santos",
+      role: "Neto preservando memórias do avô",
+      content: "Meu avô faleceu ano passado, mas suas histórias e conselhos continuam vivos através do Eterna. Meus filhos podem conhecer seu bisavô.",
+      rating: 5
+    },
+    {
+      name: "Ana Costa",
+      role: "Esposa cuidando do marido",
+      content: "Nos momentos difíceis quando meu marido não me reconhece, posso conversar com ele através do Eterna e lembrar do nosso amor.",
+      rating: 5
+    }
+  ];
+
+  const privacyPoints = [
+    {
+      icon: <Lock className="w-8 h-8" />,
+      title: "Criptografia de Ponta",
+      description: "Todas as suas memórias são protegidas com criptografia AES-256, o mesmo padrão usado por bancos e governos."
+    },
+    {
+      icon: <Shield className="w-8 h-8" />,
+      title: "Seus Dados, Suas Regras",
+      description: "Você mantém propriedade completa. Exporte, delete ou transfira seus dados quando quiser."
+    },
+    {
+      icon: <Globe className="w-8 h-8" />,
+      title: "Servidores no Brasil",
+      description: "Todos os dados ficam em território nacional, seguindo rigorosamente a LGPD."
+    },
+    {
+      icon: <Clock className="w-8 h-8" />,
+      title: "Backup Automático",
+      description: "Suas memórias são automaticamente backup em múltiplas localizações seguras."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
@@ -61,9 +220,10 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#como-funciona" className="text-muted-foreground hover:text-foreground transition-colors">Como Funciona</a>
-              <a href="#precos" className="text-muted-foreground hover:text-foreground transition-colors">Preços</a>
-              <a href="#missao" className="text-muted-foreground hover:text-foreground transition-colors">Nossa Missão</a>
+              <button onClick={() => scrollToSection('como-funciona')} className="text-muted-foreground hover:text-foreground transition-colors">Como Funciona</button>
+              <button onClick={() => scrollToSection('por-que-eterna')} className="text-muted-foreground hover:text-foreground transition-colors">Por Que Eterna</button>
+              <button onClick={() => scrollToSection('precos')} className="text-muted-foreground hover:text-foreground transition-colors">Preços</button>
+              <button onClick={() => scrollToSection('privacidade')} className="text-muted-foreground hover:text-foreground transition-colors">Privacidade</button>
             </nav>
 
             <div className="hidden md:flex items-center space-x-4">
@@ -83,6 +243,26 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
+            <div className="px-4 py-6 space-y-4">
+              <button onClick={() => { scrollToSection('como-funciona'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Como Funciona</button>
+              <button onClick={() => { scrollToSection('por-que-eterna'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Por Que Eterna</button>
+              <button onClick={() => { scrollToSection('precos'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Preços</button>
+              <button onClick={() => { scrollToSection('privacidade'); setIsMenuOpen(false); }} className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors">Privacidade</button>
+              <div className="pt-4 space-y-2">
+                <Button variant="outline" onClick={onSignIn} className="w-full">
+                  Entrar
+                </Button>
+                <Button onClick={onTryFree} className="w-full">
+                  Experimente Grátis
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -105,19 +285,124 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
             Mantenha vivas as vozes e memórias dos seus entes queridos com nossa tecnologia de IA avançada.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" onClick={onTryFree}>
               Começar Gratuitamente
             </Button>
             <Button size="lg" variant="outline" onClick={onLearnMore}>
-              Saiba Mais
+              <Play className="w-4 h-4 mr-2" />
+              Ver Como Funciona
+            </Button>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              <span>Privado por padrão</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Heart className="w-4 h-4" />
+              <span>Feito para famílias</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              <span>Configuração em minutos</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {stats.map((stat, index) => (
+              <div key={index}>
+                <div className="text-2xl sm:text-3xl font-bold mb-2">{stat.number}</div>
+                <div className="text-muted-foreground text-sm sm:text-base">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Como Funciona
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Em apenas 4 passos simples, você pode preservar as vozes e memórias dos seus entes queridos para sempre.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step, index) => (
+              <Card key={index} className="relative border hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="absolute -top-4 left-6 w-8 h-8 bg-foreground text-background rounded-full flex items-center justify-center text-sm font-bold">
+                    {index + 1}
+                  </div>
+                  <div className="mb-4 text-foreground mt-4">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground mb-3">{step.description}</p>
+                  <p className="text-sm text-muted-foreground">{step.detail}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-6">
+              * Clonagem de voz personalizada disponível após completar o perfil
+            </p>
+            <Button onClick={onTryFree} size="lg">
+              Começar Agora
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
         </div>
       </section>
 
+      {/* Why Eterna Section */}
+      <section id="por-que-eterna" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Por Que Escolher o Eterna?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Mais do que tecnologia, oferecemos uma ponte emocional entre você e seus entes queridos.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {whyEternaPoints.map((point, index) => (
+              <Card key={index} className="border hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 p-2 bg-muted rounded-lg">
+                      {point.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">{point.title}</h3>
+                      <p className="text-muted-foreground">{point.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section id="como-funciona" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -144,24 +429,210 @@ export default function RileyLandingPage({ onTryFree, onSignIn, onLearnMore }: R
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Histórias que Tocam o Coração
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Veja como o Eterna está transformando a vida de famílias pelo Brasil.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="border">
+                <CardContent className="p-6">
+                  <div className="flex mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-foreground" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
+                  <div>
+                    <div className="font-semibold">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="precos" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Preços Simples e Transparentes
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Escolha o plano que melhor se adapta às necessidades da sua família.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {pricingPlans.map((plan, index) => (
+              <Card key={index} className={`relative border ${plan.isPopular ? 'border-foreground shadow-lg' : ''}`}>
+                {plan.isPopular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <Badge className="bg-foreground text-background">Mais Popular</Badge>
+                  </div>
+                )}
+                <CardContent className="p-6">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
+                    <div className="mb-2">
+                      <span className="text-3xl font-bold">{plan.price}</span>
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    </div>
+                    <p className="text-muted-foreground">{plan.description}</p>
+                  </div>
+                  
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center gap-2">
+                        <Check className="w-4 h-4 text-foreground flex-shrink-0" />
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <Button 
+                    onClick={onTryFree} 
+                    className={`w-full ${plan.isPopular ? '' : 'variant="outline"'}`}
+                    variant={plan.isPopular ? 'default' : 'outline'}
+                  >
+                    {plan.buttonText}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">
+              Teste grátis por 14 dias. Cancele a qualquer momento.
+            </p>
+            <p className="text-muted-foreground">
+              Todas as assinaturas incluem garantia de 30 dias.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Privacy Section */}
+      <section id="privacidade" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Suas Memórias são Suas
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Privacidade e segurança são fundamentais. Suas memórias familiares merecem a máxima proteção.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {privacyPoints.map((point, index) => (
+              <Card key={index} className="border hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 p-3 bg-muted rounded-lg">
+                      {point.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">{point.title}</h3>
+                      <p className="text-muted-foreground">{point.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-2 bg-background border rounded-lg px-4 py-2">
+              <Shield className="w-5 h-5" />
+              <span className="font-medium">Certificado LGPD</span>
+              <span className="text-muted-foreground">• ISO 27001 • SOC 2</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+            Comece a Preservar Memórias Hoje
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Não deixe as vozes e memórias dos seus entes queridos se perderem. 
+            Comece gratuitamente e veja a magia acontecer em minutos.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" onClick={onTryFree}>
+              Experimente Grátis Agora
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+            <Button size="lg" variant="outline" onClick={() => scrollToSection('precos')}>
+              Ver Preços
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            Sem cartão de crédito • Configuração em 5 minutos • Suporte 24/7
+          </p>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-border bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-6 h-6 bg-foreground rounded flex items-center justify-center">
-                <span className="text-background font-bold text-xs">E</span>
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="col-span-2">
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+                  <span className="text-background font-bold text-sm">E</span>
+                </div>
+                <span className="text-xl font-bold">Eterna</span>
               </div>
-              <span className="text-xl font-bold">Eterna</span>
+              <p className="text-muted-foreground mb-4 max-w-md">
+                Preservando vozes e memórias familiares com tecnologia de IA avançada. 
+                Feito com amor para famílias brasileiras.
+              </p>
+              <div className="flex space-x-4 text-muted-foreground">
+                <span>contato@eterna.com.br</span>
+              </div>
             </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacidade</a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Termos</a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Suporte</a>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Produto</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><button onClick={() => scrollToSection('como-funciona')} className="hover:text-foreground transition-colors">Como Funciona</button></li>
+                <li><button onClick={() => scrollToSection('precos')} className="hover:text-foreground transition-colors">Preços</button></li>
+                <li><button onClick={onTryFree} className="hover:text-foreground transition-colors">Teste Grátis</button></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Suporte</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground transition-colors">Ajuda e FAQ</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">Termos de Uso</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">Política de Privacidade</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">Contato</a></li>
+              </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-border text-center">
-            <p className="text-muted-foreground">© 2024 Eterna. Feito com ❤️ para preservar memórias.</p>
+          
+          <div className="mt-12 pt-8 border-t border-border text-center">
+            <p className="text-muted-foreground">
+              © 2024 Eterna. Feito com ❤️ para preservar memórias que importam.
+            </p>
           </div>
         </div>
       </footer>
