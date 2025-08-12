@@ -1,5 +1,6 @@
 import React from 'react';
-import { Favorite, Settings, Logout } from '@carbon/icons-react';
+import { Settings, Logout } from '@carbon/icons-react';
+import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { useAuth } from '@/hooks/useAuth';
@@ -47,13 +48,10 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-5 h-5 rounded-xl bg-foreground flex items-center justify-center">
-            <Favorite size={10} className="fill-current text-background" />
+          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-br from-[#441632] to-[#331122] rounded-xl flex items-center justify-center shadow-lg">
+            <Heart className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-[#FDFBCB]" />
           </div>
-          <div className="flex flex-col">
-            <h1 className="text-xl font-bold tracking-tight text-foreground">Eterna</h1>
-            <p className="text-xs text-muted-foreground">Preserving memories</p>
-          </div>
+          <span className="text-lg sm:text-xl font-semibold text-foreground">Eterna</span>
         </div>
 
         {/* Right side actions */}
