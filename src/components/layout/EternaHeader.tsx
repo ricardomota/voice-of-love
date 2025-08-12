@@ -47,11 +47,13 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <img
-            src="/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
-            alt="Eterna logo"
-            className="h-10 w-auto"
-          />
+          <div className="w-5 h-5 rounded-xl bg-foreground flex items-center justify-center">
+            <Favorite size={10} className="fill-current text-background" />
+          </div>
+          <div className="flex flex-col">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">Eterna</h1>
+            <p className="text-xs text-muted-foreground">Preserving memories</p>
+          </div>
         </div>
 
         {/* Right side actions */}

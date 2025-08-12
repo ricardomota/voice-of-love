@@ -73,11 +73,10 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <img
-              src="/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
-              alt="Eterna logo"
-              className="h-8 sm:h-10 w-auto"
-            />
+            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-br from-[#441632] to-[#331122] rounded-xl flex items-center justify-center shadow-lg">
+              <Heart className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-[#FDFBCB]" />
+            </div>
+            <span className="text-lg sm:text-xl font-semibold text-foreground">Eterna</span>
           </div>
 
           {/* Desktop Navigation */}
