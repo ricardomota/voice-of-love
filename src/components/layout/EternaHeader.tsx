@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useLanguage } from '@/hooks/useLanguage';
+import { Link } from 'react-router-dom';
 
 interface EternaHeaderProps {
   onSettingsClick?: () => void;
@@ -47,12 +48,12 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
     <header className="fixed top-0 z-50 w-full border-b border-border backdrop-blur-xl bg-background/80">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
           <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-br from-[#441632] to-[#331122] rounded-xl flex items-center justify-center shadow-lg">
             <Heart className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-[#FDFBCB]" />
           </div>
           <span className="text-lg sm:text-xl font-semibold text-foreground">Eterna</span>
-        </div>
+        </Link>
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
