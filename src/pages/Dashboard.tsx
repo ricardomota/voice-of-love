@@ -29,7 +29,7 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
     <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header Card */}
-        <div className="bg-card border border-border rounded-xl p-6 lg:p-8 mb-8 sm:mb-12 shadow-sm">
+        <div className="bg-card border border-border rounded-xl p-6 lg:p-8 pt-10 lg:pt-12 mb-8 sm:mb-12 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
               <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-4 mb-2 text-foreground">
