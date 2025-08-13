@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useNavigate } from 'react-router-dom';
 import { Heart, Mail, FileText, Shield, HelpCircle } from 'lucide-react';
 
 interface LandingFooterProps {
@@ -68,6 +69,7 @@ const getContent = (language: string) => {
 
 export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignIn }) => {
   const { currentLanguage } = useLanguage();
+  const navigate = useNavigate();
   const content = getContent(currentLanguage);
 
   const scrollToSection = (sectionId: string) => {
@@ -145,7 +147,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
             <h4 className="font-semibold text-foreground">Support & Updates</h4>
             <nav className="flex flex-col space-y-3">
               <button 
-                onClick={() => window.open('/changelog', '_blank')}
+                onClick={() => navigate('/changelog')}
                 className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
               >
                 <FileText className="w-4 h-4" />
