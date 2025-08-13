@@ -41,13 +41,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20 bg-black">
-      {/* Background gradient with dark theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/95 to-gray-800/30" />
-      
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_white_1px,_transparent_0)] bg-[size:24px_24px]" />
-      </div>
+      {/* Solid black background */}
+      <div className="absolute inset-0 bg-black" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
