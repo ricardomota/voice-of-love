@@ -13,6 +13,7 @@ import { useState } from 'react';
 import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { Changelog } from "./pages/Changelog";
 
 // Create QueryClient outside component to avoid re-creation
 const queryClient = new QueryClient({
@@ -81,6 +82,9 @@ const AppContent = () => {
       
       {/* Legacy auth route redirect */}
       <Route path="/auth" element={<BetaGate><Index /></BetaGate>} />
+      
+      {/* Changelog Route */}
+      <Route path="/changelog" element={<Changelog />} />
       
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />

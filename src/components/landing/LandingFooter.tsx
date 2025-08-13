@@ -140,21 +140,20 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
             </nav>
           </div>
 
-          {/* Legal & Support */}
+          {/* Support & Updates */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-foreground">Legal & Support</h4>
+            <h4 className="font-semibold text-foreground">Support & Updates</h4>
             <nav className="flex flex-col space-y-3">
+              <button 
+                onClick={() => window.open('/changelog', '_blank')}
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              >
+                <FileText className="w-4 h-4" />
+                Changelog
+              </button>
               <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <HelpCircle className="w-4 h-4" />
                 {content.links.docs}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-                <FileText className="w-4 h-4" />
-                {content.links.terms}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                {content.links.privacy}
               </button>
               <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <Mail className="w-4 h-4" />
