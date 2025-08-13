@@ -3,13 +3,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Check, Star, Zap } from 'lucide-react';
-
 interface PricingSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
   onUpgrade?: (planId: string) => void;
 }
-
 const getContent = (language: string) => {
   const content = {
     en: {
@@ -20,13 +18,7 @@ const getContent = (language: string) => {
         price: "R$0",
         period: "/month",
         description: "Perfect for trying Eterna",
-        features: [
-          "5 messages per month",
-          "1 minute voice generation",
-          "Last 3 memories stored",
-          "Base voices available",
-          "All languages (EN, PT-BR, ES)"
-        ],
+        features: ["5 messages per month", "1 minute voice generation", "Last 3 memories stored", "Base voices available", "All languages (EN, PT-BR, ES)"],
         cta: "Start Free",
         popular: false
       },
@@ -36,15 +28,7 @@ const getContent = (language: string) => {
         period: "/month",
         usd: "(~US$5.99)",
         description: "Everything you need to preserve family voices",
-        features: [
-          "300 messages per month", 
-          "15 minutes voice generation",
-          "Unlimited memories stored",
-          "Personal voice clone*",
-          "Priority support",
-          "All languages (EN, PT-BR, ES)",
-          "Advanced personality settings"
-        ],
+        features: ["300 messages per month", "15 minutes voice generation", "Unlimited memories stored", "Personal voice clone*", "Priority support", "All languages (EN, PT-BR, ES)", "Advanced personality settings"],
         cta: "Upgrade Now",
         popular: true
       },
@@ -59,13 +43,7 @@ const getContent = (language: string) => {
         price: "R$0",
         period: "/mês",
         description: "Perfeito para experimentar o Eterna",
-        features: [
-          "5 mensagens por mês",
-          "1 minuto de geração de voz",
-          "Últimas 3 memórias armazenadas",
-          "Vozes base disponíveis",
-          "Todos os idiomas (EN, PT-BR, ES)"
-        ],
+        features: ["5 mensagens por mês", "1 minuto de geração de voz", "Últimas 3 memórias armazenadas", "Vozes base disponíveis", "Todos os idiomas (EN, PT-BR, ES)"],
         cta: "Começar Grátis",
         popular: false
       },
@@ -75,15 +53,7 @@ const getContent = (language: string) => {
         period: "/mês",
         usd: "(~US$5.99)",
         description: "Tudo que você precisa para preservar vozes da família",
-        features: [
-          "300 mensagens por mês",
-          "15 minutos de geração de voz", 
-          "Memórias ilimitadas armazenadas",
-          "Clone de voz pessoal*",
-          "Suporte prioritário",
-          "Todos os idiomas (EN, PT-BR, ES)",
-          "Configurações avançadas de personalidade"
-        ],
+        features: ["300 mensagens por mês", "15 minutos de geração de voz", "Memórias ilimitadas armazenadas", "Clone de voz pessoal*", "Suporte prioritário", "Todos os idiomas (EN, PT-BR, ES)", "Configurações avançadas de personalidade"],
         cta: "Fazer Upgrade",
         popular: true
       },
@@ -98,13 +68,7 @@ const getContent = (language: string) => {
         price: "R$0",
         period: "/mes",
         description: "Perfecto para probar Eterna",
-        features: [
-          "5 mensajes por mes",
-          "1 minuto de generación de voz",
-          "Últimas 3 memorias almacenadas",
-          "Voces base disponibles",
-          "Todos los idiomas (EN, PT-BR, ES)"
-        ],
+        features: ["5 mensajes por mes", "1 minuto de generación de voz", "Últimas 3 memorias almacenadas", "Voces base disponibles", "Todos los idiomas (EN, PT-BR, ES)"],
         cta: "Comenzar Gratis",
         popular: false
       },
@@ -114,15 +78,7 @@ const getContent = (language: string) => {
         period: "/mes",
         usd: "(~US$5.99)",
         description: "Todo lo que necesitas para preservar voces familiares",
-        features: [
-          "300 mensajes por mes",
-          "15 minutos de generación de voz",
-          "Memorias ilimitadas almacenadas",
-          "Clon de voz personal*",
-          "Soporte prioritario",
-          "Todos los idiomas (EN, PT-BR, ES)",
-          "Configuraciones avanzadas de personalidad"
-        ],
+        features: ["300 mensajes por mes", "15 minutos de generación de voz", "Memorias ilimitadas almacenadas", "Clon de voz personal*", "Soporte prioritario", "Todos los idiomas (EN, PT-BR, ES)", "Configuraciones avanzadas de personalidad"],
         cta: "Actualizar Ahora",
         popular: true
       },
@@ -132,15 +88,17 @@ const getContent = (language: string) => {
   };
   return content[language as keyof typeof content] || content.en;
 };
-
-export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSeePricing, onUpgrade }) => {
-  const { currentLanguage } = useLanguage();
+export const PricingSection: React.FC<PricingSectionProps> = ({
+  onTryFree,
+  onSeePricing,
+  onUpgrade
+}) => {
+  const {
+    currentLanguage
+  } = useLanguage();
   const content = getContent(currentLanguage);
-
   const plans = [content.free, content.paid];
-
-  return (
-    <section id="pricing" className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-muted/20 to-background">
+  return <section id="pricing" className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-muted/20 to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -155,24 +113,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSee
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          {plans.map((plan, index) => (
-            <Card 
-              key={index} 
-              className={`relative group transition-all duration-300 ${
-                plan.popular 
-                  ? 'border-2 border-primary shadow-xl scale-105 lg:scale-110' 
-                  : 'border-2 hover:border-primary/30 hover:shadow-lg'
-              }`}
-            >
+          {plans.map((plan, index) => <Card key={index} className={`relative group transition-all duration-300 ${plan.popular ? 'border-2 border-primary shadow-xl scale-105 lg:scale-110' : 'border-2 hover:border-primary/30 hover:shadow-lg'}`}>
               {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1 shadow-lg">
-                    <Star className="w-4 h-4" />
-                    Most Popular
-                  </div>
-                </div>
-              )}
+              {plan.popular && <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  
+                </div>}
 
               <CardContent className="p-6 sm:p-8 space-y-6">
                 
@@ -196,39 +141,29 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSee
                       {plan.period}
                     </span>
                   </div>
-                  {('usd' in plan) && (plan as any).usd && (
-                    <p className="text-sm text-muted-foreground">
+                  {'usd' in plan && (plan as any).usd && <p className="text-sm text-muted-foreground">
                       {(plan as any).usd}
-                    </p>
-                  )}
+                    </p>}
                 </div>
 
                 {/* Features */}
                 <div className="space-y-3">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-start gap-3">
+                  {plan.features.map((feature, featureIndex) => <div key={featureIndex} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">
                         {feature}
                       </span>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
 
                 {/* CTA */}
-                <Button 
-                  onClick={index === 0 ? onTryFree : (onUpgrade ? () => onUpgrade('family') : onSeePricing)}
-                  variant={plan.popular ? "cta" : "secondary"}
-                  size="lg"
-                  className="w-full"
-                >
+                <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "cta" : "secondary"} size="lg" className="w-full">
                   {plan.popular && <Zap className="w-4 h-4 mr-2" />}
                   {plan.cta}
                 </Button>
 
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         {/* Footer Notes */}
@@ -237,16 +172,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSee
             {content.note}
           </p>
           
-          <Button 
-            onClick={onSeePricing}
-            variant="ghost"
-            className="text-primary hover:text-primary/80"
-          >
+          <Button onClick={onSeePricing} variant="ghost" className="text-primary hover:text-primary/80">
             {content.fullPricing}
           </Button>
         </div>
 
       </div>
-    </section>
-  );
+    </section>;
 };
