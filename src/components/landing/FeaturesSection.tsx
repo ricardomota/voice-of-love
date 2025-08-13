@@ -22,7 +22,7 @@ const getContent = (language: string) => {
         },
         {
           title: "Cost-Smart AI",
-          description: "Together.ai (OSS-20B) for free users, OpenAI GPT-4o for premium conversations.",
+          description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations.",
           icon: Flash,
           highlight: "Optimized for families"
         },
@@ -51,7 +51,7 @@ const getContent = (language: string) => {
         },
         {
           title: "IA Econômica",
-          description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-4o para conversas premium.",
+          description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium.",
           icon: Flash,
           highlight: "Otimizado para famílias"
         },
@@ -80,7 +80,7 @@ const getContent = (language: string) => {
         },
         {
           title: "IA Económica",
-          description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-4o para conversaciones premium.",
+          description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-5o para conversaciones premium.",
           icon: Flash,
           highlight: "Optimizado para familias"
         },
