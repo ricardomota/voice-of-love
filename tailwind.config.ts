@@ -111,6 +111,10 @@ export default {
 						opacity: "0.7"
 					},
 				},
+				"slide-down": {
+					from: { opacity: "0", transform: "translateY(-10px)" },
+					to: { opacity: "1", transform: "translateY(0)" },
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -123,6 +127,7 @@ export default {
 				"float-fast": "float 4s ease-in-out infinite",
 				"shimmer": "shimmer 2s ease-in-out infinite",
 				"flow": "flow 3s ease-in-out infinite alternate",
+				"slide-down": "slide-down 0.3s ease-out",
 			},
 		},
 	},
