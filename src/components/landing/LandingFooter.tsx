@@ -152,10 +152,6 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
                 Changelog
               </button>
               <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-                <HelpCircle className="w-4 h-4" />
-                {content.links.docs}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 {content.links.contact}
               </button>
