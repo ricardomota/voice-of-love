@@ -812,35 +812,35 @@ html {
     transition: var(--transition);
     transition-property: --gradient-angle-offset, --gradient-percent,
       --gradient-shine;
-  }
 
-  .shiny-cta,
-  .shiny-cta::before,
-  .shiny-cta::after {
-    animation: var(--animation) var(--duration),
-      var(--animation) calc(var(--duration) / 0.4) reverse paused;
-    animation-composition: add;
-  }
+    &,
+    &::before,
+    &::after {
+      animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+      animation-composition: add;
+    }
 
-  .shiny-cta span::before {
-    transition: opacity var(--transition);
-    animation: calc(var(--duration) * 1.5) breathe linear infinite;
+    span::before {
+      transition: opacity var(--transition);
+      animation: calc(var(--duration) * 1.5) breathe linear infinite;
+    }
   }
 
   .shiny-cta:is(:hover, :focus-visible) {
     --gradient-percent: 20%;
     --gradient-angle-offset: 95deg;
-    --gradient-shine: hsl(var(--shiny-cta-highlight-subtle));
-  }
+    --gradient-shine: var(--shiny-cta-highlight-subtle);
 
-  .shiny-cta:is(:hover, :focus-visible),
-  .shiny-cta:is(:hover, :focus-visible)::before,
-  .shiny-cta:is(:hover, :focus-visible)::after {
-    animation-play-state: running;
-  }
+    &,
+    &::before,
+    &::after {
+      animation-play-state: running;
+    }
 
-  .shiny-cta:is(:hover, :focus-visible) span::before {
-    opacity: 1;
+    span::before {
+      opacity: 1;
+    }
   }
 
   @keyframes gradient-angle {
