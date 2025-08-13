@@ -50,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
           {/* Content */}
           <div className="text-center lg:text-left space-y-8">
             <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
                 {content.headline.split('.').map((part, index, array) => (
                   <span key={index}>
                     {part}
