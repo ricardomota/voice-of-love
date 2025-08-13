@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { usePeople } from "@/hooks/usePeople";
 import { useAppState } from "@/hooks/useAppState";
 import { useUsageTracking } from "@/hooks/useUsageTracking";
+import { useSubscription } from "@/hooks/useSubscription";
 import { Loader2 } from "lucide-react";
 
 const Index = () => {
@@ -39,6 +40,7 @@ const Index = () => {
   } = useAppState('welcome');
   
   const { usage, refreshUsage } = useUsageTracking();
+  const { createCheckout } = useSubscription();
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Load people from Supabase only after authentication is confirmed
@@ -139,10 +141,27 @@ const Index = () => {
     );
   }
 
-  const handleUpgrade = () => {
-    // TODO: Implement Stripe checkout
-    console.log('Navigate to Stripe checkout');
-    setShowUpgradeModal(false);
+  const handleUpgrade = async (planId: string) => {
+    try {
+      const checkoutUrl = await createCheckout(planId);
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+        setShowUpgradeModal(false);
+      } else {
+        toast({
+          title: "Erro",
+          description: "Não foi possível criar a sessão de checkout",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error creating checkout:', error);
+      toast({
+        title: "Erro", 
+        description: "Erro ao criar sessão de checkout",
+        variant: "destructive",
+      });
+    }
   };
 
   // Render based on app state

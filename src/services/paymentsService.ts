@@ -95,19 +95,25 @@ export const paymentsService = {
   },
 
   /**
-   * Cria sessão de checkout do Stripe (placeholder)
+   * Cria sessão de checkout do Stripe
    */
-  async createCheckoutSession(planId: string, userEmail: string, returnUrl: string): Promise<{ url: string } | null> {
-    // TODO: Implementar integração real com Stripe
-    console.log('Creating checkout session for:', { planId, userEmail, returnUrl });
+  async createCheckoutSession(planId: string): Promise<{ url: string } | null> {
+    const { supabase } = await import('@/integrations/supabase/client');
     
-    // Simular delay de API
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Por enquanto, retorna URL de exemplo
-    const mockCheckoutUrl = `https://checkout.stripe.com/pay/mock#${planId}`;
-    
-    return { url: mockCheckoutUrl };
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { planId },
+        headers: {
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        }
+      });
+
+      if (error) throw error;
+      return { url: data.url };
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      return null;
+    }
   },
 
   /**
@@ -152,9 +158,21 @@ export const paymentsService = {
   /**
    * Retorna a URL do portal de gerenciamento do cliente
    */
-  async getCustomerPortalUrl(returnUrl: string): Promise<string> {
-    // TODO: Implementar com Stripe Customer Portal
-    console.log('Getting customer portal URL for:', returnUrl);
-    return `https://billing.stripe.com/p/login/mock`;
+  async getCustomerPortalUrl(): Promise<string> {
+    const { supabase } = await import('@/integrations/supabase/client');
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal', {
+        headers: {
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        }
+      });
+
+      if (error) throw error;
+      return data.url;
+    } catch (error) {
+      console.error('Error getting customer portal URL:', error);
+      throw error;
+    }
   }
 };

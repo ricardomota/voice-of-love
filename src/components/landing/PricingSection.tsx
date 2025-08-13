@@ -7,6 +7,7 @@ import { Check, Star, Zap } from 'lucide-react';
 interface PricingSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
+  onUpgrade?: (planId: string) => void;
 }
 
 const getContent = (language: string) => {
@@ -132,7 +133,7 @@ const getContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
-export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSeePricing }) => {
+export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSeePricing, onUpgrade }) => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
 
@@ -216,7 +217,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onTryFree, onSee
 
                 {/* CTA */}
                 <Button 
-                  onClick={index === 0 ? onTryFree : onSeePricing}
+                  onClick={index === 0 ? onTryFree : (onUpgrade ? () => onUpgrade('family') : onSeePricing)}
                   variant={plan.popular ? "cta" : "secondary"}
                   size="lg"
                   className="w-full"

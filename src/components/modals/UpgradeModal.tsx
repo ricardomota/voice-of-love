@@ -13,7 +13,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 interface UpgradeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onUpgrade: () => void;
+  onUpgrade: (planId: string) => void;
   type?: 'messages' | 'tts' | 'general';
 }
 
@@ -122,7 +122,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
         <div className="flex flex-col gap-4">
           <button 
-            onClick={onUpgrade}
+            onClick={() => onUpgrade('premium')}
             className="btn-primary btn-large hover-lift hover-glow w-full px-8 py-4 rounded-xl font-semibold text-lg"
           >
             {content.ctaPrimary}
