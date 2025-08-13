@@ -60,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                 ))}
               </h1>
               
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 {content.subhead}
               </p>
             </div>
@@ -88,8 +88,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
             </div>
 
             {/* Trust indicators */}
-            <div className="pt-8 border-t border-border/30">
-              <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-muted-foreground">
+            <div className="pt-8 border-t border-gray-600">
+              <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-300">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                   <span>Private by default</span>
@@ -115,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                     <div className="h-3 bg-gradient-to-r from-primary/20 to-transparent rounded-full mx-auto w-32" />
                     <div className="h-3 bg-gradient-to-r from-primary/15 to-transparent rounded-full mx-auto w-40" />
                   </div>
-                  <p className="text-sm text-muted-foreground opacity-60">
+                  <p className="text-sm text-gray-400">
                     {content.altText}
                   </p>
                 </div>
