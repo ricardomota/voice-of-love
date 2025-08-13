@@ -139,7 +139,9 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
           {
             full_name: formData.fullName,
             email: formData.email,
-            message: formData.message || null
+            message: formData.message || null,
+            primary_interest: formData.primaryInterest || null,
+            how_did_you_hear: formData.howDidYouHear || null
           }
         ]);
 
