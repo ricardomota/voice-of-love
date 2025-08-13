@@ -130,10 +130,16 @@ export default function RileyLandingPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-                <span className="text-background font-bold text-sm">E</span>
-              </div>
-              <span className="text-xl font-bold">Eterna</span>
+              <img 
+                src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
+                alt="Eterna Logo" 
+                className="h-8 w-auto dark:hidden"
+              />
+              <img 
+                src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
+                alt="Eterna Logo" 
+                className="h-8 w-auto hidden dark:block"
+              />
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
@@ -469,10 +475,16 @@ export default function RileyLandingPage({
           <div className="grid md:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-                  <span className="text-background font-bold text-sm">E</span>
-                </div>
-                <span className="text-xl font-bold">Eterna</span>
+                <img 
+                  src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
+                  alt="Eterna Logo" 
+                  className="h-8 w-auto dark:hidden"
+                />
+                <img 
+                  src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
+                  alt="Eterna Logo" 
+                  className="h-8 w-auto hidden dark:block"
+                />
               </div>
               <p className="text-muted-foreground mb-4 max-w-md">
                 Preservando vozes e memórias familiares com tecnologia de IA avançada. 
