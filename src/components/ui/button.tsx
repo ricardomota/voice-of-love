@@ -16,7 +16,7 @@ const buttonVariants = cva(
         ghost: "rounded-xl hover:bg-accent/10 hover:text-accent-foreground hover:scale-[1.01] px-4 py-2",
         link: "text-accent underline-offset-4 hover:underline rounded-lg px-2 py-1 hover:scale-[1.01]",
         glass: "floating-button parallax-slow px-6 py-3 rounded-2xl hover:scale-[1.02]",
-        cta: "bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 hover:scale-[1.02] active:scale-95 px-6 py-3 font-bold shadow-lg hover:shadow-xl text-lg",
+        cta: "shiny-cta font-bold text-lg",
       },
       size: {
         default: "text-sm h-10",
@@ -40,14 +40,20 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    
+    // For shiny CTA variant, wrap content in span for proper styling
+    const content = variant === "cta" ? <span>{children}</span> : children
+    
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {content}
+      </Comp>
     )
   }
 )
