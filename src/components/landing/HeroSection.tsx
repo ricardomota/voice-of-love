@@ -40,17 +40,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
   const content = getContent(currentLanguage);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20 bg-black">
-      {/* Solid black background */}
-      <div className="absolute inset-0 bg-black" />
+    <section className="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/98 to-primary/5" />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Content */}
           <div className="text-center lg:text-left space-y-8">
             <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight">
                 {content.headline.split('.').map((part, index, array) => (
                   <span key={index}>
                     {part}
@@ -60,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                 ))}
               </h1>
               
-              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 {content.subhead}
               </p>
             </div>
@@ -79,23 +79,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
               
               <Button 
                 onClick={onSeePricing}
-                variant="outline" 
+                variant="secondary" 
                 size="xl"
-                className="w-full sm:w-auto min-w-[160px] border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                className="w-full sm:w-auto min-w-[160px]"
               >
                 {content.seePricing}
               </Button>
             </div>
 
             {/* Trust indicators */}
-            <div className="pt-8 border-t border-white/20">
-              <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-400">
+            <div className="pt-8 border-t border-border/30">
+              <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
                   <span>Private by default</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Favorite size={16} className="text-blue-400" />
+                  <Favorite size={16} className="text-primary" />
                   <span>Family-first design</span>
                 </div>
               </div>
@@ -104,26 +104,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
 
           {/* Hero Image */}
           <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/30 aspect-[4/3] border border-white/10">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-accent/5 aspect-[4/3]">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center space-y-4 p-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500/30 to-purple-600/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm">
-                    <Favorite size={24} className="text-blue-400" />
+                  <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <Favorite size={24} className="text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <div className="h-4 bg-gradient-to-r from-blue-500/40 to-transparent rounded-full mx-auto w-48" />
-                    <div className="h-3 bg-gradient-to-r from-purple-500/30 to-transparent rounded-full mx-auto w-32" />
-                    <div className="h-3 bg-gradient-to-r from-blue-400/25 to-transparent rounded-full mx-auto w-40" />
+                    <div className="h-4 bg-gradient-to-r from-primary/30 to-transparent rounded-full mx-auto w-48" />
+                    <div className="h-3 bg-gradient-to-r from-primary/20 to-transparent rounded-full mx-auto w-32" />
+                    <div className="h-3 bg-gradient-to-r from-primary/15 to-transparent rounded-full mx-auto w-40" />
                   </div>
-                  <p className="text-sm text-gray-400 opacity-60">
+                  <p className="text-sm text-muted-foreground opacity-60">
                     {content.altText}
                   </p>
                 </div>
               </div>
               
-              {/* Floating elements with enhanced glow */}
-              <div className="absolute top-4 right-4 w-16 h-16 bg-blue-500/20 rounded-full backdrop-blur-sm animate-float shadow-[0_0_20px_rgba(59,130,246,0.3)]" />
-              <div className="absolute bottom-6 left-6 w-12 h-12 bg-purple-500/20 rounded-full backdrop-blur-sm animate-float shadow-[0_0_15px_rgba(147,51,234,0.3)]" style={{ animationDelay: '1s' }} />
+              {/* Floating elements */}
+              <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full backdrop-blur-sm animate-float" />
+              <div className="absolute bottom-6 left-6 w-12 h-12 bg-primary/20 rounded-full backdrop-blur-sm animate-float" style={{ animationDelay: '1s' }} />
             </div>
           </div>
 

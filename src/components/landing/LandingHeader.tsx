@@ -78,7 +78,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
         isScrolled 
-          ? "bg-black/80 backdrop-blur-xl shadow-sm border-b border-white/10" 
+          ? "bg-background/80 backdrop-blur-xl shadow-sm border-b border-border/30" 
           : "bg-transparent"
       )}
       style={{
@@ -126,17 +126,17 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           )}>
             <button 
               onClick={() => handleNavigation('how-it-works')}
-              className="text-white/70 hover:text-white transition-all duration-300 hover:scale-105 relative group"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105 relative group"
             >
               {content.howItWorks}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </button>
             <button 
               onClick={() => handleNavigation('pricing')}
-              className="text-white/70 hover:text-white transition-all duration-300 hover:scale-105 relative group"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105 relative group"
             >
               Preços
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </button>
             
             <div className={cn(
@@ -146,7 +146,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               <LanguageSelector />
               <button
                 onClick={onSignIn}
-                className="text-white/70 hover:text-white transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-white/10"
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105 px-3 py-2 rounded-md hover:bg-muted/50"
               >
                 {content.signIn}
               </button>
@@ -181,7 +181,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={cn(
-                "transition-all duration-300 text-white hover:text-white hover:bg-white/10",
+                "transition-all duration-300",
                 isMobileMenuOpen ? "rotate-180" : "rotate-0"
               )}
             >
@@ -192,28 +192,28 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
 
         {/* Mobile Menu melhorado */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/10 shadow-xl animate-slide-down">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-t border-border/30 shadow-xl animate-slide-down">
             <nav className="px-4 py-6 space-y-1">
               <button 
                 onClick={() => handleNavigation('how-it-works')}
-                className="block w-full text-left text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-lg"
+                className="block w-full text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 py-3 px-3 rounded-lg"
               >
                 {content.howItWorks}
               </button>
               <button 
                 onClick={() => handleNavigation('pricing')}
-                className="block w-full text-left text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-lg"
+                className="block w-full text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 py-3 px-3 rounded-lg"
               >
                 Preços
               </button>
               <button 
                 onClick={onSignIn}
-                className="block w-full text-left text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-lg"
+                className="block w-full text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 py-3 px-3 rounded-lg"
               >
                 {content.signIn}
               </button>
               
-              <div className="pt-4 border-t border-white/20 mt-4">
+              <div className="pt-4 border-t border-border/30 mt-4">
                 {!showOnlyLogo && (
                   <div className="mb-4">
                     <LanguageSelector />

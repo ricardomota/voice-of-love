@@ -210,7 +210,7 @@ export const WaitlistSection: React.FC = () => {
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-zilla italic flex items-center justify-center gap-2">
                 <Mail className="w-6 h-6 text-primary" />
-                Waitlist
+                Lista de Espera VIP
               </CardTitle>
               <CardDescription className="text-base">
                 Preencha os dados abaixo e seja notificado quando lançarmos
