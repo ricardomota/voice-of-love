@@ -144,22 +144,22 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
           <div className="space-y-6">
             <h4 className="font-semibold text-foreground">Legal & Support</h4>
             <nav className="flex flex-col space-y-3">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <HelpCircle className="w-4 h-4" />
                 {content.links.docs}
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 {content.links.terms}
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <Shield className="w-4 h-4" />
                 {content.links.privacy}
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 {content.links.contact}
-              </a>
+              </button>
             </nav>
           </div>
         </div>

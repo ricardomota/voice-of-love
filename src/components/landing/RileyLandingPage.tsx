@@ -507,10 +507,10 @@ export default function RileyLandingPage({
             <div>
               <h3 className="font-semibold mb-4">Suporte</h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Ajuda e FAQ</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Termos de Uso</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Contato</a></li>
+                <li><button className="hover:text-foreground transition-colors text-left">Ajuda e FAQ</button></li>
+                <li><button className="hover:text-foreground transition-colors text-left">Termos de Uso</button></li>
+                <li><button className="hover:text-foreground transition-colors text-left">Política de Privacidade</button></li>
+                <li><button className="hover:text-foreground transition-colors text-left">Contato</button></li>
               </ul>
             </div>
           </div>
