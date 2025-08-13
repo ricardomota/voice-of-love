@@ -25,21 +25,21 @@ const AppRoutes = () => {
   const navigate = useNavigate();
   
   return (
-    <BetaGate>
-      <Routes>
-        <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/auth')} onSeePricing={() => navigate('/auth')} />} />
-        <Route path="/auth" element={
+    <Routes>
+      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/auth')} onSeePricing={() => navigate('/auth')} />} />
+      <Route path="/auth" element={
+        <BetaGate>
           <div className="min-h-screen bg-background">
             <EternaHeader />
             <main>
               <Index />
             </main>
           </div>
-        } />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BetaGate>
+        </BetaGate>
+      } />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
