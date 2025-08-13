@@ -52,6 +52,30 @@ export type Database = {
           },
         ]
       }
+      beta_access: {
+        Row: {
+          access_code: string
+          created_at: string
+          email: string
+          id: string
+          used_at: string | null
+        }
+        Insert: {
+          access_code?: string
+          created_at?: string
+          email: string
+          id?: string
+          used_at?: string | null
+        }
+        Update: {
+          access_code?: string
+          created_at?: string
+          email?: string
+          id?: string
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           created_at: string
@@ -579,6 +603,36 @@ export type Database = {
           style_tags?: string[] | null
           updated_at?: string
           voice_key?: string
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }

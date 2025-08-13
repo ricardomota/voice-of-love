@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { EternaHeader } from "@/components/layout/EternaHeader";
+import { BetaGate } from "@/components/BetaGate";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import RileyLandingPage from "./components/landing/RileyLandingPage";
@@ -24,19 +25,21 @@ const AppRoutes = () => {
   const navigate = useNavigate();
   
   return (
-    <Routes>
-      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/auth')} onSeePricing={() => navigate('/auth')} />} />
-      <Route path="/auth" element={
-        <div className="min-h-screen bg-background">
-          <EternaHeader />
-          <main>
-            <Index />
-          </main>
-        </div>
-      } />
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <BetaGate>
+      <Routes>
+        <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/auth')} onSeePricing={() => navigate('/auth')} />} />
+        <Route path="/auth" element={
+          <div className="min-h-screen bg-background">
+            <EternaHeader />
+            <main>
+              <Index />
+            </main>
+          </div>
+        } />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BetaGate>
   );
 };
 
