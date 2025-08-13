@@ -70,7 +70,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
               <Button 
                 onClick={onTryFree} 
                 size="xl" 
-                variant="cta"
+                variant="secondary"
                 className="w-full sm:w-auto min-w-[200px]"
               >
                 <PlayFilled size={16} className="mr-2" />
@@ -79,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
               
               <Button 
                 onClick={onSeePricing}
-                variant="secondary" 
+                variant="cta" 
                 size="xl"
                 className="w-full sm:w-auto min-w-[160px]"
               >
