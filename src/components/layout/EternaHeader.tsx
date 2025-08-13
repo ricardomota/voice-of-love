@@ -52,12 +52,12 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
           <img 
             src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
             alt="Eterna Logo" 
-            className="h-8 w-auto dark:hidden"
+            className="h-4 w-auto dark:hidden"
           />
           <img 
             src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
             alt="Eterna Logo" 
-            className="h-8 w-auto hidden dark:block"
+            className="h-4 w-auto hidden dark:block"
           />
         </Link>
 
