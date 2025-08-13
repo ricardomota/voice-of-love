@@ -97,10 +97,18 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               isCompact ? "scale-90" : "scale-100"
             )}>
               <img 
-                src="/lovable-uploads/7b4a0c18-2eab-4c51-8eb9-bed76e8cad22.png" 
-                alt="Eterna Icon" 
+                src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
+                alt="Eterna Logo" 
                 className={cn(
-                  "w-auto transition-all duration-500",
+                  "w-auto dark:hidden transition-all duration-500",
+                  showOnlyLogo ? "h-6" : "h-4"
+                )}
+              />
+              <img 
+                src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
+                alt="Eterna Logo" 
+                className={cn(
+                  "w-auto hidden dark:block transition-all duration-500",
                   showOnlyLogo ? "h-6" : "h-4"
                 )}
               />
