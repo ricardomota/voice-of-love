@@ -709,7 +709,7 @@ html {
   /* Shiny CTA Button */
   .shiny-cta {
     --animation: gradient-angle linear infinite;
-    --duration: 12s;
+    --duration: 3s;
     --shadow-size: 2px;
     isolation: isolate;
     position: relative;
