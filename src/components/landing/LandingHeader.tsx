@@ -96,30 +96,24 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               "transition-all duration-500 ease-out transform",
               isCompact ? "scale-90" : "scale-100"
             )}>
-              {showOnlyLogo ? (
-                // Mostra apenas o ícone quando scrolled
-                <img 
-                  src="/lovable-uploads/ea2ea9e4-bb75-4a5b-b508-21083739543a.png" 
-                  alt="Eterna Icon" 
-                  className="w-8 h-8 transition-all duration-500"
-                />
-              ) : (
-                // Mostra o logo completo quando não scrolled
-                <>
-                  <img 
-                    src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
-                    alt="Eterna Logo" 
-                    className="w-auto h-4 dark:hidden transition-all duration-500"
-                  />
-                  <img 
-                    src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
-                    alt="Eterna Logo" 
-                    className="w-auto h-4 hidden dark:block transition-all duration-500"
-                  />
-                </>
-              )}
+              <img 
+                src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
+                alt="Eterna Logo" 
+                className={cn(
+                  "w-auto dark:hidden transition-all duration-500",
+                  showOnlyLogo ? "h-6" : "h-4"
+                )}
+              />
+              <img 
+                src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
+                alt="Eterna Logo" 
+                className={cn(
+                  "w-auto hidden dark:block transition-all duration-500",
+                  showOnlyLogo ? "h-6" : "h-4"
+                )}
+              />
             </div>
-            {/* Glow effect apenas no ícone quando compacto */}
+            {/* Glow effect apenas no logo quando compacto */}
             {showOnlyLogo && (
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 blur-xl rounded-full scale-150 opacity-30 animate-pulse" />
             )}
