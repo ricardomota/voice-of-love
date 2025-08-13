@@ -26,8 +26,10 @@ const AppRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/auth')} onSignIn={() => navigate('/auth')} onLearnMore={() => navigate('/auth')} onSeePricing={() => navigate('/auth')} />} />
-      <Route path="/auth" element={
+      <Route path="/" element={<RileyLandingPage onTryFree={() => navigate('/app')} onSignIn={() => navigate('/app')} onLearnMore={() => navigate('/app')} onSeePricing={() => navigate('/app')} />} />
+      
+      {/* Protected App Routes */}
+      <Route path="/app/*" element={
         <BetaGate>
           <div className="min-h-screen bg-background">
             <EternaHeader />
@@ -37,6 +39,10 @@ const AppRoutes = () => {
           </div>
         </BetaGate>
       } />
+      
+      {/* Legacy auth route redirect */}
+      <Route path="/auth" element={<BetaGate><Index /></BetaGate>} />
+      
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
