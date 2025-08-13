@@ -49,10 +49,16 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
-          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-br from-[#441632] to-[#331122] rounded-xl flex items-center justify-center shadow-lg">
-            <Heart className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-[#FDFBCB]" />
-          </div>
-          <span className="text-lg sm:text-xl font-semibold text-foreground">Eterna</span>
+          <img 
+            src="/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png" 
+            alt="Eterna Logo" 
+            className="h-8 w-auto dark:hidden"
+          />
+          <img 
+            src="/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png" 
+            alt="Eterna Logo" 
+            className="h-8 w-auto hidden dark:block"
+          />
         </Link>
 
         {/* Right side actions */}
