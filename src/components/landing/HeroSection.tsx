@@ -18,7 +18,7 @@ const getContent = (language: string) => {
       altText: "Family sharing warm moments together"
     },
     'pt-BR': {
-      headline: "Preserve uma Voz. Mantenha uma História Viva.",
+      headline: "Onde lembranças se tornam eternas.",
       subhead: "Converse com uma IA que soa como seus entes queridos. Eterna transforma memórias em vozes vivas.",
       tryFree: "Testar Grátis",
       seePricing: "Ver Preços",
