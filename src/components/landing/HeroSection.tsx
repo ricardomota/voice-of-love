@@ -50,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Content */}
           <div className="text-center lg:text-left space-y-8">
             <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-relaxed sm:leading-tight lg:leading-tight tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-relaxed sm:leading-tight lg:leading-tight tracking-tight py-[33px]">
                 {content.headline.split('.').map((part, index, array) => <span key={index}>
                     {part}
                     {index < array.length - 1 && '.'}
@@ -58,7 +58,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </span>)}
               </h1>
               
-              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed py-0">
                 {content.subhead}
               </p>
             </div>
