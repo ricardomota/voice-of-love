@@ -4,18 +4,163 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Favorite, Security, Watson, Microphone, Group, Chat, Checkmark, Menu, Close, ArrowRight, PlayFilled, Time, Star, Flash, Globe, Headphones, Camera, Document, Settings, Share, Code, Db2Database, UserProfile, CloudUpload, Microphone as VoiceActivate, Security as SecurityServices } from '@carbon/icons-react';
 import EternaMatrixReveal from './EternaMatrixReveal';
+import { useLanguage } from '@/hooks/useLanguage';
 interface RileyLandingPageProps {
   onTryFree: () => void;
   onSignIn: () => void;
   onLearnMore: () => void;
   onSeePricing?: () => void;
 }
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      navigation: {
+        features: "Features",
+        pricing: "Pricing",
+        about: "About",
+        start: "Get Started"
+      },
+      hero: {
+        title: "AI-Powered Memory Preservation",
+        subtitle: "Keep the voices and memories of your loved ones alive with our advanced AI technology.",
+        tryFree: "Start for Free",
+        learnMore: "See How It Works"
+      },
+      features: [
+        {
+          title: "Voice Cloning",
+          description: "Advanced AI preserves the unique voice patterns and speech characteristics of your loved ones."
+        },
+        {
+          title: "Family Profiles", 
+          description: "Create comprehensive profiles with memories, photos, and personal stories for each family member."
+        },
+        {
+          title: "Natural Conversations",
+          description: "Have meaningful dialogues that feel authentic and emotionally connected."
+        },
+        {
+          title: "Privacy First",
+          description: "Your family's memories are encrypted and stored with military-grade security."
+        },
+        {
+          title: "Memory Preservation",
+          description: "AI learns from conversations to maintain personality traits and cherished memories."
+        },
+        {
+          title: "Made with Love",
+          description: "Created specifically for families affected by Alzheimer's and memory loss."
+        }
+      ],
+      cta: {
+        main: "Start Your Journey Now",
+        secondary: "Start Free Now",
+        subtitle: "Free forever • No credit card • 24/7 support"
+      }
+    },
+    'pt-BR': {
+      navigation: {
+        features: "Recursos",
+        pricing: "Preços",
+        about: "Sobre",
+        start: "Começar"
+      },
+      hero: {
+        title: "Preservação de Memórias com IA",
+        subtitle: "Mantenha vivas as vozes e memórias dos seus entes queridos com nossa tecnologia de IA avançada.",
+        tryFree: "Começar Gratuitamente",
+        learnMore: "Ver Como Funciona"
+      },
+      features: [
+        {
+          title: "Clonagem de Voz",
+          description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
+        },
+        {
+          title: "Perfis da Família",
+          description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
+        },
+        {
+          title: "Conversas Naturais",
+          description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
+        },
+        {
+          title: "Privacidade Primeiro",
+          description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
+        },
+        {
+          title: "Preservação de Memória",
+          description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
+        },
+        {
+          title: "Feito com Amor",
+          description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
+        }
+      ],
+      cta: {
+        main: "Começar Sua Jornada Agora",
+        secondary: "Experimente Grátis Agora",
+        subtitle: "Gratuito para sempre • Sem cartão de crédito • Suporte 24/7"
+      }
+    },
+    es: {
+      navigation: {
+        features: "Características",
+        pricing: "Precios",
+        about: "Acerca de",
+        start: "Comenzar"
+      },
+      hero: {
+        title: "Preservación de Memoria con IA",
+        subtitle: "Mantén vivas las voces y memorias de tus seres queridos con nuestra tecnología de IA avanzada.",
+        tryFree: "Comenzar Gratis",
+        learnMore: "Ver Cómo Funciona"
+      },
+      features: [
+        {
+          title: "Clonación de Voz",
+          description: "IA avanzada preserva los patrones únicos de voz y características del habla de tus seres queridos."
+        },
+        {
+          title: "Perfiles Familiares",
+          description: "Crea perfiles completos con memorias, fotos e historias personales para cada miembro de la familia."
+        },
+        {
+          title: "Conversaciones Naturales",
+          description: "Ten diálogos significativos que se sienten auténticos y emocionalmente conectados."
+        },
+        {
+          title: "Privacidad Primero",
+          description: "Las memorias de tu familia están encriptadas y almacenadas con seguridad de grado militar."
+        },
+        {
+          title: "Preservación de Memoria",
+          description: "La IA aprende de las conversaciones para mantener rasgos de personalidad y memorias queridas."
+        },
+        {
+          title: "Hecho con Amor",
+          description: "Creado específicamente para familias afectadas por el Alzheimer y pérdida de memoria."
+        }
+      ],
+      cta: {
+        main: "Comienza Tu Viaje Ahora",
+        secondary: "Prueba Gratis Ahora",
+        subtitle: "Gratis para siempre • Sin tarjeta de crédito • Soporte 24/7"
+      }
+    }
+  };
+  return content[language as keyof typeof content] || content.en;
+};
+
 export default function RileyLandingPage({
   onTryFree,
   onSignIn,
   onLearnMore
 }: RileyLandingPageProps) {
+  const { currentLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -24,31 +169,19 @@ export default function RileyLandingPage({
       });
     }
   };
-  const features = [{
-    icon: <VoiceActivate size={24} />,
-    title: "Clonagem de Voz",
-    description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
-  }, {
-    icon: <Group size={24} />,
-    title: "Perfis da Família",
-    description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
-  }, {
-    icon: <Chat size={24} />,
-    title: "Conversas Naturais",
-    description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
-  }, {
-    icon: <Security size={24} />,
-    title: "Privacidade Primeiro",
-    description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
-  }, {
-    icon: <Watson size={24} />,
-    title: "Preservação de Memória",
-    description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
-  }, {
-    icon: <Favorite size={24} />,
-    title: "Feito com Amor",
-    description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
-  }];
+  
+  const features = content.features.map((feature, index) => ({
+    icon: [
+      <VoiceActivate size={24} />,
+      <Group size={24} />,
+      <Chat size={24} />,
+      <Security size={24} />,
+      <Watson size={24} />,
+      <Favorite size={24} />
+    ][index],
+    title: feature.title,
+    description: feature.description
+  }));
   const steps = [{
     icon: <Settings size={24} />,
     title: "Configure o Perfil",
@@ -143,9 +276,9 @@ export default function RileyLandingPage({
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('como-funciona')} className="text-muted-foreground hover:text-foreground transition-colors">Como Funciona</button>
-              <button onClick={() => scrollToSection('por-que-eterna')} className="text-muted-foreground hover:text-foreground transition-colors">Por Que Eterna</button>
-              <button onClick={() => scrollToSection('precos')} className="text-muted-foreground hover:text-foreground transition-colors">Preços</button>
+              <button onClick={() => scrollToSection('como-funciona')} className="text-muted-foreground hover:text-foreground transition-colors">{content.navigation.features}</button>
+              <button onClick={() => scrollToSection('por-que-eterna')} className="text-muted-foreground hover:text-foreground transition-colors">{content.navigation.about}</button>
+              <button onClick={() => scrollToSection('precos')} className="text-muted-foreground hover:text-foreground transition-colors">{content.navigation.pricing}</button>
               <button onClick={() => scrollToSection('privacidade')} className="text-muted-foreground hover:text-foreground transition-colors">Privacidade</button>
             </nav>
 
@@ -206,20 +339,20 @@ export default function RileyLandingPage({
           </h1>
           
           <p className="text-xl text-muted-foreground mb-4">
-            Preservação de Memórias com IA
+            {content.hero.title}
           </p>
           
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Mantenha vivas as vozes e memórias dos seus entes queridos com nossa tecnologia de IA avançada.
+            {content.hero.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" onClick={onTryFree}>
-              Começar Gratuitamente
+              {content.hero.tryFree}
             </Button>
             <Button size="lg" variant="outline" onClick={onLearnMore}>
               <PlayFilled size={16} className="mr-2" />
-              Ver Como Funciona
+              {content.hero.learnMore}
             </Button>
           </div>
 
@@ -285,11 +418,11 @@ export default function RileyLandingPage({
                 <span className="text-primary font-semibold">*</span> Clonagem de voz personalizada disponível após completar o perfil
               </p>
               <Button size="lg" onClick={onTryFree}>
-                Começar Sua Jornada Agora
+                {content.cta.main}
                 <ArrowRight size={16} className="ml-2" />
               </Button>
               <p className="text-sm text-muted-foreground mt-3">
-                Gratuito para sempre • Sem cartão de crédito
+                {content.cta.subtitle}
               </p>
             </div>
           </div>
@@ -456,7 +589,7 @@ export default function RileyLandingPage({
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={onTryFree}>
-              Experimente Grátis Agora
+              {content.cta.secondary}
               <ArrowRight size={16} className="ml-2" />
             </Button>
             <Button size="lg" variant="outline" onClick={() => scrollToSection('precos')}>
@@ -464,7 +597,7 @@ export default function RileyLandingPage({
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Sem cartão de crédito • Configuração em 5 minutos • Suporte 24/7
+            {content.cta.subtitle}
           </p>
         </div>
       </section>
