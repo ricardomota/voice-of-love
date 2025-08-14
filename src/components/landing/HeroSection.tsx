@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Favorite, PlayFilled } from '@carbon/icons-react';
+import { Favorite, PlayFilled, Security } from '@carbon/icons-react';
 
 interface HeroSectionProps {
   onTryFree: () => void;
@@ -91,7 +91,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
             <div className="pt-8 border-t border-gray-600">
               <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-300">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <Security size={16} className="text-green-400" />
                   <span>Private by default</span>
                 </div>
                 <div className="flex items-center gap-2">
