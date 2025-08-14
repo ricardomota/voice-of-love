@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Favorite, PlayFilled, Security } from '@carbon/icons-react';
+import { Favorite, PlayFilled, Security, Group } from '@carbon/icons-react';
 
 interface HeroSectionProps {
   onTryFree: () => void;
@@ -95,7 +95,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onTryFree, onSeePricin
                   <span>Private by default</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Favorite size={16} className="text-primary" />
+                  <Group size={16} className="text-green-400" />
                   <span>Family-first design</span>
                 </div>
               </div>
