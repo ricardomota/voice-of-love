@@ -76,7 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Trust indicators */}
-            <div className="pt-8 border-t border-gray-600">
+            <div className="pt-8">
               <div className="flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-300">
                 <div className="flex items-center gap-2">
                   <Security size={16} className="text-green-500" />
