@@ -40,17 +40,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section className="relative min-h-[90vh] sm:min-h-screen flex items-center justify-center pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-0">
+  return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-black" />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
+      <div className="relative w-full max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Content */}
-          <div className="text-center lg:text-left space-y-6 sm:space-y-8">
-            <div className="space-y-4 sm:space-y-6">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight sm:leading-relaxed lg:leading-tight tracking-tight py-4 sm:py-[33px]">
+          <div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1">
+            <div className="space-y-6">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] sm:leading-tight tracking-tight">
                 {content.headline.split('.').map((part, index, array) => <span key={index}>
                     {part}
                     {index < array.length - 1 && '.'}
@@ -58,32 +58,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </span>)}
               </h1>
               
-              <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-xl text-gray-300/90 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 {content.subhead}
               </p>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-0">
-              <Button onClick={onTryFree} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[200px] h-12 sm:h-auto">
-                <PlayFilled size={16} className="mr-2" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button 
+                onClick={onTryFree} 
+                size="xl" 
+                variant="secondary" 
+                className="w-full sm:w-auto min-w-[220px] h-14 text-base font-medium"
+              >
+                <PlayFilled size={18} className="mr-2" />
                 {content.tryFree}
               </Button>
               
-              <Button onClick={onSeePricing} variant="cta" size="xl" className="w-full sm:w-auto min-w-[160px] h-12 sm:h-auto">
+              <Button 
+                onClick={onSeePricing} 
+                variant="cta" 
+                size="xl" 
+                className="w-full sm:w-auto min-w-[180px] h-14 text-base font-medium"
+              >
                 {content.seePricing}
               </Button>
             </div>
 
             {/* Trust indicators */}
-            <div className="pt-6 sm:pt-8">
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs sm:text-sm text-gray-300">
-                <div className="flex items-center gap-2">
-                  <Security size={14} className="text-green-500" />
+            <div className="pt-6">
+              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-6 xs:gap-8 text-sm text-gray-300/80">
+                <div className="flex items-center gap-2.5">
+                  <Security size={16} className="text-green-400 flex-shrink-0" />
                   <span>Private by default</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Group size={14} className="text-green-500" />
+                <div className="flex items-center gap-2.5">
+                  <Group size={16} className="text-green-400 flex-shrink-0" />
                   <span>Family-first design</span>
                 </div>
               </div>
@@ -91,13 +101,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Hero Image */}
-          <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-              <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover" />
+          <div className="relative order-1 lg:order-2">
+            <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3]">
+              <img 
+                src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" 
+                alt={content.altText} 
+                className="w-full h-full object-cover object-center"
+                loading="eager"
+              />
               
-              {/* Floating elements */}
-              
-              
+              {/* Subtle overlay for better contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
             </div>
           </div>
 
