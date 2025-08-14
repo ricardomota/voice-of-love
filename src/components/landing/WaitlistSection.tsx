@@ -180,7 +180,7 @@ export const WaitlistSection: React.FC = () => {
           </Badge>
           
           <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground">
-            Seja um dos <span className="text-primary">primeiros</span>
+            Entre na <span className="text-primary">waitlist</span>
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

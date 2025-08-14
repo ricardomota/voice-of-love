@@ -3,13 +3,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { EternaHeader } from "@/components/layout/EternaHeader";
-import { BetaGate } from "@/components/BetaGate";
+import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
 import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -29,9 +30,35 @@ const queryClient = new QueryClient({
 const AppContent = () => {
   const { user, loading } = useAuth();
   const [showBetaGate, setShowBetaGate] = useState(false);
+  const [userCount, setUserCount] = useState(0);
+  const [userCountLoading, setUserCountLoading] = useState(true);
   const navigate = useNavigate();
 
-  if (loading) {
+  useEffect(() => {
+    const checkUserCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('user_settings')
+          .select('*', { count: 'exact', head: true });
+        
+        if (error) {
+          console.error('Error getting user count:', error);
+          setUserCount(0);
+        } else {
+          setUserCount(count || 0);
+        }
+      } catch (error) {
+        console.error('Error in checkUserCount:', error);
+        setUserCount(0);
+      } finally {
+        setUserCountLoading(false);
+      }
+    };
+
+    checkUserCount();
+  }, []);
+
+  if (loading || userCountLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -40,7 +67,13 @@ const AppContent = () => {
   }
 
   const handleTryFree = () => {
-    setShowBetaGate(true);
+    if (userCount >= 10) {
+      // Show waitlist directly
+      setShowBetaGate(true);
+    } else {
+      // Show app with login
+      setShowBetaGate(true);
+    }
   };
 
   const handleLogin = () => {
@@ -57,31 +90,31 @@ const AppContent = () => {
             onLogin={handleLogin}
           />
         ) : (
-          <BetaGate>
+          <UserLimitGate>
             <div className="min-h-screen bg-background">
               <EternaHeader />
               <main>
                 <Index />
               </main>
             </div>
-          </BetaGate>
+          </UserLimitGate>
         )
       } />
       
       {/* Protected App Routes */}
       <Route path="/app/*" element={
-        <BetaGate>
+        <UserLimitGate>
           <div className="min-h-screen bg-background">
             <EternaHeader />
             <main>
               <Index />
             </main>
           </div>
-        </BetaGate>
+        </UserLimitGate>
       } />
       
       {/* Legacy auth route redirect */}
-      <Route path="/auth" element={<BetaGate><Index /></BetaGate>} />
+      <Route path="/auth" element={<UserLimitGate><Index /></UserLimitGate>} />
       
       {/* Changelog Route */}
       <Route path="/changelog" element={<Changelog />} />

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Group, PlayFilled, Security } from '@carbon/icons-react';
+import { supabase } from '@/integrations/supabase/client';
 interface HeroSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
+  onLogin: () => void;
 }
 const getContent = (language: string) => {
   const content = {
@@ -34,12 +36,39 @@ const getContent = (language: string) => {
 };
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onTryFree,
-  onSeePricing
+  onSeePricing,
+  onLogin
 }) => {
-  const {
-    currentLanguage
-  } = useLanguage();
+  const [userCount, setUserCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
+
+  useEffect(() => {
+    const checkUserCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('user_settings')
+          .select('*', { count: 'exact', head: true });
+        
+        if (error) {
+          console.error('Error getting user count:', error);
+          setUserCount(0);
+        } else {
+          setUserCount(count || 0);
+        }
+      } catch (error) {
+        console.error('Error in checkUserCount:', error);
+        setUserCount(0);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUserCount();
+  }, []);
+
+  const isWaitlistMode = userCount >= 10;
   return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-black" />
@@ -65,24 +94,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                onClick={onTryFree} 
-                size="xl" 
-                variant="secondary" 
-                className="w-full sm:w-auto min-w-[220px] h-14 text-base font-medium"
-              >
-                <PlayFilled size={18} className="mr-2" />
-                {content.tryFree}
-              </Button>
-              
-              <Button 
-                onClick={onSeePricing} 
-                variant="cta" 
-                size="xl" 
-                className="w-full sm:w-auto min-w-[180px] h-14 text-base font-medium"
-              >
-                {content.seePricing}
-              </Button>
+              {!isLoading && (
+                <>
+                  <Button 
+                    onClick={isWaitlistMode ? onTryFree : onLogin} 
+                    size="xl" 
+                    variant="secondary" 
+                    className="w-full sm:w-auto min-w-[220px] h-14 text-base font-medium"
+                  >
+                    <PlayFilled size={18} className="mr-2" />
+                    {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                  </Button>
+                  
+                  <Button 
+                    onClick={onSeePricing} 
+                    variant="cta" 
+                    size="xl" 
+                    className="w-full sm:w-auto min-w-[180px] h-14 text-base font-medium"
+                  >
+                    {content.seePricing}
+                  </Button>
+                </>
+              )}
             </div>
 
             {/* Trust indicators */}

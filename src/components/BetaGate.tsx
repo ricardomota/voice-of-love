@@ -33,17 +33,13 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
   const MAX_BETA_USERS = 10;
 
   useEffect(() => {
-    const checkAccess = async () => {
+  const checkAccess = async () => {
       try {
         setIsLoading(true);
         
-        // Check if user already has access stored locally
-        const hasStoredAccess = localStorage.getItem('beta_early_access') === 'true';
-        if (hasStoredAccess) {
-          setHasAccess(true);
-          return;
-        }
-
+        // Always allow access - the control is now done by user count, not local storage
+        setHasAccess(true);
+        
         // Get current user count from user_settings table
         const { count, error } = await supabase
           .from('user_settings')
