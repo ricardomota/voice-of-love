@@ -93,17 +93,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Hero Image */}
           <div className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-              <img 
-                src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" 
-                alt={content.altText}
-                className="w-full h-full object-cover"
-              />
+              <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover" />
               
               {/* Floating elements */}
-              <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full backdrop-blur-sm animate-float" />
-              <div className="absolute bottom-6 left-6 w-12 h-12 bg-primary/20 rounded-full backdrop-blur-sm animate-float" style={{
-              animationDelay: '1s'
-            }} />
+              
+              
             </div>
           </div>
 
