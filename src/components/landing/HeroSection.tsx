@@ -92,22 +92,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Hero Image */}
           <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-accent/5 aspect-[4/3]">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4 p-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <Favorite size={24} className="text-primary" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gradient-to-r from-primary/30 to-transparent rounded-full mx-auto w-48" />
-                    
-                    
-                  </div>
-                  <p className="text-sm text-gray-400">
-                    {content.altText}
-                  </p>
-                </div>
-              </div>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+              <img 
+                src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" 
+                alt={content.altText}
+                className="w-full h-full object-cover"
+              />
               
               {/* Floating elements */}
               <div className="absolute top-4 right-4 w-16 h-16 bg-white/10 rounded-full backdrop-blur-sm animate-float" />
