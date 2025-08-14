@@ -11,22 +11,22 @@ interface HeroSectionProps {
 const getContent = (language: string) => {
   const content = {
     en: {
-      headline: "Preserve a Voice. Keep a Story Alive.",
-      subhead: "Chat with an AI that sounds like your loved ones. Eterna turns memories into living voices.",
+      headline: "Where memories become eternal.",
+      subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
       tryFree: "Try Eterna Free",
       seePricing: "See Pricing",
       altText: "Family sharing warm moments together"
     },
     'pt-BR': {
       headline: "Onde lembranças se tornam eternas.",
-      subhead: "Converse com uma IA que soa como seus entes queridos. Eterna transforma memórias em vozes vivas.",
+      subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
       tryFree: "Testar Grátis",
       seePricing: "Ver Preços",
       altText: "Família compartilhando momentos especiais"
     },
     es: {
-      headline: "Preserva una Voz. Mantén una Historia Viva.",
-      subhead: "Chatea con una IA que suena como tus seres queridos. Eterna convierte memorias en voces vivas.",
+      headline: "Donde los recuerdos se vuelven eternos.",
+      subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
       tryFree: "Probar Gratis",
       seePricing: "Ver Precios",
       altText: "Familia compartiendo momentos especiales"
