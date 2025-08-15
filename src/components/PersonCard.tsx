@@ -297,23 +297,23 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         {onAddMemory && <Button variant="outline" size="sm" onClick={e => {
         e.stopPropagation();
         onAddMemory(id);
-      }} className="w-full mb-4">
+      }} className="w-full mb-4 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all">
             <Add className="w-4 h-4 mr-2" />
-            <span className="text-xs sm:text-sm">Adicionar Memória</span>
+            <span className="text-xs sm:text-sm">✨ Adicionar Memória</span>
           </Button>}
 
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
         <div className="space-y-4">
           {/* Botão principal - Chat (destaque máximo) */}
-          <Button 
-            onClick={() => onChat(id)} 
-            className="w-full mb-4"
-            size="lg"
-            aria-label={`Conversar com ${name}`}
-          >
-            <Chat className="w-6 h-6 mr-3" />
-            Conversar
-          </Button>
+            <Button 
+              onClick={() => onChat(id)} 
+              className="w-full mb-4 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all"
+              size="lg"
+              aria-label={`Conversar com ${name}`}
+            >
+              <Chat className="w-6 h-6 mr-3" />
+              💬 Conversar
+            </Button>
 
           {/* Botões secundários - Grid responsivo */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -322,16 +322,16 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <VoiceMessageGenerator 
                 person={person} 
                 trigger={
-                  <Button 
-                    onClick={e => e.stopPropagation()} 
-                    size="lg" 
-                    variant="secondary"
-                    aria-label={`Gerar mensagem de voz de ${name}`}
-                    className="w-full h-12 md:h-14"
-                  >
-                    <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    <span>Receber</span>
-                  </Button>
+                    <Button 
+                      onClick={e => e.stopPropagation()} 
+                      size="lg" 
+                      variant="secondary"
+                      aria-label={`Gerar mensagem de voz de ${name}`}
+                      className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
+                    >
+                      <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <span>🎧 Receber</span>
+                    </Button>
                 } 
               />
             ) : (
@@ -352,16 +352,16 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <AudioChat 
                 person={person} 
                 trigger={
-                  <Button 
-                    onClick={e => e.stopPropagation()} 
-                    size="lg" 
-                    variant="secondary"
-                    aria-label={`Conversa por áudio com ${name}`}
-                    className="w-full h-12 md:h-14"
-                  >
-                    <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    <span>Áudio</span>
-                  </Button>
+                    <Button 
+                      onClick={e => e.stopPropagation()} 
+                      size="lg" 
+                      variant="secondary"
+                      aria-label={`Conversa por áudio com ${name}`}
+                      className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
+                    >
+                      <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <span>🎤 Áudio</span>
+                    </Button>
                 } 
               />
             ) : (

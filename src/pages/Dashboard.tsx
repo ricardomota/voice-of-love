@@ -33,22 +33,22 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
               <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-4 mb-2 text-foreground">
-                <div className="w-12 h-12 rounded-xl bg-foreground flex items-center justify-center">
-                  <Favorite className="w-6 h-6 text-background" />
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-2xl">💖</span>
                 </div>
-                Eterna
+                ✨ Eterna
               </h1>
               <p className="text-base lg:text-lg text-muted-foreground">
-                Suas pessoas eternas aguardam por você
+                Suas pessoas eternas aguardam por você 🌟
               </p>
             </div>
             
             <Button 
               onClick={onCreatePerson}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all"
             >
               <Add className="w-5 h-5 mr-3" />
-              Nova pessoa
+              ✨ Nova pessoa
             </Button>
           </div>
           
@@ -99,20 +99,20 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
               </div>
               
               <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-foreground">
-                Nenhuma pessoa eterna ainda
+                🌟 Nenhuma pessoa eterna ainda
               </h2>
               
               <p className="mb-8 text-base lg:text-lg leading-relaxed max-w-sm mx-auto text-muted-foreground">
-                Comece criando sua primeira pessoa eterna. Preserve memórias e mantenha viva a conexão com quem você ama.
+                Comece criando sua primeira pessoa eterna. Preserve memórias preciosas e mantenha viva a conexão mágica com quem você ama! 💫❤️
               </p>
               
               <Button 
                 onClick={onCreatePerson}
-                className="w-full max-w-xs mx-auto"
+                className="w-full max-w-xs mx-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all"
                 size="lg"
               >
                 <Add className="w-6 h-6 mr-3" />
-                Criar primeira pessoa
+                🚀 Criar primeira pessoa
               </Button>
             </div>
           </div>

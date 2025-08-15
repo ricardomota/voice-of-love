@@ -6,56 +6,56 @@ import { Mic, Settings, MessageCircle, Share } from 'lucide-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "How It Works",
-      subtitle: "Four simple steps to preserve and interact with cherished voices",
+      title: "✨ How It Works",
+      subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
       steps: [
         {
-          title: "Record",
-          description: "Upload a short voice sample or choose a base voice.",
-          detail: "Just a few minutes of clear audio is enough to get started."
+          title: "🎤 Record",
+          description: "Upload a short voice sample or choose a base voice - it's that easy!",
+          detail: "Just a few minutes of clear audio is enough to get started ✨"
         },
         {
-          title: "Configure", 
-          description: "Pick language, style, and personality traits.",
-          detail: "Customize how your loved one's voice sounds and responds."
+          title: "⚙️ Configure", 
+          description: "Pick language, style, and personality traits with love.",
+          detail: "Customize how your loved one's voice sounds and responds 💖"
         },
         {
-          title: "Chat & Listen",
-          description: "Ask questions and hear authentic responses.",
-          detail: "Have meaningful conversations powered by preserved memories."
+          title: "💬 Chat & Listen",
+          description: "Ask questions and hear authentic responses - pure magic!",
+          detail: "Have meaningful conversations powered by preserved memories 🌟"
         },
         {
-          title: "Share",
-          description: "Save curated moments for family.",
-          detail: "Create lasting audio keepsakes for future generations."
+          title: "👨‍👩‍👧‍👦 Share",
+          description: "Save curated moments for family to treasure forever.",
+          detail: "Create lasting audio keepsakes for future generations 💝"
         }
       ],
       notePrefix: "Note:",
       note: "Personal voice cloning available on paid plans and only when capacity allows."
     },
     'pt-BR': {
-      title: "Como Funciona",
-      subtitle: "Quatro passos simples para preservar e interagir com vozes queridas",
+      title: "✨ Como Funciona",
+      subtitle: "Quatro passos simples para preservar e interagir com vozes queridas 💖",
       steps: [
         {
-          title: "Gravar",
-          description: "Envie uma amostra de voz ou escolha uma voz base.",
-          detail: "Apenas alguns minutos de áudio claro são suficientes para começar."
+          title: "🎤 Gravar",
+          description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
+          detail: "Apenas alguns minutos de áudio claro são suficientes para começar ✨"
         },
         {
-          title: "Configurar",
-          description: "Escolha idioma, estilo e traços de personalidade.",
-          detail: "Personalize como a voz do seu ente querido soa e responde."
+          title: "⚙️ Configurar",
+          description: "Escolha idioma, estilo e traços de personalidade com carinho.",
+          detail: "Personalize como a voz do seu ente querido soa e responde 💖"
         },
         {
-          title: "Conversar",
-          description: "Faça perguntas e ouça respostas autênticas.",
-          detail: "Tenha conversas significativas alimentadas por memórias preservadas."
+          title: "💬 Conversar",
+          description: "Faça perguntas e ouça respostas autênticas - pura magia!",
+          detail: "Tenha conversas significativas alimentadas por memórias preservadas 🌟"
         },
         {
-          title: "Compartilhar",
-          description: "Salve momentos especiais para a família.",
-          detail: "Crie recordações em áudio duradouras para as próximas gerações."
+          title: "👨‍👩‍👧‍👦 Compartilhar",
+          description: "Salve momentos especiais para a família guardar para sempre.",
+          detail: "Crie recordações em áudio duradouras para as próximas gerações 💝"
         }
       ],
       notePrefix: "Nota:",

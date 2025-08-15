@@ -11,8 +11,8 @@ interface PricingSectionProps {
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "Simple, Family-Friendly Pricing",
-      subtitle: "Start free, upgrade when you're ready to preserve more voices and memories",
+      title: "💰 Simple, Family-Friendly Pricing",
+      subtitle: "Start free, upgrade when you're ready to preserve more voices and memories ✨",
       free: {
         title: "Free",
         price: "R$0",
@@ -36,8 +36,8 @@ const getContent = (language: string) => {
       fullPricing: "See Full Pricing Details"
     },
     'pt-BR': {
-      title: "Preços Simples e Amigáveis",
-      subtitle: "Comece grátis, faça upgrade quando estiver pronto para preservar mais vozes e memórias",
+      title: "💰 Preços Simples e Amigáveis",
+      subtitle: "Comece grátis, faça upgrade quando estiver pronto para preservar mais vozes e memórias ✨",
       free: {
         title: "Gratuito",
         price: "R$0",

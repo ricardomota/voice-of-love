@@ -21,35 +21,35 @@ const getContent = (language: string) => {
         start: "Get Started"
       },
       hero: {
-        title: "AI-Powered Memory Preservation",
-        subtitle: "Keep the voices and memories of your loved ones alive with our advanced AI technology.",
-        tryFree: "Start for Free",
-        learnMore: "See How It Works"
+        title: "🎙️ AI-Powered Memory Preservation",
+        subtitle: "Keep the voices and memories of your loved ones alive forever with our magical AI technology ✨",
+        tryFree: "🚀 Start for Free",
+        learnMore: "👀 See How It Works"
       },
       features: [
         {
-          title: "Voice Cloning",
-          description: "Advanced AI preserves the unique voice patterns and speech characteristics of your loved ones."
+          title: "🎭 Voice Cloning",
+          description: "Advanced AI preserves the unique voice patterns and speech characteristics of your loved ones with stunning accuracy! ✨"
         },
         {
-          title: "Family Profiles", 
-          description: "Create comprehensive profiles with memories, photos, and personal stories for each family member."
+          title: "👨‍👩‍👧‍👦 Family Profiles", 
+          description: "Create beautiful, comprehensive profiles with memories, photos, and personal stories for each family member 📚"
         },
         {
-          title: "Natural Conversations",
-          description: "Have meaningful dialogues that feel authentic and emotionally connected."
+          title: "💬 Natural Conversations",
+          description: "Have meaningful dialogues that feel authentic and emotionally connected - just like talking to them in person! 💖"
         },
         {
-          title: "Privacy First",
-          description: "Your family's memories are encrypted and stored with military-grade security."
+          title: "🔒 Privacy First",
+          description: "Your family's precious memories are encrypted and stored with military-grade security 🛡️"
         },
         {
-          title: "Memory Preservation",
-          description: "AI learns from conversations to maintain personality traits and cherished memories."
+          title: "🧠 Memory Preservation",
+          description: "AI learns from conversations to maintain personality traits and cherished memories forever 💝"
         },
         {
-          title: "Made with Love",
-          description: "Created specifically for families affected by Alzheimer's and memory loss."
+          title: "❤️ Made with Love",
+          description: "Created specifically for families affected by Alzheimer's and memory loss - with deep care and understanding 🤗"
         }
       ],
       cta: {
@@ -66,35 +66,35 @@ const getContent = (language: string) => {
         start: "Começar"
       },
       hero: {
-        title: "Preservação de Memórias com IA",
-        subtitle: "Mantenha vivas as vozes e memórias dos seus entes queridos com nossa tecnologia de IA avançada.",
-        tryFree: "Começar Gratuitamente",
-        learnMore: "Ver Como Funciona"
+        title: "🎙️ Preservação de Memórias com IA",
+        subtitle: "Mantenha vivas as vozes e memórias dos seus entes queridos para sempre com nossa tecnologia mágica de IA ✨",
+        tryFree: "🚀 Começar Gratuitamente",
+        learnMore: "👀 Ver Como Funciona"
       },
       features: [
         {
-          title: "Clonagem de Voz",
-          description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos."
+          title: "🎭 Clonagem de Voz",
+          description: "IA avançada preserva os padrões únicos de voz e características de fala dos seus entes queridos com precisão incrível! ✨"
         },
         {
-          title: "Perfis da Família",
-          description: "Crie perfis abrangentes com memórias, fotos e histórias pessoais para cada membro da família."
+          title: "👨‍👩‍👧‍👦 Perfis da Família",
+          description: "Crie perfis lindos e abrangentes com memórias, fotos e histórias pessoais para cada membro da família 📚"
         },
         {
-          title: "Conversas Naturais",
-          description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados."
+          title: "💬 Conversas Naturais",
+          description: "Tenha diálogos significativos que se sentem autênticos e emocionalmente conectados - como falar pessoalmente com eles! 💖"
         },
         {
-          title: "Privacidade Primeiro",
-          description: "As memórias da sua família são criptografadas e armazenadas com segurança de nível militar."
+          title: "🔒 Privacidade Primeiro",
+          description: "As memórias preciosas da sua família são criptografadas e armazenadas com segurança de nível militar 🛡️"
         },
         {
-          title: "Preservação de Memória",
-          description: "IA aprende com conversas para manter traços de personalidade e memórias queridas."
+          title: "🧠 Preservação de Memória",
+          description: "IA aprende com conversas para manter traços de personalidade e memórias queridas para sempre 💝"
         },
         {
-          title: "Feito com Amor",
-          description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória."
+          title: "❤️ Feito com Amor",
+          description: "Criado especificamente para famílias afetadas pelo Alzheimer e perda de memória - com muito carinho e compreensão 🤗"
         }
       ],
       cta: {
@@ -331,11 +331,11 @@ export default function RileyLandingPage({
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="outline" className="mb-6 px-4 py-2">Feito com ❤️ para Famílias enfrentando o Alzheimer</Badge>
+          <Badge variant="outline" className="mb-6 px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30">✨ Feito com ❤️ para Famílias enfrentando o Alzheimer 🤗</Badge>
           
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight">
-            Preserve a Voz
-            <span className="block">Para Sempre</span>
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">
+            🎙️ Preserve a Voz
+            <span className="block text-transparent bg-gradient-to-r from-primary to-primary/70 bg-clip-text">Para Sempre ✨</span>
           </h1>
           
           <p className="text-xl text-muted-foreground mb-4">

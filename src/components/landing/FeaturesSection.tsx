@@ -6,60 +6,60 @@ import { Security, Microphone, Flash, Globe } from '@carbon/icons-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "Thoughtfully Designed Features",
+      title: "✨ Thoughtfully Designed Features",
       features: [
         {
-          title: "Private by Default",
-          description: "Secure, private storage that keeps your family's voices and memories safe.",
+          title: "🔒 Private by Default",
+          description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
           icon: Security,
-          highlight: "End-to-end encrypted"
+          highlight: "🔐 End-to-end encrypted"
         },
         {
-          title: "Hybrid Voices", 
-          description: "Base voices for all users, personal voice cloning for paid users when capacity allows.",
+          title: "🎭 Hybrid Voices", 
+          description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
           icon: Microphone,
-          highlight: "ElevenLabs powered"
+          highlight: "🚀 ElevenLabs powered"
         },
         {
-          title: "Cost-Smart AI",
-          description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations.",
+          title: "🧠 Cost-Smart AI",
+          description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
           icon: Flash,
-          highlight: "Optimized for families"
+          highlight: "👨‍👩‍👧‍👦 Optimized for families"
         },
         {
-          title: "Multilingual",
-          description: "Available in English, Portuguese (Brazil), and Spanish to serve global families.",
+          title: "🌍 Multilingual",
+          description: "Available in English, Portuguese (Brazil), and Spanish to serve global families everywhere! 🗣️",
           icon: Globe,
-          highlight: "EN, PT-BR, ES"
+          highlight: "🌎 EN, PT-BR, ES"
         }
       ]
     },
     'pt-BR': {
-      title: "Funcionalidades Pensadas com Carinho",
+      title: "✨ Funcionalidades Pensadas com Carinho",
       features: [
         {
-          title: "Privado por Padrão",
-          description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas.",
+          title: "🔒 Privado por Padrão",
+          description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
           icon: Security,
-          highlight: "Criptografado ponta a ponta"
+          highlight: "🔐 Criptografado ponta a ponta"
         },
         {
-          title: "Vozes Híbridas",
-          description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite.",
+          title: "🎭 Vozes Híbridas",
+          description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia pura! ✨",
           icon: Microphone,
-          highlight: "Alimentado por ElevenLabs"
+          highlight: "🚀 Alimentado por ElevenLabs"
         },
         {
-          title: "IA Econômica",
-          description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium.",
+          title: "🧠 IA Econômica",
+          description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
           icon: Flash,
-          highlight: "Otimizado para famílias"
+          highlight: "👨‍👩‍👧‍👦 Otimizado para famílias"
         },
         {
-          title: "Multilíngue",
-          description: "Disponível em Inglês, Português (Brasil) e Espanhol para servir famílias globais.",
+          title: "🌍 Multilíngue",
+          description: "Disponível em Inglês, Português (Brasil) e Espanhol para servir famílias globais em todos os lugares! 🗣️",
           icon: Globe,
-          highlight: "EN, PT-BR, ES"
+          highlight: "🌎 EN, PT-BR, ES"
         }
       ]
     },
