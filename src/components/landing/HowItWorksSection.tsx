@@ -6,7 +6,7 @@ import { Mic, Settings, MessageCircle, Share } from 'lucide-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "✨ How it works",
+      title: "Como funciona",
       subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
       steps: [
         {
@@ -34,7 +34,7 @@ const getContent = (language: string) => {
       note: "Personal voice cloning available on paid plans and only when capacity allows."
     },
     'pt-BR': {
-      title: "✨ Como Funciona",
+      title: "Como funciona",
       subtitle: "Quatro passos simples para preservar e interagir com vozes queridas 💖",
       steps: [
         {
@@ -62,7 +62,7 @@ const getContent = (language: string) => {
       note: "Clone de voz pessoal disponível em planos pagos e apenas quando a capacidade permite."
     },
     es: {
-      title: "Cómo Funciona", 
+      title: "Cómo funciona", 
       subtitle: "Cuatro pasos simples para preservar e interactuar con voces queridas",
       steps: [
         {
