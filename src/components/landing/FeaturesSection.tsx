@@ -6,7 +6,7 @@ import { Security, Microphone, Flash, Globe } from '@carbon/icons-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "✨ Thoughtfully Designed Features",
+      title: "Thoughtfully Designed Features",
       features: [
         {
           title: "🔒 Private by Default",
@@ -35,7 +35,7 @@ const getContent = (language: string) => {
       ]
     },
     'pt-BR': {
-      title: "✨ Funcionalidades Pensadas com Carinho",
+      title: "Funcionalidades Pensadas com Carinho",
       features: [
         {
           title: "🔒 Privado por Padrão",
