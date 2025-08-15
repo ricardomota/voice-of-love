@@ -18,7 +18,7 @@ const getContent = (language: string) => {
       altText: "Family sharing warm moments together"
     },
     'pt-BR': {
-      headline: "Onde lembranças se tornam eternas. ✨",
+      headline: "Onde lembranças se tornam eternas✨",
       subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
       tryFree: "Testar Grátis",
       seePricing: "Ver Preços",
