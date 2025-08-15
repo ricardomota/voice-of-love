@@ -6,7 +6,7 @@ import { Mic, Settings, MessageCircle, Share } from 'lucide-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "✨ How It Works",
+      title: "✨ How it works",
       subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
       steps: [
         {
@@ -20,7 +20,7 @@ const getContent = (language: string) => {
           detail: "Customize how your loved one's voice sounds and responds 💖"
         },
         {
-          title: "💬 Chat & Listen",
+          title: "💬 Chat & listen",
           description: "Ask questions and hear authentic responses - pure magic!",
           detail: "Have meaningful conversations powered by preserved memories 🌟"
         },

@@ -11,7 +11,7 @@ interface PricingSectionProps {
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "💰 Simple, Family-Friendly Pricing",
+      title: "💰 Simple, family-friendly pricing",
       subtitle: "Start free, upgrade when you're ready to preserve more voices and memories ✨",
       free: {
         title: "Free",
@@ -23,7 +23,7 @@ const getContent = (language: string) => {
         popular: false
       },
       paid: {
-        title: "Family Plan",
+        title: "Family plan",
         price: "R$29",
         period: "/month",
         usd: "(~US$5.99)",
@@ -36,7 +36,7 @@ const getContent = (language: string) => {
       fullPricing: "See Full Pricing Details"
     },
     'pt-BR': {
-      title: "💰 Preços Simples e Amigáveis",
+      title: "💰 Preços simples e amigáveis",
       subtitle: "Comece grátis, faça upgrade quando estiver pronto para preservar mais vozes e memórias ✨",
       free: {
         title: "Gratuito",
@@ -48,7 +48,7 @@ const getContent = (language: string) => {
         popular: false
       },
       paid: {
-        title: "Plano Família",
+        title: "Plano família",
         price: "R$29",
         period: "/mês",
         usd: "(~US$5.99)",
@@ -61,7 +61,7 @@ const getContent = (language: string) => {
       fullPricing: "Ver Detalhes Completos de Preços"
     },
     es: {
-      title: "Precios Simples y Familiares",
+      title: "Precios simples y familiares",
       subtitle: "Comienza gratis, actualiza cuando estés listo para preservar más voces y memorias",
       free: {
         title: "Gratuito",
@@ -73,7 +73,7 @@ const getContent = (language: string) => {
         popular: false
       },
       paid: {
-        title: "Plan Familiar",
+        title: "Plan familiar",
         price: "R$29",
         period: "/mes",
         usd: "(~US$5.99)",

@@ -12,32 +12,32 @@ const getContent = (language: string) => {
   const content = {
     en: {
       features: {
-        title: "Designed for Families",
+        title: "Designed for families",
         items: [
-          { title: "Private by Design", description: "Your voice models and conversations stay within your family", icon: Shield },
-          { title: "Always Available", description: "Chat with your loved ones whenever you need them most", icon: Clock },
-          { title: "Global Families", description: "Supporting families worldwide in multiple languages", icon: Globe },
-          { title: "Built with Love", description: "Created with deep understanding of memory challenges", icon: Heart }
+          { title: "Private by design", description: "Your voice models and conversations stay within your family", icon: Shield },
+          { title: "Always available", description: "Chat with your loved ones whenever you need them most", icon: Clock },
+          { title: "Global families", description: "Supporting families worldwide in multiple languages", icon: Globe },
+          { title: "Built with love", description: "Created with deep understanding of memory challenges", icon: Heart }
         ]
       },
       cta: {
-        title: "Ready to Preserve Your Family's Voice?",
+        title: "Ready to preserve your family's voice?",
         description: "Join families who are creating lasting connections through Eterna's voice preservation technology.",
         button: "Start Your Journey"
       }
     },
     'pt-BR': {
       features: {
-        title: "Projetado para Famílias",
+        title: "Projetado para famílias",
         items: [
-          { title: "Privado por Design", description: "Seus modelos de voz e conversas ficam dentro da sua família", icon: Shield },
-          { title: "Sempre Disponível", description: "Converse com seus entes queridos quando mais precisar", icon: Clock },
-          { title: "Famílias Globais", description: "Apoiando famílias no mundo todo em múltiplos idiomas", icon: Globe },
-          { title: "Feito com Amor", description: "Criado com profundo entendimento dos desafios de memória", icon: Heart }
+          { title: "Privado por design", description: "Seus modelos de voz e conversas ficam dentro da sua família", icon: Shield },
+          { title: "Sempre disponível", description: "Converse com seus entes queridos quando mais precisar", icon: Clock },
+          { title: "Famílias globais", description: "Apoiando famílias no mundo todo em múltiplos idiomas", icon: Globe },
+          { title: "Feito com amor", description: "Criado com profundo entendimento dos desafios de memória", icon: Heart }
         ]
       },
       cta: {
-        title: "Pronto para Preservar a Voz da Sua Família?",
+        title: "Pronto para preservar a voz da sua família?",
         description: "Junte-se a famílias que estão criando conexões duradouras através da tecnologia de preservação de voz do Eterna.",
         button: "Comece Sua Jornada"
       }

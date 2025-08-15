@@ -7,108 +7,108 @@ import dashboardMockup from '@/assets/dashboard-mockup.png';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "Everything You Need",
-      subtitle: "Preserve Memories, Connect Hearts",
+      title: "Everything you need",
+      subtitle: "Preserve memories, connect hearts",
       features: [
         {
-          title: "Voice Cloning",
+          title: "Voice cloning",
           description: "Advanced AI captures unique speech patterns and personality",
           icon: Mic
         },
         {
-          title: "Family Profiles",
+          title: "Family profiles",
           description: "Create detailed profiles for each loved one with photos and memories",
           icon: Users
         },
         {
-          title: "Natural Conversations",
+          title: "Natural conversations",
           description: "Chat naturally with AI that responds like your loved one",
           icon: MessageCircle
         },
         {
-          title: "Privacy First",
+          title: "Privacy first",
           description: "Your family's data is encrypted and never shared with third parties",
           icon: Shield
         },
         {
-          title: "Memory Preservation",
+          title: "Memory preservation",
           description: "Specially designed for families facing Alzheimer's and dementia",
           icon: Brain
         },
         {
-          title: "Built with Love",
+          title: "Built with love",
           description: "Created by someone who understands the pain of memory loss",
           icon: Heart
         }
       ]
     },
     'pt-BR': {
-      title: "Tudo Que Você Precisa",
-      subtitle: "Preserve Memórias, Conecte Corações",
+      title: "Tudo que você precisa",
+      subtitle: "Preserve memórias, conecte corações",
       features: [
         {
-          title: "Clonagem de Voz",
+          title: "Clonagem de voz",
           description: "IA avançada captura padrões únicos de fala e personalidade",
           icon: Mic
         },
         {
-          title: "Perfis da Família",
+          title: "Perfis da família",
           description: "Crie perfis detalhados para cada ente querido com fotos e memórias",
           icon: Users
         },
         {
-          title: "Conversas Naturais",
+          title: "Conversas naturais",
           description: "Converse naturalmente com IA que responde como seu ente querido",
           icon: MessageCircle
         },
         {
-          title: "Privacidade Primeiro",
+          title: "Privacidade primeiro",
           description: "Os dados da sua família são criptografados e nunca compartilhados",
           icon: Shield
         },
         {
-          title: "Preservação de Memória",
+          title: "Preservação de memória",
           description: "Especialmente projetado para famílias enfrentando Alzheimer e demência",
           icon: Brain
         },
         {
-          title: "Feito com Amor",
+          title: "Feito com amor",
           description: "Criado por alguém que entende a dor da perda de memória",
           icon: Heart
         }
       ]
     },
     es: {
-      title: "Todo Lo Que Necesitas",
-      subtitle: "Preserva Recuerdos, Conecta Corazones",
+      title: "Todo lo que necesitas",
+      subtitle: "Preserva recuerdos, conecta corazones",
       features: [
         {
-          title: "Clonación de Voz",
+          title: "Clonación de voz",
           description: "IA avanzada captura patrones únicos de habla y personalidad",
           icon: Mic
         },
         {
-          title: "Perfiles Familiares",
+          title: "Perfiles familiares",
           description: "Crea perfiles detallados para cada ser querido con fotos y recuerdos",
           icon: Users
         },
         {
-          title: "Conversaciones Naturales",
+          title: "Conversaciones naturales",
           description: "Conversa naturalmente con IA que responde como tu ser querido",
           icon: MessageCircle
         },
         {
-          title: "Privacidad Primero",
+          title: "Privacidad primero",
           description: "Los datos de tu familia están encriptados y nunca se comparten",
           icon: Shield
         },
         {
-          title: "Preservación de Memoria",
+          title: "Preservación de memoria",
           description: "Específicamente diseñado para familias enfrentando Alzheimer y demencia",
           icon: Brain
         },
         {
-          title: "Hecho con Amor",
+          title: "Hecho con amor",
           description: "Creado por alguien que entiende el dolor de la pérdida de memoria",
           icon: Heart
         }

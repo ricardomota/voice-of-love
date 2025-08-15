@@ -6,22 +6,22 @@ import { Security, Microphone, Flash, Globe } from '@carbon/icons-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "Thoughtfully Designed Features",
+      title: "Thoughtfully designed features",
       features: [
         {
-          title: "🔒 Private by Default",
+          title: "🔒 Private by default",
           description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
           icon: Security,
           highlight: "🔐 End-to-end encrypted"
         },
         {
-          title: "🎭 Hybrid Voices", 
+          title: "🎭 Hybrid voices", 
           description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
           icon: Microphone,
           highlight: "🚀 ElevenLabs powered"
         },
         {
-          title: "🧠 Cost-Smart AI",
+          title: "🧠 Cost-smart AI",
           description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
           icon: Flash,
           highlight: "👨‍👩‍👧‍👦 Optimized for families"
@@ -35,22 +35,22 @@ const getContent = (language: string) => {
       ]
     },
     'pt-BR': {
-      title: "Funcionalidades Pensadas com Carinho",
+      title: "Funcionalidades pensadas com carinho",
       features: [
         {
-          title: "🔒 Privado por Padrão",
+          title: "🔒 Privado por padrão",
           description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
           icon: Security,
           highlight: "🔐 Criptografado ponta a ponta"
         },
         {
-          title: "🎭 Vozes Híbridas",
+          title: "🎭 Vozes híbridas",
           description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia pura! ✨",
           icon: Microphone,
           highlight: "🚀 Alimentado por ElevenLabs"
         },
         {
-          title: "🧠 IA Econômica",
+          title: "🧠 IA econômica",
           description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
           icon: Flash,
           highlight: "👨‍👩‍👧‍👦 Otimizado para famílias"
@@ -64,22 +64,22 @@ const getContent = (language: string) => {
       ]
     },
     es: {
-      title: "Características Diseñadas con Cuidado",
+      title: "Características diseñadas con cuidado",
       features: [
         {
-          title: "Privado por Defecto",
+          title: "Privado por defecto",
           description: "Almacenamiento seguro y privado que mantiene las voces y memorias de tu familia protegidas.",
           icon: Security,
           highlight: "Cifrado extremo a extremo"
         },
         {
-          title: "Voces Híbridas",
+          title: "Voces híbridas",
           description: "Voces base para todos los usuarios, clonación de voz personal para usuarios pagos cuando la capacidad lo permite.",
           icon: Microphone,
           highlight: "Impulsado por ElevenLabs"
         },
         {
-          title: "IA Económica",
+          title: "IA económica",
           description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-5o para conversaciones premium.",
           icon: Flash,
           highlight: "Optimizado para familias"

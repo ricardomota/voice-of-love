@@ -6,66 +6,66 @@ import { Heart, Shield, Brain } from 'lucide-react';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "💝 Why Eterna",
+      title: "💝 Why eterna",
       story: "Inspired by families facing Alzheimer's… Memories fade. Voices shouldn't. ✨",
       highlight: "🔒 Private by default. Yours to keep forever. 💖",
       features: [
         {
-          title: "❤️ Built with Love",
+          title: "❤️ Built with love",
           description: "Created by someone who understands the pain of watching memories slip away. Every feature designed with families in mind, with deep care and understanding. 🤗",
           icon: Heart
         },
         {
-          title: "🔒 Privacy First", 
+          title: "🔒 Privacy first", 
           description: "Your voice models and conversations are stored securely and never shared. What you preserve stays with your family forever and ever! 🛡️",
           icon: Shield
         },
         {
-          title: "🧠 Alzheimer's Aware",
+          title: "🧠 Alzheimer's aware",
           description: "Specifically designed to help families maintain connection when traditional communication becomes difficult - because love finds a way. 💖",
           icon: Brain
         }
       ]
     },
     'pt-BR': {
-      title: "💝 Por que Eterna",
+      title: "💝 Por que eterna",
       story: "Inspirado por famílias enfrentando Alzheimer… Memórias desvanecem. Vozes não deveriam. ✨",
       highlight: "🔒 Privado por padrão. Seu para guardar para sempre. 💖",
       features: [
         {
-          title: "❤️ Feito com Amor",
+          title: "❤️ Feito com amor",
           description: "Criado por alguém que entende a dor de ver memórias se desvanecendo. Cada funcionalidade pensada para famílias, com muito carinho e compreensão. 🤗",
           icon: Heart
         },
         {
-          title: "🔒 Privacidade Primeiro",
+          title: "🔒 Privacidade primeiro",
           description: "Seus modelos de voz e conversas são armazenados com segurança e nunca compartilhados. O que você preserva fica com sua família para sempre e sempre! 🛡️",
           icon: Shield
         },
         {
-          title: "🧠 Consciente do Alzheimer",
+          title: "🧠 Consciente do alzheimer",
           description: "Especificamente projetado para ajudar famílias a manter conexão quando a comunicação tradicional se torna difícil - porque o amor sempre encontra um jeito. 💖",
           icon: Brain
         }
       ]
     },
     es: {
-      title: "Por qué Eterna",
+      title: "💝 Por qué eterna",
       story: "Inspirado por familias enfrentando Alzheimer… Los recuerdos se desvanecen. Las voces no deberían.",
       highlight: "Privado por defecto. Tuyo para guardar.",
       features: [
         {
-          title: "Hecho con Amor",
+          title: "❤️ Hecho con amor",
           description: "Creado por alguien que entiende el dolor de ver recuerdos desvaneciéndose. Cada característica diseñada pensando en las familias.",
           icon: Heart
         },
         {
-          title: "Privacidad Primero",
+          title: "🔒 Privacidad primero",
           description: "Tus modelos de voz y conversaciones se almacenan de forma segura y nunca se comparten. Lo que preservas queda con tu familia.",
           icon: Shield
         },
         {
-          title: "Consciente del Alzheimer",
+          title: "🧠 Consciente del alzheimer",
           description: "Específicamente diseñado para ayudar a las familias a mantener conexión cuando la comunicación tradicional se vuelve difícil.",
           icon: Brain
         }
