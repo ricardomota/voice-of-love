@@ -17,21 +17,21 @@ const getContent = (language: string) => {
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
-          title: "🎭 Hybrid voices", 
+          title: "Hybrid voices", 
           description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
           icon: Microphone,
           highlight: "🚀 ElevenLabs powered",
           image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
         },
         {
-          title: "🧠 Cost-smart AI",
+          title: "Cost-smart AI",
           description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
           icon: Flash,
           highlight: "👨‍👩‍👧‍👦 Optimized for families",
           image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
         },
         {
-          title: "🌍 Multilingual",
+          title: "Multilingual",
           description: "Available in English, Portuguese (Brazil), and Spanish to serve global families everywhere! 🗣️",
           icon: Globe,
           highlight: "🌎 EN, PT-BR, ES",
@@ -50,21 +50,21 @@ const getContent = (language: string) => {
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
-          title: "🎭 Vozes híbridas",
+          title: "Vozes híbridas",
           description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
           icon: Microphone,
           highlight: "🚀 Powered by ElevenLabs",
           image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
         },
         {
-          title: "🧠 IA econômica",
+          title: "IA econômica",
           description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
           icon: Flash,
           highlight: "👨‍👩‍👧‍👦 Otimizado para famílias",
           image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
         },
         {
-          title: "🌍 Multilíngue",
+          title: "Multilíngue",
           description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
           icon: Globe,
           highlight: "🌎 EN, PT-BR, ES",
@@ -72,7 +72,7 @@ const getContent = (language: string) => {
         }
       ]
     },
-    es: {
+es: {
       title: "Características diseñadas con cuidado",
       features: [
         {
