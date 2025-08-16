@@ -13,7 +13,7 @@ const getContent = (language: string) => {
           title: "Private by default",
           description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
           icon: Security,
-          highlight: "🔐 End-to-end encrypted",
+          highlight: "End-to-end encrypted",
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
@@ -46,7 +46,7 @@ const getContent = (language: string) => {
           title: "Privado por padrão",
           description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
           icon: Security,
-          highlight: "🔐 Criptografado ponta a ponta",
+          highlight: "Criptografado ponta a ponta",
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
@@ -79,7 +79,7 @@ const getContent = (language: string) => {
           title: "Privado por defecto",
           description: "Almacenamiento seguro y privado que mantiene las voces y memorias de tu familia protegidas y seguras! 🛡️",
           icon: Security,
-          highlight: "🔐 Cifrado extremo a extremo",
+          highlight: "Cifrado extremo a extremo",
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
@@ -207,7 +207,7 @@ export const FeaturesSection: React.FC = () => {
                       <p className="text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-full text-sm font-medium text-primary">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/30 rounded-full text-sm font-medium text-violet-700 dark:text-violet-300 backdrop-blur-sm">
                         {feature.highlight}
                       </div>
                     </div>
