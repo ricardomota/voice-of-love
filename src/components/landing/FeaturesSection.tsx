@@ -200,7 +200,7 @@ export const FeaturesSection: React.FC = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-8 space-y-4">
+                    <div className="p-6 pb-4 space-y-4">
                       <h3 className="text-xl lg:text-2xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                         {feature.title}
                       </h3>
