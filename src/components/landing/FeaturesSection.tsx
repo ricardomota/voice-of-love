@@ -207,7 +207,15 @@ export const FeaturesSection: React.FC = () => {
                       <p className="text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/30 rounded-full text-sm font-medium text-violet-700 dark:text-violet-300 backdrop-blur-sm">
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm ${
+                        index === 0 
+                          ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/30 text-violet-700 dark:text-violet-300"
+                          : index === 1
+                          ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/30 text-blue-700 dark:text-blue-300"
+                          : index === 2
+                          ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/30 text-emerald-700 dark:text-emerald-300"
+                          : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/30 text-orange-700 dark:text-orange-300"
+                      } bg-[length:200%_100%] animate-[gradient-shift_3s_ease-in-out_infinite]`}>
                         {feature.highlight}
                       </div>
                     </div>
