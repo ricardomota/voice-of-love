@@ -181,7 +181,7 @@ export const FeaturesSection: React.FC = () => {
               >
                 <Card className="relative overflow-hidden border-2 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl bg-gradient-to-br from-card to-card/80 h-full">
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-64 sm:h-72 overflow-hidden">
                       {/* Feature Image */}
                       <img
                         src={feature.image}
