@@ -54,7 +54,7 @@ const getContent = (language: string) => {
           description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
           icon: Microphone,
           highlight: "🚀 Powered by ElevenLabs",
-          image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
+          image: "/lovable-uploads/feb6ff74-d393-4dad-89b9-2b6dedd46c46.png"
         },
         {
           title: "IA econômica",
