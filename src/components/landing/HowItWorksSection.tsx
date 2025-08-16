@@ -83,7 +83,7 @@ export const HowItWorksSection: React.FC = () => {
   } = useLanguage();
   const content = getContent(currentLanguage);
   const icons = [Mic, Settings, MessageCircle, Share];
-  return <section id="how-it-works" className="py-32 sm:py-40 lg:py-48 relative overflow-hidden">
+  return <section id="how-it-works" className="py-40 sm:py-52 lg:py-64 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30" />
       
@@ -106,7 +106,7 @@ export const HowItWorksSection: React.FC = () => {
       delay: 2
     }} />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
         
         {/* Enhanced Header */}
         <motion.div initial={{
@@ -120,7 +120,7 @@ export const HowItWorksSection: React.FC = () => {
         margin: "-100px"
       }} transition={{
         duration: 0.8
-      }} className="text-center max-w-4xl mx-auto mb-20 lg:mb-28">
+      }} className="text-center max-w-4xl mx-auto mb-28 lg:mb-36">
           <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
@@ -152,7 +152,7 @@ export const HowItWorksSection: React.FC = () => {
         </motion.div>
 
         {/* Enhanced Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-16 xl:gap-20 mb-20 lg:mb-24">
           {content.steps.map((step, index) => {
           const IconComponent = icons[index];
           return <motion.div key={index} initial={{
@@ -175,7 +175,7 @@ export const HowItWorksSection: React.FC = () => {
               }
             }}>
                   <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full">
-                    <CardContent className="p-8 sm:p-10 text-center space-y-6 relative">
+                    <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 text-center space-y-8 lg:space-y-10 relative">
                       
                       {/* Enhanced Step Number */}
                       <motion.div className="absolute -top-6 left-1/2 transform -translate-x-1/2" whileHover={{
@@ -199,7 +199,7 @@ export const HowItWorksSection: React.FC = () => {
                       </motion.div>
 
                       {/* Enhanced Content */}
-                      <div className="space-y-4">
+                      <div className="space-y-6 lg:space-y-8">
                         <motion.h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300" whileHover={{
                       scale: 1.02
                     }}>

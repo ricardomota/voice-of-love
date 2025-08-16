@@ -121,7 +121,7 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section id="features" className="py-32 sm:py-40 lg:py-48 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+  return <section id="features" className="py-40 sm:py-52 lg:py-64 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
@@ -144,7 +144,7 @@ export const FeaturesSection: React.FC = () => {
       delay: 3
     }} />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
         
         {/* Enhanced Header */}
         <motion.div initial={{
@@ -159,7 +159,7 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         ease: "easeOut"
-      }} className="text-center max-w-4xl mx-auto mb-20 lg:mb-28">
+      }} className="text-center max-w-4xl mx-auto mb-28 lg:mb-36">
           <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
@@ -180,7 +180,7 @@ export const FeaturesSection: React.FC = () => {
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{
         once: true,
         margin: "-100px"
-      }} className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      }} className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24">
           {content.features.map((feature, index) => {
           const IconComponent = feature.icon;
           return <motion.div key={index} variants={itemVariants} whileHover={{
@@ -201,7 +201,7 @@ export const FeaturesSection: React.FC = () => {
                 duration: 0.5
               }} />
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-80 sm:h-96 overflow-hidden">
+                    <div className="relative h-88 sm:h-96 lg:h-80 xl:h-88 overflow-hidden">
                       {/* Enhanced Feature Image */}
                       <div className="relative w-full h-full">
                         <motion.img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" whileHover={{
@@ -258,7 +258,7 @@ export const FeaturesSection: React.FC = () => {
                     </div>
 
                     {/* Enhanced Content */}
-                    <div className="p-8 pb-6 space-y-6">
+                    <div className="p-8 lg:p-10 pb-8 lg:pb-10 space-y-8">
                       <motion.h3 className="text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300" whileHover={{
                     scale: 1.02,
                     x: 3
@@ -318,7 +318,7 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         delay: 0.4
-      }} className="mt-24 text-center">
+      }} className="mt-32 lg:mt-40 text-center">
           <motion.div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300" whileHover={{
           scale: 1.05
         }}>

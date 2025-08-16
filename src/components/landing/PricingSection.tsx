@@ -99,7 +99,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   } = useLanguage();
   const content = getContent(currentLanguage);
   const plans = [content.free, content.paid];
-  return <section id="pricing" className="py-32 sm:py-40 lg:py-48 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
+  return <section id="pricing" className="py-40 sm:py-52 lg:py-64 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
       {/* Background Elements */}
       <motion.div className="absolute top-0 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" animate={{
       scale: [1, 1.2, 1],
@@ -119,7 +119,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       delay: 3
     }} />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
         
         {/* Enhanced Header */}
         <motion.div initial={{
@@ -133,7 +133,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         margin: "-100px"
       }} transition={{
         duration: 0.8
-      }} className="text-center max-w-4xl mx-auto mb-20 lg:mb-28">
+      }} className="text-center max-w-4xl mx-auto mb-28 lg:mb-36">
           <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
@@ -165,7 +165,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         </motion.div>
 
         {/* Enhanced Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 max-w-6xl mx-auto mb-20 lg:mb-24">
           {plans.map((plan, index) => <motion.div key={index} initial={{
           opacity: 0,
           y: 50
@@ -200,10 +200,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       
                     </motion.div>}
 
-                  <CardContent className="p-8 sm:p-10 space-y-8 relative">
+                  <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 space-y-10 lg:space-y-12 relative">
                     
                     {/* Enhanced Header */}
-                    <div className="text-center space-y-4">
+                    <div className="text-center space-y-6">
                       <motion.h3 className="text-2xl sm:text-3xl font-bold text-foreground" whileHover={{
                     scale: 1.05
                   }}>
@@ -215,7 +215,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     </div>
 
                     {/* Enhanced Price */}
-                    <div className="text-center space-y-2">
+                    <div className="text-center space-y-4">
                       <div className="flex items-baseline justify-center gap-2">
                         <motion.span className="text-4xl sm:text-5xl font-bold text-foreground" whileHover={{
                       scale: 1.1
@@ -232,7 +232,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     </div>
 
                     {/* Enhanced Features */}
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       {plan.features.map((feature, featureIndex) => <motion.div key={featureIndex} className="flex items-start gap-4" initial={{
                     opacity: 0,
                     x: -20
