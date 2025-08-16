@@ -262,7 +262,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 }} whileTap={{
                   scale: 0.98
                 }}>
-                      <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-14 text-lg font-semibold transition-all duration-300 ${plan.popular ? 'bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
+                      <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-14 text-lg font-semibold transition-all duration-300 ${plan.popular ? 'bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
                         {plan.popular && <Zap className="w-5 h-5 mr-2" />}
                         {plan.cta}
                       </Button>

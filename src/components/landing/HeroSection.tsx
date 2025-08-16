@@ -193,7 +193,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               }} whileTap={{
                 scale: 0.98
               }} onHoverStart={() => {}}>
-                    <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-500 relative overflow-hidden bg-gradient-to-r from-secondary via-secondary/90 to-secondary hover:from-secondary/90 hover:via-secondary/80 hover:to-secondary/70">
+                    <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-500 relative overflow-hidden bg-secondary hover:bg-secondary/90">
                       <motion.div className="flex items-center relative z-10">
                         <PlayFilled size={20} className="mr-3" />
                         <motion.span initial={{
