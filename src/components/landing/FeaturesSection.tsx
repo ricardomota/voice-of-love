@@ -186,7 +186,7 @@ export const FeaturesSection: React.FC = () => {
                       <img
                         src={feature.image}
                         alt={feature.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-t-lg"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-lg"
                       />
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
