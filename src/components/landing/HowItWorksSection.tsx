@@ -248,13 +248,7 @@ export const HowItWorksSection: React.FC = () => {
         duration: 0.8,
         delay: 0.6
       }}>
-          <motion.p className="text-base text-muted-foreground/90 bg-gradient-to-r from-muted/60 to-muted/40 backdrop-blur-sm rounded-2xl px-8 py-6 inline-block max-w-3xl shadow-lg border border-muted-foreground/10" whileHover={{
-          scale: 1.02
-        }} transition={{
-          duration: 0.3
-        }}>
-            <span className="font-semibold text-foreground">{content.notePrefix}</span> {content.note}
-          </motion.p>
+          
         </motion.div>
 
       </div>
