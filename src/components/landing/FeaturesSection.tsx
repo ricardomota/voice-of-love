@@ -50,7 +50,7 @@ const getContent = (language: string) => {
           image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
-          title: "Vozes híbridas",
+          title: "Vozes personalizadas",
           description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
           icon: Microphone,
           highlight: "🚀 Powered by ElevenLabs",
