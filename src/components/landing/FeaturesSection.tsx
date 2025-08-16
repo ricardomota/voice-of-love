@@ -209,13 +209,13 @@ export const FeaturesSection: React.FC = () => {
                       </p>
                       <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm ${
                         index === 0 
-                          ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/30 text-violet-700 dark:text-violet-300"
+                          ? "bg-gradient-to-r from-violet-600/30 via-purple-600/30 to-pink-600/30 border border-violet-500/40 text-violet-200 dark:text-violet-100"
                           : index === 1
-                          ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/30 text-blue-700 dark:text-blue-300"
+                          ? "bg-gradient-to-r from-blue-600/30 via-cyan-600/30 to-teal-600/30 border border-blue-500/40 text-blue-200 dark:text-blue-100"
                           : index === 2
-                          ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/30 text-emerald-700 dark:text-emerald-300"
-                          : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/30 text-orange-700 dark:text-orange-300"
-                      } bg-[length:200%_100%] animate-[gradient-shift_3s_ease-in-out_infinite]`}>
+                          ? "bg-gradient-to-r from-emerald-600/30 via-green-600/30 to-lime-600/30 border border-emerald-500/40 text-emerald-200 dark:text-emerald-100"
+                          : "bg-gradient-to-r from-orange-600/30 via-red-600/30 to-pink-600/30 border border-orange-500/40 text-orange-200 dark:text-orange-100"
+                      } bg-[length:200%_100%] animate-gradient-shift`}>
                         {feature.highlight}
                       </div>
                     </div>
