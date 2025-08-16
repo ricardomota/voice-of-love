@@ -201,7 +201,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                   onClick={onTryFree} 
                   variant="default" 
                   size={isCompact ? "default" : "lg"}
-                  className="shadow-lg hover:shadow-2xl transition-all duration-500 bg-gradient-to-r from-primary via-primary/90 to-accent hover:from-primary/90 hover:via-primary/80 hover:to-accent/90 text-lg font-semibold px-8"
+                  className="shadow-lg hover:shadow-2xl transition-all duration-500 bg-primary hover:bg-primary/90 text-lg font-semibold px-8"
                 >
                   {content.tryFree}
                 </Button>
@@ -292,7 +292,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                       onClick={onTryFree} 
                       variant="default" 
                       size="lg" 
-                      className="w-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent text-lg font-semibold h-14"
+                      className="w-full shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold h-14"
                     >
                       {content.tryFree}
                     </Button>
