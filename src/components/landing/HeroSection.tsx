@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Group, PlayFilled, Security } from '@carbon/icons-react';
 import { supabase } from '@/integrations/supabase/client';
+import { motion } from 'framer-motion';
 interface HeroSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
@@ -69,86 +70,221 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   const isWaitlistMode = userCount >= 10;
-  return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+  
+  return (
+    <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 overflow-hidden">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+        
+        {/* Animated Background Elements */}
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.2, 0.4],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:50px_50px]" />
+        </div>
+      </div>
       
       <div className="relative w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
-          {/* Content */}
-          <div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1">
-            <div className="space-y-6">
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-primary-foreground leading-[1.1] sm:leading-tight tracking-tight">
-                {content.headline.split('.').map((part, index, array) => <span key={index}>
+          {/* Enhanced Content */}
+          <motion.div 
+            className="text-center lg:text-left space-y-10 lg:space-y-12 order-2 lg:order-1"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="space-y-8">
+              <motion.h1 
+                className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.05] tracking-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                {content.headline.split('.').map((part, index, array) => (
+                  <motion.span 
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                    className="inline-block"
+                  >
                     {part}
                     {index < array.length - 1 && '.'}
                     {index === 0 && <br className="hidden sm:block" />}
-                  </span>)}
-              </h1>
+                  </motion.span>
+                ))}
+              </motion.h1>
               
-              <p className="text-lg sm:text-xl lg:text-xl text-primary-foreground/80 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <motion.p 
+                className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
                 {content.subhead}
-              </p>
+              </motion.p>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* Enhanced CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               {!isLoading && (
                 <>
-                  <Button 
-                    onClick={isWaitlistMode ? onTryFree : onLogin} 
-                    size="xl" 
-                    variant="secondary" 
-                    className="w-full sm:w-auto min-w-[220px] h-14 text-base font-medium"
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <PlayFilled size={18} className="mr-2" />
-                    {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
-                  </Button>
+                    <Button 
+                      onClick={isWaitlistMode ? onTryFree : onLogin} 
+                      size="xl" 
+                      variant="secondary" 
+                      className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300"
+                    >
+                      <PlayFilled size={20} className="mr-3" />
+                      {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                    </Button>
+                  </motion.div>
                   
-                  <Button 
-                    onClick={onSeePricing} 
-                    variant="cta" 
-                    size="xl" 
-                    className="w-full sm:w-auto min-w-[180px] h-14 text-base font-medium"
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {content.seePricing}
-                  </Button>
+                    <Button 
+                      onClick={onSeePricing} 
+                      variant="outline" 
+                      size="xl" 
+                      className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300"
+                    >
+                      {content.seePricing}
+                    </Button>
+                  </motion.div>
                 </>
               )}
-            </div>
+            </motion.div>
 
-            {/* Trust indicators */}
-            <div className="pt-6">
-              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-6 xs:gap-8 text-sm text-primary-foreground/70">
-                <div className="flex items-center gap-2.5">
-                  <Security size={16} className="text-secondary flex-shrink-0" />
-                  <span>Private by default</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <Group size={16} className="text-secondary flex-shrink-0" />
-                  <span>Family-first design</span>
-                </div>
+            {/* Enhanced Trust indicators */}
+            <motion.div 
+              className="pt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-8 xs:gap-12 text-base text-primary-foreground/75">
+                <motion.div 
+                  className="flex items-center gap-3"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                    <Security size={20} className="text-secondary flex-shrink-0" />
+                  </div>
+                  <span className="font-medium">Private by default</span>
+                </motion.div>
+                <motion.div 
+                  className="flex items-center gap-3"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                    <Group size={20} className="text-secondary flex-shrink-0" />
+                  </div>
+                  <span className="font-medium">Family-first design</span>
+                </motion.div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Enhanced Hero Image */}
+          <motion.div 
+            className="relative order-1 lg:order-2"
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+          >
+            <div className="relative">
+              {/* Glow Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-secondary/30 via-accent/20 to-secondary/30 rounded-3xl blur-2xl opacity-75" />
+              
+              <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
+                <motion.img 
+                  src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" 
+                  alt={content.altText} 
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.6 }}
+                />
+                
+                {/* Enhanced overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Floating Elements */}
+                <motion.div
+                  className="absolute -top-4 -right-4 w-16 h-16 bg-secondary/80 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl"
+                  animate={{
+                    y: [-10, 10, -10],
+                    rotate: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <span className="text-2xl">✨</span>
+                </motion.div>
+                
+                <motion.div
+                  className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent/80 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-xl"
+                  animate={{
+                    y: [10, -10, 10],
+                    rotate: [0, -5, 0],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1,
+                  }}
+                >
+                  <span className="text-lg">💖</span>
+                </motion.div>
               </div>
             </div>
-          </div>
-
-          {/* Hero Image */}
-          <div className="relative order-1 lg:order-2">
-            <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3]">
-              <img 
-                src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" 
-                alt={content.altText} 
-                className="w-full h-full object-cover object-center"
-                loading="eager"
-              />
-              
-              {/* Subtle overlay for better contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
-            </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };

@@ -138,34 +138,65 @@ export const FeaturesSection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section id="features" className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
-      {/* Background decoration */}
+    <section id="features" className="py-32 sm:py-40 lg:py-48 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+      {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      
+      {/* Floating Orbs */}
+      <motion.div 
+        className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-20 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.4, 0.2, 0.4],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
+      />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
-        {/* Header */}
+        {/* Enhanced Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16 lg:mb-20"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center max-w-4xl mx-auto mb-20 lg:mb-28"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
+          <motion.h2 
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {content.title}
-          </h2>
+          </motion.h2>
         </motion.div>
 
-        {/* Interactive Features Grid */}
+        {/* Enhanced Features Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"
         >
           {content.features.map((feature, index) => {
             const IconComponent = feature.icon;
@@ -174,54 +205,93 @@ export const FeaturesSection: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ 
-                  scale: 1.03,
-                  transition: { duration: 0.2 }
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
                 }}
                 className="group"
               >
-                <Card className="relative overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 bg-gradient-to-br from-card to-card/80 h-full">
+                <Card className="relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-64 sm:h-72 overflow-hidden rounded-lg">
-                      {/* Feature Image */}
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-lg"
-                      />
-                      {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-lg" />
-                      
-                      {/* Icon overlay */}
-                      <div className="absolute top-4 right-4">
-                        <div className="w-12 h-12 bg-card/90 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
-                          <IconComponent className="w-6 h-6 text-primary" />
-                        </div>
+                    <div className="relative h-80 sm:h-96 overflow-hidden">
+                      {/* Enhanced Feature Image */}
+                      <div className="relative w-full h-full">
+                        <motion.img
+                          src={feature.image}
+                          alt={feature.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.6 }}
+                        />
+                        
+                        {/* Enhanced overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
                       </div>
+                      
+                      {/* Enhanced icon overlay */}
+                      <motion.div 
+                        className="absolute top-6 right-6"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-xl border border-primary/10">
+                          <IconComponent className="w-7 h-7 text-primary" />
+                        </div>
+                      </motion.div>
+                      
+                      {/* Floating accent */}
+                      <motion.div
+                        className="absolute bottom-6 left-6"
+                        animate={{
+                          y: [-5, 5, -5],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: index * 0.5,
+                        }}
+                      >
+                        <div className="w-8 h-8 bg-secondary/80 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-sm">✨</span>
+                        </div>
+                      </motion.div>
                     </div>
 
-                    {/* Content */}
-                    <div className="p-6 pb-4 space-y-4">
-                      <h3 className="text-xl lg:text-2xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                    {/* Enhanced Content */}
+                    <div className="p-8 pb-6 space-y-6">
+                      <motion.h3 
+                        className="text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300"
+                        whileHover={{ scale: 1.02 }}
+                      >
                         {feature.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      </motion.h3>
+                      
+                      <p className="text-muted-foreground leading-relaxed text-lg">
                         {feature.description}
                       </p>
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm ${
-                        index === 0 
-                          ? "bg-gradient-to-r from-violet-600/30 via-purple-600/30 to-pink-600/30 border border-violet-500/40 text-violet-900 dark:text-violet-100"
-                          : index === 1
-                          ? "bg-gradient-to-r from-blue-600/30 via-cyan-600/30 to-teal-600/30 border border-blue-500/40 text-blue-900 dark:text-blue-100"
-                          : index === 2
-                          ? "bg-gradient-to-r from-emerald-600/30 via-green-600/30 to-lime-600/30 border border-emerald-500/40 text-emerald-900 dark:text-emerald-100"
-                          : "bg-gradient-to-r from-orange-600/30 via-red-600/30 to-pink-600/30 border border-orange-500/40 text-orange-900 dark:text-orange-100"
-                      } bg-[length:200%_100%] animate-gradient-shift`}>
+                      
+                      <motion.div 
+                        className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 ${
+                          index === 0 
+                            ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200"
+                            : index === 1
+                            ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/40 text-blue-800 dark:text-blue-200"
+                            : index === 2
+                            ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200"
+                            : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"
+                        } hover:scale-105`}
+                        whileHover={{ scale: 1.05 }}
+                      >
                         {feature.highlight}
-                      </div>
+                      </motion.div>
                     </div>
 
-                    {/* Animated border gradient */}
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    {/* Enhanced animated border gradient */}
+                    <motion.div 
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    />
                   </CardContent>
                 </Card>
               </motion.div>
@@ -229,19 +299,30 @@ export const FeaturesSection: React.FC = () => {
           })}
         </motion.div>
 
-        {/* Bottom visual element */}
+        {/* Enhanced Bottom visual element */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-24 text-center"
         >
-          <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-full backdrop-blur-sm">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-            <span className="text-primary font-medium">Designed with families in mind</span>
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-          </div>
+          <motion.div 
+            className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+          >
+            <motion.div 
+              className="w-3 h-3 bg-primary rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
+            <motion.div 
+              className="w-3 h-3 bg-primary rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+            />
+          </motion.div>
         </motion.div>
 
       </div>

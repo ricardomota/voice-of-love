@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Mic, Settings, MessageCircle, Share } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const getContent = (language: string) => {
   const content = {
@@ -100,64 +101,175 @@ export const HowItWorksSection: React.FC = () => {
   const icons = [Mic, Settings, MessageCircle, Share];
 
   return (
-    <section id="how-it-works" className="py-20 sm:py-24 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="py-32 sm:py-40 lg:py-48 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30" />
+      
+      {/* Animated Background Orbs */}
+      <motion.div
+        className="absolute top-20 right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.4, 0.2, 0.4],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
+        {/* Enhanced Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-4xl mx-auto mb-20 lg:mb-28"
+        >
+          <motion.h2 
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {content.title}
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+          </motion.h2>
+          <motion.p 
+            className="text-xl sm:text-2xl text-muted-foreground leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             {content.subtitle}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 mb-12">
+        {/* Enhanced Steps Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-12 mb-16">
           {content.steps.map((step, index) => {
             const IconComponent = icons[index];
             return (
-              <Card key={index} className="relative group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
-                <CardContent className="p-6 sm:p-8 text-center space-y-4">
-                  
-                  {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-semibold shadow-lg">
-                      {index + 1}
-                    </div>
-                  </div>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+              >
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full">
+                    <CardContent className="p-8 sm:p-10 text-center space-y-6 relative">
+                      
+                      {/* Enhanced Step Number */}
+                      <motion.div 
+                        className="absolute -top-6 left-1/2 transform -translate-x-1/2"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl flex items-center justify-center text-lg font-bold shadow-xl border-4 border-background">
+                          {index + 1}
+                        </div>
+                      </motion.div>
 
-                  {/* Icon */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="w-8 h-8 text-primary" />
-                  </div>
+                      {/* Enhanced Icon */}
+                      <motion.div 
+                        className="w-20 h-20 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg"
+                        whileHover={{ rotate: 10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <IconComponent className="w-10 h-10 text-primary" />
+                      </motion.div>
 
-                  {/* Content */}
-                  <div className="space-y-3">
-                    <h3 className="text-xl font-semibold text-foreground">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {step.description}
-                    </p>
-                    <p className="text-sm text-muted-foreground/70 leading-relaxed">
-                      {step.detail}
-                    </p>
-                  </div>
+                      {/* Enhanced Content */}
+                      <div className="space-y-4">
+                        <motion.h3 
+                          className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          {step.title}
+                        </motion.h3>
+                        <p className="text-muted-foreground leading-relaxed text-lg">
+                          {step.description}
+                        </p>
+                        <p className="text-sm text-muted-foreground/80 leading-relaxed font-light">
+                          {step.detail}
+                        </p>
+                      </div>
 
-                </CardContent>
-              </Card>
+                      {/* Connection Line (for larger screens) */}
+                      {index < content.steps.length - 1 && (
+                        <motion.div 
+                          className="hidden xl:block absolute top-1/2 -right-6 w-12 h-0.5 bg-gradient-to-r from-primary/30 to-transparent"
+                          initial={{ scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: (index + 1) * 0.2 }}
+                        />
+                      )}
+
+                      {/* Floating Accent */}
+                      <motion.div
+                        className="absolute top-4 right-4 w-6 h-6 bg-secondary/60 backdrop-blur-sm rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        animate={{
+                          y: [-3, 3, -3],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: index * 0.5,
+                        }}
+                      >
+                        <span className="text-xs">✨</span>
+                      </motion.div>
+
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </motion.div>
             );
           })}
         </div>
 
-        {/* Note */}
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground/80 bg-muted/50 rounded-xl px-6 py-4 inline-block max-w-2xl">
-            <span className="font-medium">{content.notePrefix}</span> {content.note}
-          </p>
-        </div>
+        {/* Enhanced Note */}
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <motion.p 
+            className="text-base text-muted-foreground/90 bg-gradient-to-r from-muted/60 to-muted/40 backdrop-blur-sm rounded-2xl px-8 py-6 inline-block max-w-3xl shadow-lg border border-muted-foreground/10"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <span className="font-semibold text-foreground">{content.notePrefix}</span> {content.note}
+          </motion.p>
+        </motion.div>
 
       </div>
     </section>

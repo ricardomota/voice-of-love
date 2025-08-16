@@ -19,31 +19,40 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-hidden">
       {/* Header */}
       <LandingHeader
         onTryFree={onTryFree}
         onSignIn={onLogin}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced spacing */}
       <HeroSection 
         onTryFree={onTryFree}
         onSeePricing={scrollToPricing}
         onLogin={onLogin}
       />
 
-      {/* Features Section */}
-      <FeaturesSection />
+      {/* Features Section - Enhanced spacing */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/10 to-transparent pointer-events-none" />
+        <FeaturesSection />
+      </div>
 
-      {/* How It Works */}
-      <HowItWorksSection />
+      {/* How It Works - Enhanced spacing */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
+        <HowItWorksSection />
+      </div>
 
-      {/* Pricing */}
-      <PricingSection 
-        onTryFree={onTryFree}
-        onSeePricing={scrollToPricing}
-      />
+      {/* Pricing - Enhanced spacing */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
+        <PricingSection 
+          onTryFree={onTryFree}
+          onSeePricing={scrollToPricing}
+        />
+      </div>
 
       {/* Footer */}
       <LandingFooter 
