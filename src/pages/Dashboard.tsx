@@ -34,7 +34,7 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
             <div className="flex-1">
               <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-4 mb-2 text-foreground">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
-                  <span className="text-white text-2xl">💖</span>
+                  <span className="text-primary-foreground text-2xl">💖</span>
                 </div>
                 ✨ Eterna
               </h1>

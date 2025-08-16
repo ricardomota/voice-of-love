@@ -16,7 +16,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             ❤️ Feito com amor para famílias com Alzheimer 🤗
           </div>
           
-          <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-white flex items-center justify-center text-2xl animate-pulse">
+          <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-2xl animate-pulse">
             💖
           </div>
           
@@ -42,21 +42,21 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             
             <div className="space-y-6 text-left">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   1️⃣
                 </div>
                 <p className="text-muted-foreground leading-relaxed">Adicione memórias preciosas, traços de personalidade únicos e frases marcantes 📚💫</p>
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   2️⃣
                 </div>
                 <p className="text-muted-foreground leading-relaxed">A IA aprende e recria magicamente a personalidade única da pessoa 🧠✨</p>
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   3️⃣
                 </div>
                 <p className="text-muted-foreground leading-relaxed">Tenha conversas significativas e emocionantes a qualquer momento 💬❤️</p>

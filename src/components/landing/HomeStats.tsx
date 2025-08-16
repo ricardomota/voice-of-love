@@ -116,7 +116,7 @@ export const HomeStats: React.FC<HomeStatsProps> = ({ onGetStarted }) => {
             <Button 
               onClick={onGetStarted}
               size="xl"
-              className="bg-accent hover:bg-accent/90 text-white font-bold text-lg h-16 min-w-[200px] rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-work"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg h-16 min-w-[200px] rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-work"
             >
               {content.cta.button}
               <ArrowRight className="w-5 h-5 ml-3" />

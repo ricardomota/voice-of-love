@@ -189,7 +189,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     </AlertDialogHeader>
                     <AlertDialogFooter className="flex-col sm:flex-row gap-2">
                       <AlertDialogCancel className="w-full sm:w-auto">Cancelar</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white">
+                      <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="w-full sm:w-auto bg-destructive hover:bg-destructive/90 text-destructive-foreground">
                         {isDeleting ? "Removendo..." : "Remover definitivamente"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -246,8 +246,8 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                                     {memory.mediaType === 'image' && <img src={memory.mediaUrl} alt="Memória" className="w-full h-32 object-cover rounded-lg" />}
                                     {memory.mediaType === 'video' && <video src={memory.mediaUrl} controls className="w-full h-32 rounded-lg" />}
                                     {memory.mediaType === 'audio' && <audio src={memory.mediaUrl} controls className="w-full" />}
-                                    <div className="absolute top-2 left-2 bg-black/50 rounded-full p-1">
-                                      <Image className="w-4 h-4 text-white" />
+                                    <div className="absolute top-2 left-2 bg-primary/50 rounded-full p-1">
+                                      <Image className="w-4 h-4 text-primary-foreground" />
                                     </div>
                                   </div>}
                                 <p className="text-sm leading-relaxed">{memory.text}</p>

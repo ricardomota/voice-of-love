@@ -193,7 +193,7 @@ export const FeaturesSection: React.FC = () => {
                       
                       {/* Icon overlay */}
                       <div className="absolute top-4 right-4">
-                        <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <div className="w-12 h-12 bg-card/90 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg">
                           <IconComponent className="w-6 h-6 text-primary" />
                         </div>
                       </div>

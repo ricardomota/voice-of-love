@@ -214,7 +214,7 @@ export function AuthGate({ children }: AuthGateProps) {
               <CardHeader className="text-center space-y-2">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center shadow-lg">
-                    <span className="text-white font-bold">✨</span>
+                    <span className="text-primary-foreground font-bold">✨</span>
                   </div>
                 </div>
                 <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">🌟 Eterna</CardTitle>

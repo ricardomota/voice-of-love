@@ -212,7 +212,7 @@ export const VoiceMessageGenerator: React.FC<VoiceMessageGeneratorProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
-              <MessageCircleHeart className="w-4 h-4 text-white" />
+              <MessageCircleHeart className="w-4 h-4 text-primary-foreground" />
             </div>
             Mensagem especial de {person.name}
           </DialogTitle>

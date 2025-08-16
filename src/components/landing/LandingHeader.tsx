@@ -78,8 +78,8 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
         isScrolled 
-          ? "bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-200" 
-          : "bg-white/90"
+          ? "bg-background/95 backdrop-blur-xl shadow-sm border-b border-border" 
+          : "bg-background/90"
       )}
       style={{
         transform: `translateY(${Math.min(scrollY * 0.1, 2)}px)`,
@@ -192,7 +192,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
 
         {/* Mobile Menu melhorado */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-xl animate-slide-down">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-t border-border shadow-xl animate-slide-down">
             <nav className="px-4 py-6 space-y-1">
               <button 
                 onClick={() => handleNavigation('how-it-works')}
@@ -213,7 +213,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                 {content.signIn}
               </button>
               
-              <div className="pt-4 border-t border-gray-200 mt-4">
+              <div className="pt-4 border-t border-border mt-4">
                 {!showOnlyLogo && (
                   <div className="mb-4">
                     <LanguageSelector />

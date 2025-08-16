@@ -71,7 +71,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const isWaitlistMode = userCount >= 10;
   return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-black" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
       
       <div className="relative w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -79,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Content */}
           <div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1">
             <div className="space-y-6">
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] sm:leading-tight tracking-tight">
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-primary-foreground leading-[1.1] sm:leading-tight tracking-tight">
                 {content.headline.split('.').map((part, index, array) => <span key={index}>
                     {part}
                     {index < array.length - 1 && '.'}
@@ -87,7 +87,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </span>)}
               </h1>
               
-              <p className="text-lg sm:text-xl lg:text-xl text-gray-300/90 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-xl text-primary-foreground/80 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 {content.subhead}
               </p>
             </div>
@@ -120,13 +120,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Trust indicators */}
             <div className="pt-6">
-              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-6 xs:gap-8 text-sm text-gray-300/80">
+              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-6 xs:gap-8 text-sm text-primary-foreground/70">
                 <div className="flex items-center gap-2.5">
-                  <Security size={16} className="text-green-400 flex-shrink-0" />
+                  <Security size={16} className="text-secondary flex-shrink-0" />
                   <span>Private by default</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Group size={16} className="text-green-400 flex-shrink-0" />
+                  <Group size={16} className="text-secondary flex-shrink-0" />
                   <span>Family-first design</span>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               />
               
               {/* Subtle overlay for better contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
             </div>
           </div>
 
