@@ -10,7 +10,7 @@ const getContent = (language: string) => {
       title: "Thoughtfully designed features",
       features: [
         {
-          title: "🔒 Private by default",
+          title: "Private by default",
           description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
           icon: Security,
           highlight: "🔐 End-to-end encrypted",
@@ -43,7 +43,7 @@ const getContent = (language: string) => {
       title: "Funcionalidades pensadas com carinho",
       features: [
         {
-          title: "🔒 Privado por padrão",
+          title: "Privado por padrão",
           description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
           icon: Security,
           highlight: "🔐 Criptografado ponta a ponta",
@@ -186,7 +186,7 @@ export const FeaturesSection: React.FC = () => {
                       <img
                         src={feature.image}
                         alt={feature.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-t-lg"
                       />
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
