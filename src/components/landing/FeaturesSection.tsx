@@ -58,9 +58,9 @@ const getContent = (language: string) => {
         },
         {
           title: "IA inteligente",
-          description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
+          description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
           icon: Flash,
-          highlight: "👨‍👩‍👧‍👦 Otimizado para famílias",
+          highlight: "✨ Conversas mais humanas",
           image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
         },
         {
