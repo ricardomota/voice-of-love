@@ -181,7 +181,7 @@ export const FeaturesSection: React.FC = () => {
               >
                 <Card className="relative overflow-hidden border-2 hover:border-primary/40 transition-all duration-500 hover:shadow-2xl bg-gradient-to-br from-card to-card/80 h-full">
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-64 sm:h-72 overflow-hidden">
+                    <div className="relative h-64 sm:h-72 overflow-hidden rounded-lg">
                       {/* Feature Image */}
                       <img
                         src={feature.image}
@@ -189,7 +189,7 @@ export const FeaturesSection: React.FC = () => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-lg"
                       />
                       {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-lg" />
                       
                       {/* Icon overlay */}
                       <div className="absolute top-4 right-4">
