@@ -57,7 +57,7 @@ const getContent = (language: string) => {
           image: "/lovable-uploads/53170fb1-7796-436e-b100-99bb359fcd92.png"
         },
         {
-          title: "IA econômica",
+          title: "IA inteligente",
           description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
           icon: Flash,
           highlight: "👨‍👩‍👧‍👦 Otimizado para famílias",
