@@ -14,7 +14,7 @@ const getContent = (language: string) => {
           description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
           icon: Security,
           highlight: "🔐 End-to-end encrypted",
-          image: "/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png"
+          image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
           title: "🎭 Hybrid voices", 
@@ -47,7 +47,7 @@ const getContent = (language: string) => {
           description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
           icon: Security,
           highlight: "🔐 Criptografado ponta a ponta",
-          image: "/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png"
+          image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
           title: "🎭 Vozes híbridas",
@@ -80,7 +80,7 @@ const getContent = (language: string) => {
           description: "Almacenamiento seguro y privado que mantiene las voces y memorias de tu familia protegidas y seguras! 🛡️",
           icon: Security,
           highlight: "🔐 Cifrado extremo a extremo",
-          image: "/lovable-uploads/c1fd4ff0-e689-46b5-ac3c-25f711975c12.png"
+          image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
         },
         {
           title: "Voces híbridas",
