@@ -57,7 +57,7 @@ const getContent = (language: string) => {
           image: "/lovable-uploads/53170fb1-7796-436e-b100-99bb359fcd92.png"
         },
         {
-          title: "IA inteligente",
+          title: "Conversas inteligentes",
           description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
           icon: Flash,
           highlight: "✨ Conversas mais humanas",
