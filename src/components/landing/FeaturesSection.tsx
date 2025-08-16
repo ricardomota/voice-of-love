@@ -206,11 +206,21 @@ export const FeaturesSection: React.FC = () => {
                 variants={itemVariants}
                 whileHover={{ 
                   scale: 1.02,
-                  transition: { duration: 0.3 }
+                  rotateY: 2,
+                  transition: { duration: 0.4, ease: "easeOut" }
                 }}
-                className="group"
+                className="group perspective-1000"
+                style={{ 
+                  transformStyle: "preserve-3d",
+                }}
               >
-                <Card className="relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
+                <Card className="relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20 transform-gpu">
+                  {/* Animated background gradient */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0"
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
                   <CardContent className="p-0 h-full">
                     <div className="relative h-80 sm:h-96 overflow-hidden">
                       {/* Enhanced Feature Image */}
@@ -227,18 +237,33 @@ export const FeaturesSection: React.FC = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
                       </div>
                       
-                      {/* Enhanced icon overlay */}
+                      {/* Enhanced icon overlay with magnetic effect */}
                       <motion.div 
                         className="absolute top-6 right-6"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
+                        whileHover={{ 
+                          scale: 1.15, 
+                          rotate: 8,
+                          y: -2,
+                          transition: { type: "spring", stiffness: 300, damping: 10 }
+                        }}
                       >
-                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-xl border border-primary/10">
-                          <IconComponent className="w-7 h-7 text-primary" />
-                        </div>
+                        <motion.div 
+                          className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-xl border border-primary/10 relative overflow-hidden"
+                          whileHover={{
+                            background: "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8))",
+                          }}
+                        >
+                          <IconComponent className="w-7 h-7 text-primary relative z-10" />
+                          {/* Ripple effect */}
+                          <motion.div
+                            className="absolute inset-0 bg-primary/20 rounded-full scale-0"
+                            whileHover={{ scale: [0, 1.5], opacity: [0.5, 0] }}
+                            transition={{ duration: 0.6 }}
+                          />
+                        </motion.div>
                       </motion.div>
                       
-                      {/* Floating accent */}
+                      {/* Enhanced floating accent with magnetic trail */}
                       <motion.div
                         className="absolute bottom-6 left-6"
                         animate={{
@@ -250,10 +275,24 @@ export const FeaturesSection: React.FC = () => {
                           ease: "easeInOut",
                           delay: index * 0.5,
                         }}
+                        whileHover={{
+                          scale: 1.2,
+                          transition: { duration: 0.2 }
+                        }}
                       >
-                        <div className="w-8 h-8 bg-secondary/80 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-                          <span className="text-sm">✨</span>
-                        </div>
+                        <motion.div 
+                          className="w-8 h-8 bg-gradient-to-br from-secondary/90 to-secondary/70 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg border border-secondary/20 relative overflow-hidden"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.8, ease: "easeInOut" }}
+                        >
+                          <span className="text-sm relative z-10">✨</span>
+                          {/* Shimmer effect */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+                            animate={{ x: ["-100%", "100%"] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          />
+                        </motion.div>
                       </motion.div>
                     </div>
 
@@ -261,7 +300,8 @@ export const FeaturesSection: React.FC = () => {
                     <div className="p-8 pb-6 space-y-6">
                       <motion.h3 
                         className="text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300"
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ scale: 1.02, x: 3 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                       >
                         {feature.title}
                       </motion.h3>
@@ -271,7 +311,7 @@ export const FeaturesSection: React.FC = () => {
                       </p>
                       
                       <motion.div 
-                        className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 ${
+                        className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 cursor-pointer relative overflow-hidden ${
                           index === 0 
                             ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200"
                             : index === 1
@@ -279,10 +319,22 @@ export const FeaturesSection: React.FC = () => {
                             : index === 2
                             ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200"
                             : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"
-                        } hover:scale-105`}
-                        whileHover={{ scale: 1.05 }}
+                        } hover:scale-105 group-hover:scale-105`}
+                        whileHover={{ 
+                          scale: 1.1,
+                          y: -2,
+                          boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       >
                         {feature.highlight}
+                        {/* Interactive background glow */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-current/10 to-current/5 opacity-0"
+                          whileHover={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
                       </motion.div>
                     </div>
 

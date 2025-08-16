@@ -89,9 +89,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/d40b9060-49a3-4a2e-992b-167e50dc80d5.png" 
+                src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
                 alt="Eterna Logo" 
-                className="h-4 w-auto"
+                className="h-6 w-auto"
               />
             </div>
             

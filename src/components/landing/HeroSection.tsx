@@ -128,21 +128,45 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                {content.headline.split('.').map((part, index, array) => (
+                {content.headline.split(' ').map((word, wordIndex, array) => (
                   <motion.span 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                    key={wordIndex}
                     className="inline-block"
+                    initial={{ opacity: 0, y: 50, rotateX: 90 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: 0.3 + wordIndex * 0.08,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      textShadow: "0 0 8px rgba(255,255,255,0.5)",
+                      transition: { duration: 0.3 }
+                    }}
                   >
-                    {part}
-                    {index < array.length - 1 && '.'}
-                    {index === 0 && <br className="hidden sm:block" />}
+                    {word}
+                    {wordIndex === 2 && <br className="hidden sm:block" />}
+                    {wordIndex < array.length - 1 && ' '}
+                    {word === '✨' && (
+                      <motion.span
+                        animate={{ 
+                          rotate: [0, 10, -10, 0],
+                          scale: [1, 1.1, 1]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: wordIndex * 0.1
+                        }}
+                        className="inline-block"
+                      >
+                        ✨
+                      </motion.span>
+                    )}
                   </motion.span>
                 ))}
               </motion.h1>
-              
               <motion.p 
                 className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light"
                 initial={{ opacity: 0, y: 30 }}
@@ -163,21 +187,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {!isLoading && (
                 <>
                   <motion.div
+                    className="group relative"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
+                    onHoverStart={() => {}}
                   >
                     <Button 
                       onClick={isWaitlistMode ? onTryFree : onLogin} 
                       size="xl" 
                       variant="secondary" 
-                      className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300"
+                      className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-500 relative overflow-hidden bg-gradient-to-r from-secondary via-secondary/90 to-secondary hover:from-secondary/90 hover:via-secondary/80 hover:to-secondary/70"
                     >
-                      <PlayFilled size={20} className="mr-3" />
-                      {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                      <motion.div className="flex items-center relative z-10">
+                        <PlayFilled size={20} className="mr-3" />
+                        <motion.span
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.8 }}
+                        >
+                          {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                        </motion.span>
+                      </motion.div>
+                      {/* Magnetic ripple effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 opacity-0"
+                        whileHover={{ opacity: 1, scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                      />
                     </Button>
                   </motion.div>
                   
                   <motion.div
+                    className="group relative"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -185,9 +226,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       onClick={onSeePricing} 
                       variant="outline" 
                       size="xl" 
-                      className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300"
+                      className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-500 relative overflow-hidden group"
                     >
-                      {content.seePricing}
+                      <motion.span
+                        className="relative z-10"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.9 }}
+                      >
+                        {content.seePricing}
+                      </motion.span>
+                      {/* Hover background sweep */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-primary-foreground/20 to-primary-foreground/10 -translate-x-full"
+                        whileHover={{ x: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                      />
                     </Button>
                   </motion.div>
                 </>
