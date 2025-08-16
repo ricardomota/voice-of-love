@@ -168,43 +168,27 @@ export const HowItWorksSection: React.FC = () => {
             duration: 0.6,
             delay: index * 0.2
           }}>
-                <motion.div whileHover={{
-              scale: 1.05,
-              transition: {
-                duration: 0.3
-              }
-            }}>
+                <div className="group hover:scale-105 transition-transform duration-300">
                   <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full">
                     <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 text-center space-y-8 lg:space-y-10 relative">
                       
-                      {/* Enhanced Step Number */}
-                      <motion.div className="absolute -top-6 left-1/2 transform -translate-x-1/2" whileHover={{
-                    scale: 1.1,
-                    rotate: 5
-                  }} transition={{
-                    duration: 0.3
-                  }}>
+                      {/* Simple Step Number */}
+                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
                         <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl flex items-center justify-center text-lg font-bold shadow-xl border-4 border-background">
                           {index + 1}
                         </div>
-                      </motion.div>
+                      </div>
 
-                      {/* Enhanced Icon */}
-                      <motion.div className="w-20 h-20 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg" whileHover={{
-                    rotate: 10
-                  }} transition={{
-                    duration: 0.3
-                  }}>
+                      {/* Simple Icon */}
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
                         <IconComponent className="w-10 h-10 text-primary" />
-                      </motion.div>
+                      </div>
 
-                      {/* Enhanced Content */}
+                      {/* Simple Content */}
                       <div className="space-y-6 lg:space-y-8">
-                        <motion.h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300" whileHover={{
-                      scale: 1.02
-                    }}>
+                        <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                           {step.title}
-                        </motion.h3>
+                        </h3>
                         <p className="text-muted-foreground leading-relaxed text-lg">
                           {step.description}
                         </p>
@@ -214,23 +198,14 @@ export const HowItWorksSection: React.FC = () => {
                       </div>
 
                       {/* Connection Line (for larger screens) */}
-                      {index < content.steps.length - 1 && <motion.div className="hidden xl:block absolute top-1/2 -right-6 w-12 h-0.5 bg-gradient-to-r from-primary/30 to-transparent" initial={{
-                    scaleX: 0
-                  }} whileInView={{
-                    scaleX: 1
-                  }} viewport={{
-                    once: true
-                  }} transition={{
-                    duration: 0.8,
-                    delay: (index + 1) * 0.2
-                  }} />}
+                      {index < content.steps.length - 1 && <div className="hidden xl:block absolute top-1/2 -right-6 w-12 h-0.5 bg-gradient-to-r from-primary/30 to-transparent" />}
 
-                      {/* Floating Accent */}
+                      {/* Simple Accent */}
                       
 
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               </motion.div>;
         })}
         </div>

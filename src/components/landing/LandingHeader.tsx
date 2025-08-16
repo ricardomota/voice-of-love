@@ -98,116 +98,64 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           )}
           style={{ opacity: navOpacity }}
         >
-          {/* Enhanced Logo with magnetic effect */}
-          <motion.div 
-            className="flex items-center gap-3 relative cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <motion.div
-              className={cn(
-                "transition-all duration-500 ease-out transform relative",
+          {/* Simple Logo */}
+          <div className="flex items-center gap-3 relative cursor-pointer">
+            <div className={cn(
+                "transition-all duration-300",
                 isCompact ? "scale-90" : "scale-100"
-              )}
-              style={{ scale: logoScale }}
-              whileHover={{ rotate: [0, -2, 2, 0] }}
-              transition={{ duration: 0.6 }}
-            >
-              <motion.img 
+              )}>
+              <img 
                 src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
                 alt="Eterna Logo" 
                 className={cn(
-                  "w-auto transition-all duration-500 hover:brightness-110",
+                  "w-auto transition-all duration-300",
                   showOnlyLogo ? "h-8" : "h-6"
                 )}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
               />
-              
-              {/* Enhanced glow effect */}
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-primary/30 via-accent/30 to-secondary/30 blur-xl rounded-full scale-150 opacity-0"
-                animate={{ 
-                  opacity: showOnlyLogo ? [0, 0.4, 0] : 0,
-                  scale: showOnlyLogo ? [1.5, 1.8, 1.5] : 1.5 
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* Enhanced Desktop Navigation */}
-          <motion.nav 
-            className={cn(
-              "hidden lg:flex items-center gap-8 transition-all duration-500 ease-out",
+          {/* Simple Desktop Navigation */}
+          <nav className={cn(
+              "hidden lg:flex items-center gap-8 transition-all duration-300",
               showOnlyLogo ? "opacity-0 translate-x-4 pointer-events-none" : "opacity-100 translate-x-0"
-            )}
-            style={{ opacity: navOpacity }}
-          >
-            <motion.button 
+            )}>
+            <button 
               onClick={() => handleNavigation('how-it-works')}
               className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium"
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               {content.howItWorks}
-              <motion.span 
-                className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
-                style={{ width: "100%" }}
-              />
-            </motion.button>
-            <motion.button 
+              <span className="absolute -bottom-1 left-0 h-0.5 bg-primary w-0 group-hover:w-full transition-all duration-300" />
+            </button>
+            <button 
               onClick={() => handleNavigation('pricing')}
               className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium"
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               Preços
-              <motion.span 
-                className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
-                style={{ width: "100%" }}
-              />
-            </motion.button>
+              <span className="absolute -bottom-1 left-0 h-0.5 bg-primary w-0 group-hover:w-full transition-all duration-300" />
+            </button>
             
-            <motion.div
-              className={cn(
-                "flex items-center gap-6 transition-all duration-500",
+            <div className={cn(
+                "flex items-center gap-6 transition-all duration-300",
                 isCompact ? "scale-90" : "scale-100"
-              )}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+              )}>
               <LanguageSelector />
-              <motion.button
+              <button
                 onClick={onSignIn}
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium"
-                whileHover={{ scale: 1.05, y: -1 }}
-                whileTap={{ scale: 0.98 }}
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium hover:scale-105"
               >
                 {content.signIn}
-              </motion.button>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+              </button>
+              <Button 
+                onClick={onTryFree} 
+                variant="default" 
+                size={isCompact ? "default" : "lg"}
+                className="shadow-lg hover:shadow-2xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold px-8 hover:scale-105"
               >
-                <Button 
-                  onClick={onTryFree} 
-                  variant="default" 
-                  size={isCompact ? "default" : "lg"}
-                  className="shadow-lg hover:shadow-2xl transition-all duration-500 bg-primary hover:bg-primary/90 text-lg font-semibold px-8"
-                >
-                  {content.tryFree}
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.nav>
+                {content.tryFree}
+              </Button>
+            </div>
+          </nav>
 
           {/* Mobile: Menu button ou CTA inteligente */}
           <div className="flex items-center gap-3 lg:hidden">

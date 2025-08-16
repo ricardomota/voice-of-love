@@ -128,39 +128,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               duration: 0.8,
               delay: 0.2
             }}>
-                {content.headline.split(' ').map((word, wordIndex, array) => <motion.span key={wordIndex} className="inline-block" initial={{
-                opacity: 0,
-                y: 50,
-                rotateX: 90
-              }} animate={{
-                opacity: 1,
-                y: 0,
-                rotateX: 0
-              }} transition={{
-                duration: 0.8,
-                delay: 0.3 + wordIndex * 0.08,
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }} whileHover={{
-                scale: 1.05,
-                textShadow: "0 0 8px rgba(255,255,255,0.5)",
-                transition: {
-                  duration: 0.3
-                }
-              }}>
-                    {word}
-                    {wordIndex === 2 && <br className="hidden sm:block" />}
-                    {wordIndex < array.length - 1 && ' '}
-                    {word === '✨' && <motion.span animate={{
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.1, 1]
-                }} transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: wordIndex * 0.1
-                }} className="inline-block">
-                        ✨
-                      </motion.span>}
-                  </motion.span>)}
+                {content.headline}
               </motion.h1>
               <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light" initial={{
               opacity: 0,
@@ -188,62 +156,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             delay: 0.6
           }}>
               {!isLoading && <>
-                  <motion.div className="group relative" whileHover={{
-                scale: 1.05
-              }} whileTap={{
-                scale: 0.98
-              }} onHoverStart={() => {}}>
-                    <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-500 relative overflow-hidden bg-secondary hover:bg-secondary/90">
-                      <motion.div className="flex items-center relative z-10">
-                        <PlayFilled size={20} className="mr-3" />
-                        <motion.span initial={{
-                      opacity: 0,
-                      x: -10
-                    }} animate={{
-                      opacity: 1,
-                      x: 0
-                    }} transition={{
-                      delay: 0.8
-                    }}>
-                          {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
-                        </motion.span>
-                      </motion.div>
-                      {/* Magnetic ripple effect */}
-                      <motion.div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 opacity-0" whileHover={{
-                    opacity: 1,
-                    scale: 1.1
-                  }} transition={{
-                    duration: 0.4
-                  }} />
-                    </Button>
-                  </motion.div>
+                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
+                    <PlayFilled size={20} className="mr-3" />
+                    {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                  </Button>
                   
-                  <motion.div className="group relative" whileHover={{
-                scale: 1.05
-              }} whileTap={{
-                scale: 0.98
-              }}>
-                    <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-500 relative overflow-hidden group">
-                      <motion.span className="relative z-10" initial={{
-                    opacity: 0,
-                    x: 10
-                  }} animate={{
-                    opacity: 1,
-                    x: 0
-                  }} transition={{
-                    delay: 0.9
-                  }}>
-                        {content.seePricing}
-                      </motion.span>
-                      {/* Hover background sweep */}
-                      <motion.div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/20 to-primary-foreground/10 -translate-x-full" whileHover={{
-                    x: 0
-                  }} transition={{
-                    duration: 0.5,
-                    ease: "easeInOut"
-                  }} />
-                    </Button>
-                  </motion.div>
+                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
+                    {content.seePricing}
+                  </Button>
                 </>}
             </motion.div>
 
@@ -259,22 +179,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             delay: 0.8
           }}>
               <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-10 xs:gap-16 text-base text-primary-foreground/75">
-                <motion.div className="flex items-center gap-3" whileHover={{
-                scale: 1.05
-              }}>
+                <div className="flex items-center gap-3">
                   <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
                     <Security size={20} className="text-secondary flex-shrink-0" />
                   </div>
                   <span className="font-medium">Private by default</span>
-                </motion.div>
-                <motion.div className="flex items-center gap-3" whileHover={{
-                scale: 1.05
-              }}>
+                </div>
+                <div className="flex items-center gap-3">
                   <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
                     <Group size={20} className="text-secondary flex-shrink-0" />
                   </div>
                   <span className="font-medium">Family-first design</span>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -298,11 +214,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="absolute -inset-4 bg-gradient-to-r from-secondary/30 via-accent/20 to-secondary/30 rounded-3xl blur-2xl opacity-75" />
               
               <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
-                <motion.img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover object-center" loading="eager" whileHover={{
-                scale: 1.05
-              }} transition={{
-                duration: 0.6
-              }} />
+                <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover object-center" loading="eager" />
                 
                 {/* Enhanced overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent pointer-events-none" />

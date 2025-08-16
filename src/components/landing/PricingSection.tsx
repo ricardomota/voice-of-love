@@ -179,13 +179,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           duration: 0.6,
           delay: index * 0.2
         }}>
-              <motion.div whileHover={{
-            scale: plan.popular ? 1.02 : 1.05,
-            transition: {
-              duration: 0.3
-            }
-          }}>
-                <Card className={`relative group transition-all duration-500 h-full ${plan.popular ? 'border-2 border-primary shadow-2xl scale-105 lg:scale-110 bg-gradient-to-br from-card to-primary/5' : 'border-2 hover:border-primary/30 hover:shadow-xl bg-gradient-to-br from-card to-card/80'}`}>
+              <div className="hover:scale-105 transition-transform duration-300">
+                <Card className={`relative group transition-all duration-300 h-full ${plan.popular ? 'border-2 border-primary shadow-xl scale-105 lg:scale-110 bg-gradient-to-br from-card to-primary/5' : 'border-2 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/80'}`}>
                   {/* Enhanced Popular Badge */}
                   {plan.popular && <motion.div className="absolute -top-6 left-1/2 transform -translate-x-1/2" initial={{
                 scale: 0,
@@ -202,26 +197,22 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
                   <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 space-y-10 lg:space-y-12 relative">
                     
-                    {/* Enhanced Header */}
+                    {/* Simple Header */}
                     <div className="text-center space-y-6">
-                      <motion.h3 className="text-2xl sm:text-3xl font-bold text-foreground" whileHover={{
-                    scale: 1.05
-                  }}>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
                         {plan.title}
-                      </motion.h3>
+                      </h3>
                       <p className="text-muted-foreground text-lg">
                         {plan.description}
                       </p>
                     </div>
 
-                    {/* Enhanced Price */}
+                    {/* Simple Price */}
                     <div className="text-center space-y-4">
                       <div className="flex items-baseline justify-center gap-2">
-                        <motion.span className="text-4xl sm:text-5xl font-bold text-foreground" whileHover={{
-                      scale: 1.1
-                    }}>
+                        <span className="text-4xl sm:text-5xl font-bold text-foreground">
                           {plan.price}
-                        </motion.span>
+                        </span>
                         <span className="text-xl text-muted-foreground">
                           {plan.period}
                         </span>
@@ -231,52 +222,29 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         </p>}
                     </div>
 
-                    {/* Enhanced Features */}
+                    {/* Simple Features */}
                     <div className="space-y-6">
-                      {plan.features.map((feature, featureIndex) => <motion.div key={featureIndex} className="flex items-start gap-4" initial={{
-                    opacity: 0,
-                    x: -20
-                  }} whileInView={{
-                    opacity: 1,
-                    x: 0
-                  }} viewport={{
-                    once: true
-                  }} transition={{
-                    duration: 0.4,
-                    delay: featureIndex * 0.1
-                  }} whileHover={{
-                    x: 5
-                  }}>
+                      {plan.features.map((feature, featureIndex) => <div key={featureIndex} className="flex items-start gap-4 hover:translate-x-1 transition-transform duration-200">
                           <div className="p-1 bg-primary/10 rounded-full mt-0.5">
                             <Check className="w-5 h-5 text-primary flex-shrink-0" />
                           </div>
                           <span className="text-muted-foreground text-lg leading-relaxed">
                             {feature}
                           </span>
-                        </motion.div>)}
+                        </div>)}
                     </div>
 
-                    {/* Enhanced CTA */}
-                    <motion.div whileHover={{
-                  scale: 1.02
-                }} whileTap={{
-                  scale: 0.98
-                }}>
-                      <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-14 text-lg font-semibold transition-all duration-300 ${plan.popular ? 'bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
-                        {plan.popular && <Zap className="w-5 h-5 mr-2" />}
-                        {plan.cta}
-                      </Button>
-                    </motion.div>
+                    {/* Simple CTA */}
+                    <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-14 text-lg font-semibold transition-all duration-300 hover:scale-105 ${plan.popular ? 'bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
+                      {plan.popular && <Zap className="w-5 h-5 mr-2" />}
+                      {plan.cta}
+                    </Button>
 
-                    {/* Floating Elements for Popular Plan */}
-                    {plan.popular && <>
-                        
-                        
-                      </>}
+                    {/* Remove floating elements */}
 
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </motion.div>)}
         </div>
 
