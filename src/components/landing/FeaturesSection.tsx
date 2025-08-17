@@ -121,7 +121,7 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section id="features" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+  return <section id="features" className="py-16 sm:py-20 lg:py-24 pb-8 sm:pb-12 lg:pb-16 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       

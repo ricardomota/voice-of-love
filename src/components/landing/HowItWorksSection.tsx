@@ -83,7 +83,7 @@ export const HowItWorksSection: React.FC = () => {
   } = useLanguage();
   const content = getContent(currentLanguage);
   const icons = [Mic, Settings, MessageCircle, Share];
-  return <section id="how-it-works" className="py-40 sm:py-52 lg:py-64 relative overflow-hidden">
+  return <section id="how-it-works" className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30" />
       
@@ -120,7 +120,7 @@ export const HowItWorksSection: React.FC = () => {
         margin: "-100px"
       }} transition={{
         duration: 0.8
-      }} className="text-center max-w-4xl mx-auto mb-28 lg:mb-36">
+      }} className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
           <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
