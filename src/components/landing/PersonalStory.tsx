@@ -97,7 +97,7 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
   const content = getContent(currentLanguage);
 
   return (
-    <section className="py-20 sm:py-32 bg-gradient-to-b from-background to-accent/5">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-background to-accent/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Personal Story Header */}

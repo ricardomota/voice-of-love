@@ -121,7 +121,7 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section id="features" className="py-40 sm:py-52 lg:py-64 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+  return <section id="features" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
@@ -159,7 +159,7 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         ease: "easeOut"
-      }} className="text-center max-w-4xl mx-auto mb-28 lg:mb-36">
+      }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
           <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
@@ -242,7 +242,7 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         delay: 0.4
-      }} className="mt-32 lg:mt-40 text-center">
+      }} className="mt-16 lg:mt-20 text-center">
           <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
             <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
             <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
