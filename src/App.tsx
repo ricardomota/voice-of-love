@@ -94,7 +94,7 @@ const AppContent = () => {
           <UserLimitGate>
             <div className="min-h-screen bg-background">
               <EternaHeader />
-              <main>
+              <main className="pt-16">
                 <Index />
               </main>
             </div>
@@ -107,7 +107,7 @@ const AppContent = () => {
         <UserLimitGate>
           <div className="min-h-screen bg-background">
             <EternaHeader />
-            <main>
+            <main className="pt-16">
               <Index />
             </main>
           </div>
