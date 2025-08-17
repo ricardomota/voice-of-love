@@ -152,7 +152,7 @@ export const HowItWorksSection: React.FC = () => {
         </motion.div>
 
         {/* Enhanced Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-16 xl:gap-20 mb-20 lg:mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10 mb-20 lg:mb-24">
           {content.steps.map((step, index) => {
           const IconComponent = icons[index];
           return <motion.div key={index} initial={{
@@ -169,38 +169,39 @@ export const HowItWorksSection: React.FC = () => {
             delay: index * 0.2
           }}>
                 <div className="group hover:scale-105 transition-transform duration-300">
-                  <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full">
-                    <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 text-center space-y-8 lg:space-y-10 relative">
+                  <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full min-h-[420px]">
+                    <CardContent className="p-8 sm:p-10 lg:p-8 xl:p-10 text-center space-y-6 lg:space-y-8 relative flex flex-col justify-between h-full">
                       
                       {/* Simple Step Number */}
-                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl flex items-center justify-center text-lg font-bold shadow-xl border-4 border-background">
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-xl flex items-center justify-center text-base font-bold shadow-lg border-2 border-background">
                           {index + 1}
                         </div>
                       </div>
 
-                      {/* Simple Icon */}
-                      <div className="w-20 h-20 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <IconComponent className="w-10 h-10 text-primary" />
-                      </div>
+                       <div className="pt-4">
 
-                      {/* Simple Content */}
-                      <div className="space-y-6 lg:space-y-8">
-                        <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                          {step.title}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed text-lg">
-                          {step.description}
-                        </p>
-                        <p className="text-sm text-muted-foreground/80 leading-relaxed font-light">
-                          {step.detail}
-                        </p>
-                      </div>
+                       {/* Simple Icon */}
+                       <div className="w-16 h-16 bg-gradient-to-br from-primary/15 to-primary/5 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-md">
+                         <IconComponent className="w-8 h-8 text-primary" />
+                       </div>
 
-                      {/* Connection Line (for larger screens) */}
-                      {index < content.steps.length - 1 && <div className="hidden xl:block absolute top-1/2 -right-6 w-12 h-0.5 bg-gradient-to-r from-primary/30 to-transparent" />}
+                       {/* Simple Content */}
+                       <div className="space-y-4 lg:space-y-6 flex-1 flex flex-col justify-center">
+                         <h3 className="text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                           {step.title}
+                         </h3>
+                         <p className="text-muted-foreground leading-relaxed text-base lg:text-lg px-2">
+                           {step.description}
+                         </p>
+                         <p className="text-sm text-muted-foreground/70 leading-relaxed font-light px-2">
+                           {step.detail}
+                         </p>
+                       </div>
+                       </div>
 
-                      {/* Simple Accent */}
+                       {/* Connection Line (for larger screens) */}
+                       {index < content.steps.length - 1 && <div className="hidden xl:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary/30 to-transparent" />}
                       
 
                     </CardContent>
