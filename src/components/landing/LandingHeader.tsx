@@ -35,21 +35,13 @@ const getContent = (language: string) => {
 
 export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignIn, onHowItWorks }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const { scrollY: motionScrollY } = useScroll();
-  
-  // Advanced parallax transforms
-  const headerY = useTransform(motionScrollY, [0, 300], [0, -50]);
-  const logoScale = useTransform(motionScrollY, [0, 200], [1, 0.9]);
-  const navOpacity = useTransform(motionScrollY, [0, 150], [1, 0.8]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
       setIsScrolled(currentScrollY > 50);
     };
     
@@ -77,49 +69,36 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
     setIsMobileMenuOpen(false);
   };
 
-  const isCompact = scrollY > 100;
-  const showOnlyLogo = scrollY > 200;
-
   return (
-    <motion.header 
+    <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out",
         isScrolled 
           ? "bg-background/95 backdrop-blur-xl shadow-sm border-b border-border" 
           : "bg-background/90"
       )}
-      style={{ y: headerY }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <div 
           className={cn(
-            "flex items-center justify-between transition-all duration-500 ease-out",
-            isCompact ? "h-14" : "h-16 lg:h-20"
+            "flex items-center justify-between transition-all duration-300 ease-out",
+            isScrolled ? "h-14" : "h-16 lg:h-20"
           )}
-          style={{ opacity: navOpacity }}
         >
           {/* Simple Logo */}
           <div className="flex items-center gap-3 relative cursor-pointer">
-            <div className={cn(
-                "transition-all duration-300",
-                isCompact ? "scale-90" : "scale-100"
-              )}>
-              <img 
-                src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
-                alt="Eterna Logo" 
-                className={cn(
-                  "w-auto transition-all duration-300",
-                  showOnlyLogo ? "h-8" : "h-6"
-                )}
-              />
-            </div>
+            <img 
+              src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
+              alt="Eterna Logo" 
+              className={cn(
+                "w-auto transition-all duration-300",
+                isScrolled ? "h-6" : "h-8"
+              )}
+            />
           </div>
 
           {/* Simple Desktop Navigation */}
-          <nav className={cn(
-              "hidden lg:flex items-center gap-8 transition-all duration-300",
-              showOnlyLogo ? "opacity-0 translate-x-4 pointer-events-none" : "opacity-100 translate-x-0"
-            )}>
+          <nav className="hidden lg:flex items-center gap-8">
             <button 
               onClick={() => handleNavigation('how-it-works')}
               className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium"
@@ -135,10 +114,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               <span className="absolute -bottom-1 left-0 h-0.5 bg-primary w-0 group-hover:w-full transition-all duration-300" />
             </button>
             
-            <div className={cn(
-                "flex items-center gap-6 transition-all duration-300",
-                isCompact ? "scale-90" : "scale-100"
-              )}>
+            <div className="flex items-center gap-6">
               <LanguageSelector />
               <button
                 onClick={onSignIn}
@@ -149,7 +125,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               <Button 
                 onClick={onTryFree} 
                 variant="default" 
-                size={isCompact ? "default" : "lg"}
+                size="lg"
                 className="shadow-lg hover:shadow-2xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold px-8 hover:scale-105"
               >
                 {content.tryFree}
@@ -157,20 +133,9 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
             </div>
           </nav>
 
-          {/* Mobile: Menu button ou CTA inteligente */}
+          {/* Mobile: Menu button */}
           <div className="flex items-center gap-3 lg:hidden">
-            {showOnlyLogo ? (
-              // Quando só mostra logo, mostra CTA compacto
-              <Button 
-                onClick={onTryFree}
-                size="sm"
-                className="shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-              >
-                Testar
-              </Button>
-            ) : (
-              <LanguageSelector />
-            )}
+            <LanguageSelector />
             
             <Button
               variant="ghost"
@@ -184,7 +149,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Enhanced Mobile Menu */}
         <AnimatePresence>
@@ -227,11 +192,9 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {!showOnlyLogo && (
-                    <div className="mb-4">
-                      <LanguageSelector />
-                    </div>
-                  )}
+                  <div className="mb-4">
+                    <LanguageSelector />
+                  </div>
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -251,6 +214,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           )}
         </AnimatePresence>
       </div>
-    </motion.header>
+    </header>
   );
 };
