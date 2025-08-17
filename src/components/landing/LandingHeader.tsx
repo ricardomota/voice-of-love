@@ -101,17 +101,15 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           <nav className="hidden lg:flex items-center gap-8">
             <button 
               onClick={() => handleNavigation('how-it-works')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
               {content.howItWorks}
-              <span className="absolute -bottom-1 left-0 h-0.5 bg-primary w-0 group-hover:w-full transition-all duration-300" />
             </button>
             <button 
               onClick={() => handleNavigation('pricing')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
               Preços
-              <span className="absolute -bottom-1 left-0 h-0.5 bg-primary w-0 group-hover:w-full transition-all duration-300" />
             </button>
             
             <div className="flex items-center gap-6">
