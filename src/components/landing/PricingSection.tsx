@@ -199,7 +199,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     
                     {/* Simple Header */}
                     <div className="text-center space-y-6">
-                      <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
+                      <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] font-bold text-foreground">
                         {plan.title}
                       </h3>
                       <p className="text-muted-foreground text-lg">
