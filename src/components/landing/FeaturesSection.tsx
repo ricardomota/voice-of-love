@@ -47,13 +47,13 @@ const getContent = (language: string) => {
         description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
-        image: "/lovable-uploads/53170fb1-7796-436e-b100-99bb359fcd92.png"
+        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
       }, {
         title: "Conversas inteligentes",
         description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
         icon: Flash,
         highlight: "✨ Conversas mais humanas",
-        image: "/lovable-uploads/283c9aa7-58d9-444d-bcb2-3ec9a0965926.png"
+        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
       }, {
         title: "Multilíngue",
         description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
