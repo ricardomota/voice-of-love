@@ -299,7 +299,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         onAddMemory(id);
       }} className="w-full mb-4 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all">
             <Add className="w-4 h-4 mr-2" />
-            <span className="text-xs sm:text-sm">✨ Adicionar Memória</span>
+            <span className="text-xs sm:text-sm">Adicionar Memória</span>
           </Button>}
 
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
