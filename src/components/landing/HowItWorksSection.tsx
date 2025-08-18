@@ -85,7 +85,7 @@ export const HowItWorksSection: React.FC = () => {
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
-    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-32 overflow-hidden">
+    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 overflow-hidden">
       
       {/* Hero-style Background */}
       <div className="absolute inset-0">
@@ -173,20 +173,21 @@ export const HowItWorksSection: React.FC = () => {
         </div>
       </div>
 
+      {/* Container with consistent max-width */}
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
-        {/* Header */}
+        {/* Header with better responsive typography */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16 sm:mb-20"
         >
-          <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             {content.title}
           </h2>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             {content.subtitle}
           </p>
         </motion.div>
@@ -197,7 +198,7 @@ export const HowItWorksSection: React.FC = () => {
           {/* Connection Line */}
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
             {content.steps.map((step, index) => {
               const IconComponent = icons[index];
               
@@ -219,32 +220,32 @@ export const HowItWorksSection: React.FC = () => {
                 >
                   
                   {/* Step Card */}
-                  <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
+                  <div className="relative bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
                     
                     {/* Step Number */}
                     <div className="absolute -top-4 -right-4 w-8 h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-sm">
                       {index + 1}
                     </div>
                     
-                    {/* Icon */}
+                    {/* Icon with responsive sizing */}
                     <div 
-                      className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-white/30 transition-colors duration-300"
+                      className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:bg-white/30 transition-colors duration-300"
                     >
-                      <IconComponent className="w-10 h-10 text-white" size={40} />
+                      <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-white" size={40} />
                     </div>
                     
-                    {/* Content */}
-                    <div className="space-y-4">
-                      <h3 className="font-serif text-xl font-bold text-white">
+                    {/* Content with responsive text */}
+                    <div className="space-y-3 sm:space-y-4">
+                      <h3 className="font-serif text-lg sm:text-xl font-bold text-white">
                         {step.title}
                       </h3>
                       
-                      <p className="text-white/80 text-sm leading-relaxed">
+                      <p className="text-white/80 text-sm sm:text-base leading-relaxed">
                         {step.description}
                       </p>
                       
                       <motion.p 
-                        className="text-xs text-white/60 leading-relaxed"
+                        className="text-xs sm:text-sm text-white/60 leading-relaxed"
                         initial={{ opacity: 0.7 }}
                         animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
                       >

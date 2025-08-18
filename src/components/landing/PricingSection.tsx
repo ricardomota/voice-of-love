@@ -99,7 +99,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   } = useLanguage();
   const content = getContent(currentLanguage);
   const plans = [content.free, content.paid];
-  return <section id="pricing" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
+  return <section id="pricing" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
       {/* Background Elements */}
       <motion.div className="absolute top-0 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" animate={{
       scale: [1, 1.2, 1],
@@ -119,7 +119,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       delay: 3
     }} />
       
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+      {/* Container with consistent padding */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Enhanced Header */}
         <motion.div initial={{
@@ -133,8 +134,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         margin: "-100px"
       }} transition={{
         duration: 0.8
-      }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
-          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-foreground mb-8 tracking-tight" initial={{
+      }} className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
+          <motion.h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 sm:mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -148,7 +149,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         }}>
             {content.title}
           </motion.h2>
-          <motion.p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed font-light" initial={{
+          <motion.p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed font-light" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -165,7 +166,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         </motion.div>
 
         {/* Enhanced Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 max-w-6xl mx-auto mb-20 lg:mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 xl:gap-24 max-w-6xl mx-auto mb-16 sm:mb-20 lg:mb-24">
           {plans.map((plan, index) => <motion.div key={index} initial={{
           opacity: 0,
           y: 50
@@ -195,25 +196,25 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       
                     </motion.div>}
 
-                  <CardContent className="p-10 sm:p-12 lg:p-10 xl:p-12 space-y-10 lg:space-y-12 relative">
+                  <CardContent className="p-6 sm:p-8 md:p-10 lg:p-12 space-y-8 lg:space-y-10 relative">
                     
-                    {/* Simple Header */}
-                    <div className="text-center space-y-6">
-                      <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] font-bold text-foreground">
+                    {/* Header with responsive text */}
+                    <div className="text-center space-y-4 sm:space-y-6">
+                      <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
                         {plan.title}
                       </h3>
-                      <p className="text-muted-foreground text-lg">
+                      <p className="text-muted-foreground text-base sm:text-lg">
                         {plan.description}
                       </p>
                     </div>
 
-                    {/* Simple Price */}
-                    <div className="text-center space-y-4">
+                    {/* Price with responsive sizing */}
+                    <div className="text-center space-y-3 sm:space-y-4">
                       <div className="flex items-baseline justify-center gap-2">
-                        <span className="text-4xl sm:text-5xl font-bold text-foreground">
+                        <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
                           {plan.price}
                         </span>
-                        <span className="text-xl text-muted-foreground">
+                        <span className="text-lg sm:text-xl text-muted-foreground">
                           {plan.period}
                         </span>
                       </div>
@@ -222,21 +223,21 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         </p>}
                     </div>
 
-                    {/* Simple Features */}
-                    <div className="space-y-6">
-                      {plan.features.map((feature, featureIndex) => <div key={featureIndex} className="flex items-start gap-4 hover:translate-x-1 transition-transform duration-200">
+                    {/* Features with better mobile spacing */}
+                    <div className="space-y-4 sm:space-y-6">
+                      {plan.features.map((feature, featureIndex) => <div key={featureIndex} className="flex items-start gap-3 sm:gap-4 hover:translate-x-1 transition-transform duration-200">
                           <div className="p-1 bg-primary/10 rounded-full mt-0.5">
-                            <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                            <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
                           </div>
-                          <span className="text-muted-foreground text-lg leading-relaxed">
+                          <span className="text-muted-foreground text-base sm:text-lg leading-relaxed">
                             {feature}
                           </span>
                         </div>)}
                     </div>
 
-                    {/* Simple CTA */}
-                    <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-14 text-lg font-semibold transition-all duration-300 hover:scale-105 ${plan.popular ? 'bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
-                      {plan.popular && <Bolt className="w-5 h-5 mr-2" />}
+                    {/* CTA with responsive sizing */}
+                    <Button onClick={index === 0 ? onTryFree : onUpgrade ? () => onUpgrade('family') : onSeePricing} variant={plan.popular ? "default" : "secondary"} size="xl" className={`w-full h-12 sm:h-14 text-base sm:text-lg font-semibold transition-all duration-300 hover:scale-105 ${plan.popular ? 'bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl' : 'shadow-lg hover:shadow-xl'}`}>
+                      {plan.popular && <Bolt className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />}
                       {plan.cta}
                     </Button>
 

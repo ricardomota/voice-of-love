@@ -121,7 +121,7 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section id="features" className="py-16 sm:py-20 lg:py-24 pb-8 sm:pb-12 lg:pb-16 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+  return <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
@@ -144,7 +144,8 @@ export const FeaturesSection: React.FC = () => {
       delay: 3
     }} />
       
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+      {/* Container with consistent padding */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Enhanced Header */}
         <motion.div initial={{
@@ -159,8 +160,8 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         ease: "easeOut"
-      }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
-          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
+      }} className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
+          <motion.h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-foreground mb-6 sm:mb-8 leading-tight tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -180,7 +181,7 @@ export const FeaturesSection: React.FC = () => {
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{
         once: true,
         margin: "-100px"
-      }} className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24">
+      }} className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 xl:gap-24">
           {content.features.map((feature, index) => {
           const IconComponent = feature.icon;
           return <motion.div key={index} variants={itemVariants} className="group">
@@ -188,8 +189,8 @@ export const FeaturesSection: React.FC = () => {
                   {/* Simple background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-88 sm:h-96 lg:h-80 xl:h-88 overflow-hidden">
-                      {/* Simple Feature Image */}
+                    <div className="relative h-64 sm:h-80 md:h-88 lg:h-80 xl:h-88 overflow-hidden">
+                      {/* Feature Image with responsive sizing */}
                       <div className="relative w-full h-full">
                         <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                         
@@ -208,12 +209,12 @@ export const FeaturesSection: React.FC = () => {
                     </div>
 
                     {/* Simple Content */}
-                    <div className="p-8 lg:p-10 pb-8 lg:pb-10 space-y-8">
-                      <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                    <div className="p-6 sm:p-8 lg:p-10 space-y-4 sm:space-y-6 lg:space-y-8">
+                      <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                         {feature.title}
                       </h3>
                       
-                      <p className="text-muted-foreground leading-relaxed text-lg">
+                      <p className="text-muted-foreground leading-relaxed text-base sm:text-lg">
                         {feature.description}
                       </p>
                       

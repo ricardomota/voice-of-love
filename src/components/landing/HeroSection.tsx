@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     checkUserCount();
   }, []);
   const isWaitlistMode = userCount >= 10;
-  return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-32 sm:pt-40 lg:pt-48 overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 pt-24 sm:pt-28 lg:pt-32 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
@@ -103,11 +103,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </div>
       
+      {/* Container with consistent max-width and responsive padding */}
       <div className="relative w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 xl:gap-20 items-center">
           
-          {/* Enhanced Content */}
-          <motion.div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1" initial={{
+          {/* Enhanced Content with mobile-first responsive design */}
+          <motion.div className="text-center lg:text-left space-y-6 md:space-y-8 lg:space-y-10 order-2 lg:order-1" initial={{
           opacity: 0,
           y: 50
         }} animate={{
@@ -117,8 +119,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           duration: 0.8,
           ease: "easeOut"
         }}>
-            <div className="space-y-8 lg:space-y-12">
-              <motion.h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-primary-foreground leading-none tracking-tight mb-12 mt-8" initial={{
+            <div className="space-y-6 md:space-y-8 lg:space-y-10">
+              <motion.h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-primary-foreground leading-tight tracking-tight" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -130,7 +132,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }}>
                 {content.headline}
               </motion.h1>
-              <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light mt-6" initial={{
+              <motion.p className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -144,8 +146,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </motion.p>
             </div>
 
-            {/* Enhanced CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start pt-2" initial={{
+            {/* Enhanced CTA Buttons with better mobile layout */}
+            <motion.div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start items-center" initial={{
             opacity: 0,
             y: 30
           }} animate={{
@@ -156,18 +158,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             delay: 0.6
           }}>
               {!isLoading && <>
-                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
+                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[240px] sm:min-w-[260px] h-14 sm:h-16 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
                     {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
                   </Button>
                   
-                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
+                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] h-14 sm:h-16 text-base sm:text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
                     {content.seePricing}
                   </Button>
                 </>}
             </motion.div>
 
-            {/* Enhanced Trust indicators */}
-            <motion.div className="pt-8 lg:pt-10" initial={{
+            {/* Enhanced Trust indicators with better mobile layout */}
+            <motion.div className="pt-6 md:pt-8 lg:pt-10" initial={{
             opacity: 0,
             y: 20
           }} animate={{
@@ -177,7 +179,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             duration: 0.8,
             delay: 0.8
           }}>
-              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-10 xs:gap-16 text-base text-primary-foreground/75">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 sm:gap-8 md:gap-12 lg:gap-16 text-sm sm:text-base text-primary-foreground/75">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
                     <Security size={20} className="text-secondary flex-shrink-0" />
@@ -212,7 +214,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Glow Effect */}
               <div className="absolute -inset-4 bg-gradient-to-r from-secondary/30 via-accent/20 to-secondary/30 rounded-3xl blur-2xl opacity-75" />
               
-              <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
+              <div className="relative rounded-2xl sm:rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[4/3] sm:aspect-[16/10] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
                 <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover object-center" loading="eager" />
                 
                 {/* Enhanced overlay */}
