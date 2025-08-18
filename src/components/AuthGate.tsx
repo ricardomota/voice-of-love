@@ -30,9 +30,9 @@ const getContent = (language: string) => {
       createAccount: "Create Account",
       backToHome: "Back to Home",
       story: {
-        title: "💝 Why I Created Eterna",
+        title: "Why I Created Eterna",
         text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones. ✨",
-        heart: "❤️ Built with love for families 🤗"
+        heart: "Built with love for families"
       },
       errors: {
         fillFields: "Please fill in email and password",
@@ -58,9 +58,9 @@ const getContent = (language: string) => {
       createAccount: "Criar Conta",
       backToHome: "Voltar ao Início",
       story: {
-        title: "💝 Por que Criei o Eterna",
+        title: "Por que Criei o Eterna",
         text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos. ✨",
-        heart: "❤️ Feito com amor para famílias 🤗"
+        heart: "Feito com amor para famílias"
       },
       errors: {
         fillFields: "Por favor, preencha email e senha",
@@ -193,15 +193,13 @@ export function AuthGate({ children }: AuthGateProps) {
             {/* Story Section */}
             <Card className="bg-card/50 border-border/50">
               <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Heart className="h-5 w-5 text-primary" />
+                <div className="mb-4">
                   <h3 className="text-lg font-semibold">{content.story.title}</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   {content.story.text}
                 </p>
-                <div className="flex items-center gap-2 text-sm text-primary">
-                  <Heart className="h-4 w-4" />
+                <div className="text-sm text-primary">
                   <span className="font-medium">{content.story.heart}</span>
                 </div>
               </CardContent>
