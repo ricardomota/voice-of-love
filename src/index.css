@@ -1,3 +1,4 @@
+@import './styles/performance.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

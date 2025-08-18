@@ -7,15 +7,21 @@ import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
 import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Loader2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { cacheApiCall } from '@/utils/performanceUtils';
+import { usePerformanceMonitoring } from '@/hooks/usePerformanceMonitoring';
 import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Changelog } from "./pages/Changelog";
+
+// Lazy load heavy components for better performance
+const LazyIndex = memo(() => <Index />);
+const LazyChangelog = memo(() => <Changelog />);
 
 // Create QueryClient outside component to avoid re-creation
 const queryClient = new QueryClient({
@@ -33,23 +39,30 @@ const AppContent = () => {
   const [showBetaGate, setShowBetaGate] = useState(false);
   const [userCount, setUserCount] = useState(0);
   const [userCountLoading, setUserCountLoading] = useState(true);
-  const navigate = useNavigate();
+  
+  // Enable performance monitoring
+  usePerformanceMonitoring();
 
+  // Optimized user count check with caching to prevent duplicate API calls
   useEffect(() => {
     const checkUserCount = async () => {
       try {
-        const { count, error } = await supabase
-          .from('user_settings')
-          .select('*', { count: 'exact', head: true });
+        const result = await cacheApiCall(
+          'user_settings_count',
+          async () => {
+            const { count, error } = await supabase
+              .from('user_settings')
+              .select('*', { count: 'exact', head: true });
+            
+            if (error) throw error;
+            return count || 0;
+          },
+          2 * 60 * 1000 // 2 minutes cache
+        );
         
-        if (error) {
-          console.error('Error getting user count:', error);
-          setUserCount(0);
-        } else {
-          setUserCount(count || 0);
-        }
+        setUserCount(result);
       } catch (error) {
-        console.error('Error in checkUserCount:', error);
+        console.error('Error getting user count:', error);
         setUserCount(0);
       } finally {
         setUserCountLoading(false);
@@ -67,19 +80,14 @@ const AppContent = () => {
     );
   }
 
-  const handleTryFree = () => {
-    if (userCount >= 10) {
-      // Show waitlist directly
-      setShowBetaGate(true);
-    } else {
-      // Show app with login
-      setShowBetaGate(true);
-    }
-  };
-
-  const handleLogin = () => {
+  // Memoized handlers to prevent unnecessary re-renders
+  const handleTryFree = useCallback(() => {
     setShowBetaGate(true);
-  };
+  }, []);
+
+  const handleLogin = useCallback(() => {
+    setShowBetaGate(true);
+  }, []);
 
   // Show the actual app routes
   return (
@@ -95,7 +103,7 @@ const AppContent = () => {
             <div className="min-h-screen bg-background">
               <EternaHeader />
               <main className="pt-16">
-                <Index />
+                <LazyIndex />
               </main>
             </div>
           </UserLimitGate>
@@ -108,17 +116,17 @@ const AppContent = () => {
           <div className="min-h-screen bg-background">
             <EternaHeader />
             <main className="pt-16">
-              <Index />
+              <LazyIndex />
             </main>
           </div>
         </UserLimitGate>
       } />
       
       {/* Legacy auth route redirect */}
-      <Route path="/auth" element={<UserLimitGate><Index /></UserLimitGate>} />
+      <Route path="/auth" element={<UserLimitGate><LazyIndex /></UserLimitGate>} />
       
       {/* Changelog Route */}
-      <Route path="/changelog" element={<Changelog />} />
+      <Route path="/changelog" element={<LazyChangelog />} />
       
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />

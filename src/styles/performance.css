@@ -1,0 +1,101 @@
+/* Performance optimizations for better rendering */
+
+/* Enable hardware acceleration for elements with frequent transforms */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Optimize animations to use transform and opacity only */
+.optimized-transition {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce paint and layout thrashing */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize gradients for better performance */
+.gradient-optimized {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Contain layout and paint for better performance */
+.performance-contain {
+  contain: layout paint;
+}
+
+/* Optimize text rendering */
+.text-optimized {
+  text-rendering: optimizeSpeed;
+  font-smooth: auto;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* Reduce repaints on hover states */
+.hover-optimized {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.hover-optimized:hover {
+  transform: scale(1.02);
+}
+
+/* Optimize images for performance */
+.image-optimized {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Optimize scrolling performance */
+.scroll-optimized {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* Reduce layout shifts */
+.layout-stable {
+  min-height: 1px;
+  contain: layout;
+}
+
+/* Optimize complex animations */
+@keyframes optimized-fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fade-in-optimized {
+  animation: optimized-fade-in 0.3s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Critical rendering path optimization */
+.above-fold {
+  contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 100vh;
+}
+
+/* Defer non-critical elements */
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}

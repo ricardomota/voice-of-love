@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, memo, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { InputWithVoice } from '@/components/ui/input-with-voice';
@@ -11,6 +11,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 interface AuthGateProps {
   children: React.ReactNode;
 }
+// Memoized content getter to prevent recalculating on every render
 const getContent = (language: string) => {
   const content = {
     en: {
@@ -88,9 +89,10 @@ const getContent = (language: string) => {
   };
   return content[language as keyof typeof content] || content.en;
 };
-export function AuthGate({
+// Memoized AuthGate component
+export const AuthGate = memo(({
   children
-}: AuthGateProps) {
+}: AuthGateProps) => {
   const {
     user,
     loading,
@@ -107,14 +109,17 @@ export function AuthGate({
   const {
     currentLanguage
   } = useLanguage();
-  const content = getContent(currentLanguage);
+  
+  // Memoize content to prevent recalculation
+  const content = useMemo(() => getContent(currentLanguage), [currentLanguage]);
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>;
   }
   if (!user) {
-    const handleAuth = async (type: 'signin' | 'signup') => {
+    // Memoized auth handler to prevent recreation on every render
+    const handleAuth = useCallback(async (type: 'signin' | 'signup') => {
       if (!email || !password) {
         toast({
           title: content.errors.error,
@@ -147,7 +152,7 @@ export function AuthGate({
       } finally {
         setIsLoading(false);
       }
-    };
+    }, [email, password, content, toast, signIn, signUp, navigate]);
     return <main className="min-h-screen bg-background px-4">
         {/* Back Button */}
         <div className="pt-6 pb-4">
@@ -229,4 +234,4 @@ export function AuthGate({
       </main>;
   }
   return <>{children}</>;
-}
+});
