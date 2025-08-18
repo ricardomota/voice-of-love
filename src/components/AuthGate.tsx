@@ -24,7 +24,7 @@ const getContent = (language: string) => {
       createAccount: "Create Account",
       backToHome: "Back to Home",
       story: {
-        title: "💝 Why I Created Eterna",
+        title: "Why I Created Eterna",
         text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones. ✨",
         heart: "❤️"
       },
@@ -48,7 +48,7 @@ const getContent = (language: string) => {
       createAccount: "Criar Conta",
       backToHome: "Voltar ao Início",
       story: {
-        title: "💝 Por que Criei o Eterna",
+        title: "Por que Criei o Eterna",
         text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos. ✨",
         heart: "❤️"
       },
