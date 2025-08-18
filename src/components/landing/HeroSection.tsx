@@ -159,7 +159,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           }}>
               {!isLoading && <>
                   <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[240px] sm:min-w-[260px] h-14 sm:h-16 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
-                    {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                    {isWaitlistMode ? 'Join Waitlist' : content.tryFree}
                   </Button>
                   
                   <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] h-14 sm:h-16 text-base sm:text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
