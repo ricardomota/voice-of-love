@@ -85,7 +85,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         <div 
           className={cn(
             "flex items-center justify-between transition-all duration-300 ease-out",
-            isScrolled ? "h-16" : "h-18 lg:h-20"
+            isScrolled ? "h-16" : "h-20"
           )}
         >
           {/* Simple Logo */}
