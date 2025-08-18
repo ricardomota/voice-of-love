@@ -19,13 +19,13 @@ const getContent = (language: string) => {
         description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
         icon: Microphone,
         highlight: "🚀 ElevenLabs powered",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
+        image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
         title: "Cost-smart AI",
         description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
         icon: Flash,
         highlight: "👨‍👩‍👧‍👦 Optimized for families",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
+        image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilingual",
         description: "Available in English, Portuguese (Brazil), and Spanish to serve global families everywhere! 🗣️",
@@ -47,13 +47,13 @@ const getContent = (language: string) => {
         description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
+        image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
         title: "Conversas inteligentes",
         description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
         icon: Flash,
         highlight: "✨ Conversas mais humanas",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
+        image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilíngue",
         description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
@@ -75,13 +75,13 @@ const getContent = (language: string) => {
         description: "Voces base para todos los usuarios, clonación personal para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
+        image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
         title: "IA económica",
         description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-5o para conversaciones premium - ¡lo mejor de ambos mundos! 💫",
         icon: Flash,
         highlight: "👨‍👩‍👧‍👦 Optimizado para familias",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
+        image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilingüe",
         description: "Disponible en inglés, portugués (Brasil) y español para servir familias globales en todas partes! 🗣️",
