@@ -360,7 +360,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                       className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
                     >
                       <Mic className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span>Áudio</span>
+                      <span>Call</span>
                     </Button>
                 } 
               />
