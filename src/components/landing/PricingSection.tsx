@@ -134,7 +134,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       }} transition={{
         duration: 0.8
       }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
-          <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
+          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
