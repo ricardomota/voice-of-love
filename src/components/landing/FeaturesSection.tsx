@@ -13,25 +13,25 @@ const getContent = (language: string) => {
         description: "Secure, private storage that keeps your family's voices and memories safe and sound! 🛡️",
         icon: Security,
         highlight: "End-to-end encrypted",
-        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
+        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Hybrid voices",
         description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
         icon: Microphone,
         highlight: "🚀 ElevenLabs powered",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
+        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
       }, {
         title: "Cost-smart AI",
         description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
         icon: Flash,
         highlight: "👨‍👩‍👧‍👦 Optimized for families",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
+        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
       }, {
         title: "Multilingual",
         description: "Available in English, Portuguese (Brazil), and Spanish to serve global families everywhere! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png?v=2"
       }]
     },
     'pt-BR': {
@@ -41,25 +41,25 @@ const getContent = (language: string) => {
         description: "Armazenamento seguro e privado que mantém as vozes e memórias da sua família protegidas e seguras! 🛡️",
         icon: Security,
         highlight: "Criptografado ponta a ponta",
-        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
+        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Vozes personalizadas",
         description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
+        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
       }, {
         title: "Conversas inteligentes",
         description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
         icon: Flash,
         highlight: "✨ Conversas mais humanas",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
+        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
       }, {
         title: "Multilíngue",
         description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png?v=2"
       }]
     },
     es: {
@@ -69,25 +69,25 @@ const getContent = (language: string) => {
         description: "Almacenamiento seguro y privado que mantiene las voces y memorias de tu familia protegidas y seguras! 🛡️",
         icon: Security,
         highlight: "Cifrado extremo a extremo",
-        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png"
+        image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Voces híbridas",
         description: "Voces base para todos los usuarios, clonación personal para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
-        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png"
+        image: "/lovable-uploads/28e5692e-d7de-4041-a643-3d8bcc19f107.png?v=2"
       }, {
         title: "IA económica",
         description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-5o para conversaciones premium - ¡lo mejor de ambos mundos! 💫",
         icon: Flash,
         highlight: "👨‍👩‍👧‍👦 Optimizado para familias",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
+        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png?v=2"
       }, {
         title: "Multilingüe",
         description: "Disponible en inglés, portugués (Brasil) y español para servir familias globales en todas partes! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png?v=2"
       }]
     }
   };
