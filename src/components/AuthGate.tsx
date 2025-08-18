@@ -112,47 +112,47 @@ export const AuthGate = memo(({
   
   // Memoize content to prevent recalculation
   const content = useMemo(() => getContent(currentLanguage), [currentLanguage]);
+
+  // Memoized auth handler to prevent recreation on every render - MOVED OUTSIDE CONDITIONAL
+  const handleAuth = useCallback(async (type: 'signin' | 'signup') => {
+    if (!email || !password) {
+      toast({
+        title: content.errors.error,
+        description: content.errors.fillFields,
+        variant: "destructive"
+      });
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const {
+        error
+      } = type === 'signin' ? await signIn(email, password) : await signUp(email, password);
+      if (error) throw error;
+      if (type === 'signup') {
+        toast({
+          title: content.success.title,
+          description: content.success.accountCreated
+        });
+      } else {
+        navigate('/auth');
+      }
+    } catch (error: any) {
+      toast({
+        title: content.errors.error,
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [email, password, content, toast, signIn, signUp, navigate]);
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>;
   }
   if (!user) {
-    // Memoized auth handler to prevent recreation on every render
-    const handleAuth = useCallback(async (type: 'signin' | 'signup') => {
-      if (!email || !password) {
-        toast({
-          title: content.errors.error,
-          description: content.errors.fillFields,
-          variant: "destructive"
-        });
-        return;
-      }
-      setIsLoading(true);
-      try {
-        const {
-          error
-        } = type === 'signin' ? await signIn(email, password) : await signUp(email, password);
-        if (error) throw error;
-        if (type === 'signup') {
-          toast({
-            title: content.success.title,
-            description: content.success.accountCreated
-          });
-        } else {
-          // Redireciona para a área principal após login
-          navigate('/auth');
-        }
-      } catch (error: any) {
-        toast({
-          title: content.errors.error,
-          description: error.message,
-          variant: "destructive"
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    }, [email, password, content, toast, signIn, signUp, navigate]);
     return <main className="min-h-screen bg-background px-4">
         {/* Back Button */}
         <div className="pt-6 pb-4">
