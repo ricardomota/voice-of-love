@@ -79,41 +79,98 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
   const isWaitlistMode = userCount >= 10;
   return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-32 sm:pt-40 lg:pt-48 overflow-hidden">
-      {/* Enhanced Background */}
+      {/* Enhanced Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+        {/* Base animated gradient */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "linear-gradient(45deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%)",
+              "linear-gradient(90deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 50%, hsl(var(--primary)) 100%)",
+              "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--primary)) 50%, hsl(var(--accent)) 100%)",
+              "linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%)"
+            ]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
         
-        {/* Animated Background Elements */}
-        <motion.div className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl" animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.3, 0.6, 0.3]
-      }} transition={{
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }} />
-        <motion.div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl" animate={{
-        scale: [1.2, 1, 1.2],
-        opacity: [0.4, 0.2, 0.4]
-      }} transition={{
-        duration: 10,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2
-      }} />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-background/10" />
         
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:50px_50px]" />
-        </div>
+        {/* Large floating orbs */}
+        <motion.div 
+          className="absolute top-10 left-10 w-96 h-96 bg-secondary/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.7, 0.3],
+            x: [0, 100, 0],
+            y: [0, -50, 0]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div 
+          className="absolute bottom-10 right-10 w-80 h-80 bg-accent/40 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.8, 0.4],
+            x: [0, -80, 0],
+            y: [0, 30, 0]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+        />
+        
+        <motion.div 
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/25 rounded-full blur-3xl"
+          animate={{
+            scale: [0.8, 1.5, 0.8],
+            opacity: [0.2, 0.5, 0.2],
+            x: [-150, 150, -150],
+            y: [-100, 100, -100]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        
+        {/* Animated grid pattern */}
+        <motion.div 
+          className="absolute inset-0 opacity-10"
+          animate={{
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] [background-size:60px_60px]" />
+        </motion.div>
       </div>
       
-      <div className="relative w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="relative w-full max-w-4xl mx-auto">
+        <div className="text-center space-y-8 lg:space-y-10">
           
           {/* Enhanced Content */}
-          <motion.div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1" initial={{
+          <motion.div className="text-center space-y-8 lg:space-y-10" initial={{
           opacity: 0,
           y: 50
         }} animate={{
@@ -184,7 +241,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             duration: 0.8,
             delay: 0.8
           }}>
-              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-10 xs:gap-16 text-base text-primary-foreground/75">
+              <div className="flex flex-col xs:flex-row items-center justify-center gap-10 xs:gap-16 text-base text-primary-foreground/75">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
                     <Security size={20} className="text-secondary flex-shrink-0" />
@@ -200,39 +257,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Enhanced Hero Image */}
-          <motion.div className="relative order-1 lg:order-2" initial={{
-          opacity: 0,
-          scale: 0.9,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          scale: 1,
-          y: 0
-        }} transition={{
-          duration: 1,
-          delay: 0.4,
-          ease: "easeOut"
-        }}>
-            <div className="relative">
-              {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-secondary/30 via-accent/20 to-secondary/30 rounded-3xl blur-2xl opacity-75" />
-              
-              <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
-                <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover object-center" loading="eager" />
-                
-                {/* Enhanced overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent pointer-events-none" />
-                
-                {/* Floating Elements */}
-                
-                
-                
-              </div>
-            </div>
-          </motion.div>
-
         </div>
       </div>
     </section>;
