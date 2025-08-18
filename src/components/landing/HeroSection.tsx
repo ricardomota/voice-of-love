@@ -79,90 +79,90 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
   const isWaitlistMode = userCount >= 10;
   return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-32 sm:pt-40 lg:pt-48 overflow-hidden">
-      {/* Enhanced Animated Background */}
+      {/* Subtle Animated Background */}
       <div className="absolute inset-0">
-        {/* Base animated gradient */}
+        {/* Base soft animated gradient */}
         <motion.div 
           className="absolute inset-0"
           animate={{
             background: [
-              "linear-gradient(45deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%)",
-              "linear-gradient(90deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 50%, hsl(var(--primary)) 100%)",
-              "linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--primary)) 50%, hsl(var(--accent)) 100%)",
-              "linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%)"
+              "linear-gradient(45deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--accent) / 0.06) 50%, hsl(var(--secondary) / 0.08) 100%)",
+              "linear-gradient(90deg, hsl(var(--accent) / 0.06) 0%, hsl(var(--secondary) / 0.08) 50%, hsl(var(--primary) / 0.08) 100%)",
+              "linear-gradient(135deg, hsl(var(--secondary) / 0.08) 0%, hsl(var(--primary) / 0.06) 50%, hsl(var(--accent) / 0.08) 100%)",
+              "linear-gradient(180deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--accent) / 0.06) 50%, hsl(var(--secondary) / 0.08) 100%)"
             ]
           }}
           transition={{
-            duration: 8,
+            duration: 20,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
         
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-background/10" />
+        {/* Soft overlay gradient for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/60" />
         
-        {/* Large floating orbs */}
+        {/* Subtle floating orbs */}
         <motion.div 
-          className="absolute top-10 left-10 w-96 h-96 bg-secondary/30 rounded-full blur-3xl"
+          className="absolute top-20 left-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.7, 0.3],
-            x: [0, 100, 0],
-            y: [0, -50, 0]
+            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.2, 0.1],
+            x: [0, 50, 0],
+            y: [0, -30, 0]
           }}
           transition={{
-            duration: 12,
+            duration: 25,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
         
         <motion.div 
-          className="absolute bottom-10 right-10 w-80 h-80 bg-accent/40 rounded-full blur-3xl"
+          className="absolute bottom-20 right-20 w-64 h-64 bg-accent/8 rounded-full blur-3xl"
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.8, 0.4],
-            x: [0, -80, 0],
-            y: [0, 30, 0]
+            scale: [1.1, 1, 1.1],
+            opacity: [0.08, 0.15, 0.08],
+            x: [0, -40, 0],
+            y: [0, 20, 0]
           }}
           transition={{
-            duration: 10,
+            duration: 30,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 3
+            delay: 5
           }}
         />
         
         <motion.div 
-          className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/25 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 w-48 h-48 bg-primary/6 rounded-full blur-3xl"
           animate={{
-            scale: [0.8, 1.5, 0.8],
-            opacity: [0.2, 0.5, 0.2],
-            x: [-150, 150, -150],
-            y: [-100, 100, -100]
+            scale: [0.9, 1.2, 0.9],
+            opacity: [0.06, 0.12, 0.06],
+            x: [-100, 100, -100],
+            y: [-60, 60, -60]
+          }}
+          transition={{
+            duration: 35,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        
+        {/* Very subtle grid pattern */}
+        <motion.div 
+          className="absolute inset-0 opacity-5"
+          animate={{
+            opacity: [0.03, 0.05, 0.03]
           }}
           transition={{
             duration: 15,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-        
-        {/* Animated grid pattern */}
-        <motion.div 
-          className="absolute inset-0 opacity-10"
-          animate={{
-            opacity: [0.1, 0.3, 0.1]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
             ease: "easeInOut"
           }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] [background-size:60px_60px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] [background-size:80px_80px]" />
         </motion.div>
       </div>
       {/* Content Grid Container */}
