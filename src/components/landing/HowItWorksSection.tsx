@@ -227,13 +227,11 @@ export const HowItWorksSection: React.FC = () => {
                     </div>
                     
                     {/* Icon */}
-                    <motion.div 
+                    <div 
                       className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-white/30 transition-colors duration-300"
-                      animate={hoveredStep === index ? { rotate: [0, 10, -10, 0] } : {}}
-                      transition={{ duration: 0.6 }}
                     >
                       <IconComponent className="w-10 h-10 text-white" size={40} />
-                    </motion.div>
+                    </div>
                     
                     {/* Content */}
                     <div className="space-y-4">
