@@ -2,8 +2,12 @@ import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/PersonCard";
 import { UsageBar } from "@/components/ui/usage-bar";
-import { Add, Favorite } from "@mui/icons-material";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Add, Favorite, Settings, ExitToApp } from "@mui/icons-material";
 import { Person } from "@/types/person";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 interface UsageData {
   messagesUsed: number;
@@ -25,11 +29,84 @@ interface DashboardProps {
 }
 
 const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemory, onReload, usage, onUpgrade }: DashboardProps) => {
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await signOut();
+      if (error) {
+        toast({
+          title: "Erro ao sair",
+          description: error.message,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Logout realizado",
+          description: "Você foi desconectado com sucesso."
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Ocorreu um erro inesperado ao fazer logout.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const getUserInitials = () => {
+    if (!user?.email) return "?";
+    return user.email.charAt(0).toUpperCase();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header Card */}
         <div className="bg-card border border-border rounded-xl p-6 lg:p-8 pt-10 lg:pt-12 mb-8 sm:mb-12 shadow-sm">
+          {/* Top Row with User Menu */}
+          <div className="flex justify-between items-center mb-6">
+            <div></div> {/* Empty div for spacing */}
+            
+            {/* User Profile Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src="" alt={user?.email || ""} />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getUserInitials()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium text-sm">{user?.email}</p>
+                    <p className="w-[200px] truncate text-xs text-muted-foreground">
+                      {user?.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Configurações</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="cursor-pointer text-red-600 focus:text-red-600" 
+                  onClick={handleLogout}
+                >
+                  <ExitToApp className="mr-2 h-4 w-4" />
+                  <span>Sair</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
               <h1 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] flex items-center gap-4 mb-2 text-foreground leading-tight">
