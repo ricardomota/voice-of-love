@@ -157,7 +157,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           }}>
               {!isLoading && <>
                   <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
-                    <PlayFilled size={20} className="mr-3" />
                     {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
                   </Button>
                   
