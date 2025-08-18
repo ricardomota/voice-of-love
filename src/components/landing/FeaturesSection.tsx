@@ -245,9 +245,9 @@ export const FeaturesSection: React.FC = () => {
         delay: 0.4
       }} className="mt-16 lg:mt-20 text-center">
           <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+            
             <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
-            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+            
           </div>
         </motion.div>
 
