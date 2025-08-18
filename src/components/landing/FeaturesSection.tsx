@@ -18,7 +18,7 @@ const getContent = (language: string) => {
         title: "Hybrid voices",
         description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
         icon: Microphone,
-        highlight: "🚀 Powered by ElevenLabs",
+        highlight: "🚀 ElevenLabs powered",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
         title: "Cost-smart AI",
@@ -43,16 +43,16 @@ const getContent = (language: string) => {
         highlight: "Criptografado ponta a ponta",
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
-        title: "Vozes híbridas",
-        description: "Vozes base para todos os usuários, clonação de voz pessoal para usuários pagos quando a capacidade permite - magia em ação! ✨",
+        title: "Vozes personalizadas",
+        description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
-        title: "IA econômica",
-        description: "Together.ai (OSS-20B) para usuários gratuitos, OpenAI GPT-5o para conversas premium - o melhor dos dois mundos! 💫",
+        title: "Conversas inteligentes",
+        description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
         icon: Flash,
-        highlight: "👨‍👩‍👧‍👦 Otimizado para famílias",
+        highlight: "✨ Conversas mais humanas",
         image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilíngue",
@@ -72,7 +72,7 @@ const getContent = (language: string) => {
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Voces híbridas",
-        description: "Voces base para todos los usuarios, clonación de voz personal para usuarios de pago cuando la capacidad lo permita - ¡magia en acción! ✨",
+        description: "Voces base para todos los usuarios, clonación personal para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
