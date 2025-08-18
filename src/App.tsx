@@ -13,7 +13,7 @@ import { Loader2 } from 'lucide-react';
 import { useState, useEffect, memo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cacheApiCall } from '@/utils/performanceUtils';
-import { usePerformanceMonitoring } from '@/hooks/usePerformanceMonitoring';
+
 import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -40,8 +40,7 @@ const AppContent = () => {
   const [userCount, setUserCount] = useState(0);
   const [userCountLoading, setUserCountLoading] = useState(true);
   
-  // Enable performance monitoring
-  usePerformanceMonitoring();
+  // Performance monitoring disabled to ensure preview stability
 
   // Optimized user count check with caching to prevent duplicate API calls
   useEffect(() => {
