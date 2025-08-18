@@ -165,98 +165,99 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] [background-size:60px_60px]" />
         </motion.div>
       </div>
-      
-      <div className="relative w-full max-w-4xl mx-auto">
-        <div className="text-center space-y-8 lg:space-y-10">
-          
-          {/* Enhanced Content */}
-          <motion.div className="text-center space-y-8 lg:space-y-10" initial={{
-          opacity: 0,
-          y: 50
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          ease: "easeOut"
-        }}>
-            <div className="space-y-8 lg:space-y-12">
-              <motion.h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-primary-foreground leading-none tracking-tight mb-12 mt-8" initial={{
-              opacity: 0,
-              y: 30
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.8,
-              delay: 0.2
-            }}>
-                {content.headline}
-              </motion.h1>
-              <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light mt-6" initial={{
-              opacity: 0,
-              y: 30
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.8,
-              delay: 0.4
-            }}>
-                {content.subhead}
-              </motion.p>
-            </div>
+      {/* Content Grid Container */}
+      <div className="relative z-10 w-full">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-12 flex flex-col items-center justify-center text-center">
+              
+              {/* Typography Hierarchy */}
+              <motion.div 
+                className="max-w-5xl mx-auto space-y-8"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                {/* Primary Headline */}
+                <motion.h1 
+                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-primary-foreground leading-[1.1] tracking-tight"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  {content.headline}
+                </motion.h1>
+                
+                {/* Supporting Text */}
+                <motion.p 
+                  className="text-lg sm:text-xl lg:text-2xl text-primary-foreground/85 max-w-3xl mx-auto leading-relaxed font-light"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  {content.subhead}
+                </motion.p>
+              </motion.div>
 
-            {/* Enhanced CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start pt-2" initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 0.6
-          }}>
-              {!isLoading && <>
-                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
-                    <PlayFilled size={20} className="mr-3" />
-                    {isWaitlistMode ? content.joinWaitlist : content.startNow}
-                  </Button>
+              {/* CTA Button Grid */}
+              <motion.div 
+                className="mt-12 w-full max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+                  {!isLoading && (
+                    <>
+                      <Button 
+                        onClick={isWaitlistMode ? onTryFree : onLogin} 
+                        size="xl" 
+                        variant="secondary" 
+                        className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90"
+                      >
+                        <PlayFilled size={20} className="mr-3" />
+                        {isWaitlistMode ? content.joinWaitlist : content.startNow}
+                      </Button>
+                      
+                      <Button 
+                        onClick={onSeePricing} 
+                        variant="outline" 
+                        size="xl" 
+                        className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300"
+                      >
+                        {content.seePricing}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Trust Indicators Grid */}
+              <motion.div 
+                className="mt-16 w-full max-w-lg mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-6 sm:gap-8">
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="p-3 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                      <Security size={20} className="text-secondary" />
+                    </div>
+                    <span className="text-sm sm:text-base font-medium text-primary-foreground/75">Private by default</span>
+                  </div>
                   
-                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
-                    {content.seePricing}
-                  </Button>
-                </>}
-            </motion.div>
-
-            {/* Enhanced Trust indicators */}
-            <motion.div className="pt-8 lg:pt-10" initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 0.8
-          }}>
-              <div className="flex flex-col xs:flex-row items-center justify-center gap-10 xs:gap-16 text-base text-primary-foreground/75">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
-                    <Security size={20} className="text-secondary flex-shrink-0" />
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="p-3 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                      <Group size={20} className="text-secondary" />
+                    </div>
+                    <span className="text-sm sm:text-base font-medium text-primary-foreground/75">Family-first design</span>
                   </div>
-                  <span className="font-medium">Private by default</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
-                    <Group size={20} className="text-secondary flex-shrink-0" />
-                  </div>
-                  <span className="font-medium">Family-first design</span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              </motion.div>
+              
+            </div>
+          </div>
         </div>
       </div>
     </section>;

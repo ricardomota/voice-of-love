@@ -19,46 +19,53 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
-      {/* Header */}
+    <div className="min-h-screen bg-background">
+      {/* Fixed Header */}
       <LandingHeader
         onTryFree={onTryFree}
         onSignIn={onLogin}
       />
 
-      {/* Hero Section - Enhanced spacing */}
-      <HeroSection 
-        onTryFree={onTryFree}
-        onSeePricing={scrollToPricing}
-        onLogin={onLogin}
-      />
+      {/* Main Content Grid */}
+      <main className="relative">
+        {/* Hero Section - Full viewport */}
+        <section>
+          <HeroSection 
+            onTryFree={onTryFree}
+            onSeePricing={scrollToPricing}
+            onLogin={onLogin}
+          />
+        </section>
 
-      {/* Features Section - Enhanced spacing */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/10 to-transparent pointer-events-none" />
-        <FeaturesSection />
-      </div>
+        {/* Features Section - Proper spacing */}
+        <section className="relative py-20 lg:py-32">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/5 to-transparent pointer-events-none" />
+          <FeaturesSection />
+        </section>
 
-      {/* How It Works - Enhanced spacing */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
-        <HowItWorksSection />
-      </div>
+        {/* How It Works Section - Proper spacing */}
+        <section className="relative py-20 lg:py-32">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-accent/3 pointer-events-none" />
+          <HowItWorksSection />
+        </section>
 
-      {/* Pricing - Enhanced spacing */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
-        <PricingSection 
-          onTryFree={onTryFree}
-          onSeePricing={scrollToPricing}
-        />
-      </div>
+        {/* Pricing Section - Proper spacing */}
+        <section id="pricing" className="relative py-20 lg:py-32">
+          <div className="absolute inset-0 bg-gradient-to-t from-secondary/5 via-transparent to-transparent pointer-events-none" />
+          <PricingSection 
+            onTryFree={onTryFree}
+            onSeePricing={scrollToPricing}
+          />
+        </section>
+      </main>
 
       {/* Footer */}
-      <LandingFooter 
-        onTryFree={onTryFree}
-        onSignIn={onLogin}
-      />
+      <footer>
+        <LandingFooter 
+          onTryFree={onTryFree}
+          onSignIn={onLogin}
+        />
+      </footer>
     </div>
   );
 };
