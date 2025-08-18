@@ -23,7 +23,7 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
             ❤️ Feito com amor para famílias com Alzheimer
           </div>
           
-          <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-2xl">
+          <div className="w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-xl">
             E
           </div>
           
