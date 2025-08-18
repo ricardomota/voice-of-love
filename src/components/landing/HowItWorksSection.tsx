@@ -183,10 +183,10 @@ export const HowItWorksSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold text-primary-foreground mb-6 leading-tight">
+          <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-6 leading-tight">
             {content.title}
           </h2>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             {content.subtitle}
           </p>
         </motion.div>
@@ -195,7 +195,7 @@ export const HowItWorksSection: React.FC = () => {
         <div className="relative">
           
           {/* Connection Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-primary-foreground/20 -translate-y-1/2" />
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {content.steps.map((step, index) => {
@@ -219,32 +219,32 @@ export const HowItWorksSection: React.FC = () => {
                 >
                   
                   {/* Step Card */}
-                  <div className="relative bg-primary-foreground/10 backdrop-blur-md rounded-3xl p-8 text-center border border-primary-foreground/20 transition-all duration-500 hover:bg-primary-foreground/20 hover:scale-105 hover:border-primary-foreground/40">
+                  <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
                     
                     {/* Step Number */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary-foreground text-primary rounded-full flex items-center justify-center font-bold text-sm">
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-sm">
                       {index + 1}
                     </div>
                     
                     {/* Icon */}
                     <div 
-                      className="w-20 h-20 bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-foreground/30 transition-colors duration-300"
+                      className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-white/30 transition-colors duration-300"
                     >
-                      <IconComponent className="w-10 h-10 text-primary-foreground" size={40} />
+                      <IconComponent className="w-10 h-10 text-white" size={40} />
                     </div>
                     
                     {/* Content */}
                     <div className="space-y-4">
-                      <h3 className="font-serif text-xl font-bold text-primary-foreground">
+                      <h3 className="font-serif text-xl font-bold text-white">
                         {step.title}
                       </h3>
                       
-                      <p className="text-primary-foreground/80 text-sm leading-relaxed">
+                      <p className="text-white/80 text-sm leading-relaxed">
                         {step.description}
                       </p>
                       
                       <motion.p 
-                        className="text-xs text-primary-foreground/60 leading-relaxed"
+                        className="text-xs text-white/60 leading-relaxed"
                         initial={{ opacity: 0.7 }}
                         animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
                       >
@@ -262,7 +262,7 @@ export const HowItWorksSection: React.FC = () => {
                       viewport={{ once: true }}
                       transition={{ delay: (index + 1) * 0.15 + 0.5 }}
                     >
-                      <div className="w-8 h-8 bg-primary-foreground rounded-full flex items-center justify-center shadow-lg">
+                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
                         <ArrowRight className="w-4 h-4 text-primary" size={16} />
                       </div>
                     </motion.div>

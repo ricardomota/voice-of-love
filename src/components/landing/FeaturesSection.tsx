@@ -121,150 +121,135 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return (
-    <section id="features" className="py-20 lg:py-32 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
-      {/* Background decoration */}
+  return <section id="features" className="py-16 sm:py-20 lg:py-24 pb-8 sm:pb-12 lg:pb-16 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+      {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
       {/* Floating Orbs */}
-      <motion.div 
-        className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div 
-        className="absolute bottom-20 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.4, 0.2, 0.4]
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 3
-        }}
-      />
+      <motion.div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" animate={{
+      scale: [1, 1.2, 1],
+      opacity: [0.3, 0.6, 0.3]
+    }} transition={{
+      duration: 12,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }} />
+      <motion.div className="absolute bottom-20 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" animate={{
+      scale: [1.2, 1, 1.2],
+      opacity: [0.4, 0.2, 0.4]
+    }} transition={{
+      duration: 15,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: 3
+    }} />
       
-      {/* Main Container Grid */}
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 relative">
-        <div className="grid grid-cols-12 gap-6">
-          
-          {/* Header Section */}
-          <div className="col-span-12">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center max-w-4xl mx-auto mb-16 lg:mb-20"
-            >
-              <motion.h2 
-                className="text-3xl sm:text-4xl lg:text-5xl font-serif text-foreground mb-8 leading-tight tracking-tight"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                {content.title}
-              </motion.h2>
-            </motion.div>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+        
+        {/* Enhanced Header */}
+        <motion.div initial={{
+        opacity: 0,
+        y: 40
+      }} whileInView={{
+        opacity: 1,
+        y: 0
+      }} viewport={{
+        once: true,
+        margin: "-100px"
+      }} transition={{
+        duration: 0.8,
+        ease: "easeOut"
+      }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
+          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
+          opacity: 0,
+          y: 20
+        }} whileInView={{
+          opacity: 1,
+          y: 0
+        }} viewport={{
+          once: true
+        }} transition={{
+          duration: 0.6,
+          delay: 0.2
+        }}>
+            {content.title}
+          </motion.h2>
+        </motion.div>
 
-          {/* Features Grid */}
-          <div className="col-span-12">
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
-            >
-              {content.features.map((feature, index) => {
-                const IconComponent = feature.icon;
-                return (
-                  <motion.div key={index} variants={itemVariants} className="group">
-                    <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
-                      {/* Hover background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Enhanced Features Grid */}
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{
+        once: true,
+        margin: "-100px"
+      }} className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24">
+          {content.features.map((feature, index) => {
+          const IconComponent = feature.icon;
+          return <motion.div key={index} variants={itemVariants} className="group">
+                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
+                  {/* Simple background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CardContent className="p-0 h-full">
+                    <div className="relative h-88 sm:h-96 lg:h-80 xl:h-88 overflow-hidden">
+                      {/* Simple Feature Image */}
+                      <div className="relative w-full h-full">
+                        <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                        
+                        {/* Enhanced overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
+                      </div>
                       
-                      <CardContent className="p-0 h-full">
-                        {/* Feature Image Container */}
-                        <div className="relative h-64 lg:h-72 overflow-hidden">
-                          <img 
-                            src={feature.image} 
-                            alt={feature.title} 
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                          
-                          {/* Overlay gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
-                          
-                          {/* Icon overlay */}
-                          <div className="absolute top-6 right-6">
-                            <div className="w-12 h-12 bg-card/95 backdrop-blur-md rounded-xl flex items-center justify-center transition-all duration-300 shadow-xl border border-primary/10">
-                              <IconComponent className="w-6 h-6 text-primary" />
-                            </div>
-                          </div>
+                      {/* Simple icon overlay */}
+                      <div className="absolute top-6 right-6">
+                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl border border-primary/10">
+                          <IconComponent className="w-7 h-7 text-primary" />
                         </div>
+                      </div>
+                      
+                      
+                    </div>
 
-                        {/* Content Section */}
-                        <div className="p-6 lg:p-8 space-y-4">
-                          <h3 className="text-xl sm:text-2xl font-serif text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
-                            {feature.title}
-                          </h3>
-                          
-                          <p className="text-muted-foreground leading-relaxed text-base">
-                            {feature.description}
-                          </p>
-                          
-                          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 ${
-                            index === 0 ? "bg-violet-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200" :
-                            index === 1 ? "bg-blue-500/20 border border-blue-400/40 text-blue-800 dark:text-blue-200" :
-                            index === 2 ? "bg-emerald-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200" :
-                            "bg-orange-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"
-                          }`}>
-                            {feature.highlight}
-                          </div>
-                        </div>
+                    {/* Simple Content */}
+                    <div className="p-8 lg:p-10 pb-8 lg:pb-10 space-y-8">
+                      <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                        {feature.title}
+                      </h3>
+                      
+                      <p className="text-muted-foreground leading-relaxed text-lg">
+                        {feature.description}
+                      </p>
+                      
+                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 cursor-pointer hover:scale-105 ${index === 0 ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200" : index === 1 ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/40 text-blue-800 dark:text-blue-200" : index === 2 ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200" : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"}`}>
+                        {feature.highlight}
+                      </div>
+                    </div>
 
-                        {/* Border effect */}
-                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                    {/* Simple border effect */}
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  </CardContent>
+                </Card>
+              </motion.div>;
+        })}
+        </motion.div>
+
+        {/* Enhanced Bottom visual element */}
+        <motion.div initial={{
+        opacity: 0,
+        y: 40
+      }} whileInView={{
+        opacity: 1,
+        y: 0
+      }} viewport={{
+        once: true
+      }} transition={{
+        duration: 0.8,
+        delay: 0.4
+      }} className="mt-16 lg:mt-20 text-center">
+          <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+            <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
           </div>
+        </motion.div>
 
-          {/* Bottom CTA */}
-          <div className="col-span-12">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-16 lg:mt-20 text-center"
-            >
-              <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-                <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
-                <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
-                <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-              </div>
-            </motion.div>
-          </div>
-          
-        </div>
       </div>
-    </section>
-  );
+    </section>;
 };

@@ -162,28 +162,28 @@ export const AuthGate = memo(({
           </Button>
         </div>
 
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-12 items-start pt-6 sm:pt-8">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start pt-8">
           {/* Left side - Introduction & Story */}
-          <section className="space-y-6 sm:space-y-8" aria-label="Introdução">
+          <section className="space-y-8" aria-label="Introdução">
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3 sm:mb-4">{content.welcome}</h1>
-              <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">{content.subtitle}</p>
-              <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground">
+              <h1 className="text-4xl font-bold tracking-tight mb-4">{content.welcome}</h1>
+              <p className="text-muted-foreground mb-8">{content.subtitle}</p>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 {content.features.map((feature, index) => <li key={index}>{feature}</li>)}
               </ul>
             </div>
 
             {/* Story Section */}
             <Card className="bg-card/50 border-border/50">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 mb-4">
                   
-                  <h3 className="text-base sm:text-lg font-semibold">{content.story.title}</h3>
+                  <h3 className="text-lg font-semibold">{content.story.title}</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-3 sm:mb-4 text-xs sm:text-sm">
+                <p className="text-muted-foreground leading-relaxed mb-4">
                   {content.story.text}
                 </p>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-primary">
+                <div className="flex items-center gap-2 text-sm text-primary">
                   
                   <span className="font-medium">{content.story.heart}</span>
                 </div>
@@ -194,35 +194,35 @@ export const AuthGate = memo(({
           {/* Right side - Authentication */}
           <section aria-label="Autenticação" className="lg:pt-12">
             <Card className="w-full max-w-md shadow-xl mx-auto border-2 border-primary/20">
-              <CardHeader className="text-center space-y-2 p-4 sm:p-6">
-                <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
-                <p className="text-xs sm:text-sm text-muted-foreground px-2">{content.subtitle}</p>
+              <CardHeader className="text-center space-y-2">
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
+                <p className="text-sm text-muted-foreground">{content.subtitle}</p>
               </CardHeader>
-              <CardContent className="p-4 sm:p-6">
+              <CardContent>
                 <Tabs defaultValue="signin" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 mb-4 sm:mb-6">
-                    <TabsTrigger value="signin" className="text-xs sm:text-sm">{content.signin}</TabsTrigger>
-                    <TabsTrigger value="signup" className="text-xs sm:text-sm">{content.signup}</TabsTrigger>
+                  <TabsList className="grid w-full grid-cols-2 mb-6">
+                    <TabsTrigger value="signin" className="text-sm">{content.signin}</TabsTrigger>
+                    <TabsTrigger value="signup" className="text-sm">{content.signup}</TabsTrigger>
                   </TabsList>
                   
-                  <TabsContent value="signin" className="space-y-3 sm:space-y-4">
-                    <div className="space-y-2 sm:space-y-3">
-                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-10 sm:h-12 text-sm sm:text-base" />
-                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-10 sm:h-12 text-sm sm:text-base" />
+                  <TabsContent value="signin" className="space-y-4">
+                    <div className="space-y-3">
+                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-12" />
+                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-12" />
                     </div>
-                    <Button className="w-full h-10 sm:h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all text-sm sm:text-base" onClick={() => handleAuth('signin')} disabled={isLoading}>
-                      {isLoading && <Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />}
+                    <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signin')} disabled={isLoading}>
+                      {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                       {content.signin}
                     </Button>
                   </TabsContent>
                   
-                  <TabsContent value="signup" className="space-y-3 sm:space-y-4">
-                    <div className="space-y-2 sm:space-y-3">
-                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-10 sm:h-12 text-sm sm:text-base" />
-                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-10 sm:h-12 text-sm sm:text-base" />
+                  <TabsContent value="signup" className="space-y-4">
+                    <div className="space-y-3">
+                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-12" />
+                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-12" />
                     </div>
-                    <Button className="w-full h-10 sm:h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all text-sm sm:text-base" onClick={() => handleAuth('signup')} disabled={isLoading}>
-                      {isLoading && <Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />}
+                    <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signup')} disabled={isLoading}>
+                      {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                       {content.createAccount}
                     </Button>
                   </TabsContent>

@@ -1,6 +1,4 @@
 @import './styles/performance.css';
-@import './styles/mobile.css';
-@import './styles/grid-system.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

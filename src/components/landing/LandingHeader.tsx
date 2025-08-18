@@ -16,19 +16,16 @@ const getContent = (language: string) => {
   const content = {
     en: {
       howItWorks: "How it Works",
-      pricing: "Pricing",
       tryFree: "Try Eterna Free",
       signIn: "Sign In"
     },
     'pt-BR': {
       howItWorks: "Como Funciona",
-      pricing: "Preços", 
       tryFree: "Testar Grátis", 
       signIn: "Entrar"
     },
     es: {
       howItWorks: "Cómo Funciona",
-      pricing: "Precios",
       tryFree: "Probar Gratis",
       signIn: "Iniciar Sesión" 
     }
@@ -85,7 +82,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         <div 
           className={cn(
             "flex items-center justify-between transition-all duration-300 ease-out",
-            isScrolled ? "h-16" : "h-20"
+            isScrolled ? "h-14" : "h-16 lg:h-20"
           )}
         >
           {/* Simple Logo */}
@@ -104,22 +101,22 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           <nav className="hidden lg:flex items-center gap-8">
             <button 
               onClick={() => handleNavigation('how-it-works')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-base font-medium px-3 py-2 rounded-lg hover:bg-primary/5 hover:scale-105 min-h-[44px] flex items-center"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
               {content.howItWorks}
             </button>
             <button 
               onClick={() => handleNavigation('pricing')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-base font-medium px-3 py-2 rounded-lg hover:bg-primary/5 hover:scale-105 min-h-[44px] flex items-center"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
-              {content.pricing}
+              Preços
             </button>
             
             <div className="flex items-center gap-6">
               <LanguageSelector />
               <button
                 onClick={onSignIn}
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-3 py-2 rounded-lg hover:bg-muted/50 text-base font-medium hover:scale-105 min-h-[44px] flex items-center"
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium hover:scale-105"
               >
                 {content.signIn}
               </button>
@@ -127,7 +124,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                 onClick={onTryFree} 
                 variant="default" 
                 size="lg"
-                className="shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/90 text-base font-semibold px-6 hover:scale-105 min-h-[44px]"
+                className="shadow-lg hover:shadow-2xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold px-8 hover:scale-105"
               >
                 {content.tryFree}
               </Button>
@@ -170,13 +167,13 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               >
                 {[
                   { label: content.howItWorks, action: () => handleNavigation('how-it-works') },
-                  { label: content.pricing, action: () => handleNavigation('pricing') },
+                  { label: "Preços", action: () => handleNavigation('pricing') },
                   { label: content.signIn, action: onSignIn }
                 ].map((item, index) => (
                   <motion.button
                     key={item.label}
                     onClick={item.action}
-                    className="block w-full text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 py-3 px-4 rounded-lg text-base font-medium min-h-[44px] flex items-center"
+                    className="block w-full text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 py-4 px-4 rounded-xl text-lg font-medium"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + index * 0.05 }}
@@ -204,7 +201,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                       onClick={onTryFree} 
                       variant="default" 
                       size="lg" 
-                      className="w-full shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/90 text-base font-semibold min-h-[48px]"
+                      className="w-full shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold h-14"
                     >
                       {content.tryFree}
                     </Button>
