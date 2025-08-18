@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/useLanguage';
-import { CheckCircle, Star, Bolt } from '@mui/icons-material';
+import { Check, Star, Bolt } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 interface PricingSectionProps {
   onTryFree: () => void;
@@ -226,7 +226,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     <div className="space-y-6">
                       {plan.features.map((feature, featureIndex) => <div key={featureIndex} className="flex items-start gap-4 hover:translate-x-1 transition-transform duration-200">
                           <div className="p-1 bg-primary/10 rounded-full mt-0.5">
-                            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                            <Check className="w-5 h-5 text-primary flex-shrink-0" />
                           </div>
                           <span className="text-muted-foreground text-lg leading-relaxed">
                             {feature}
