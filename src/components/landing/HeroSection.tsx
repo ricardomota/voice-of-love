@@ -75,45 +75,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-32 sm:pt-40 lg:pt-48 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-accent/95" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
         
-        {/* Subtle Animated Background Elements */}
-        <motion.div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" 
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2]
-          }} 
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }} 
-        />
-        <motion.div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl" 
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.3, 0.1, 0.3]
-          }} 
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }} 
-        />
+        {/* Animated Background Elements */}
+        <motion.div className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl" animate={{
+        scale: [1, 1.2, 1],
+        opacity: [0.3, 0.6, 0.3]
+      }} transition={{
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }} />
+        <motion.div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl" animate={{
+        scale: [1.2, 1, 1.2],
+        opacity: [0.4, 0.2, 0.4]
+      }} transition={{
+        duration: 10,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 2
+      }} />
         
-        {/* Subtle Grid Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] [background-size:60px_60px]" />
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:50px_50px]" />
         </div>
       </div>
       
       <div className="relative w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
           {/* Enhanced Content */}
-          <motion.div className="text-center lg:text-left space-y-10 lg:space-y-14 order-2 lg:order-1" initial={{
+          <motion.div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1" initial={{
           opacity: 0,
           y: 50
         }} animate={{
@@ -123,8 +117,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           duration: 0.8,
           ease: "easeOut"
         }}>
-            <div className="space-y-10 lg:space-y-14">
-              <motion.h1 className="text-5xl xs:text-6xl sm:text-7xl lg:text-8xl font-bold text-primary-foreground leading-[1.1] tracking-tight mb-16 mt-12" initial={{
+            <div className="space-y-8 lg:space-y-12">
+              <motion.h1 className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] tracking-tight mb-12 mt-8" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -136,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }}>
                 {content.headline}
               </motion.h1>
-              <motion.p className="text-2xl sm:text-3xl lg:text-3xl text-primary-foreground/90 max-w-3xl mx-auto lg:mx-0 leading-relaxed font-light mt-8" initial={{
+              <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light mt-6" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -151,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Enhanced CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-6 lg:gap-8 justify-center lg:justify-start pt-8" initial={{
+            <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start pt-2" initial={{
             opacity: 0,
             y: 30
           }} animate={{
@@ -162,19 +156,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             delay: 0.6
           }}>
               {!isLoading && <>
-                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[280px] h-20 text-xl font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 bg-secondary hover:bg-secondary/90 rounded-2xl">
-                    <PlayFilled size={24} className="mr-4" />
+                  <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
+                    <PlayFilled size={20} className="mr-3" />
                     {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
                   </Button>
                   
-                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[240px] h-20 text-xl font-semibold bg-primary-foreground/5 backdrop-blur-lg border-2 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/15 hover:border-primary-foreground/40 transition-all duration-300 rounded-2xl">
+                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
                     {content.seePricing}
                   </Button>
                 </>}
             </motion.div>
 
             {/* Enhanced Trust indicators */}
-            <motion.div className="pt-12 lg:pt-16" initial={{
+            <motion.div className="pt-8 lg:pt-10" initial={{
             opacity: 0,
             y: 20
           }} animate={{
@@ -184,18 +178,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             duration: 0.8,
             delay: 0.8
           }}>
-              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-12 xs:gap-20 text-lg text-primary-foreground/80">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-secondary/20 rounded-2xl backdrop-blur-lg border border-secondary/20">
-                    <Security size={24} className="text-secondary flex-shrink-0" />
+              <div className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-10 xs:gap-16 text-base text-primary-foreground/75">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                    <Security size={20} className="text-secondary flex-shrink-0" />
                   </div>
-                  <span className="font-semibold">Private by default</span>
+                  <span className="font-medium">Private by default</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-secondary/20 rounded-2xl backdrop-blur-lg border border-secondary/20">
-                    <Group size={24} className="text-secondary flex-shrink-0" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-secondary/20 rounded-xl backdrop-blur-sm">
+                    <Group size={20} className="text-secondary flex-shrink-0" />
                   </div>
-                  <span className="font-semibold">Family-first design</span>
+                  <span className="font-medium">Family-first design</span>
                 </div>
               </div>
             </motion.div>
@@ -216,14 +210,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           ease: "easeOut"
         }}>
             <div className="relative">
-              {/* Enhanced Glow Effect */}
-              <div className="absolute -inset-8 bg-gradient-to-r from-secondary/20 via-accent/15 to-secondary/20 rounded-4xl blur-3xl opacity-60" />
+              {/* Glow Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-secondary/30 via-accent/20 to-secondary/30 rounded-3xl blur-2xl opacity-75" />
               
-              <div className="relative rounded-4xl lg:rounded-5xl overflow-hidden shadow-3xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/5 to-transparent backdrop-blur-lg border-2 border-primary-foreground/10">
+              <div className="relative rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl aspect-[16/10] sm:aspect-[4/3] bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
                 <img src="/lovable-uploads/fbc775df-e88c-44eb-b8e5-b8ada1ea8b9d.png" alt={content.altText} className="w-full h-full object-cover object-center" loading="eager" />
                 
                 {/* Enhanced overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent pointer-events-none" />
                 
                 {/* Floating Elements */}
                 

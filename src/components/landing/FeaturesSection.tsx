@@ -121,7 +121,7 @@ export const FeaturesSection: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section id="features" className="py-24 sm:py-28 lg:py-32 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
+  return <section id="features" className="py-16 sm:py-20 lg:py-24 pb-8 sm:pb-12 lg:pb-16 bg-gradient-to-br from-background via-background/95 to-muted/20 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
@@ -159,8 +159,8 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         ease: "easeOut"
-      }} className="text-center max-w-5xl mx-auto mb-20 lg:mb-24">
-          <motion.h2 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-foreground mb-12 lg:mb-16 tracking-tight" initial={{
+      }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
+          <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -180,15 +180,15 @@ export const FeaturesSection: React.FC = () => {
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{
         once: true,
         margin: "-100px"
-      }} className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-24 xl:gap-28">
+      }} className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 xl:gap-24">
           {content.features.map((feature, index) => {
           const IconComponent = feature.icon;
           return <motion.div key={index} variants={itemVariants} className="group">
-                <Card className="relative overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/30 rounded-3xl">
+                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
                   {/* Simple background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <CardContent className="p-0 h-full">
-                    <div className="relative h-96 sm:h-104 lg:h-88 xl:h-96 overflow-hidden rounded-t-3xl">
+                    <div className="relative h-88 sm:h-96 lg:h-80 xl:h-88 overflow-hidden">
                       {/* Simple Feature Image */}
                       <div className="relative w-full h-full">
                         <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
@@ -198,9 +198,9 @@ export const FeaturesSection: React.FC = () => {
                       </div>
                       
                       {/* Simple icon overlay */}
-                      <div className="absolute top-8 right-8">
-                        <div className="w-16 h-16 bg-card/95 backdrop-blur-lg rounded-3xl flex items-center justify-center transition-all duration-300 shadow-2xl border-2 border-primary/20">
-                          <IconComponent className="w-8 h-8 text-primary" />
+                      <div className="absolute top-6 right-6">
+                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl border border-primary/10">
+                          <IconComponent className="w-7 h-7 text-primary" />
                         </div>
                       </div>
                       
@@ -208,16 +208,16 @@ export const FeaturesSection: React.FC = () => {
                     </div>
 
                     {/* Simple Content */}
-                    <div className="p-10 lg:p-12 pb-10 lg:pb-12 space-y-10">
-                      <h3 className="text-3xl lg:text-4xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                    <div className="p-8 lg:p-10 pb-8 lg:pb-10 space-y-8">
+                      <h3 className="text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                         {feature.title}
                       </h3>
                       
-                      <p className="text-muted-foreground leading-relaxed text-xl">
+                      <p className="text-muted-foreground leading-relaxed text-lg">
                         {feature.description}
                       </p>
                       
-                      <div className={`inline-flex items-center gap-4 px-6 py-4 rounded-3xl text-base font-semibold backdrop-blur-lg transition-all duration-300 cursor-pointer hover:scale-105 ${index === 0 ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border-2 border-violet-400/40 text-violet-800 dark:text-violet-200" : index === 1 ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border-2 border-blue-400/40 text-blue-800 dark:text-blue-200" : index === 2 ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border-2 border-emerald-400/40 text-emerald-800 dark:text-emerald-200" : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border-2 border-orange-400/40 text-orange-800 dark:text-orange-200"}`}>
+                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 cursor-pointer hover:scale-105 ${index === 0 ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200" : index === 1 ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/40 text-blue-800 dark:text-blue-200" : index === 2 ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200" : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"}`}>
                         {feature.highlight}
                       </div>
                     </div>
@@ -242,11 +242,11 @@ export const FeaturesSection: React.FC = () => {
       }} transition={{
         duration: 0.8,
         delay: 0.4
-      }} className="mt-20 lg:mt-24 text-center">
-          <div className="inline-flex items-center gap-6 px-12 py-6 bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20 rounded-3xl backdrop-blur-lg shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105">
-            <div className="w-4 h-4 bg-primary rounded-full animate-pulse" />
-            <span className="text-primary font-semibold text-xl">Designed with families in mind</span>
-            <div className="w-4 h-4 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+      }} className="mt-16 lg:mt-20 text-center">
+          <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+            <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
+            <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
           </div>
         </motion.div>
 
