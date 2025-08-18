@@ -219,9 +219,9 @@ export const HowItWorksSection: React.FC = () => {
                       className={`absolute inset-0 bg-gradient-to-br ${stepColors[index]} opacity-0 group-hover:opacity-100`}
                       animate={activeStep === index ? {
                         background: [
-                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[2].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
-                          `linear-gradient(225deg, ${stepColors[index].split(' ')[2].replace('to-', 'rgba(').replace('/20', ', 0.2)')}, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')})`,
-                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[2].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
+                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
+                          `linear-gradient(225deg, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.2)')}, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')})`,
+                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
                         ]
                       } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
