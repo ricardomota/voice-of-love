@@ -6,6 +6,7 @@ import { useCallback, useMemo, useRef } from 'react';
 
 // Cache for API calls to prevent duplicates
 const apiCache = new Map<string, { data: any; timestamp: number; ttl: number }>();
+let cacheCleanupInterval: NodeJS.Timeout | null = null;
 
 /**
  * Cache API responses to prevent duplicate requests
@@ -25,6 +26,9 @@ export const cacheApiCall = <T>(
   return apiCall().then((data) => {
     apiCache.set(key, { data, timestamp: now, ttl });
     return data;
+  }).catch((error) => {
+    // Don't cache errors
+    throw error;
   });
 };
 
@@ -39,7 +43,9 @@ export const useDebounce = <T extends (...args: any[]) => any>(
 
   return useCallback(
     ((...args: Parameters<T>) => {
-      clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
       timeoutRef.current = setTimeout(() => callback(...args), delay);
     }) as T,
     [callback, delay]
@@ -57,9 +63,14 @@ export const useMemoizedComputation = <T>(
 };
 
 /**
- * Performance monitoring for components
+ * Performance monitoring for components (development only)
  */
 export const measurePerformance = (name: string, fn: () => void) => {
+  if (process.env.NODE_ENV !== 'development') {
+    fn();
+    return;
+  }
+
   const start = performance.now();
   fn();
   const end = performance.now();
@@ -90,5 +101,27 @@ export const clearExpiredCache = () => {
   }
 };
 
-// Auto-clear expired cache every 10 minutes
-setInterval(clearExpiredCache, 10 * 60 * 1000);
+/**
+ * Initialize cache cleanup (call once)
+ */
+export const initCacheCleanup = () => {
+  if (cacheCleanupInterval) return;
+  
+  // Auto-clear expired cache every 10 minutes
+  cacheCleanupInterval = setInterval(clearExpiredCache, 10 * 60 * 1000);
+};
+
+/**
+ * Stop cache cleanup
+ */
+export const stopCacheCleanup = () => {
+  if (cacheCleanupInterval) {
+    clearInterval(cacheCleanupInterval);
+    cacheCleanupInterval = null;
+  }
+};
+
+// Initialize cleanup once
+if (typeof window !== 'undefined') {
+  initCacheCleanup();
+}
