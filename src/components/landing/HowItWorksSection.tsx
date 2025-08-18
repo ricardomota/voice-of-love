@@ -9,13 +9,13 @@ const getContent = (language: string) => {
       title: "Como funciona",
       subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
       steps: [{
-        title: "Record",
-        description: "Upload a short voice sample or choose a base voice - it's that easy!",
-        detail: "Just a few minutes of clear audio is enough to get started ✨"
-      }, {
         title: "Configure",
         description: "Pick language, style, and personality traits with love.",
         detail: "Customize how your loved one's voice sounds and responds 💖"
+      }, {
+        title: "Record",
+        description: "Upload a short voice sample or choose a base voice - it's that easy!",
+        detail: "Just a few minutes of clear audio is enough to get started ✨"
       }, {
         title: "Chat & listen",
         description: "Ask questions and hear authentic responses - pure magic!",
@@ -32,13 +32,13 @@ const getContent = (language: string) => {
       title: "Como funciona",
       subtitle: "Quatro passos simples para preservar e interagir com vozes queridas 💖",
       steps: [{
-        title: "Gravar",
-        description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
-        detail: "Apenas alguns minutos de áudio claro são suficientes para começar ✨"
-      }, {
         title: "Configurar",
         description: "Escolha idioma, estilo e traços de personalidade com carinho.",
         detail: "Personalize como a voz do seu ente querido soa e responde 💖"
+      }, {
+        title: "Gravar",
+        description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
+        detail: "Apenas alguns minutos de áudio claro são suficientes para começar ✨"
       }, {
         title: "Conversar",
         description: "Faça perguntas e ouça respostas autênticas - pura magia!",
@@ -55,13 +55,13 @@ const getContent = (language: string) => {
       title: "Cómo funciona",
       subtitle: "Cuatro pasos simples para preservar e interactuar con voces queridas",
       steps: [{
-        title: "Grabar",
-        description: "Sube una muestra de voz o elige una voz base.",
-        detail: "Solo unos minutos de audio claro son suficientes para empezar."
-      }, {
         title: "Configurar",
         description: "Elige idioma, estilo y rasgos de personalidad.",
         detail: "Personaliza cómo suena y responde la voz de tu ser querido."
+      }, {
+        title: "Grabar",
+        description: "Sube una muestra de voz o elige una voz base.",
+        detail: "Solo unos minutos de audio claro son suficientes para empezar."
       }, {
         title: "Charlar",
         description: "Haz preguntas y escucha respuestas auténticas.",
@@ -81,7 +81,7 @@ const getContent = (language: string) => {
 export const HowItWorksSection: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const icons = [Mic, Settings, MessageCircle, Share];
+  const icons = [Settings, Mic, MessageCircle, Share];
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
