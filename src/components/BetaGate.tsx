@@ -267,7 +267,7 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 
-                <h1 className="text-4xl font-zilla font-medium italic text-foreground">
+                <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
                   Você está na lista! 🎉
                 </h1>
                 
@@ -355,7 +355,7 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
                 </Badge>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground">
+              <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
                 Entre agora no <span className="text-primary">Eterna</span>
               </h1>
               
@@ -484,7 +484,7 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
               Lista de Espera Ativa
             </Badge>
             
-            <h1 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground">
+            <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
               Junte-se à <span className="text-primary">lista de espera</span>
             </h1>
             

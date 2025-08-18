@@ -39,7 +39,7 @@ export const ConversationInsights: React.FC<ConversationInsightsProps> = ({
     <div className="fixed inset-0 bg-background/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-background rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b flex justify-between items-center">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
+          <h2 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] flex items-center gap-2 leading-tight">
             <Brain className="h-6 w-6 text-primary" />
             Análise da Conversa
           </h2>

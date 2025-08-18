@@ -121,7 +121,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <h3 className="text-xl font-bold text-foreground leading-tight mb-2 truncate">{name}</h3>
+              <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground leading-tight mb-2 truncate">{name}</h3>
               <div className="flex items-center gap-3 flex-wrap">
                 <Badge 
                   variant="secondary" 

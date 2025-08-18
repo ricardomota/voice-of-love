@@ -182,7 +182,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
         return (
           <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground mb-4 leading-tight">
                 Vamos começar! ✨
               </h2>
               <p className="text-lg text-muted-foreground">

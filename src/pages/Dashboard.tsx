@@ -32,7 +32,7 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
         <div className="bg-card border border-border rounded-xl p-6 lg:p-8 pt-10 lg:pt-12 mb-8 sm:mb-12 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-4 mb-2 text-foreground">
+              <h1 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] flex items-center gap-4 mb-2 text-foreground leading-tight">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
                   <span className="text-primary-foreground text-2xl">💖</span>
                 </div>
@@ -98,7 +98,7 @@ const Dashboard = memo(({ people, onCreatePerson, onChat, onSettings, onAddMemor
                 <Favorite className="w-12 h-12 lg:w-16 lg:h-16 text-background" />
               </div>
               
-              <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-foreground">
+              <h2 className="font-serif text-[clamp(1.25rem,3vw,2rem)] mb-4 text-foreground leading-tight">
                 🌟 Nenhuma pessoa eterna ainda
               </h2>
               

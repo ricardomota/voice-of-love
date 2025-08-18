@@ -32,7 +32,7 @@ export const StoryStep = ({
   return (
     <div className={`animate-fade-in space-y-6 sm:space-y-8 ${className}`}>
       <div className="text-center space-y-3 sm:space-y-4 px-4">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-medium text-foreground leading-tight">
+        <h2 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground leading-tight">
           {title}
         </h2>
         {subtitle && (

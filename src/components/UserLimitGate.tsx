@@ -179,7 +179,7 @@ export const UserLimitGate: React.FC<UserLimitGateProps> = ({ children }) => {
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 
-                <h1 className="text-4xl font-zilla font-medium italic text-foreground">
+                <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
                   Você está na lista! 🎉
                 </h1>
                 
@@ -236,7 +236,7 @@ export const UserLimitGate: React.FC<UserLimitGateProps> = ({ children }) => {
               Capacidade Atingida
             </Badge>
             
-            <h1 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground">
+            <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
               Entre na <span className="text-primary">waitlist</span>
             </h1>
             

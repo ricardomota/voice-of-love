@@ -20,7 +20,7 @@ export const WelcomeView = ({ onCreatePerson }: WelcomeViewProps) => {
             💖
           </div>
           
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+          <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground mb-4 leading-none tracking-tight">
             🌟 Bem-vindo ao Eterna! ✨
           </h1>
           

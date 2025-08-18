@@ -126,7 +126,7 @@ export const Changelog: React.FC = () => {
           </Button>
           
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold text-foreground">
+            <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
               Changelog
             </h1>
             <p className="text-xl text-muted-foreground">
@@ -141,7 +141,7 @@ export const Changelog: React.FC = () => {
             <Card key={entry.version} className="overflow-hidden">
               <CardHeader className="bg-muted/30">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-2xl font-semibold">
+                  <CardTitle className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] leading-tight">
                     {entry.version}
                   </CardTitle>
                   <div className="flex items-center gap-2 text-muted-foreground">

@@ -181,7 +181,7 @@ export function AuthGate({ children }: AuthGateProps) {
           {/* Left side - Introduction & Story */}
           <section className="space-y-8" aria-label="Introdução">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight mb-4">{content.welcome}</h1>
+              <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] leading-none tracking-tight mb-4">{content.welcome}</h1>
               <p className="text-muted-foreground mb-8">{content.subtitle}</p>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 {content.features.map((feature, index) => (
@@ -217,7 +217,7 @@ export function AuthGate({ children }: AuthGateProps) {
                     <span className="text-primary-foreground font-bold">✨</span>
                   </div>
                 </div>
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">🌟 Eterna</CardTitle>
+                <CardTitle className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text leading-tight">🌟 Eterna</CardTitle>
                 <p className="text-sm text-muted-foreground">{content.subtitle}</p>
               </CardHeader>
               <CardContent>

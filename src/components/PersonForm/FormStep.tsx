@@ -30,7 +30,7 @@ export const FormStep: React.FC<FormStepProps> = ({
   return (
     <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
       <div className="text-center space-y-4 mb-8">
-        <h2 className="text-3xl font-bold text-foreground">{title}</h2>
+        <h2 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground leading-tight">{title}</h2>
         {subtitle && (
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             {subtitle}

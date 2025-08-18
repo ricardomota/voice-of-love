@@ -295,7 +295,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                 <ArrowBack className="w-5 h-5 mr-2" />
                 Voltar
               </Button>
-               <h1 className="text-3xl font-light text-foreground mb-2">
+               <h1 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground mb-2 leading-tight">
                  Gerenciar Memórias
                </h1>
                <p className="text-muted-foreground text-lg">
