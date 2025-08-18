@@ -16,18 +16,21 @@ const getContent = (language: string) => {
   const content = {
     en: {
       howItWorks: "How it Works",
+      pricing: "Pricing",
       tryFree: "Try Eterna Free",
       signIn: "Sign In"
     },
     'pt-BR': {
       howItWorks: "Como Funciona",
+      pricing: "Preços",
       tryFree: "Testar Grátis", 
       signIn: "Entrar"
     },
     es: {
       howItWorks: "Cómo Funciona",
+      pricing: "Precios",
       tryFree: "Probar Gratis",
-      signIn: "Iniciar Sesión" 
+      signIn: "Iniciar Sesión"
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -109,7 +112,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               onClick={() => handleNavigation('pricing')}
               className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
-              Preços
+              {content.pricing}
             </button>
             
             <div className="flex items-center gap-6">
@@ -167,7 +170,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               >
                 {[
                   { label: content.howItWorks, action: () => handleNavigation('how-it-works') },
-                  { label: "Preços", action: () => handleNavigation('pricing') },
+                  { label: content.pricing, action: () => handleNavigation('pricing') },
                   { label: content.signIn, action: onSignIn }
                 ].map((item, index) => (
                   <motion.button
