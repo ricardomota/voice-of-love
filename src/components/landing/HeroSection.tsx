@@ -118,7 +118,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           ease: "easeOut"
         }}>
             <div className="space-y-8 lg:space-y-12">
-              <motion.h1 className="font-serif text-[clamp(2.5rem,6vw,5rem)] text-primary-foreground leading-none tracking-tight mb-12 mt-8" initial={{
+              <motion.h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-primary-foreground leading-none tracking-tight mb-12 mt-8" initial={{
               opacity: 0,
               y: 30
             }} animate={{
