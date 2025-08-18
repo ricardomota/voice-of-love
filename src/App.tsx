@@ -71,14 +71,6 @@ const AppContent = () => {
     checkUserCount();
   }, []);
 
-  if (loading || userCountLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
   // Memoized handlers to prevent unnecessary re-renders
   const handleTryFree = useCallback(() => {
     setShowBetaGate(true);
@@ -87,6 +79,14 @@ const AppContent = () => {
   const handleLogin = useCallback(() => {
     setShowBetaGate(true);
   }, []);
+
+  if (loading || userCountLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   // Show the actual app routes
   return (
