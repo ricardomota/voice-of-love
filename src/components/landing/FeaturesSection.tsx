@@ -31,7 +31,7 @@ const getContent = (language: string) => {
         description: "Available in English, Portuguese (Brazil), and Spanish to serve global families everywhere! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
       }]
     },
     'pt-BR': {
@@ -59,7 +59,7 @@ const getContent = (language: string) => {
         description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
       }]
     },
     es: {
@@ -87,7 +87,7 @@ const getContent = (language: string) => {
         description: "Disponible en inglés, portugués (Brasil) y español para servir familias globales en todas partes! 🗣️",
         icon: Globe,
         highlight: "🌎 EN, PT-BR, ES",
-        image: "/lovable-uploads/0d1a58a9-f5b7-441f-a99a-ee72d330aa78.png"
+        image: "/lovable-uploads/91a8b058-4624-4dfd-a844-b72b970ebf11.png"
       }]
     }
   };
