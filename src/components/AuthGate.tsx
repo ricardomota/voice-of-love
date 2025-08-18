@@ -14,9 +14,9 @@ interface AuthGateProps {
 const getContent = (language: string) => {
   const content = {
     en: {
-      welcome: "🌟 Welcome to Eterna",
-      subtitle: "Join us to preserve memories with security and simplicity ✨",
-      features: ["• 🎭 Create unique voices and stories", "• 💬 Chat in real-time and save precious memories", "• 📱 Access from any device, anywhere"],
+      welcome: "Welcome to Eterna",
+      subtitle: "Join us to preserve memories with security and simplicity",
+      features: ["• Create unique voices and stories", "• Chat in real-time and save precious memories", "• Access from any device, anywhere"],
       signin: "Sign In",
       signup: "Sign Up",
       email: "Email",
@@ -25,7 +25,7 @@ const getContent = (language: string) => {
       backToHome: "Back to Home",
       story: {
         title: "Why I Created Eterna",
-        text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones. ✨",
+        text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones.",
         heart: "❤️"
       },
       errors: {
@@ -33,14 +33,14 @@ const getContent = (language: string) => {
         error: "Error"
       },
       success: {
-        title: "🎉 Success!",
-        accountCreated: "Account created! Check your email to confirm. ✨📧"
+        title: "Success!",
+        accountCreated: "Account created! Check your email to confirm."
       }
     },
     'pt-BR': {
-      welcome: "🌟 Bem-vindo ao Eterna!",
-      subtitle: "Entre para preservar memórias preciosas com segurança e simplicidade ✨",
-      features: ["• 🎭 Crie vozes e histórias únicas", "• 💬 Converse em tempo real e salve memórias especiais", "• 📱 Acesse de qualquer dispositivo, em qualquer lugar"],
+      welcome: "Bem-vindo ao Eterna",
+      subtitle: "Entre para preservar memórias preciosas com segurança e simplicidade",
+      features: ["• Crie vozes e histórias únicas", "• Converse em tempo real e salve memórias especiais", "• Acesse de qualquer dispositivo, em qualquer lugar"],
       signin: "Entrar",
       signup: "Cadastrar",
       email: "Email",
@@ -49,7 +49,7 @@ const getContent = (language: string) => {
       backToHome: "Voltar ao Início",
       story: {
         title: "Por que Criei o Eterna",
-        text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos. ✨",
+        text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos.",
         heart: "❤️"
       },
       errors: {
@@ -57,8 +57,8 @@ const getContent = (language: string) => {
         error: "Erro"
       },
       success: {
-        title: "🎉 Sucesso!",
-        accountCreated: "Conta criada com sucesso! Verifique seu email para confirmar. ✨📧"
+        title: "Sucesso!",
+        accountCreated: "Conta criada com sucesso! Verifique seu email para confirmar."
       }
     },
     es: {
@@ -192,10 +192,10 @@ export function AuthGate({
               <CardHeader className="text-center space-y-2">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center shadow-lg">
-                    <span className="text-primary-foreground font-bold">✨</span>
+                    <span className="text-primary-foreground font-bold">E</span>
                   </div>
                 </div>
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">🌟 Eterna</CardTitle>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
                 <p className="text-sm text-muted-foreground">{content.subtitle}</p>
               </CardHeader>
               <CardContent>
@@ -212,7 +212,7 @@ export function AuthGate({
                     </div>
                     <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signin')} disabled={isLoading}>
                       {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      🚀 {content.signin}
+                      {content.signin}
                     </Button>
                   </TabsContent>
                   
@@ -223,7 +223,7 @@ export function AuthGate({
                     </div>
                     <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signup')} disabled={isLoading}>
                       {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      ✨ {content.createAccount}
+                      {content.createAccount}
                     </Button>
                   </TabsContent>
                 </Tabs>
