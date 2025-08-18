@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Mic, Settings, MessageCircle, Share, Play, ArrowRight, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Mic, Settings, MessageCircle, Share, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const getContent = (language: string) => {
   const content = {
@@ -27,9 +26,7 @@ const getContent = (language: string) => {
         detail: "Create lasting audio keepsakes for future generations 💝"
       }],
       notePrefix: "Note:",
-      note: "Personal voice cloning available on paid plans and only when capacity allows.",
-      watchDemo: "Watch Demo",
-      tryNow: "Try Now"
+      note: "Personal voice cloning available on paid plans and only when capacity allows."
     },
     'pt-BR': {
       title: "Como funciona",
@@ -52,9 +49,7 @@ const getContent = (language: string) => {
         detail: "Crie recordações em áudio duradouras para as próximas gerações 💝"
       }],
       notePrefix: "Nota:",
-      note: "Clone de voz pessoal disponível em planos pagos e apenas quando a capacidade permite.",
-      watchDemo: "Ver Demo",
-      tryNow: "Experimente"
+      note: "Clone de voz pessoal disponível em planos pagos e apenas quando a capacidade permite."
     },
     es: {
       title: "Cómo funciona",
@@ -77,9 +72,7 @@ const getContent = (language: string) => {
         detail: "Crea recuerdos de audio duraderos para futuras generaciones."
       }],
       notePrefix: "Nota:",
-      note: "Clonación de voz personal disponible en planes pagos y solo cuando la capacidad lo permite.",
-      watchDemo: "Ver Demo",
-      tryNow: "Probar Ahora"
+      note: "Clonación de voz personal disponible en planes pagos y solo cuando la capacidad lo permite."
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -89,239 +82,145 @@ export const HowItWorksSection: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const icons = [Mic, Settings, MessageCircle, Share];
-  const [activeStep, setActiveStep] = useState<number | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const stepColors = [
-    'from-blue-500/20 to-purple-500/20',
-    'from-purple-500/20 to-pink-500/20', 
-    'from-pink-500/20 to-orange-500/20',
-    'from-orange-500/20 to-blue-500/20'
-  ];
-
-  const stepAccents = [
-    'border-blue-500/30 text-blue-600 bg-blue-500/10',
-    'border-purple-500/30 text-purple-600 bg-purple-500/10',
-    'border-pink-500/30 text-pink-600 bg-pink-500/10', 
-    'border-orange-500/30 text-orange-600 bg-orange-500/10'
-  ];
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
-    <section id="how-it-works" className="py-20 sm:py-24 lg:py-32 relative overflow-hidden">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/5 to-background">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent)] opacity-70" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,119,198,0.1),transparent)] opacity-70" />
+    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-32 overflow-hidden">
+      
+      {/* Hero-style Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+        
+        {/* Animated Background Elements */}
+        <motion.div 
+          className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.2, 0.4]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
       </div>
 
-      {/* Floating Elements */}
-      <motion.div 
-        className="absolute top-20 left-10 w-20 h-20 bg-primary/5 rounded-full blur-xl"
-        animate={{ y: [-20, 20, -20], x: [-10, 10, -10] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div 
-        className="absolute bottom-20 right-10 w-32 h-32 bg-accent/5 rounded-full blur-2xl"
-        animate={{ y: [20, -20, 20], x: [10, -10, 10] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         
-        {/* Revolutionary Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
-          <motion.div
-            animate={{ rotate: isHovered ? [0, 5, -5, 0] : 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block mb-6"
-          >
-            <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
-          </motion.div>
-          
-          <motion.h2 
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)] font-bold text-foreground mb-6 leading-tight"
-            animate={{ backgroundPosition: ['0%', '100%', '0%'] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-300% bg-clip-text text-transparent">
-              {content.title}
-            </span>
-          </motion.h2>
-          
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-6 leading-tight">
+            {content.title}
+          </h2>
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             {content.subtitle}
           </p>
         </motion.div>
 
-        {/* Revolutionary Steps Layout */}
+        {/* Steps Flow */}
         <div className="relative">
-          {/* Connection Path */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" style={{ zIndex: 1 }}>
-            <motion.path
-              d="M 200 100 Q 600 50 800 300 Q 600 550 200 500"
-              stroke="url(#gradient)"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="10,5"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.6 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.5} />
-                <stop offset="25%" stopColor="#8b5cf6" stopOpacity={0.5} />
-                <stop offset="50%" stopColor="#ec4899" stopOpacity={0.5} />
-                <stop offset="75%" stopColor="#f97316" stopOpacity={0.5} />
-                <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.5} />
-              </linearGradient>
-            </defs>
-          </svg>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative z-10">
+          
+          {/* Connection Line */}
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {content.steps.map((step, index) => {
               const IconComponent = icons[index];
-              const isLeft = index % 2 === 0;
               
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 60, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ 
-                    duration: 0.8, 
-                    delay: index * 0.2,
+                    duration: 0.6, 
+                    delay: index * 0.15,
                     type: "spring",
                     stiffness: 100
                   }}
-                  className={`relative ${isLeft ? 'lg:justify-self-end' : 'lg:justify-self-start'} max-w-md lg:max-w-lg`}
-                  onMouseEnter={() => setActiveStep(index)}
-                  onMouseLeave={() => setActiveStep(null)}
+                  className="relative group"
+                  onMouseEnter={() => setHoveredStep(index)}
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
-                  <Card className={`group relative overflow-hidden border-2 transition-all duration-500 hover:shadow-2xl ${
-                    activeStep === index 
-                      ? 'border-primary/50 shadow-xl scale-105' 
-                      : 'border-border/30 hover:border-primary/30'
-                  }`}>
+                  
+                  {/* Step Card */}
+                  <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
                     
-                    {/* Animated Background Gradient */}
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${stepColors[index]} opacity-0 group-hover:opacity-100`}
-                      animate={activeStep === index ? {
-                        background: [
-                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
-                          `linear-gradient(225deg, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.2)')}, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')})`,
-                          `linear-gradient(45deg, ${stepColors[index].split(' ')[0].replace('from-', 'rgba(').replace('/20', ', 0.1)')}, ${stepColors[index].split(' ')[1].replace('to-', 'rgba(').replace('/20', ', 0.1)')})`,
-                        ]
-                      } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
+                    {/* Step Number */}
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-sm">
+                      {index + 1}
+                    </div>
+                    
+                    {/* Icon */}
+                    <motion.div 
+                      className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-white/30 transition-colors duration-300"
+                      animate={hoveredStep === index ? { rotate: [0, 10, -10, 0] } : {}}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <IconComponent className="w-10 h-10 text-white" />
+                    </motion.div>
+                    
+                    {/* Content */}
+                    <div className="space-y-4">
+                      <h3 className="font-serif text-xl font-bold text-white">
+                        {step.title}
+                      </h3>
+                      
+                      <p className="text-white/80 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                      
+                      <motion.p 
+                        className="text-xs text-white/60 leading-relaxed"
+                        initial={{ opacity: 0.7 }}
+                        animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
+                      >
+                        {step.detail}
+                      </motion.p>
+                    </div>
+                  </div>
 
-                    <CardContent className="p-8 sm:p-10 relative z-10">
-                      {/* Step Header */}
-                      <div className="flex items-start gap-6 mb-6">
-                        {/* Mega Step Number */}
-                        <motion.div
-                          className={`flex-shrink-0 w-16 h-16 rounded-2xl border-2 flex items-center justify-center font-bold text-2xl transition-all duration-300 ${stepAccents[index]}`}
-                          animate={activeStep === index ? { 
-                            rotate: [0, 10, -10, 0],
-                            scale: [1, 1.1, 1]
-                          } : {}}
-                          transition={{ duration: 0.5 }}
-                        >
-                          {index + 1}
-                        </motion.div>
-
-                        {/* Icon with Animation */}
-                        <motion.div 
-                          className="flex-shrink-0 w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300"
-                          whileHover={{ rotate: 360, scale: 1.1 }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          <IconComponent className="w-7 h-7 text-primary" />
-                        </motion.div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="space-y-4">
-                        <h3 className="font-serif text-[clamp(1.25rem,2.5vw,1.75rem)] font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                          {step.title}
-                        </h3>
-                        
-                        <p className="text-muted-foreground leading-relaxed text-base">
-                          {step.description}
-                        </p>
-
-                        <motion.p 
-                          className="text-sm text-muted-foreground/80 leading-relaxed"
-                          initial={{ opacity: 0.7 }}
-                          animate={activeStep === index ? { opacity: 1 } : { opacity: 0.7 }}
-                        >
-                          {step.detail}
-                        </motion.p>
-
-                        {/* Interactive Elements */}
-                        <AnimatePresence>
-                          {activeStep === index && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 10 }}
-                              className="flex gap-3 pt-4"
-                            >
-                              <motion.button
-                                className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-medium transition-colors duration-200"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                <Play className="w-4 h-4" />
-                                {content.watchDemo}
-                              </motion.button>
-                              
-                              <motion.button
-                                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors duration-200"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                {content.tryNow}
-                                <ArrowRight className="w-4 h-4" />
-                              </motion.button>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </CardContent>
-
-                    {/* Hover Glow Effect */}
-                    <motion.div
-                      className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{
-                        background: `radial-gradient(circle at 50% 50%, ${stepColors[index].split(' ')[0].replace('from-', '').replace('/20', '/10')}, transparent 70%)`
-                      }}
-                    />
-                  </Card>
-
-                  {/* Step Connector Arrow */}
+                  {/* Connection Arrow */}
                   {index < content.steps.length - 1 && (
                     <motion.div
-                      className="hidden lg:block absolute -bottom-6 left-1/2 transform -translate-x-1/2"
-                      initial={{ opacity: 0, y: -20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      className="hidden lg:block absolute top-1/2 -right-2 w-4 h-4 -translate-y-1/2 z-10"
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: (index + 1) * 0.2 + 0.5 }}
+                      transition={{ delay: (index + 1) * 0.15 + 0.5 }}
                     >
-                      <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center border-2 border-primary/30">
-                        <ArrowRight className="w-4 h-4 text-primary rotate-90" />
+                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <ArrowRight className="w-4 h-4 text-primary" />
                       </div>
                     </motion.div>
                   )}
@@ -331,25 +230,18 @@ export const HowItWorksSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Revolutionary CTA */}
+        {/* Bottom Note */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 1 }}
           className="text-center mt-20"
         >
-          <div className="relative">
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-3xl blur-xl"
-              animate={{ scale: [1, 1.05, 1], opacity: [0.5, 0.8, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            />
-            <div className="relative bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-sm rounded-2xl p-8 border border-primary/20">
-              <p className="text-muted-foreground text-lg mb-2">
-                <span className="text-primary font-semibold">{content.notePrefix}</span> {content.note}
-              </p>
-            </div>
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 max-w-2xl mx-auto">
+            <p className="text-white/80 text-sm">
+              <span className="text-white font-semibold">{content.notePrefix}</span> {content.note}
+            </p>
           </div>
         </motion.div>
 
