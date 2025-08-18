@@ -53,7 +53,7 @@ const getContent = (language: string) => {
         description: "IA avançada que entende o contexto familiar e se adapta ao estilo de cada pessoa querida para conversas mais naturais e envolventes! 🧠",
         icon: Flash,
         highlight: "✨ Conversas mais humanas",
-        image: "/lovable-uploads/4a3edab3-4083-4a1c-a748-c8c1d4626206.png"
+        image: "/lovable-uploads/283c9aa7-58d9-444d-bcb2-3ec9a0965926.png"
       }, {
         title: "Multilíngue",
         description: "Disponível em inglês, português (Brasil) e espanhol para servir famílias globais em todos os lugares! 🗣️",
