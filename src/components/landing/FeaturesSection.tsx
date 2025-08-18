@@ -15,16 +15,16 @@ const getContent = (language: string) => {
         highlight: "End-to-end encrypted",
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
-        title: "Hybrid voices",
+        title: "Personalized voices",
         description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
         icon: Microphone,
-        highlight: "🚀 ElevenLabs powered",
+        highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
-        title: "Cost-smart AI",
-        description: "Together.ai (OSS-20B) for free users, OpenAI GPT-5o for premium conversations - the best of both worlds! 💫",
+        title: "Smart conversations",
+        description: "Advanced AI that understands family context and adapts to each loved one's style for more natural and engaging conversations! 🧠",
         icon: Flash,
-        highlight: "👨‍👩‍👧‍👦 Optimized for families",
+        highlight: "✨ More human conversations",
         image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilingual",
@@ -71,16 +71,16 @@ const getContent = (language: string) => {
         highlight: "Cifrado extremo a extremo",
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
-        title: "Voces híbridas",
+        title: "Voces personalizadas",
         description: "Voces base para todos los usuarios, clonación personal para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
       }, {
-        title: "IA económica",
-        description: "Together.ai (OSS-20B) para usuarios gratuitos, OpenAI GPT-5o para conversaciones premium - ¡lo mejor de ambos mundos! 💫",
+        title: "Conversaciones inteligentes",
+        description: "IA avanzada que entiende el contexto familiar y se adapta al estilo de cada ser querido para conversaciones más naturales y atractivas! 🧠",
         icon: Flash,
-        highlight: "👨‍👩‍👧‍👦 Optimizado para familias",
+        highlight: "✨ Conversaciones más humanas",
         image: "/lovable-uploads/a7a421f7-b128-4025-836f-a9cbdec7c230.png?v=3"
       }, {
         title: "Multilingüe",
