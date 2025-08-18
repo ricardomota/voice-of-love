@@ -16,6 +16,8 @@ const getContent = (language: string) => {
       subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
       tryFree: "Try Eterna Free",
       seePricing: "See Pricing",
+      startNow: "Start Now",
+      joinWaitlist: "Join Waitlist",
       altText: "Family sharing warm moments together"
     },
     'pt-BR': {
@@ -23,6 +25,8 @@ const getContent = (language: string) => {
       subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
       tryFree: "Testar Grátis",
       seePricing: "Ver Preços",
+      startNow: "Começar Agora",
+      joinWaitlist: "Entrar na Waitlist",
       altText: "Família compartilhando momentos especiais"
     },
     es: {
@@ -30,6 +34,8 @@ const getContent = (language: string) => {
       subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
       tryFree: "Probar Gratis",
       seePricing: "Ver Precios",
+      startNow: "Empezar Ahora",
+      joinWaitlist: "Unirse a la Lista",
       altText: "Familia compartiendo momentos especiales"
     }
   };
@@ -158,7 +164,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {!isLoading && <>
                   <Button onClick={isWaitlistMode ? onTryFree : onLogin} size="xl" variant="secondary" className="w-full sm:w-auto min-w-[260px] h-16 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-secondary hover:bg-secondary/90">
                     <PlayFilled size={20} className="mr-3" />
-                    {isWaitlistMode ? 'Entrar na Waitlist' : 'Começar Agora'}
+                    {isWaitlistMode ? content.joinWaitlist : content.startNow}
                   </Button>
                   
                   <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[220px] h-16 text-lg font-semibold bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:border-primary-foreground/30 transition-all duration-300">
