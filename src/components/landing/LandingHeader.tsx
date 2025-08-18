@@ -82,7 +82,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         <div 
           className={cn(
             "flex items-center justify-between transition-all duration-300 ease-out",
-            isScrolled ? "h-14" : "h-16 lg:h-20"
+            isScrolled ? "h-16" : "h-20 lg:h-24"
           )}
         >
           {/* Simple Logo */}
@@ -92,31 +92,31 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               alt="Eterna Logo" 
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled ? "h-6" : "h-8"
+                isScrolled ? "h-8" : "h-10"
               )}
             />
           </div>
 
           {/* Simple Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-12">
             <button 
               onClick={() => handleNavigation('how-it-works')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-xl font-medium px-6 py-3 rounded-2xl hover:bg-primary/5 hover:scale-105"
             >
               {content.howItWorks}
             </button>
             <button 
               onClick={() => handleNavigation('pricing')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
+              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-xl font-medium px-6 py-3 rounded-2xl hover:bg-primary/5 hover:scale-105"
             >
               Preços
             </button>
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8">
               <LanguageSelector />
               <button
                 onClick={onSignIn}
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium hover:scale-105"
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 px-6 py-3 rounded-2xl hover:bg-muted/50 text-xl font-medium hover:scale-105"
               >
                 {content.signIn}
               </button>
@@ -124,7 +124,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                 onClick={onTryFree} 
                 variant="default" 
                 size="lg"
-                className="shadow-lg hover:shadow-2xl transition-all duration-300 bg-primary hover:bg-primary/90 text-lg font-semibold px-8 hover:scale-105"
+                className="shadow-lg hover:shadow-2xl transition-all duration-300 bg-primary hover:bg-primary/90 text-xl font-semibold px-10 py-3 h-14 rounded-2xl hover:scale-105"
               >
                 {content.tryFree}
               </Button>
