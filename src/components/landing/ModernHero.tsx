@@ -71,7 +71,7 @@ export const ModernHero: React.FC<ModernHeroProps> = ({
                 <span className="text-sm font-work font-medium text-accent">Made for Alzheimer's families</span>
               </div>
               
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-zilla font-medium italic text-foreground leading-tight">
+              <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground leading-none tracking-tight">
                 {content.headline}
               </h1>
               

@@ -128,7 +128,7 @@ export const FeaturesShowcase: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground mb-4">
+          <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-4 leading-none tracking-tight">
             {content.title}
           </h2>
           <p className="text-xl font-work text-muted-foreground max-w-2xl mx-auto">

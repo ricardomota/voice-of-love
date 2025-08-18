@@ -103,7 +103,7 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
         {/* Personal Story Header */}
         <div className="max-w-6xl mx-auto mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground mb-6">
+            <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-6 leading-none tracking-tight">
               {content.title}
             </h2>
           </div>

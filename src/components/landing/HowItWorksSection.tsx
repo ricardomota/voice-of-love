@@ -121,7 +121,7 @@ export const HowItWorksSection: React.FC = () => {
       }} transition={{
         duration: 0.8
       }} className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
-          <motion.h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight" initial={{
+          <motion.h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{

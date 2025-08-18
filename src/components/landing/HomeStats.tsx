@@ -72,7 +72,7 @@ export const HomeStats: React.FC<HomeStatsProps> = ({ onGetStarted }) => {
         
         {/* Features Section */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground mb-16">
+          <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-16 leading-none tracking-tight">
             {content.features.title}
           </h2>
           
