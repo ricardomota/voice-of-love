@@ -27,6 +27,13 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
+  componentDidUpdate(prevProps: Props) {
+    // Reset error state if children tree changes (e.g., route change or hot reload)
+    if (prevProps.children !== this.props.children && this.state.hasError) {
+      this.setState({ hasError: false, error: undefined });
+    }
+  }
+
   handleReset = () => {
     this.setState({ hasError: false, error: undefined });
   };
