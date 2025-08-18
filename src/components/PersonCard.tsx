@@ -7,7 +7,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image, Mic } from "@mui/icons-material";
-import { VolumeX } from "lucide-react";
+import { VolumeUpFilled } from "@carbon/icons-react";
 import { cn } from "@/lib/utils";
 import { peopleService } from "@/services/peopleService";
 import { useToast } from "@/hooks/use-toast";
@@ -329,7 +329,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                       aria-label={`Gerar mensagem de voz de ${name}`}
                       className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
                     >
-                      <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <VolumeUpFilled className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                       <span>Audio</span>
                     </Button>
                 } 
@@ -342,7 +342,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 size="lg"
                 variant="secondary"
               >
-                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <VolumeUpFilled className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 <span>Receber</span>
               </Button>
             )}
