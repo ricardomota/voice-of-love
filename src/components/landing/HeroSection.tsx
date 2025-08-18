@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     checkUserCount();
   }, []);
   const isWaitlistMode = userCount >= 10;
-  return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-20 sm:pt-24 lg:pt-28 overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 pt-32 sm:pt-40 lg:pt-48 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
@@ -117,8 +117,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           duration: 0.8,
           ease: "easeOut"
         }}>
-            <div className="space-y-6 lg:space-y-8">
-              <motion.h1 className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.05] tracking-tight mb-8 mt-4" initial={{
+            <div className="space-y-8 lg:space-y-12">
+              <motion.h1 className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] tracking-tight mb-12 mt-8" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -130,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }}>
                 {content.headline}
               </motion.h1>
-              <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light" initial={{
+              <motion.p className="text-xl sm:text-2xl lg:text-2xl text-primary-foreground/85 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light mt-6" initial={{
               opacity: 0,
               y: 30
             }} animate={{
