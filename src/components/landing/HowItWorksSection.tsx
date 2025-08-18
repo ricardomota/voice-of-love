@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Mic, Settings, MessageCircle, Share } from 'lucide-react';
 import { motion } from 'framer-motion';
+
 const getContent = (language: string) => {
   const content = {
     en: {
@@ -77,156 +78,132 @@ const getContent = (language: string) => {
   };
   return content[language as keyof typeof content] || content.en;
 };
+
 export const HowItWorksSection: React.FC = () => {
-  const {
-    currentLanguage
-  } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const icons = [Mic, Settings, MessageCircle, Share];
-  return <section id="how-it-works" className="py-12 sm:py-16 lg:py-20 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30" />
-      
-      {/* Animated Background Orbs */}
-      <motion.div className="absolute top-20 right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" animate={{
-      scale: [1, 1.3, 1],
-      opacity: [0.3, 0.7, 0.3]
-    }} transition={{
-      duration: 10,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }} />
-      <motion.div className="absolute bottom-20 left-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl" animate={{
-      scale: [1.2, 1, 1.2],
-      opacity: [0.4, 0.2, 0.4]
-    }} transition={{
-      duration: 12,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: 2
-    }} />
+
+  return (
+    <section id="how-it-works" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-gradient-to-b from-background via-muted/10 to-background">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/20 rounded-full animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-accent/30 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute bottom-1/3 left-2/3 w-1.5 h-1.5 bg-secondary/20 rounded-full animate-pulse delay-500"></div>
+      </div>
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
         
-        {/* Enhanced Header */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 40
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true,
-        margin: "-100px"
-      }} transition={{
-        duration: 0.8
-      }} className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
-          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.6,
-          delay: 0.2
-        }}>
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.6 }} 
+          className="text-center max-w-4xl mx-auto mb-16 lg:mb-20"
+        >
+          <h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-foreground mb-6">
             {content.title}
-          </motion.h2>
-          <motion.p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed font-light" initial={{
-          opacity: 0,
-          y: 20
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} viewport={{
-          once: true
-        }} transition={{
-          duration: 0.6,
-          delay: 0.4
-        }}>
+          </h2>
+          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             {content.subtitle}
-          </motion.p>
+          </p>
         </motion.div>
 
-        {/* Enhanced Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 mb-12 lg:mb-16">
-          {content.steps.map((step, index) => {
-          const IconComponent = icons[index];
-          return <motion.div key={index} initial={{
-            opacity: 0,
-            y: 50
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true,
-            margin: "-100px"
-          }} transition={{
-            duration: 0.6,
-            delay: index * 0.2
-          }}>
-                <div className="group hover:scale-105 transition-transform duration-300">
-                  <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full min-h-[420px]">
-                    <CardContent className="p-6 sm:p-8 lg:p-6 xl:p-8 text-center space-y-4 lg:space-y-6 relative flex flex-col justify-between h-full">
-                      
-                      {/* Simple Step Number */}
-                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-xl flex items-center justify-center text-base font-bold shadow-lg border-2 border-background">
+        {/* Steps with Timeline Design */}
+        <div className="relative">
+          {/* Central Timeline Line (hidden on mobile) */}
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent transform -translate-x-1/2"></div>
+          
+          <div className="space-y-12 lg:space-y-16">
+            {content.steps.map((step, index) => {
+              const IconComponent = icons[index];
+              const isEven = index % 2 === 0;
+              
+              return (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className={`relative lg:flex lg:items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                >
+                  {/* Timeline Dot (hidden on mobile) */}
+                  <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                    <div className="w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
+                  </div>
+                  
+                  {/* Card */}
+                  <div className={`lg:w-5/12 ${isEven ? '' : 'lg:ml-auto'}`}>
+                    <Card className="group hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-primary/20 bg-card/80 backdrop-blur-sm overflow-hidden">
+                      <CardContent className="p-6 sm:p-8">
+                        {/* Mobile Step Number */}
+                        <div className="lg:hidden flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full text-sm font-bold mb-4 mx-auto">
                           {index + 1}
                         </div>
-                      </div>
-
-                       <div className="pt-4">
-
-                       {/* Simple Icon */}
-                       <div className="w-16 h-16 bg-gradient-to-br from-primary/15 to-primary/5 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-md">
-                         <IconComponent className="w-8 h-8 text-primary" />
-                       </div>
-
-                       {/* Simple Content */}
-                       <div className="space-y-3 lg:space-y-4 flex-1 flex flex-col justify-center">
-                         <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
-                           {step.title}
-                         </h3>
-                         <p className="text-muted-foreground leading-relaxed text-base lg:text-lg px-2">
-                           {step.description}
-                         </p>
-                         <p className="text-sm text-muted-foreground/70 leading-relaxed font-light px-2">
-                           {step.detail}
-                         </p>
-                       </div>
-                       </div>
-
-                       {/* Connection Line (for larger screens) */}
-                       {index < content.steps.length - 1 && <div className="hidden xl:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary/30 to-transparent" />}
-                      
-
-                    </CardContent>
-                  </Card>
-                </div>
-              </motion.div>;
-        })}
+                        
+                        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center gap-4 sm:gap-6 lg:gap-4 xl:gap-6">
+                          {/* Icon */}
+                          <div className="flex-shrink-0">
+                            <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300 border border-primary/10">
+                              <IconComponent className="w-8 h-8 text-primary" />
+                            </div>
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="flex-1 text-center sm:text-left lg:text-center xl:text-left">
+                            {/* Desktop Step Number */}
+                            <div className="hidden lg:block lg:mb-2">
+                              <span className="inline-flex items-center justify-center w-6 h-6 bg-primary text-primary-foreground rounded-full text-xs font-bold">
+                                {index + 1}
+                              </span>
+                            </div>
+                            
+                            <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                              {step.title}
+                            </h3>
+                            <p className="text-muted-foreground leading-relaxed mb-2">
+                              {step.description}
+                            </p>
+                            <p className="text-sm text-muted-foreground/80 leading-relaxed">
+                              {step.detail}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  
+                  {/* Desktop Step Label */}
+                  <div className={`hidden lg:block lg:w-2/12 ${isEven ? 'lg:text-right lg:pr-8' : 'lg:text-left lg:pl-8'}`}>
+                    <div className={`inline-flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-2xl font-bold text-lg border border-primary/20`}>
+                      {index + 1}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Enhanced Note */}
-        <motion.div className="text-center" initial={{
-        opacity: 0,
-        y: 30
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.8,
-        delay: 0.6
-      }}>
-          
+        {/* Call to Action */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center mt-16 lg:mt-20"
+        >
+          <div className="bg-gradient-to-r from-primary/5 via-transparent to-primary/5 rounded-2xl p-6 sm:p-8 border border-primary/10">
+            <p className="text-muted-foreground mb-4">
+              <span className="text-primary font-semibold">{content.notePrefix}</span> {content.note}
+            </p>
+          </div>
         </motion.div>
 
       </div>
-    </section>;
+    </section>
+  );
 };
