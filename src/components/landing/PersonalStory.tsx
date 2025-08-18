@@ -103,7 +103,7 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
         {/* Personal Story Header */}
         <div className="max-w-6xl mx-auto mb-20">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-6 leading-none tracking-tight">
+            <h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-6 leading-none tracking-tight">
               {content.title}
             </h2>
           </div>
@@ -139,7 +139,7 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
                 <CardContent className="p-8">
                   <div className="flex items-center gap-4 mb-6">
                     <Heart className="w-8 h-8 text-accent" />
-                    <h3 className="text-2xl font-zilla font-medium italic text-foreground">
+                    <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground leading-tight">
                       {content.mission.title}
                     </h3>
                   </div>
@@ -154,7 +154,7 @@ export const PersonalStory: React.FC<PersonalStoryProps> = ({ onGetStarted }) =>
 
         {/* Mission Statement */}
         <div className="text-center mb-16">
-          <h3 className="text-3xl sm:text-4xl font-zilla font-medium italic text-foreground mb-6">
+          <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground mb-6 leading-tight">
             {content.mission.title}
           </h3>
           <p className="text-xl font-work text-muted-foreground max-w-3xl mx-auto leading-relaxed">

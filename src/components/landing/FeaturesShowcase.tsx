@@ -128,7 +128,7 @@ export const FeaturesShowcase: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-4 leading-none tracking-tight">
+          <h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-4 leading-none tracking-tight">
             {content.title}
           </h2>
           <p className="text-xl font-work text-muted-foreground max-w-2xl mx-auto">
@@ -166,7 +166,7 @@ export const FeaturesShowcase: React.FC = () => {
                   </div>
                   
                   <div className="text-center space-y-3">
-                    <h3 className="text-xl font-zilla font-medium text-foreground">
+                    <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground leading-tight">
                       {feature.title}
                     </h3>
                     

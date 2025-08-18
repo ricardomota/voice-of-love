@@ -160,7 +160,7 @@ export const FeaturesSection: React.FC = () => {
         duration: 0.8,
         ease: "easeOut"
       }} className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
-          <motion.h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
+          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -209,7 +209,7 @@ export const FeaturesSection: React.FC = () => {
 
                     {/* Simple Content */}
                     <div className="p-8 lg:p-10 pb-8 lg:pb-10 space-y-8">
-                      <h3 className="text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                         {feature.title}
                       </h3>
                       

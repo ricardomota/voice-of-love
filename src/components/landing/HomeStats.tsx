@@ -72,7 +72,7 @@ export const HomeStats: React.FC<HomeStatsProps> = ({ onGetStarted }) => {
         
         {/* Features Section */}
         <div className="text-center mb-20">
-          <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-16 leading-none tracking-tight">
+          <h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-16 leading-none tracking-tight">
             {content.features.title}
           </h2>
           
@@ -87,7 +87,7 @@ export const HomeStats: React.FC<HomeStatsProps> = ({ onGetStarted }) => {
                         <IconComponent className="w-7 h-7 text-accent" />
                       </div>
                       <div className="text-left">
-                        <h3 className="text-xl font-zilla font-medium text-foreground mb-2">
+                        <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground mb-2 leading-tight">
                           {feature.title}
                         </h3>
                         <p className="font-work text-muted-foreground">
@@ -105,7 +105,7 @@ export const HomeStats: React.FC<HomeStatsProps> = ({ onGetStarted }) => {
         {/* CTA Section */}
         <Card className="bg-gradient-to-r from-accent/5 to-primary/5 border-2 border-accent/20 shadow-2xl">
           <CardContent className="p-8 sm:p-12 text-center space-y-8">
-            <h3 className="text-3xl sm:text-4xl font-zilla font-medium italic text-foreground">
+            <h3 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground leading-tight">
               {content.cta.title}
             </h3>
             

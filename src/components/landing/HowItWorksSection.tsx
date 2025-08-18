@@ -121,7 +121,7 @@ export const HowItWorksSection: React.FC = () => {
       }} transition={{
         duration: 0.8
       }} className="text-center max-w-4xl mx-auto mb-12 lg:mb-16">
-          <motion.h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
+          <motion.h2 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] text-foreground mb-8 leading-none tracking-tight" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -188,7 +188,7 @@ export const HowItWorksSection: React.FC = () => {
 
                        {/* Simple Content */}
                        <div className="space-y-3 lg:space-y-4 flex-1 flex flex-col justify-center">
-                         <h3 className="text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                         <h3 className="font-serif text-[clamp(1.125rem,2.5vw,1.5rem)] text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                            {step.title}
                          </h3>
                          <p className="text-muted-foreground leading-relaxed text-base lg:text-lg px-2">
