@@ -25,66 +25,66 @@ html {
 /* Base CSS Variables - Eterna Riley Adapted */
 @layer base {
   :root {
-    /* New Color System - Purple & Cream */
-    --background: 51 85% 91%; /* FDFBCB - cream background */
-    --foreground: 315 47% 17%; /* 441632 - dark purple */
-    --card: 51 85% 91%; /* FDFBCB - cream for cards */
-    --card-foreground: 315 47% 17%; /* 441632 - dark purple text */
-    --popover: 51 85% 91%; /* FDFBCB - cream */
-    --popover-foreground: 315 47% 17%; /* 441632 - dark purple */
-    --primary: 315 47% 17%; /* 441632 - dark purple primary */
-    --primary-foreground: 51 85% 91%; /* FDFBCB - cream text on primary */
-    --secondary: 58 99% 66%; /* FEF252 - bright yellow */
-    --secondary-foreground: 315 53% 12%; /* 2C0E20 - very dark purple */
-    --muted: 51 70% 85%; /* lighter version of cream */
-    --muted-foreground: 315 47% 25%; /* slightly lighter dark purple */
-    --accent: 332 59% 46%; /* BA306C - pink/magenta */
-    --accent-foreground: 51 85% 91%; /* FDFBCB - cream text on accent */
-    --destructive: 0 84% 60%;
+    /* Refined Professional Color System */
+    --background: 51 20% 97%; /* F9F8F5 - softer cream background */
+    --foreground: 315 35% 20%; /* 523A47 - softer dark purple */
+    --card: 51 40% 98%; /* FEFEFE - very light cream cards */
+    --card-foreground: 315 35% 20%; /* 523A47 - softer dark purple text */
+    --popover: 51 40% 98%; /* FEFEFE - very light cream */
+    --popover-foreground: 315 35% 20%; /* 523A47 - softer dark purple */
+    --primary: 315 30% 25%; /* 5E4152 - refined dark purple primary */
+    --primary-foreground: 51 30% 95%; /* F8F7F4 - soft cream text on primary */
+    --secondary: 210 25% 88%; /* E0E7EA - soft blue-gray */
+    --secondary-foreground: 315 25% 20%; /* 4D3F49 - dark purple text */
+    --muted: 51 15% 92%; /* F1F0ED - subtle cream muted */
+    --muted-foreground: 315 20% 35%; /* 6B5A63 - muted purple text */
+    --accent: 200 35% 65%; /* 7FB3C7 - soft teal accent */
+    --accent-foreground: 51 30% 95%; /* F8F7F4 - soft cream text on accent */
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 51 60% 80%; /* border using cream tones */
-    --input: 51 60% 85%; /* input background */
-    --ring: 315 47% 17%; /* 441632 - dark purple ring */
-    --radius: 0.375rem;
+    --border: 51 20% 85%; /* E5E2DC - subtle cream border */
+    --input: 51 20% 95%; /* F4F2EE - light cream input */
+    --ring: 315 30% 25%; /* 5E4152 - refined dark purple ring */
+    --radius: 0.5rem;
     
-    /* Chart colors - new theme */
-    --chart-1: 315 47% 17%; /* dark purple */
-    --chart-2: 332 59% 46%; /* pink/magenta */
-    --chart-3: 58 99% 66%; /* bright yellow */
-    --chart-4: 315 53% 12%; /* very dark purple */
-    --chart-5: 51 70% 75%; /* lighter cream */
+    /* Chart colors - professional theme */
+    --chart-1: 315 30% 25%; /* refined dark purple */
+    --chart-2: 200 35% 65%; /* soft teal */
+    --chart-3: 260 25% 60%; /* soft lavender */
+    --chart-4: 315 20% 30%; /* medium purple */
+    --chart-5: 51 25% 80%; /* light cream */
 
-    /* New Color Palette */
-    --white: 51 85% 95%; /* slightly creamy white */
-    --black: 315 53% 12%; /* 2C0E20 - very dark purple */
-    --cream: 51 85% 91%; /* FDFBCB - main background */
-    --purple-dark: 315 47% 17%; /* 441632 - primary */
-    --purple-darker: 315 53% 12%; /* 2C0E20 - very dark */
-    --yellow-bright: 58 99% 66%; /* FEF252 - accent */
-    --pink-magenta: 332 59% 46%; /* BA306C - accent */
+    /* Professional Color Palette */
+    --white: 51 40% 98%; /* FEFEFE - soft white */
+    --black: 315 25% 15%; /* 3C2E38 - softer black */
+    --cream: 51 20% 97%; /* F9F8F5 - main background */
+    --purple-dark: 315 30% 25%; /* 5E4152 - primary */
+    --purple-medium: 315 25% 35%; /* 6B5A63 - medium */
+    --teal-soft: 200 35% 65%; /* 7FB3C7 - accent */
+    --blue-gray: 210 25% 88%; /* E0E7EA - secondary */
     
-    /* New Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(315 47% 17%) 0%, hsl(315 53% 12%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(58 99% 66%) 0%, hsl(332 59% 46%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(51 85% 91%) 0%, hsl(51 70% 85%) 100%);
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(315 30% 25%) 0%, hsl(315 25% 30%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(200 35% 65%) 0%, hsl(210 25% 75%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(51 20% 97%) 0%, hsl(51 15% 93%) 100%);
     
-    /* Purple-themed Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(315 47% 17% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(315 47% 17% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(315 47% 17% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(315 47% 17% / 0.1);
-    --shadow-card: 0 1px 3px 0 hsl(315 47% 17% / 0.1);
-    --shadow-hover: 0 4px 15px -3px hsl(315 47% 17% / 0.12);
+    /* Refined Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(315 30% 25% / 0.06);
+    --shadow-md: 0 4px 6px -1px hsl(315 30% 25% / 0.08);
+    --shadow-lg: 0 10px 15px -3px hsl(315 30% 25% / 0.08);
+    --shadow-xl: 0 20px 25px -5px hsl(315 30% 25% / 0.08);
+    --shadow-card: 0 1px 3px 0 hsl(315 30% 25% / 0.08);
+    --shadow-hover: 0 4px 15px -3px hsl(315 30% 25% / 0.10);
 
-    /* New Sidebar Colors */
-    --sidebar-background: 51 70% 88%; /* lighter cream */
-    --sidebar-foreground: 315 47% 17%; /* dark purple */
-    --sidebar-primary: 315 47% 17%; /* dark purple */
-    --sidebar-primary-foreground: 51 85% 91%; /* cream */
-    --sidebar-accent: 332 59% 46%; /* pink/magenta */
-    --sidebar-accent-foreground: 51 85% 91%; /* cream */
-    --sidebar-border: 51 60% 80%; /* cream border */
-    --sidebar-ring: 315 47% 17%; /* dark purple */
+    /* Professional Sidebar Colors */
+    --sidebar-background: 51 15% 95%; /* F2F1ED - light cream */
+    --sidebar-foreground: 315 30% 25%; /* refined dark purple */
+    --sidebar-primary: 315 30% 25%; /* refined dark purple */
+    --sidebar-primary-foreground: 51 30% 95%; /* soft cream */
+    --sidebar-accent: 200 35% 65%; /* soft teal */
+    --sidebar-accent-foreground: 51 30% 95%; /* soft cream */
+    --sidebar-border: 51 20% 85%; /* subtle cream border */
+    --sidebar-ring: 315 30% 25%; /* refined dark purple */
     
     /* Enhanced Spacing System */
     --space-xs: 0.5rem;
@@ -127,41 +127,41 @@ html {
   }
 
   .dark {
-    /* Dark Mode - New Color System */
-    --background: 315 53% 12%; /* 2C0E20 - very dark purple */
-    --foreground: 51 85% 91%; /* FDFBCB - cream */
-    --card: 315 47% 17%; /* 441632 - dark purple for cards */
-    --card-foreground: 51 85% 91%; /* FDFBCB - cream text */
-    --popover: 315 47% 17%; /* 441632 - dark purple */
-    --popover-foreground: 51 85% 91%; /* FDFBCB - cream */
-    --primary: 58 99% 66%; /* FEF252 - bright yellow primary in dark */
-    --primary-foreground: 315 53% 12%; /* 2C0E20 - very dark purple text */
-    --secondary: 332 59% 46%; /* BA306C - pink/magenta */
-    --secondary-foreground: 51 85% 91%; /* FDFBCB - cream */
-    --muted: 315 47% 20%; /* slightly lighter dark purple */
-    --muted-foreground: 51 60% 70%; /* lighter cream for muted text */
-    --accent: 332 59% 46%; /* BA306C - pink/magenta */
-    --accent-foreground: 51 85% 91%; /* FDFBCB - cream */
-    --destructive: 0 84% 60%;
+    /* Dark Mode - Professional Colors */
+    --background: 315 25% 8%; /* 1F1419 - deep purple-black */
+    --foreground: 51 20% 92%; /* F0EFEC - soft cream */
+    --card: 315 20% 12%; /* 2B1F26 - dark purple cards */
+    --card-foreground: 51 20% 92%; /* F0EFEC - soft cream text */
+    --popover: 315 20% 12%; /* 2B1F26 - dark purple */
+    --popover-foreground: 51 20% 92%; /* F0EFEC - soft cream */
+    --primary: 200 40% 70%; /* 85C1D9 - soft blue primary in dark */
+    --primary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black text */
+    --secondary: 260 30% 75%; /* B5A3D1 - soft lavender */
+    --secondary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
+    --muted: 315 20% 18%; /* 3D2C36 - muted dark purple */
+    --muted-foreground: 51 15% 70%; /* C4C0BA - light muted text */
+    --accent: 200 40% 70%; /* 85C1D9 - soft blue accent */
+    --accent-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 315 47% 25%; /* border using dark purple tones */
-    --input: 315 47% 20%; /* input background */
-    --ring: 58 99% 66%; /* FEF252 - bright yellow ring */
+    --border: 315 20% 25%; /* 4A3540 - dark purple border */
+    --input: 315 20% 15%; /* 332429 - dark input */
+    --ring: 200 40% 70%; /* 85C1D9 - soft blue ring */
 
-    /* Dark Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(315 47% 17%) 0%, hsl(315 53% 12%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(332 59% 46%) 0%, hsl(58 99% 66%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(315 53% 12%) 0%, hsl(315 47% 17%) 100%);
+    /* Dark Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(315 20% 12%) 0%, hsl(315 25% 8%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(260 30% 75%) 0%, hsl(200 40% 70%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(315 25% 8%) 0%, hsl(315 20% 12%) 100%);
 
-    /* Dark sidebar */
-    --sidebar-background: 315 47% 17%; /* 441632 - dark purple */
-    --sidebar-foreground: 51 85% 91%; /* FDFBCB - cream */
-    --sidebar-primary: 58 99% 66%; /* FEF252 - bright yellow */
-    --sidebar-primary-foreground: 315 53% 12%; /* 2C0E20 - very dark purple */
-    --sidebar-accent: 332 59% 46%; /* BA306C - pink/magenta */
-    --sidebar-accent-foreground: 51 85% 91%; /* FDFBCB - cream */
-    --sidebar-border: 315 47% 25%; /* dark purple border */
-    --sidebar-ring: 58 99% 66%; /* FEF252 - bright yellow */
+    /* Dark Professional Sidebar */
+    --sidebar-background: 315 20% 10%; /* 261B21 - dark purple */
+    --sidebar-foreground: 51 20% 92%; /* F0EFEC - soft cream */
+    --sidebar-primary: 200 40% 70%; /* 85C1D9 - soft blue */
+    --sidebar-primary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
+    --sidebar-accent: 260 30% 75%; /* B5A3D1 - soft lavender */
+    --sidebar-accent-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
+    --sidebar-border: 315 20% 20%; /* 3E2C35 - dark purple border */
+    --sidebar-ring: 200 40% 70%; /* 85C1D9 - soft blue */
   }
 
   * {
