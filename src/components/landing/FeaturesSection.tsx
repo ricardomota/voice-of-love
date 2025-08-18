@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Security, Microphone, Flash, Globe } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
@@ -244,11 +245,9 @@ export const FeaturesSection: React.FC = () => {
         duration: 0.8,
         delay: 0.4
       }} className="mt-16 lg:mt-20 text-center">
-          <div className="inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-            
-            <span className="text-primary font-semibold text-lg">Designed with families in mind</span>
-            
-          </div>
+          <Badge variant="outline" className="px-4 py-2 text-base font-medium bg-primary/5 border-primary/20 text-primary hover:bg-primary/10 transition-colors duration-300">
+            Designed with families in mind ❤️
+          </Badge>
         </motion.div>
 
       </div>
