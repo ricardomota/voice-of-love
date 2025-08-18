@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Mic, Settings, MessageCircle, Share, ArrowRight } from 'lucide-react';
+import { SettingsAdjust, Microphone, Chat, Share, ArrowRight } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
 
 const getContent = (language: string) => {
@@ -81,7 +81,7 @@ const getContent = (language: string) => {
 export const HowItWorksSection: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const icons = [Settings, Mic, MessageCircle, Share];
+  const icons = [SettingsAdjust, Microphone, Chat, Share];
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
@@ -232,7 +232,7 @@ export const HowItWorksSection: React.FC = () => {
                       animate={hoveredStep === index ? { rotate: [0, 10, -10, 0] } : {}}
                       transition={{ duration: 0.6 }}
                     >
-                      <IconComponent className="w-10 h-10 text-white" />
+                      <IconComponent className="w-10 h-10 text-white" size={40} />
                     </motion.div>
                     
                     {/* Content */}
@@ -265,7 +265,7 @@ export const HowItWorksSection: React.FC = () => {
                       transition={{ delay: (index + 1) * 0.15 + 0.5 }}
                     >
                       <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                        <ArrowRight className="w-4 h-4 text-primary" />
+                        <ArrowRight className="w-4 h-4 text-primary" size={16} />
                       </div>
                     </motion.div>
                   )}
