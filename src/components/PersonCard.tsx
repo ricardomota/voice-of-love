@@ -312,7 +312,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               aria-label={`Conversar com ${name}`}
             >
               <Chat className="w-6 h-6 mr-3" />
-              💬 Conversar
+              Conversar
             </Button>
 
           {/* Botões secundários - Grid responsivo */}
