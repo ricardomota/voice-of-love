@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     checkUserCount();
   }, []);
   const isWaitlistMode = userCount >= 10;
-  return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 pt-24 sm:pt-28 lg:pt-32 overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 pt-32 sm:pt-36 lg:pt-40 xl:pt-44 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
