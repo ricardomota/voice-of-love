@@ -92,7 +92,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               alt="Eterna Logo" 
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled ? "h-6" : "h-8"
+                isScrolled ? "h-4" : "h-6"
               )}
             />
           </div>
