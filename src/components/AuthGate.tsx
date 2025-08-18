@@ -26,7 +26,7 @@ const getContent = (language: string) => {
       story: {
         title: "💝 Why I Created Eterna",
         text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones. ✨",
-        heart: "❤️ Built with love for families 🤗"
+        heart: "❤️"
       },
       errors: {
         fillFields: "Please fill in email and password",
@@ -50,7 +50,7 @@ const getContent = (language: string) => {
       story: {
         title: "💝 Por que Criei o Eterna",
         text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos. ✨",
-        heart: "❤️ Feito com amor para famílias 🤗"
+        heart: "❤️"
       },
       errors: {
         fillFields: "Por favor, preencha email e senha",
@@ -74,7 +74,7 @@ const getContent = (language: string) => {
       story: {
         title: "Por qué Creé Eterna",
         text: "Creé Eterna después de perder a mi abuela por Alzheimer. Me di cuenta de que, aunque tomamos miles de fotos, rara vez preservamos las voces e historias de quienes amamos. Eterna nació del deseo de asegurar que las futuras generaciones puedan no solo ver, sino también escuchar e interactuar con los recuerdos de sus seres queridos.",
-        heart: "Hecho con amor para familias"
+        heart: "❤️"
       },
       errors: {
         fillFields: "Por favor, completa email y contraseña",
