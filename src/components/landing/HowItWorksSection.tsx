@@ -275,20 +275,6 @@ export const HowItWorksSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="text-center mt-20"
-        >
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 max-w-2xl mx-auto">
-            <p className="text-white/80 text-sm">
-              <span className="text-white font-semibold">{content.notePrefix}</span> {content.note}
-            </p>
-          </div>
-        </motion.div>
 
       </div>
     </section>
