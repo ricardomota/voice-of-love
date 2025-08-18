@@ -119,6 +119,51 @@ export const HowItWorksSection: React.FC = () => {
           }}
         />
         
+        {/* Additional Gradient Blur Elements */}
+        <motion.div 
+          className="absolute top-1/3 left-1/3 w-64 h-32 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
+          animate={{
+            x: [-20, 20, -20],
+            y: [-10, 10, -10],
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 left-1/5 w-48 h-48 bg-gradient-to-br from-blue-400/15 to-cyan-400/15 rounded-full blur-2xl"
+          animate={{
+            scale: [0.8, 1.2, 0.8],
+            opacity: [0.1, 0.3, 0.1],
+            rotate: [0, 180, 360]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/4 right-1/4 w-56 h-28 bg-gradient-to-l from-orange-400/25 to-red-400/25 rounded-full blur-3xl"
+          animate={{
+            y: [10, -10, 10],
+            x: [5, -5, 5],
+            opacity: [0.15, 0.35, 0.15]
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4
+          }}
+        />
+        
         {/* Grid Pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
