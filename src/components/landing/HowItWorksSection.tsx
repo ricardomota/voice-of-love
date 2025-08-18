@@ -152,7 +152,7 @@ export const HowItWorksSection: React.FC = () => {
         </motion.div>
 
         {/* Enhanced Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10 mb-20 lg:mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 mb-12 lg:mb-16">
           {content.steps.map((step, index) => {
           const IconComponent = icons[index];
           return <motion.div key={index} initial={{
@@ -170,7 +170,7 @@ export const HowItWorksSection: React.FC = () => {
           }}>
                 <div className="group hover:scale-105 transition-transform duration-300">
                   <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/80 h-full min-h-[420px]">
-                    <CardContent className="p-8 sm:p-10 lg:p-8 xl:p-10 text-center space-y-6 lg:space-y-8 relative flex flex-col justify-between h-full">
+                    <CardContent className="p-6 sm:p-8 lg:p-6 xl:p-8 text-center space-y-4 lg:space-y-6 relative flex flex-col justify-between h-full">
                       
                       {/* Simple Step Number */}
                       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -187,7 +187,7 @@ export const HowItWorksSection: React.FC = () => {
                        </div>
 
                        {/* Simple Content */}
-                       <div className="space-y-4 lg:space-y-6 flex-1 flex flex-col justify-center">
+                       <div className="space-y-3 lg:space-y-4 flex-1 flex flex-col justify-center">
                          <h3 className="text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                            {step.title}
                          </h3>

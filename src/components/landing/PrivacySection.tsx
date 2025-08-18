@@ -92,11 +92,11 @@ export const PrivacySection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section className="py-20 sm:py-24 lg:py-32">
+    <section className="py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
             {content.title}
           </h2>
@@ -137,7 +137,7 @@ export const PrivacySection: React.FC = () => {
         </div>
 
         {/* Trust Badge */}
-        <div className="text-center mt-16 lg:mt-20">
+        <div className="text-center mt-10 lg:mt-12">
           <div className="inline-flex items-center gap-3 bg-muted/50 rounded-2xl px-6 py-4 border border-border/50">
             <Shield className="w-6 h-6 text-primary" />
             <span className="text-sm font-medium text-foreground">

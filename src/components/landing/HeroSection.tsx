@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     checkUserCount();
   }, []);
   const isWaitlistMode = userCount >= 10;
-  return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24 overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
@@ -104,10 +104,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
       
       <div className="relative w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
           {/* Enhanced Content */}
-          <motion.div className="text-center lg:text-left space-y-12 lg:space-y-16 order-2 lg:order-1" initial={{
+          <motion.div className="text-center lg:text-left space-y-8 lg:space-y-10 order-2 lg:order-1" initial={{
           opacity: 0,
           y: 50
         }} animate={{
@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           duration: 0.8,
           ease: "easeOut"
         }}>
-            <div className="space-y-10 lg:space-y-12">
+            <div className="space-y-6 lg:space-y-8">
               <motion.h1 className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.05] tracking-tight" initial={{
               opacity: 0,
               y: 30
@@ -145,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Enhanced CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-8 lg:gap-10 justify-center lg:justify-start pt-4" initial={{
+            <motion.div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start pt-2" initial={{
             opacity: 0,
             y: 30
           }} animate={{
@@ -168,7 +168,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
 
             {/* Enhanced Trust indicators */}
-            <motion.div className="pt-12 lg:pt-16" initial={{
+            <motion.div className="pt-8 lg:pt-10" initial={{
             opacity: 0,
             y: 20
           }} animate={{

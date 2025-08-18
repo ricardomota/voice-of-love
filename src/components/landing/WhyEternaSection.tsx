@@ -80,13 +80,13 @@ export const WhyEternaSection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-muted/30 to-background">
+    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-muted/30 to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Story Content */}
-          <div className="space-y-8 text-center lg:text-left">
+          <div className="space-y-6 text-center lg:text-left">
             <div className="space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground">
                 {content.title}
