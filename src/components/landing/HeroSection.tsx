@@ -86,10 +86,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="absolute inset-0"
           animate={{
             background: [
-              "linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--accent) / 0.12) 50%, hsl(var(--secondary) / 0.15) 100%)",
-              "linear-gradient(225deg, hsl(var(--accent) / 0.12) 0%, hsl(var(--secondary) / 0.15) 50%, hsl(var(--primary) / 0.15) 100%)",
-              "linear-gradient(315deg, hsl(var(--secondary) / 0.15) 0%, hsl(var(--primary) / 0.12) 50%, hsl(var(--accent) / 0.15) 100%)",
-              "linear-gradient(45deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--accent) / 0.12) 50%, hsl(var(--secondary) / 0.15) 100%)"
+              "linear-gradient(135deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.22) 50%, hsl(var(--secondary) / 0.25) 100%)",
+              "linear-gradient(225deg, hsl(var(--accent) / 0.22) 0%, hsl(var(--secondary) / 0.25) 50%, hsl(var(--primary) / 0.25) 100%)",
+              "linear-gradient(315deg, hsl(var(--secondary) / 0.25) 0%, hsl(var(--primary) / 0.22) 50%, hsl(var(--accent) / 0.25) 100%)",
+              "linear-gradient(45deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.22) 50%, hsl(var(--secondary) / 0.25) 100%)"
             ]
           }}
           transition={{
@@ -99,8 +99,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           }}
         />
         
-        {/* Readability overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80" />
+        {/* Darker readability overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/30 to-background/40" />
         
         {/* Animated floating elements */}
         <motion.div 
