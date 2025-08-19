@@ -78,24 +78,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
         
-        {/* Animated Background Elements */}
-        <motion.div className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl" animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.3, 0.6, 0.3]
-      }} transition={{
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }} />
-        <motion.div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl" animate={{
-        scale: [1.2, 1, 1.2],
-        opacity: [0.4, 0.2, 0.4]
-      }} transition={{
-        duration: 10,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2
-      }} />
+        {/* Simplified Background Elements - reduced animation complexity */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-secondary/15 rounded-full blur-3xl opacity-40" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/15 rounded-full blur-3xl opacity-30" />
         
         {/* Grid Pattern */}
         <div className="absolute inset-0 opacity-20">

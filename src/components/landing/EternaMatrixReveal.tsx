@@ -13,9 +13,9 @@ export default function EternaMatrixReveal({
   cols = 28,
   fontFamily = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
   baseFontSize = 22, // in px at 1024px wide; auto-scales with width
-  tickMs = 80, // frame interval for character churn
+  tickMs = 200, // frame interval for character churn - reduced frequency
   revealDelayMs = 1200, // when to start revealing the word
-  revealStepMs = 120, // per-letter settle cadence
+  revealStepMs = 200, // per-letter settle cadence - slower for smoother effect
   noiseOpacity = 0.06,
   bgGradient = "from-[#fff2ff] via-[#f3f3ff] to-[#eef5ff]",
 }: {
@@ -130,10 +130,10 @@ export default function EternaMatrixReveal({
           const inWord = r === rowIndex && c >= wordColStart && c < wordColStart + word.length;
           const letterIdx = c - wordColStart;
 
-          // Update churn
-          if (tick && !inWord && !prefersReducedMotion) {
-            if (Math.random() < 0.25) cell.ch = randChar();
-          }
+      // Update churn - reduced frequency for performance
+      if (tick && !inWord && !prefersReducedMotion) {
+        if (Math.random() < 0.15) cell.ch = randChar(); // Reduced from 0.25 to 0.15
+      }
 
           ctx.globalAlpha = inWord ? 1 : 0.15;
           ctx.fillStyle = "hsl(0 0% 100%)";

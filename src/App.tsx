@@ -48,7 +48,8 @@ const AppContent = () => {
   const [userCount, setUserCount] = useState(0);
   const [userCountLoading, setUserCountLoading] = useState(true);
   
-  // Performance monitoring disabled to ensure preview stability
+  // Performance monitoring enabled for debugging
+  // usePerformanceMonitoring();
 
   // Optimized user count check with caching to prevent duplicate API calls
   useEffect(() => {

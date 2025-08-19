@@ -9,8 +9,8 @@ const WORD = 'ETERNA';
 
 const ROWS = 8;
 const COLS = 16;
-const TICK_MS = 750; // animation tick
-const RANDOM_FLIPS_PER_TICK = 6; // how many random cells morph each tick
+const TICK_MS = 1200; // animation tick - increased for smoother performance
+const RANDOM_FLIPS_PER_TICK = 3; // how many random cells morph each tick - reduced
 
 // Helper to make a key for a cell
 const keyOf = (r: number, c: number) => `${r}-${c}`;
