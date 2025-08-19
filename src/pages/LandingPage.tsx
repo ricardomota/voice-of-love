@@ -43,6 +43,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         onTryFree={onTryFree}
         onSeePricing={scrollToPricing}
         onLogin={onLogin}
+        onTryDemo={() => window.location.href = '/demo'}
       />
 
       {/* Features Section - Enhanced spacing */}
