@@ -96,7 +96,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border backdrop-blur-xl bg-background/80">
+    <header className="fixed top-0 z-50 w-full border-b border-border backdrop-blur-xl bg-background/95 shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
@@ -115,21 +115,27 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg bg-foreground text-background flex items-center justify-center hover:bg-foreground/90 transition-colors overflow-hidden">
+                <button className="w-9 h-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors overflow-hidden border border-border shadow-sm">
                   {profile?.avatar_url ? (
                     <img 
                       src={profile.avatar_url} 
                       alt="Profile" 
                       className="w-full h-full object-cover rounded-lg"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.setAttribute('style', 'display: flex');
+                      }}
                     />
-                  ) : (
-                    <span className="text-sm font-semibold">
-                      {profile?.display_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
-                    </span>
-                  )}
+                  ) : null}
+                  <span 
+                    className="text-sm font-semibold flex items-center justify-center w-full h-full"
+                    style={{ display: profile?.avatar_url ? 'none' : 'flex' }}
+                  >
+                    {profile?.display_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
+                  </span>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <DropdownMenuContent align="end" className="w-56 bg-background border shadow-lg z-50">
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">
