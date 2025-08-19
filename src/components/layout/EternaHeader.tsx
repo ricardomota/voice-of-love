@@ -58,11 +58,14 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
   onSettingsClick
 }) => {
   const { user, signOut } = useAuth();
-  const { profile } = useProfile();
+  const { profile, loading: profileLoading } = useProfile();
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
   const [showProfileModal, setShowProfileModal] = useState(false);
+
+  // Add debugging
+  console.log('EternaHeader - user:', !!user, 'profile:', !!profile, 'profileLoading:', profileLoading);
 
   const handleSignOut = async () => {
     try {

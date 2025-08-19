@@ -29,20 +29,38 @@ export function useProfile() {
         .from('profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle(); // Use maybeSingle instead of single to handle 0 rows
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         throw error;
       }
 
-      setProfile(data);
+      // If no profile exists, create one
+      if (!data) {
+        console.log('No profile found, creating one for user:', user.id);
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: user.id,
+            display_name: user.email?.split('@')[0] || null
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Error creating profile:', createError);
+          // Set empty profile if creation fails
+          setProfile(null);
+        } else {
+          setProfile(newProfile);
+        }
+      } else {
+        setProfile(data);
+      }
     } catch (error) {
       console.error('Error fetching profile:', error);
-      toast({
-        title: "Erro ao carregar perfil",
-        description: "Não foi possível carregar os dados do perfil.",
-        variant: "destructive"
-      });
+      // Don't show toast for missing profile, just log it
+      setProfile(null);
     } finally {
       setLoading(false);
     }
