@@ -447,63 +447,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             ))}
           </div>
 
-          {/* Comparison Table */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-20 bg-card/50 backdrop-blur-sm rounded-xl border border-border/50 overflow-hidden"
-          >
-            <div className="p-8">
-              <h3 className="font-serif text-2xl font-bold text-center text-foreground mb-8">
-                {content.comparison.title}
-              </h3>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border">
-                      {content.comparison.headers.map((header, index) => (
-                        <th key={index} className={`py-4 px-4 font-semibold text-foreground ${
-                          index === 0 ? 'text-left' : 'text-center'
-                        }`}>
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="text-sm">
-                    {content.comparison.features.map((feature, index) => (
-                      <tr key={index} className="border-b border-border/50">
-                        <td className="py-3 px-4 text-muted-foreground">{feature.name}</td>
-                        <td className="py-3 px-4 text-center">
-                          {typeof feature.free === 'boolean' ? (
-                            feature.free ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
-                          ) : (
-                            feature.free
-                          )}
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          {typeof feature.essential === 'boolean' ? (
-                            feature.essential ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
-                          ) : (
-                            feature.essential
-                          )}
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          {typeof feature.complete === 'boolean' ? (
-                            feature.complete ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
-                          ) : (
-                            feature.complete
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Testimonials */}
           <motion.div
