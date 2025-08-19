@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,10 +16,8 @@ import {
   Users, 
   Mic, 
   Lock, 
-  Play,
   Quote,
-  Volume2,
-  Clock
+  Volume2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
@@ -38,9 +35,6 @@ const mockState = {
   maxSlots: 30,
   autoUpgradeThreshold: 30,
   waitlistLength: 0,
-  free_voice_demo_seconds_total: 60,
-  free_voice_demo_seconds_used: 0,
-  require_onboarding_to_unlock_demo: true,
   monthly_voice_minutes_essential: 30,
   monthly_voice_minutes_complete: 120,
   monthly_chat_limits: { free: 20, essential: 200, complete: -1 },
@@ -76,11 +70,9 @@ const getContent = (language: string) => {
             "1 pessoa (clone)",
             "20 interações de chat (TEXTO)",
             "Upload de memórias em texto e fotos (sem áudio contínuo)",
-            "Demo único de 60s de voz (vozes genéricas, one-time) 🔒",
             "Sem exportação"
           ],
           cta: "Comece grátis",
-          note: "O teste gratuito não inclui voz contínua. O demo de 60s é único por conta.",
           popular: false
         } as PlanData,
         essential: {
@@ -131,7 +123,6 @@ const getContent = (language: string) => {
           { name: "Minutos de voz/mês", free: "—", essential: "30", complete: "120" },
           { name: "Interações de chat/mês", free: "20", essential: "200", complete: "Ilimitado" },
           { name: "Vozes pré-criadas", free: "—", essential: "✔", complete: "✔" },
-          { name: "Demo de voz (60s, one-time)", free: "✔ (genéricas)", essential: "—", complete: "—" },
           { name: "Voz personalizada (slots)", free: "—", essential: "—", complete: "✔ (fila se necessário)" },
           { name: "Exportação de áudio", free: "—", essential: "Básica", complete: "Completa" },
           { name: "Convidados", free: "—", essential: "—", complete: "✔ (até 3)" }
@@ -140,10 +131,6 @@ const getContent = (language: string) => {
       faq: {
         title: "FAQ rápido",
         items: [
-          {
-            question: "O teste grátis tem voz?",
-            answer: "O Free não inclui voz contínua. Você tem um demo único de 60s com vozes genéricas para experimentar."
-          },
           {
             question: "Qual a diferença entre voz pré-criada e personalizada?",
             answer: "A pré-criada usa timbres humanos genéricos; a personalizada é treinada com gravações reais (apenas no Completo e sujeita a slots)."
@@ -174,11 +161,6 @@ const getContent = (language: string) => {
         "Ela me chamou de filho de novo. Eu chorei.",
         "É como manter uma parte dela viva aqui comigo."
       ],
-      demo: {
-        play: "Ouvir demonstração (60s)",
-        upsell: "Desbloqueie a voz no Essencial",
-        progress: "Demo de voz (60s total)"
-      },
       waitlist: {
         title: "Entrar na lista de espera",
         description: "Avisaremos você por email assim que uma vaga de voz personalizada for liberada.",
@@ -201,11 +183,9 @@ const getContent = (language: string) => {
             "1 person (clone)",
             "20 chat interactions (TEXT)",
             "Upload text and photo memories (no continuous audio)",
-            "Single 60s voice demo (generic voices, one-time) 🔒",
             "No export"
           ],
           cta: "Start free",
-          note: "The free trial doesn't include continuous voice. The 60s demo is one-time per account.",
           popular: false
         } as PlanData,
         essential: {
@@ -256,7 +236,6 @@ const getContent = (language: string) => {
           { name: "Voice minutes/month", free: "—", essential: "30", complete: "120" },
           { name: "Chat interactions/month", free: "20", essential: "200", complete: "Unlimited" },
           { name: "Pre-created voices", free: "—", essential: "✔", complete: "✔" },
-          { name: "Voice demo (60s, one-time)", free: "✔ (generic)", essential: "—", complete: "—" },
           { name: "Custom voice (slots)", free: "—", essential: "—", complete: "✔ (queue if needed)" },
           { name: "Audio export", free: "—", essential: "Basic", complete: "Complete" },
           { name: "Guests", free: "—", essential: "—", complete: "✔ (up to 3)" }
@@ -265,10 +244,6 @@ const getContent = (language: string) => {
       faq: {
         title: "Quick FAQ",
         items: [
-          {
-            question: "Does the free trial have voice?",
-            answer: "Free doesn't include continuous voice. You have a single 60s demo with generic voices to try."
-          },
           {
             question: "What's the difference between pre-created and custom voice?",
             answer: "Pre-created uses generic human timbres; custom is trained with real recordings (Complete plan only, subject to slots)."
@@ -299,11 +274,6 @@ const getContent = (language: string) => {
         "She called me son again. I cried.",
         "It's like keeping a part of her alive with me."
       ],
-      demo: {
-        play: "Listen to demo (60s)",
-        upsell: "Unlock voice in Essential",
-        progress: "Voice demo (60s total)"
-      },
       waitlist: {
         title: "Join waitlist",
         description: "We'll notify you by email as soon as a custom voice slot becomes available.",
@@ -327,38 +297,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const content = getContent(currentLanguage);
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [waitlistForm, setWaitlistForm] = useState({ name: '', email: '', consent: false });
-  const [demoProgress, setDemoProgress] = useState(mockState.free_voice_demo_seconds_used);
   const { toast } = useToast();
   
   const slotsAvailable = mockState.slotsDisponiveis > 0;
-  const demoExhausted = demoProgress >= mockState.free_voice_demo_seconds_total;
   const planOrder = [content.plans.free, content.plans.essential, content.plans.complete];
 
   // Event handlers with proper IDs
   const handleFreeTrial = () => {
     console.log('Analytics: pricing_free_start');
     onTryFree();
-  };
-
-  const handleVoiceDemo = () => {
-    if (mockState.plan !== 'free') return;
-    if (demoProgress >= mockState.free_voice_demo_seconds_total) return;
-    
-    console.log('Analytics: free_demo_play_start');
-    
-    const playDuration = Math.min(15, mockState.free_voice_demo_seconds_total - demoProgress);
-    setDemoProgress(prev => Math.min(prev + playDuration, mockState.free_voice_demo_seconds_total));
-    
-    toast({
-      title: currentLanguage === 'pt-BR' ? "Demonstração reproduzida" : "Demo played",
-      description: currentLanguage === 'pt-BR' ? 
-        `${playDuration}s de demonstração utilizada` : 
-        `${playDuration}s of demo used`,
-    });
-
-    if (demoProgress + playDuration >= mockState.free_voice_demo_seconds_total) {
-      console.log('Analytics: free_demo_play_complete');
-    }
   };
 
   const handleEssentialSubscribe = () => {
@@ -400,11 +347,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     });
     setShowWaitlistModal(false);
     setWaitlistForm({ name: '', email: '', consent: false });
-  };
-
-  const handleUpsellToEssential = () => {
-    console.log('Analytics: upsell_to_essential');
-    onUpgrade?.('essential');
   };
 
   return (
@@ -509,41 +451,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       ))}
                     </div>
 
-                    {/* Free plan demo section */}
-                    {index === 0 && (
-                      <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium text-foreground">{content.demo.progress}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {demoProgress}/{mockState.free_voice_demo_seconds_total}s
-                          </span>
-                        </div>
-                        <Progress value={(demoProgress / mockState.free_voice_demo_seconds_total) * 100} className="h-2" />
-                        
-                        {!demoExhausted ? (
-                          <Button 
-                            id="free_demo_play"
-                            onClick={handleVoiceDemo}
-                            variant="outline" 
-                            size="sm"
-                            className="w-full"
-                          >
-                            <Play className="w-4 h-4 mr-2" />
-                            {content.demo.play}
-                          </Button>
-                        ) : (
-                          <Button 
-                            id="upsell_to_essential"
-                            onClick={handleUpsellToEssential}
-                            variant="default" 
-                            size="sm"
-                            className="w-full"
-                          >
-                            {content.demo.upsell}
-                          </Button>
-                        )}
-                      </div>
-                    )}
 
                     {/* Complete plan slot availability */}
                     {index === 2 && (
