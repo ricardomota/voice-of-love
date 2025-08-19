@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Logout, User, Help, Information } from '@carbon/icons-react';
+import { Settings, Logout, User, Help, Information, Language } from '@carbon/icons-react';
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
@@ -13,8 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuLabel,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useLanguage } from '@/hooks/useLanguage';
+import { useLanguage, type Language as LanguageType } from '@/hooks/useLanguage';
 import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ProfileModal } from '@/components/ProfileModal';
@@ -31,6 +34,7 @@ const getContent = (language: string) => {
       settings: "Settings", 
       help: "Help & Support",
       about: "About",
+      language: "Language",
       signOut: "Sign out"
     },
     'pt-BR': {
@@ -39,6 +43,7 @@ const getContent = (language: string) => {
       settings: "Configurações",
       help: "Ajuda e Suporte",
       about: "Sobre",
+      language: "Idioma",
       signOut: "Sair"
     },
     es: {
@@ -47,6 +52,7 @@ const getContent = (language: string) => {
       settings: "Configuración",
       help: "Ayuda y Soporte",
       about: "Acerca de",
+      language: "Idioma",
       signOut: "Cerrar sesión"
     }
   };
@@ -59,13 +65,19 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
 }) => {
   const { user, signOut } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
-  const { currentLanguage } = useLanguage();
+  const { currentLanguage, setLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   // Add debugging
   console.log('EternaHeader - user:', !!user, 'profile:', !!profile, 'profileLoading:', profileLoading);
+
+  const languageOptions: { code: LanguageType; label: string; flag: string }[] = [
+    { code: 'en', label: 'English', flag: '🇺🇸' },
+    { code: 'pt-BR', label: 'Português', flag: '🇧🇷' },
+    { code: 'es', label: 'Español', flag: '🇪🇸' }
+  ];
 
   const handleSignOut = async () => {
     try {
@@ -97,7 +109,8 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
-          <LanguageSelector />
+          {/* Only show standalone language selector when user is not logged in */}
+          {!user && <LanguageSelector />}
           
           {user && (
             <DropdownMenu>
@@ -146,6 +159,27 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                 </DropdownMenuItem>
                 
                 <DropdownMenuSeparator />
+                
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="flex items-center gap-2 cursor-pointer">
+                    <Language size={16} />
+                    {content.language}
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    {languageOptions.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code)}
+                        className={`flex items-center gap-2 cursor-pointer ${
+                          currentLanguage === lang.code ? 'bg-muted' : ''
+                        }`}
+                      >
+                        <span>{lang.flag}</span>
+                        <span>{lang.label}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
                 
                 <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
                   <Help size={16} />
