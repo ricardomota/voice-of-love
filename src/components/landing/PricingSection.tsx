@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSubscriptionInfo } from '@/hooks/useSubscriptionInfo';
@@ -16,7 +12,6 @@ import {
   Heart, 
   MessageCircle, 
   Users, 
-  Mic, 
   Lock, 
   Quote,
   Volume2
@@ -41,7 +36,6 @@ interface PlanData {
   popular: boolean;
   specialNote?: string;
   ctaCustomVoice?: string;
-  ctaWaitlist?: string;
 }
 
 const getContent = (language: string) => {
@@ -96,7 +90,6 @@ const getContent = (language: string) => {
           ],
           cta: "Assine Completo",
           ctaCustomVoice: "Criar minha voz agora",
-          ctaWaitlist: "Entrar na lista de espera",
           popular: true,
           specialNote: "Limite global de capacidade: 30 vozes simultâneas"
         } as PlanData
@@ -111,7 +104,7 @@ const getContent = (language: string) => {
           { name: "Minutos de voz/mês", free: "—", essential: "30", complete: "120" },
           { name: "Interações de chat/mês", free: "20", essential: "200", complete: "Ilimitado" },
           { name: "Vozes pré-criadas", free: "—", essential: "✔", complete: "✔" },
-          { name: "Voz personalizada (slots)", free: "—", essential: "—", complete: "✔ (fila se necessário)" },
+          { name: "Voz personalizada (slots)", free: "—", essential: "—", complete: "✔" },
           { name: "Exportação de áudio", free: "—", essential: "Básica", complete: "Completa" },
           { name: "Convidados", free: "—", essential: "—", complete: "✔ (até 3)" }
         ]
@@ -124,10 +117,6 @@ const getContent = (language: string) => {
             answer: "A pré-criada usa timbres humanos genéricos; a personalizada é treinada com gravações reais (apenas no Completo e sujeita a slots)."
           },
           {
-            question: "E se os slots acabarem?",
-            answer: "Você pode entrar na lista de espera; avisaremos assim que houver vaga."
-          },
-          {
             question: "Posso mudar de plano depois?",
             answer: "Sim, a qualquer momento."
           }
@@ -135,29 +124,19 @@ const getContent = (language: string) => {
       },
       footer: {
         notes: [
-          "Voz personalizada sujeita à disponibilidade de slots. Em caso de fila, avisaremos por email.",
+          "Voz personalizada sujeita à disponibilidade de slots.",
           "Minutos e interações são reiniciados mensalmente. Uso adicional pode exigir add-ons.",
           "Valores em USD. Impostos podem se aplicar conforme região."
         ]
       },
       slots: {
-        available: "Vagas disponíveis para voz personalizada agora",
-        unavailable: "Todas as vagas ocupadas — entre na lista de espera"
+        available: "Vagas disponíveis para voz personalizada agora"
       },
       testimonials: [
         "Voltar a ouvir a voz da minha mãe foi como um abraço.",
         "Ela me chamou de filho de novo. Eu chorei.",
         "É como manter uma parte dela viva aqui comigo."
-      ],
-      waitlist: {
-        title: "Entrar na lista de espera",
-        description: "Avisaremos você por email assim que uma vaga de voz personalizada for liberada.",
-        nameLabel: "Nome",
-        emailLabel: "Email",
-        consentLabel: "Concordo em receber notificações sobre disponibilidade de vagas",
-        cancel: "Cancelar",
-        submit: "Entrar na lista"
-      }
+      ]
     },
     en: {
       title: "Choose how to keep your loved ones always close",
@@ -209,7 +188,6 @@ const getContent = (language: string) => {
           ],
           cta: "Subscribe Complete",
           ctaCustomVoice: "Create my voice now",
-          ctaWaitlist: "Join waitlist",
           popular: true,
           specialNote: "Global capacity limit: 30 simultaneous voices"
         } as PlanData
@@ -224,7 +202,7 @@ const getContent = (language: string) => {
           { name: "Voice minutes/month", free: "—", essential: "30", complete: "120" },
           { name: "Chat interactions/month", free: "20", essential: "200", complete: "Unlimited" },
           { name: "Pre-created voices", free: "—", essential: "✔", complete: "✔" },
-          { name: "Custom voice (slots)", free: "—", essential: "—", complete: "✔ (queue if needed)" },
+          { name: "Custom voice (slots)", free: "—", essential: "—", complete: "✔" },
           { name: "Audio export", free: "—", essential: "Basic", complete: "Complete" },
           { name: "Guests", free: "—", essential: "—", complete: "✔ (up to 3)" }
         ]
@@ -237,10 +215,6 @@ const getContent = (language: string) => {
             answer: "Pre-created uses generic human timbres; custom is trained with real recordings (Complete plan only, subject to slots)."
           },
           {
-            question: "What if slots run out?",
-            answer: "You can join the waitlist; we'll notify you when a slot becomes available."
-          },
-          {
             question: "Can I change plans later?",
             answer: "Yes, at any time."
           }
@@ -248,29 +222,19 @@ const getContent = (language: string) => {
       },
       footer: {
         notes: [
-          "Custom voice subject to slot availability. In case of queue, we'll notify by email.",
+          "Custom voice subject to slot availability.",
           "Minutes and interactions are reset monthly. Additional usage may require add-ons.",
           "Values in USD. Taxes may apply according to region."
         ]
       },
       slots: {
-        available: "Slots available for custom voice now",
-        unavailable: "All slots occupied — join the waitlist"
+        available: "Slots available for custom voice now"
       },
       testimonials: [
         "Hearing my mother's voice again was like a hug.",
         "She called me son again. I cried.",
         "It's like keeping a part of her alive with me."
-      ],
-      waitlist: {
-        title: "Join waitlist",
-        description: "We'll notify you by email as soon as a custom voice slot becomes available.",
-        nameLabel: "Name",
-        emailLabel: "Email",
-        consentLabel: "I agree to receive notifications about slot availability",
-        cancel: "Cancel",
-        submit: "Join waitlist"
-      }
+      ]
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -283,8 +247,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 }) => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
-  const [waitlistForm, setWaitlistForm] = useState({ name: '', email: '', consent: false });
   const { toast } = useToast();
   
   // Use real subscription data
@@ -292,10 +254,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     subscriptionInfo, 
     loading: subscriptionLoading,
     slotsAvailable, 
-    isSlotAvailable,
-    canUseVoiceDemo,
-    getRemainingDemoSeconds,
-    refresh: refreshSubscription
+    isSlotAvailable
   } = useSubscriptionInfo();
   
   const planOrder = [content.plans.free, content.plans.essential, content.plans.complete];
@@ -341,7 +300,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   };
 
   const handleCreateVoice = () => {
-    if (!isSlotAvailable) return;
     console.log('Analytics: voice_create_now_click');
     toast({
       title: currentLanguage === 'pt-BR' ? "Iniciando criação de voz" : "Starting voice creation",
@@ -352,39 +310,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     // Navigate to voice creation flow
     if (onUpgrade) {
       onUpgrade('voice-creation');
-    }
-  };
-
-  const handleJoinWaitlist = () => {
-    console.log('Analytics: voice_join_waitlist_click');
-    setShowWaitlistModal(true);
-  };
-
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!waitlistForm.name || !waitlistForm.email || !waitlistForm.consent) return;
-    
-    try {
-      console.log('Analytics: waitlist_submit_success', { name: waitlistForm.name, email: waitlistForm.email });
-      
-      const response = await SubscriptionService.joinVoiceWaitlist(waitlistForm.name, waitlistForm.email);
-      
-      toast({
-        title: currentLanguage === 'pt-BR' ? "Adicionado à lista de espera" : "Added to waitlist",
-        description: response.message,
-      });
-      
-      setShowWaitlistModal(false);
-      setWaitlistForm({ name: '', email: '', consent: false });
-    } catch (error) {
-      console.error('Failed to join waitlist:', error);
-      toast({
-        title: currentLanguage === 'pt-BR' ? "Erro" : "Error",
-        description: currentLanguage === 'pt-BR' ? 
-          "Falha ao entrar na lista de espera. Tente novamente." : 
-          "Failed to join waitlist. Please try again.",
-        variant: "destructive"
-      });
     }
   };
 
@@ -492,15 +417,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
                     {/* Complete plan slot availability */}
                     {index === 2 && (
-                      <div className={`p-4 rounded-lg border ${
-                        isSlotAvailable 
-                          ? 'bg-green-50 border-green-200 availability-ok' 
-                          : 'bg-amber-50 border-amber-200 availability-warn'
-                      }`}>
-                        <p className={`text-sm font-medium text-center ${
-                          isSlotAvailable ? 'text-green-700' : 'text-amber-700'
-                        }`}>
-                          {isSlotAvailable ? content.slots.available : content.slots.unavailable}
+                      <div className="p-4 rounded-lg border bg-green-50 border-green-200 availability-ok">
+                        <p className="text-sm font-medium text-center text-green-700">
+                          {content.slots.available}
                         </p>
                         {subscriptionInfo && (
                           <p className="text-xs text-center mt-1 opacity-75">
@@ -537,15 +456,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       {/* Complete plan secondary CTA */}
                       {index === 2 && plan.ctaCustomVoice && (
                         <Button 
-                          id={isSlotAvailable ? 'voice_create_now' : 'voice_join_waitlist'}
-                          onClick={isSlotAvailable ? handleCreateVoice : handleJoinWaitlist}
+                          id="voice_create_now"
+                          onClick={handleCreateVoice}
                           variant="ghost" 
                           size="lg"
                           className="w-full h-12 border border-primary/20 hover:bg-primary/5"
                           disabled={subscriptionLoading}
                         >
                           <Volume2 className="w-4 h-4 mr-2" />
-                          {isSlotAvailable ? plan.ctaCustomVoice : plan.ctaWaitlist}
+                          {plan.ctaCustomVoice}
                         </Button>
                       )}
                     </div>
@@ -667,67 +586,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </motion.div>
         </div>
       </section>
-
-      {/* Waitlist Modal */}
-      <Dialog open={showWaitlistModal} onOpenChange={setShowWaitlistModal}>
-        <DialogContent id="waitlist_modal" className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{content.waitlist.title}</DialogTitle>
-            <DialogDescription>
-              {content.waitlist.description}
-            </DialogDescription>
-          </DialogHeader>
-          
-          <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="name">{content.waitlist.nameLabel}</Label>
-              <Input
-                id="name"
-                type="text"
-                value={waitlistForm.name}
-                onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
-                required
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="email">{content.waitlist.emailLabel}</Label>
-              <Input
-                id="email"
-                type="email"
-                value={waitlistForm.email}
-                onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
-                required
-              />
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="consent"
-                checked={waitlistForm.consent}
-                onCheckedChange={(checked) => setWaitlistForm(prev => ({ ...prev, consent: !!checked }))}
-                required
-              />
-              <Label htmlFor="consent" className="text-sm text-muted-foreground">
-                {content.waitlist.consentLabel}
-              </Label>
-            </div>
-            
-            <div className="flex gap-3">
-              <Button type="button" variant="outline" onClick={() => setShowWaitlistModal(false)}>
-                {content.waitlist.cancel}
-              </Button>
-              <Button 
-                type="submit" 
-                id="waitlist_submit"
-                disabled={!waitlistForm.name || !waitlistForm.email || !waitlistForm.consent}
-              >
-                {content.waitlist.submit}
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };
