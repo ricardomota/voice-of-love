@@ -35,7 +35,7 @@ interface PlanData {
   note?: string;
   popular: boolean;
   specialNote?: string;
-  ctaCustomVoice?: string;
+  
 }
 
 const getContent = (language: string) => {
@@ -89,7 +89,7 @@ const getContent = (language: string) => {
             "Voz personalizada com gravações reais (consome slot global)"
           ],
           cta: "Assine Completo",
-          ctaCustomVoice: "Criar minha voz agora",
+          
           popular: true,
           specialNote: "Limite global de capacidade: 30 vozes simultâneas"
         } as PlanData
@@ -187,7 +187,7 @@ const getContent = (language: string) => {
             "Custom voice with real recordings (consumes global slot)"
           ],
           cta: "Subscribe Complete",
-          ctaCustomVoice: "Create my voice now",
+          
           popular: true,
           specialNote: "Global capacity limit: 30 simultaneous voices"
         } as PlanData
@@ -299,19 +299,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     }
   };
 
-  const handleCreateVoice = () => {
-    console.log('Analytics: voice_create_now_click');
-    toast({
-      title: currentLanguage === 'pt-BR' ? "Iniciando criação de voz" : "Starting voice creation",
-      description: currentLanguage === 'pt-BR' ? 
-        "Redirecionando para o processo de clonagem..." : 
-        "Redirecting to cloning process...",
-    });
-    // Navigate to voice creation flow
-    if (onUpgrade) {
-      onUpgrade('voice-creation');
-    }
-  };
 
   return (
     <>
@@ -453,20 +440,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         {plan.cta}
                       </Button>
 
-                      {/* Complete plan secondary CTA */}
-                      {index === 2 && plan.ctaCustomVoice && (
-                        <Button 
-                          id="voice_create_now"
-                          onClick={handleCreateVoice}
-                          variant="ghost" 
-                          size="lg"
-                          className="w-full h-12 border border-primary/20 hover:bg-primary/5"
-                          disabled={subscriptionLoading}
-                        >
-                          <Volume2 className="w-4 h-4 mr-2" />
-                          {plan.ctaCustomVoice}
-                        </Button>
-                      )}
                     </div>
                   </CardContent>
                 </Card>

@@ -28,9 +28,10 @@ serve(async (req) => {
     logStep("Function started");
 
     const body = await req.json();
-    const { planId, mode = 'checkout' } = body;
-    if (!planId) throw new Error("Plan ID is required");
-    logStep("Plan ID received", { planId, mode });
+    const { plan, planId, mode = 'checkout' } = body;
+    const selectedPlan = plan || planId;
+    if (!selectedPlan) throw new Error("Plan ID is required");
+    logStep("Plan ID received", { selectedPlan, mode });
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
@@ -58,25 +59,25 @@ serve(async (req) => {
 
     // Define prices based on plan
     let priceData;
-    if (planId === 'premium') {
+    if (selectedPlan === 'essential') {
       priceData = {
         currency: "usd",
-        product_data: { name: "Premium Plan" },
-        unit_amount: 1999, // $19.99
+        product_data: { name: "Essential Plan" },
+        unit_amount: 2900, // $29.00
         recurring: { interval: "month" },
       };
-    } else if (planId === 'family') {
+    } else if (selectedPlan === 'complete') {
       priceData = {
         currency: "usd",
-        product_data: { name: "Family Plan" },
-        unit_amount: 3999, // $39.99
+        product_data: { name: "Complete Plan" },
+        unit_amount: 7900, // $79.00
         recurring: { interval: "month" },
       };
     } else {
       throw new Error("Invalid plan ID");
     }
 
-    logStep("Creating checkout session", { planId, priceData, mode });
+    logStep("Creating checkout session", { selectedPlan, priceData, mode });
 
     if (mode === 'setup') {
       // Create a subscription for Stripe Elements (Payment page) with incomplete payment behavior
