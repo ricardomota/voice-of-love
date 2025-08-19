@@ -71,12 +71,12 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
     <div className="min-h-screen bg-background">
       <div className="min-h-screen flex flex-col items-center justify-center p-8 gap-8">
         {/* Main Welcome Card */}
-        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-12 text-center will-change-transform holographic-feature-card grainy-card-bg">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-sm font-medium mb-8 grainy-gradient">
+        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-12 text-center will-change-transform">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-sm font-medium mb-8">
             {content.madeWithLove}
           </div>
           
-          <div className="w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-xl grainy-gradient-primary holographic-foil">
+          <div className="w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-xl">
             E
           </div>
           
@@ -91,7 +91,7 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
           <Button 
             onClick={handleCreatePerson}
             size="lg"
-            className="w-full max-w-xs mx-auto mb-10 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all will-change-transform grainy-gradient-primary grainy-glow"
+            className="w-full max-w-xs mx-auto mb-10 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all will-change-transform"
           >
             <Add className="w-5 h-5 mr-3" />
             {content.createButton}
@@ -102,21 +102,21 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
             
             <div className="space-y-6 text-left">
               <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg grainy-gradient-primary holographic-foil">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   1
                 </div>
                 <p className="text-muted-foreground leading-relaxed">{content.steps[0]}</p>
               </div>
               
               <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground flex items-center justify-center font-bold text-lg shadow-lg grainy-gradient-accent holographic-foil">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   2
                 </div>
                 <p className="text-muted-foreground leading-relaxed">{content.steps[1]}</p>
               </div>
               
               <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground flex items-center justify-center font-bold text-lg shadow-lg grainy-gradient holographic-foil">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
                   3
                 </div>
                 <p className="text-muted-foreground leading-relaxed">{content.steps[2]}</p>
@@ -126,7 +126,7 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
         </div>
 
         {/* Mission Card */}
-        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-8 text-center will-change-transform holographic-feature-card grainy-card-bg">
+        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-8 text-center will-change-transform">
           <h3 className="text-lg font-semibold text-foreground mb-4">{content.whyCreated}</h3>
           <p className="text-muted-foreground leading-relaxed text-sm mb-6">
             {content.mission}
