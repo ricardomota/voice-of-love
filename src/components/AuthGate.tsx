@@ -238,7 +238,7 @@ export const AuthGate = memo(({
                 relative w-full bg-gradient-to-br from-card via-card/95 to-card/90 
                 border-4 border-primary/20 rounded-2xl overflow-hidden cursor-pointer
                 shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.16)]
-                transform-gpu will-change-transform
+                transform-gpu will-change-transform group
                 ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
               `}
               style={{ 
@@ -249,6 +249,18 @@ export const AuthGate = memo(({
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
             >
+              {/* Shimmer/Shine Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+                  animate-[shimmer_2s_ease-in-out_infinite] transform -skew-x-12"
+                  style={{
+                    background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%)',
+                    animation: 'shimmer 3s ease-in-out infinite'
+                  }}
+                />
+              </div>
+
               {/* Moving highlight overlay */}
               <div 
                 ref={highlightRef}
