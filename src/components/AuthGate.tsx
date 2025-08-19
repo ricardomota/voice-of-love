@@ -249,6 +249,7 @@ export const AuthGate = memo(({
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
             >
+              {/* Background photo */} <img src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" alt="Family portrait in warm light" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-35 md:opacity-40 blur-[1px] scale-105 pointer-events-none z-0" loading="eager" decoding="async" />
               {/* Shimmer/Shine Effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 <div 
@@ -278,8 +279,8 @@ export const AuthGate = memo(({
                   <div className="flex items-center gap-3">
                     <img 
                       src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" 
-                      alt="Mother's portrait" 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-amber-200/60 shadow-lg"
+                      alt="Family portrait"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-amber-200/60 shadow-lg"
                     />
                     <div className="p-3 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full">
                       <Heart className="h-6 w-6 text-primary" />
