@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
 
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
+import { StoryCard } from '@/components/landing/StoryCard';
 import { PricingSection } from '@/components/landing/PricingSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 
@@ -38,6 +39,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/10 to-transparent pointer-events-none" />
         <FeaturesSection />
       </div>
+
+      {/* Story Card - Personal touch */}
+      <StoryCard />
 
       {/* How It Works - Enhanced spacing */}
       <div className="relative">
