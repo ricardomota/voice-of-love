@@ -90,7 +90,7 @@ const getContent = (language: string) => {
           ],
           cta: "Assine Completo",
           
-          popular: true,
+          popular: false,
           specialNote: "Limite global de capacidade: 30 vozes simultâneas"
         } as PlanData
       },
@@ -188,7 +188,7 @@ const getContent = (language: string) => {
           ],
           cta: "Subscribe Complete",
           
-          popular: true,
+          popular: false,
           specialNote: "Global capacity limit: 30 simultaneous voices"
         } as PlanData
       },
@@ -332,21 +332,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`${plan.popular ? 'md:scale-105 md:-mt-4' : ''}`}
+                className=""
               >
-                <Card className={`relative h-full transition-all duration-300 ${
-                  plan.popular 
-                    ? 'border-2 border-primary shadow-2xl bg-gradient-to-br from-card via-card to-primary/5' 
-                    : 'border border-border/50 hover:border-primary/30 hover:shadow-lg bg-card'
-                }`}>
-                  {/* Popular badge */}
-                  {plan.popular && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                      <Badge className="bg-primary text-primary-foreground px-6 py-2 text-sm font-semibold shadow-lg">
-                        {currentLanguage === 'pt-BR' ? 'Mais popular' : 'Most popular'}
-                      </Badge>
-                    </div>
-                  )}
+                <Card className="relative h-full transition-all duration-300 border border-border/50 hover:border-primary/30 hover:shadow-lg bg-card">
 
                   <CardContent className="p-8 space-y-8">
                     {/* Plan header */}
@@ -432,7 +420,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           index === 1 ? handleEssentialSubscribe :
                           handleCompleteSubscribe
                         }
-                        variant={plan.popular ? "default" : "outline"}
+                        variant="outline"
                         size="lg" 
                         className="w-full h-12 font-semibold"
                         disabled={subscriptionLoading}
