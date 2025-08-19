@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Check, X, Heart, MessageCircle, Users, Mic, Clock, Star } from 'lucide-react';
+import { Check, X, Heart, MessageCircle, Users, Mic, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { WaitlistModal } from './WaitlistModal';
 import { Separator } from '@/components/ui/separator';
@@ -104,11 +104,6 @@ const getContent = (language: string) => {
           { name: "Voz personalizada (slots limitados)", free: false, essential: false, complete: true }
         ]
       },
-      testimonials: [
-        "Voltar a ouvir a voz da minha mãe foi como um abraço.",
-        "Ela me chamou de filho de novo. Eu chorei.",
-        "É como manter uma parte dela viva aqui comigo."
-      ],
       faq: {
         title: "Dúvidas Frequentes",
         items: [
@@ -213,11 +208,6 @@ const getContent = (language: string) => {
           { name: "Custom voice (limited slots)", free: false, essential: false, complete: true }
         ]
       },
-      testimonials: [
-        "Hearing my mother's voice again was like a hug.",
-        "She called me son again. I cried.",
-        "It's like keeping a part of her alive here with me."
-      ],
       faq: {
         title: "Frequently Asked Questions",
         items: [
@@ -502,30 +492,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   ))}
                 </tbody>
               </table>
-            </div>
-          </motion.div>
-
-          {/* Testimonials */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mb-16"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {content.testimonials.map((testimonial, index) => (
-                <Card key={index} className="p-6 bg-muted/20 border-muted/30">
-                  <div className="flex mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground italic leading-relaxed">
-                    "{testimonial}"
-                  </p>
-                </Card>
-              ))}
             </div>
           </motion.div>
 
