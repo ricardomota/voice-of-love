@@ -184,18 +184,22 @@ export const AuthGate = memo(({
             </div>
 
             {/* Story Section */}
-            <Card className="group relative bg-gradient-to-br from-card/80 to-card/40 border-border/20 backdrop-blur-sm hover:from-card/90 hover:to-card/60 hover:border-primary/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 cursor-default overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <CardContent className="relative p-6 z-10">
-                <div className="flex items-center gap-2 mb-4">
-                  <Heart className="h-5 w-5 text-primary group-hover:text-primary/80 transition-colors duration-300" />
-                  <h3 className="text-lg font-semibold group-hover:text-foreground/90 transition-colors duration-300">{content.story.title}</h3>
+            <Card className="group relative bg-gradient-to-br from-background via-card to-background border border-border/10 rounded-2xl shadow-2xl shadow-black/20 hover:shadow-3xl hover:shadow-primary/20 transition-all duration-700 hover:-translate-y-2 hover:scale-[1.02] cursor-default overflow-hidden backdrop-blur-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <CardContent className="relative p-8 z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-300">
+                    <Heart className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">{content.story.title}</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-4 group-hover:text-muted-foreground/80 transition-colors duration-300">
+                <p className="text-muted-foreground/90 leading-relaxed mb-6 text-base group-hover:text-muted-foreground transition-colors duration-300">
                   {content.story.text}
                 </p>
-                <div className="flex items-center gap-2 text-sm text-primary group-hover:text-primary/80 transition-colors duration-300">
-                  <span className="font-medium text-lg">{content.story.heart}</span>
+                <div className="flex items-center gap-2 text-primary">
+                  <span className="text-2xl animate-pulse">{content.story.heart}</span>
+                  <span className="text-sm font-medium opacity-70">Made with love</span>
                 </div>
               </CardContent>
             </Card>
