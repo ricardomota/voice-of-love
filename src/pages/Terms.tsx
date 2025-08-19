@@ -80,8 +80,7 @@ const getContent = (language: string) => {
         }
       ],
       contact: 'Entre em Contato',
-      contactText: 'Para questões sobre estes termos, entre em contato:',
-      email: 'legal@eterna.ai',
+      contactText: 'Para questões sobre estes termos, use o formulário de suporte:',
       jurisdiction: 'Jurisdição',
       jurisdictionText: 'Estes termos são regidos pelas leis do Brasil. Disputas serão resolvidas nos tribunais competentes do Brasil.'
     },
@@ -157,8 +156,7 @@ const getContent = (language: string) => {
         }
       ],
       contact: 'Contact Us',
-      contactText: 'For questions about these terms, contact us:',
-      email: 'legal@eterna.ai',
+      contactText: 'For questions about these terms, use the support form:',
       jurisdiction: 'Jurisdiction',
       jurisdictionText: 'These terms are governed by Brazilian law. Disputes will be resolved in competent Brazilian courts.'
     }
@@ -283,11 +281,11 @@ export const Terms: React.FC = () => {
               </p>
               <Button 
                 variant="outline" 
-                onClick={() => window.location.href = `mailto:${content.email}`}
+                onClick={() => navigate('/support')}
                 className="gap-2"
               >
                 <FileText className="w-4 h-4" />
-                {content.email}
+                Ir para Suporte
               </Button>
             </CardContent>
           </Card>

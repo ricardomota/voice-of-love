@@ -247,28 +247,16 @@ export const About: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Button variant="outline" className="h-16 gap-3">
+              <div className="grid grid-cols-1 gap-6">
+                <Button 
+                  variant="outline" 
+                  className="h-16 gap-3"
+                  onClick={() => navigate('/support')}
+                >
                   <Mail className="w-5 h-5" />
                   <div className="text-left">
-                    <div className="font-medium">Email</div>
-                    <div className="text-sm text-muted-foreground">hello@eterna.ai</div>
-                  </div>
-                </Button>
-                
-                <Button variant="outline" className="h-16 gap-3">
-                  <Twitter className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-medium">Twitter</div>
-                    <div className="text-sm text-muted-foreground">@eterna_ai</div>
-                  </div>
-                </Button>
-                
-                <Button variant="outline" className="h-16 gap-3">
-                  <Github className="w-5 h-5" />
-                  <div className="text-left">
-                    <div className="font-medium">GitHub</div>
-                    <div className="text-sm text-muted-foreground">github.com/eterna</div>
+                    <div className="font-medium">Suporte</div>
+                    <div className="text-sm text-muted-foreground">Central de ajuda e contato</div>
                   </div>
                 </Button>
               </div>

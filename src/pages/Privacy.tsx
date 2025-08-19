@@ -77,8 +77,7 @@ const getContent = (language: string) => {
         }
       ],
       contact: 'Entre em Contato',
-      contactText: 'Se você tiver dúvidas sobre esta política de privacidade, entre em contato conosco em:',
-      email: 'privacy@eterna.ai'
+      contactText: 'Se você tiver dúvidas sobre esta política de privacidade, entre em contato através do formulário de suporte.',
     },
     en: {
       title: 'Privacy Policy',
@@ -149,8 +148,7 @@ const getContent = (language: string) => {
         }
       ],
       contact: 'Contact Us',
-      contactText: 'If you have questions about this privacy policy, contact us at:',
-      email: 'privacy@eterna.ai'
+      contactText: 'If you have questions about this privacy policy, contact us through the support form.'
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -252,11 +250,11 @@ export const Privacy: React.FC = () => {
               </p>
               <Button 
                 variant="outline" 
-                onClick={() => window.location.href = `mailto:${content.email}`}
+                onClick={() => navigate('/support')}
                 className="gap-2"
               >
                 <Shield className="w-4 h-4" />
-                {content.email}
+                Ir para Suporte
               </Button>
             </CardContent>
           </Card>
