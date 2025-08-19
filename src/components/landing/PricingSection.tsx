@@ -1,9 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Check, Star, Heart, Users, Mic, MessageCircle } from 'lucide-react';
+import { Check, Heart, Users, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PricingSectionProps {
@@ -31,7 +30,7 @@ const getContent = (language: string) => {
             "Sem personalização de personalidade",
             "Sem exportação de conteúdo"
           ],
-          cta: "Comece grátis",
+          cta: "Experimente Agora",
           highlight: "Depois: 50% de desconto no primeiro mês",
           popular: false
         },
@@ -49,7 +48,7 @@ const getContent = (language: string) => {
             "Exportação básica de áudio",
             "Sem convidados extras"
           ],
-          cta: "Assine Essencial",
+          cta: "Preserve uma Memória",
           popular: false,
           highlight: ""
         },
@@ -68,8 +67,8 @@ const getContent = (language: string) => {
             "Compartilhamento com até 3 convidados",
             "Acesso contínuo às memórias"
           ],
-          cta: "Assine Completo",
-          popular: true,
+          cta: "Honre Toda a Família",
+          popular: false,
           highlight: ""
         }
       },
@@ -105,7 +104,7 @@ const getContent = (language: string) => {
             "No personality customization",
             "No content export"
           ],
-          cta: "Start Free",
+          cta: "Try It Now",
           highlight: "Then: 50% off first month",
           popular: false
         },
@@ -123,7 +122,7 @@ const getContent = (language: string) => {
             "Basic audio export",
             "No extra guests"
           ],
-          cta: "Subscribe Essential",
+          cta: "Preserve a Memory",
           popular: false,
           highlight: ""
         },
@@ -142,8 +141,8 @@ const getContent = (language: string) => {
             "Share with up to 3 guests",
             "Continuous memory access"
           ],
-          cta: "Subscribe Complete",
-          popular: true,
+          cta: "Honor the Family",
+          popular: false,
           highlight: ""
         }
       },
@@ -231,22 +230,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className={`relative ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
             >
-              <Card className={`relative group transition-all duration-300 h-full border-2 ${
-                plan.popular 
-                  ? 'border-primary/50 shadow-2xl bg-gradient-to-br from-card via-primary/5 to-primary/10 scale-105' 
-                  : 'border-border/50 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/95'
-              }`}>
-                {/* Popular badge */}
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground px-4 py-1 text-sm font-semibold shadow-lg">
-                      <Star className="w-4 h-4 mr-1" />
-                      Mais popular
-                    </Badge>
-                  </div>
-                )}
+              <Card className="relative group transition-all duration-300 h-full border-2 border-border/50 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/95">
 
                 <CardContent className="p-8 space-y-6 relative">
                   {/* Plan header */}
@@ -307,13 +292,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       index === 1 ? (onUpgrade ? () => onUpgrade('essential') : onSeePricing) :
                       (onUpgrade ? () => onUpgrade('complete') : onSeePricing)
                     }
-                    variant={plan.popular ? "default" : "outline"}
+                    variant="outline"
                     size="lg"
-                    className={`w-full font-semibold transition-all duration-300 ${
-                      plan.popular 
-                        ? 'bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl hover:scale-105' 
-                        : 'hover:bg-primary hover:text-primary-foreground hover:scale-105'
-                    }`}
+                    className="w-full font-semibold transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:scale-105"
                   >
                     {plan.cta}
                   </Button>
