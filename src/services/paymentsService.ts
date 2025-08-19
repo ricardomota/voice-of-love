@@ -20,61 +20,61 @@ export interface PricingPlan {
 export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'free',
-    name: 'Free',
+    name: 'Primeiro Olhar',
     monthlyPriceUSD: 0,
     monthlyPriceBRL: 0,
     limits: {
-      messagesPerMonth: 50,
-      ttsMinutesPerMonth: 5,
+      messagesPerMonth: 20,
+      ttsMinutesPerMonth: 0,
       voiceCloneSlots: 0,
-      peopleLimit: 2
+      peopleLimit: 1
     },
     features: [
-      '50 mensagens por mês',
-      '5 minutos de TTS',
-      'Até 2 pessoas',
-      'Suporte básico'
+      '1 pessoa (clone)',
+      '20 interações de chat (TEXTO)',
+      'Upload de memórias em texto e fotos',
+      'Sem exportação'
     ]
   },
   {
-    id: 'premium',
-    name: 'Premium',
-    monthlyPriceUSD: 19.99,
-    monthlyPriceBRL: 99.99,
+    id: 'essential',
+    name: 'Essencial',
+    monthlyPriceUSD: 29.00,
+    monthlyPriceBRL: 149.99,
     limits: {
-      messagesPerMonth: 1000,
-      ttsMinutesPerMonth: 60,
-      voiceCloneSlots: 5,
-      peopleLimit: 10
+      messagesPerMonth: 200,
+      ttsMinutesPerMonth: 30,
+      voiceCloneSlots: 0,
+      peopleLimit: 1
     },
     features: [
-      '1000 mensagens por mês',
-      '60 minutos de TTS',
-      'Até 10 pessoas',
-      'Clonagem de voz',
-      'Análises avançadas',
-      'Suporte prioritário'
+      '1 pessoa',
+      '30 minutos/mês de voz gerada (vozes pré-criadas)',
+      '200 interações/mês de chat',
+      'Personalidade básica (tom/estilo)',
+      'Exportação básica de áudio'
     ]
   },
   {
-    id: 'family',
-    name: 'Family',
-    monthlyPriceUSD: 39.99,
-    monthlyPriceBRL: 199.99,
+    id: 'complete',
+    name: 'Completo',
+    monthlyPriceUSD: 79.00,
+    monthlyPriceBRL: 399.99,
     limits: {
       messagesPerMonth: -1, // Unlimited
-      ttsMinutesPerMonth: 180,
-      voiceCloneSlots: 15,
-      peopleLimit: -1 // Unlimited
+      ttsMinutesPerMonth: 120,
+      voiceCloneSlots: 1,
+      peopleLimit: 3
     },
     features: [
-      'Mensagens ilimitadas',
-      '180 minutos de TTS',
-      'Pessoas ilimitadas',
-      'Clonagem de voz avançada',
-      'Análises premium',
-      'Histórico completo',
-      'Suporte dedicado'
+      'Até 3 pessoas',
+      '120 minutos/mês de voz',
+      'Interações ilimitadas de chat',
+      'Personalidade avançada (temperamento/emoção)',
+      'Upload de textos, fotos e áudios',
+      'Exportação completa de áudio',
+      'Compartilhamento com até 3 convidados',
+      'Voz personalizada com gravações reais'
     ]
   }
 ];

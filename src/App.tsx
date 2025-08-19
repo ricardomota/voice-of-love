@@ -20,6 +20,12 @@ import NotFound from "./pages/NotFound";
 import { Changelog } from "./pages/Changelog";
 import { Payment } from "./pages/Payment";
 import { PaymentSuccess } from "./pages/PaymentSuccess";
+import { Profile } from "./pages/Profile";
+import { Settings } from "./pages/Settings";
+import { About } from "./pages/About";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
+import { Support } from "./pages/Support";
 
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
@@ -133,7 +139,13 @@ const AppContent = () => {
       <Route path="/payment" element={<Payment />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       
-      
+      {/* New Pages */}
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/support" element={<Support />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
