@@ -14,13 +14,13 @@ interface PricingSectionProps {
 const getContent = (language: string) => {
   const content = {
     'pt-BR': {
-      title: "Preserve memórias, reconquiste conexões",
-      subtitle: "Experimente o poder da Eterna por 7 dias. Depois, escolha o plano ideal para manter quem você ama sempre presente.",
+      title: "Escolha seu plano",
+      subtitle: "Teste grátis por 7 dias, depois escolha o plano ideal para suas necessidades.",
       plans: {
         free: {
-          title: "Primeiro Olhar",
-          subtitle: "Uma memória, uma voz, um começo.",
-          price: "Gratuito",
+          title: "Gratuito",
+          subtitle: "Teste todas as funcionalidades por 7 dias.",
+          price: "R$ 0",
           period: "7 dias",
           features: [
             "7 dias de acesso total gratuito",
@@ -30,13 +30,13 @@ const getContent = (language: string) => {
             "Sem personalização de personalidade",
             "Sem exportação de conteúdo"
           ],
-          cta: "Experimente Agora",
+          cta: "Começar Teste Grátis",
           highlight: "Depois: 50% de desconto no primeiro mês",
           popular: false
         },
         essential: {
           title: "Essencial",
-          subtitle: "Para quem quer manter uma presença viva e reconfortante.",
+          subtitle: "Ideal para uso pessoal.",
           price: "US$ 29",
           period: "/mês",
           features: [
@@ -48,13 +48,13 @@ const getContent = (language: string) => {
             "Exportação básica de áudio",
             "Sem convidados extras"
           ],
-          cta: "Preserve uma Memória",
-          popular: false,
+          cta: "Escolher Essencial",
+          popular: true,
           highlight: ""
         },
         complete: {
           title: "Completo",
-          subtitle: "Para famílias que desejam homenagear profundamente quem amam.",
+          subtitle: "Para famílias e uso avançado.",
           price: "US$ 79",
           period: "/mês",
           features: [
@@ -67,34 +67,20 @@ const getContent = (language: string) => {
             "Compartilhamento com até 3 convidados",
             "Acesso contínuo às memórias"
           ],
-          cta: "Honre Toda a Família",
+          cta: "Escolher Completo",
           popular: false,
           highlight: ""
         }
-      },
-      testimonials: [
-        {
-          text: "Senti minha avó falando comigo de novo — inacreditável.",
-          author: "Maria, 42 anos"
-        },
-        {
-          text: "Voltar a ouvir minha mãe dizendo meu nome me emocionou.",
-          author: "Carlos, 35 anos"
-        },
-        {
-          text: "É como manter uma parte dela viva aqui comigo.",
-          author: "Ana, 28 anos"
-        }
-      ]
+      }
     },
     en: {
-      title: "Preserve memories, reconnect hearts",
-      subtitle: "Experience the power of Eterna for 7 days. Then choose the perfect plan to keep your loved ones always present.",
+      title: "Choose your plan",
+      subtitle: "Try free for 7 days, then choose the perfect plan for your needs.",
       plans: {
         free: {
-          title: "First Look",
-          subtitle: "One memory, one voice, one beginning.",
-          price: "Free",
+          title: "Free",
+          subtitle: "Test all features for 7 days.",
+          price: "$0",
           period: "7 days",
           features: [
             "7 days of full free access",
@@ -104,13 +90,13 @@ const getContent = (language: string) => {
             "No personality customization",
             "No content export"
           ],
-          cta: "Try It Now",
+          cta: "Start Free Trial",
           highlight: "Then: 50% off first month",
           popular: false
         },
         essential: {
           title: "Essential",
-          subtitle: "For those who want to keep a living and comforting presence.",
+          subtitle: "Perfect for personal use.",
           price: "US$ 29",
           period: "/month",
           features: [
@@ -122,13 +108,13 @@ const getContent = (language: string) => {
             "Basic audio export",
             "No extra guests"
           ],
-          cta: "Preserve a Memory",
-          popular: false,
+          cta: "Choose Essential",
+          popular: true,
           highlight: ""
         },
         complete: {
           title: "Complete",
-          subtitle: "For families who want to deeply honor those they love.",
+          subtitle: "For families and advanced use.",
           price: "US$ 79",
           period: "/month",
           features: [
@@ -141,25 +127,11 @@ const getContent = (language: string) => {
             "Share with up to 3 guests",
             "Continuous memory access"
           ],
-          cta: "Honor the Family",
+          cta: "Choose Complete",
           popular: false,
           highlight: ""
         }
-      },
-      testimonials: [
-        {
-          text: "I felt my grandmother speaking to me again — incredible.",
-          author: "Maria, 42"
-        },
-        {
-          text: "Hearing my mother say my name again moved me to tears.",
-          author: "Carlos, 35"
-        },
-        {
-          text: "It's like keeping a part of her alive here with me.",
-          author: "Ana, 28"
-        }
-      ]
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -230,8 +202,21 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
+              className={`${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
             >
-              <Card className="relative group transition-all duration-300 h-full border-2 border-border/50 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/95">
+              <Card className={`relative group transition-all duration-300 h-full border-2 ${
+                plan.popular 
+                  ? 'border-primary shadow-2xl bg-gradient-to-br from-card via-primary/5 to-primary/10 scale-105' 
+                  : 'border-border/50 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/95'
+              }`}>
+                {/* Popular badge */}
+                {plan.popular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-primary text-primary-foreground px-3 py-1 text-xs font-semibold rounded-full shadow-lg">
+                      Mais Escolhido
+                    </div>
+                  </div>
+                )}
 
                 <CardContent className="p-8 space-y-6 relative">
                   {/* Plan header */}
@@ -292,9 +277,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       index === 1 ? (onUpgrade ? () => onUpgrade('essential') : onSeePricing) :
                       (onUpgrade ? () => onUpgrade('complete') : onSeePricing)
                     }
-                    variant="outline"
+                    variant={plan.popular ? "default" : "outline"}
                     size="lg"
-                    className="w-full font-semibold transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:scale-105"
+                    className={`w-full font-semibold transition-all duration-300 ${
+                      plan.popular 
+                        ? 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105' 
+                        : 'border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:scale-105'
+                    }`}
                   >
                     {plan.cta}
                   </Button>
@@ -303,37 +292,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             </motion.div>
           ))}
         </div>
-
-        {/* Testimonials */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-5xl mx-auto"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {content.testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 + (index * 0.1) }}
-                className="text-center space-y-4"
-              >
-                <div className="bg-gradient-to-br from-card/80 to-muted/20 p-6 rounded-2xl border border-border/50">
-                  <p className="text-muted-foreground italic leading-relaxed">
-                    "{testimonial.text}"
-                  </p>
-                  <p className="text-sm text-primary font-medium mt-4">
-                    — {testimonial.author}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
