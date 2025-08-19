@@ -1128,6 +1128,10 @@ export type Database = {
         Args: { p_access_code?: string; p_email: string }
         Returns: Json
       }
+      check_event_rate_limit: {
+        Args: { p_user_id: string }
+        Returns: boolean
+      }
       compute_entitlements: {
         Args: { user_plan: string }
         Returns: Json
