@@ -92,9 +92,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
 
-          {/* Grainy gradient overlay */}
+          {/* Grainy noise overlay */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 grainy-gradient opacity-70 mix-blend-multiply" />
+            <div className="absolute inset-0 hero-grainy-noise opacity-30" />
           </div>
           
           {/* Enhanced Background Elements */}
