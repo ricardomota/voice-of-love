@@ -162,7 +162,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     {isWaitlistMode ? 'Join Waitlist' : content.tryFree}
                   </Button>
                   
-                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] h-14 sm:h-16 text-base sm:text-lg font-semibold border-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:border-primary-foreground transition-all duration-300">
+                  <Button onClick={onSeePricing} variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] h-14 sm:h-16 text-base sm:text-lg font-semibold bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white hover:text-primary hover:border-white transition-all duration-300">
                     {content.seePricing}
                   </Button>
                 </>}
