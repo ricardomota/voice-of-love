@@ -47,7 +47,7 @@ export const StoryCard: React.FC = () => {
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
                     <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                   </div>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold bg-gradient-to-r from-amber-800 to-rose-700 bg-clip-text text-transparent sm:max-w-[120px] sm:leading-tight">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent sm:max-w-[120px] sm:leading-tight">
                     {content.title}
                   </h3>
                 </div>
