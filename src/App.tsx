@@ -18,6 +18,8 @@ import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Changelog } from "./pages/Changelog";
+import { Payment } from "./pages/Payment";
+import { PaymentSuccess } from "./pages/PaymentSuccess";
 
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
@@ -126,6 +128,11 @@ const AppContent = () => {
       
       {/* Changelog Route */}
       <Route path="/changelog" element={<LazyChangelog />} />
+      
+      {/* Payment Routes */}
+      <Route path="/payment" element={<Payment />} />
+      <Route path="/payment/success" element={<PaymentSuccess />} />
+      
       
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />

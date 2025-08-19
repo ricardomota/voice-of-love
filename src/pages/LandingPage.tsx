@@ -25,25 +25,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   const handleUpgrade = async (planId: string) => {
-    try {
-      const checkoutUrl = await createCheckout(planId);
-      if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
-      } else {
-        toast({
-          title: "Erro",
-          description: "Não foi possível criar a sessão de checkout",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Error creating checkout:', error);
-      toast({
-        title: "Erro", 
-        description: "Erro ao criar sessão de checkout",
-        variant: "destructive",
-      });
-    }
+    // Navigate to dedicated payment page
+    const params = new URLSearchParams({ plan: planId });
+    window.location.href = `/payment?${params.toString()}`;
   };
 
   return (
