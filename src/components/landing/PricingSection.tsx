@@ -37,7 +37,7 @@ const getContent = (language: string) => {
         essential: {
           title: "Essencial",
           subtitle: "Ideal para uso pessoal.",
-          price: "US$ 29",
+          price: "US$ 19,99",
           period: "/mês",
           features: [
             "1 pessoa registrada",
@@ -55,7 +55,7 @@ const getContent = (language: string) => {
         complete: {
           title: "Completo",
           subtitle: "Para famílias e uso avançado.",
-          price: "US$ 79",
+          price: "US$ 39,99",
           period: "/mês",
           features: [
             "Até 3 pessoas registradas",
@@ -97,7 +97,7 @@ const getContent = (language: string) => {
         essential: {
           title: "Essential",
           subtitle: "Perfect for personal use.",
-          price: "US$ 29",
+          price: "US$ 19.99",
           period: "/month",
           features: [
             "1 registered person",
@@ -115,7 +115,7 @@ const getContent = (language: string) => {
         complete: {
           title: "Complete",
           subtitle: "For families and advanced use.",
-          price: "US$ 79",
+          price: "US$ 39.99",
           period: "/month",
           features: [
             "Up to 3 registered persons",
@@ -274,8 +274,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   <Button 
                     onClick={
                       index === 0 ? onTryFree : 
-                      index === 1 ? (onUpgrade ? () => onUpgrade('essential') : onSeePricing) :
-                      (onUpgrade ? () => onUpgrade('complete') : onSeePricing)
+                      index === 1 ? (onUpgrade ? () => onUpgrade('premium') : onSeePricing) :
+                      (onUpgrade ? () => onUpgrade('family') : onSeePricing)
                     }
                     variant={plan.popular ? "default" : "outline"}
                     size="lg"

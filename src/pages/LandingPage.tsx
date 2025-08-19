@@ -7,6 +7,8 @@ import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { StoryCard } from '@/components/landing/StoryCard';
 import { PricingSection } from '@/components/landing/PricingSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useToast } from '@/hooks/use-toast';
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -14,9 +16,34 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
+  const { createCheckout } = useSubscription();
+  const { toast } = useToast();
+
   const scrollToPricing = () => {
     const element = document.getElementById('pricing');
     element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleUpgrade = async (planId: string) => {
+    try {
+      const checkoutUrl = await createCheckout(planId);
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+      } else {
+        toast({
+          title: "Erro",
+          description: "Não foi possível criar a sessão de checkout",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error creating checkout:', error);
+      toast({
+        title: "Erro", 
+        description: "Erro ao criar sessão de checkout",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -52,6 +79,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         <PricingSection 
           onTryFree={onTryFree}
           onSeePricing={scrollToPricing}
+          onUpgrade={handleUpgrade}
         />
       </div>
       {/* Story Card - Personal touch */}
