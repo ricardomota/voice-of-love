@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { InputWithVoice } from '@/components/ui/input-with-voice';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2, ArrowLeft, Heart } from 'lucide-react';
+import { Loader2, ArrowLeft, Heart, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -304,8 +304,13 @@ export const AuthGate = memo(({
           {/* Right side - Authentication */}
           <section aria-label="Autenticação" className="lg:pt-12">
             <Card className="w-full max-w-md shadow-xl mx-auto border-2 border-primary/20">
-              <CardHeader className="text-center space-y-2">
-                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
+              <CardHeader className="text-center space-y-4">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="p-3 bg-primary/10 rounded-full">
+                    <User className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
+                </div>
                 <p className="text-sm text-muted-foreground">{content.subtitle}</p>
               </CardHeader>
               <CardContent>
