@@ -97,10 +97,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="absolute inset-0 hero-grainy-noise opacity-30" />
           </div>
           
-          {/* Enhanced Animated Background Elements */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-secondary/15 rounded-full blur-3xl opacity-40 animate-[pulse_3s_ease-in-out_infinite,float_6s_ease-in-out_infinite]" />
-          <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/15 rounded-full blur-3xl opacity-30 animate-[pulse_4s_ease-in-out_infinite,float_8s_ease-in-out_infinite_reverse]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50 animate-[pulse_5s_ease-in-out_infinite,rotate_20s_linear_infinite]" />
+          {/* Enhanced Background Elements */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-secondary/15 rounded-full blur-3xl opacity-40 animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/15 rounded-full blur-3xl opacity-30 animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50" />
           
           {/* Grid Pattern */}
           <div className="absolute inset-0 opacity-20">
@@ -108,10 +108,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
         
-        {/* Right-positioned Content Container */}
-        <div className="relative w-full max-w-7xl mx-auto">
-          {/* Enhanced Content with right-aligned design */}
-          <motion.div className="text-left md:text-left lg:ml-auto lg:w-3/4 xl:w-2/3 space-y-8 md:space-y-12 lg:space-y-16 px-4 md:px-8" initial={{
+        {/* Centered Content Container */}
+        <div className="relative w-full max-w-5xl mx-auto text-center">
+          {/* Enhanced Content with centered design */}
+          <motion.div className="text-center space-y-8 md:space-y-12 lg:space-y-16" initial={{
             opacity: 0,
             y: 50
           }} animate={{
@@ -134,7 +134,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               }}>
                 {content.headline}
               </motion.h1>
-              <motion.p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-primary-foreground/90 max-w-4xl leading-relaxed font-light" initial={{
+              <motion.p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed font-light" initial={{
                 opacity: 0,
                 y: 30
               }} animate={{
@@ -148,8 +148,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </motion.p>
             </div>
 
-            {/* Enhanced CTA Buttons with left-aligned layout */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-start items-start" initial={{
+            {/* Enhanced CTA Buttons with centered layout */}
+            <motion.div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center items-center" initial={{
               opacity: 0,
               y: 30
             }} animate={{
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               duration: 0.8,
               delay: 0.8
             }}>
-              <div className="flex flex-col sm:flex-row items-start justify-start gap-8 sm:gap-12 md:gap-16 text-base sm:text-lg text-primary-foreground/80">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16 text-base sm:text-lg text-primary-foreground/80">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-secondary/20 rounded-xl backdrop-blur-sm">
                     <Security size={24} className="text-secondary flex-shrink-0" />
