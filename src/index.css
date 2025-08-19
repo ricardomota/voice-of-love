@@ -482,9 +482,95 @@ html {
      transition: all var(--transition-normal);
    }
 
-   .hover-lift:hover {
-     transform: translateY(-4px) scale(1.02);
-   }
+    .hover-lift:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Floating Background Animations */
+    .animate-float-slow {
+      animation: float-slow 8s ease-in-out infinite;
+    }
+
+    .animate-float-medium {
+      animation: float-medium 6s ease-in-out infinite;
+    }
+
+    .animate-float-fast {
+      animation: float-fast 4s ease-in-out infinite;
+    }
+
+    .animate-bounce-slow {
+      animation: bounce-slow 3s ease-in-out infinite;
+    }
+
+    .animate-grid-drift {
+      animation: grid-drift 20s linear infinite;
+    }
+
+    @keyframes float-slow {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px);
+      }
+      25% {
+        transform: translateY(-10px) translateX(5px);
+      }
+      50% {
+        transform: translateY(0px) translateX(10px);
+      }
+      75% {
+        transform: translateY(10px) translateX(5px);
+      }
+    }
+
+    @keyframes float-medium {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+      }
+      33% {
+        transform: translateY(-15px) translateX(-8px) rotate(2deg);
+      }
+      66% {
+        transform: translateY(5px) translateX(8px) rotate(-1deg);
+      }
+    }
+
+    @keyframes float-fast {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-20px) scale(1.05);
+      }
+    }
+
+    @keyframes bounce-slow {
+      0%, 100% {
+        transform: translateY(0px);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-15px);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes grid-drift {
+      0% {
+        transform: translateX(0px) translateY(0px);
+      }
+      25% {
+        transform: translateX(2px) translateY(-2px);
+      }
+      50% {
+        transform: translateX(0px) translateY(-4px);
+      }
+      75% {
+        transform: translateX(-2px) translateY(-2px);
+      }
+      100% {
+        transform: translateX(0px) translateY(0px);
+      }
+    }
 
   /* Typography Utilities */
   .text-large {
