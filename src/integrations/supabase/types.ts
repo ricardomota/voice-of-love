@@ -1124,6 +1124,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_beta_access: {
+        Args: { p_access_code?: string; p_email: string }
+        Returns: Json
+      }
       compute_entitlements: {
         Args: { user_plan: string }
         Returns: Json
