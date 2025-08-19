@@ -15,6 +15,7 @@ import { Memory, Person } from "@/types/person";
 import { VoiceMessageGenerator } from "@/components/VoiceMessageGenerator";
 import { VoiceSettings } from "@/components/VoiceSettings";
 import { AudioChat } from "@/components/AudioChat";
+import { useLanguage } from "@/hooks/useLanguage";
 interface PersonCardProps {
   id: string;
   name: string;
@@ -42,6 +43,77 @@ interface PersonCardProps {
   onDelete?: () => void;
   className?: string;
 }
+
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      years: "years",
+      ageNotInformed: "Age not informed",
+      memory: "memory",
+      memories: "memories",
+      memoriesOf: "Memories of",
+      noMemories: "No memories recorded yet.",
+      addFirstMemory: "Add first memory",
+      lastConversation: "Last conversation",
+      never: "Never",
+      chat: "Chat",
+      call: "Call",
+      addMemory: "Add memory", 
+      settings: "Settings",
+      deleteConfirm: "Are you sure you want to delete",
+      deleteWarning: "This action cannot be undone. All memories, conversations and data related to",
+      deleteButton: "Delete",
+      cancel: "Cancel",
+      voiceMessage: "Voice Message",
+      voiceSettings: "Voice Settings"
+    },
+    'pt-BR': {
+      years: "anos",
+      ageNotInformed: "Idade não informada", 
+      memory: "memória",
+      memories: "memórias",
+      memoriesOf: "Memórias de",
+      noMemories: "Nenhuma memória registrada ainda.",
+      addFirstMemory: "Adicionar primeira memória",
+      lastConversation: "Última conversa",
+      never: "Nunca",
+      chat: "Conversar",
+      call: "Ligar",
+      addMemory: "Adicionar memória",
+      settings: "Configurações", 
+      deleteConfirm: "Tem certeza que deseja excluir",
+      deleteWarning: "Esta ação não pode ser desfeita. Todas as memórias, conversas e dados relacionados a",
+      deleteButton: "Excluir",
+      cancel: "Cancelar",
+      voiceMessage: "Mensagem de Voz",
+      voiceSettings: "Configurações de Voz"
+    },
+    es: {
+      years: "años",
+      ageNotInformed: "Edad no informada",
+      memory: "recuerdo", 
+      memories: "recuerdos",
+      memoriesOf: "Recuerdos de",
+      noMemories: "No hay recuerdos registrados aún.",
+      addFirstMemory: "Agregar primer recuerdo",
+      lastConversation: "Última conversación", 
+      never: "Nunca",
+      chat: "Conversar",
+      call: "Llamar",
+      addMemory: "Agregar recuerdo",
+      settings: "Configuración",
+      deleteConfirm: "¿Estás seguro de que quieres eliminar a",
+      deleteWarning: "Esta acción no se puede deshacer. Todos los recuerdos, conversaciones y datos relacionados con",
+      deleteButton: "Eliminar", 
+      cancel: "Cancelar",
+      voiceMessage: "Mensaje de Voz",
+      voiceSettings: "Configuración de Voz"
+    }
+  };
+
+  return content[language as keyof typeof content] || content.en;
+};
+
 export const PersonCard: React.FC<PersonCardProps> = ({
   id,
   name,
@@ -59,8 +131,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   onSettings,
   onAddMemory,
   onDelete,
-  className
-}: PersonCardProps) => {
+  className = ""
+}) => {
+  const { currentLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMemoriesDialogOpen, setIsMemoriesDialogOpen] = useState(false);
   const {
@@ -177,22 +251,22 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                   <AlertDialogTrigger asChild>
                     <DropdownMenuItem onSelect={e => e.preventDefault()} className="text-red-600 focus:text-red-600">
                       <Delete className="w-4 h-4 mr-2" />
-                      Remover pessoa
+                      {content.deleteButton}
                     </DropdownMenuItem>
                   </AlertDialogTrigger>
                   <AlertDialogContent className="mx-4 max-w-md sm:max-w-lg">
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Remover {name}?</AlertDialogTitle>
+                      <AlertDialogTitle>{content.deleteConfirm} {name}?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. Todas as memórias, conversas e dados relacionados a {name} serão permanentemente removidos.
+                        {content.deleteWarning} {name} serão permanentemente removidos.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter className="flex-col sm:flex-row gap-2">
-                      <AlertDialogCancel className="w-full sm:w-auto">Cancelar</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="w-full sm:w-auto bg-destructive hover:bg-destructive/90 text-destructive-foreground">
-                        {isDeleting ? "Removendo..." : "Remover definitivamente"}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
+                      <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+                        <AlertDialogCancel className="w-full sm:w-auto">{content.cancel}</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="w-full sm:w-auto bg-destructive hover:bg-destructive/90 text-destructive-foreground">
+                          {isDeleting ? "..." : content.deleteButton}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
               </DropdownMenuContent>
@@ -207,8 +281,8 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               const age = calculateAge();
               return age !== null ? <>
                     <CalendarToday className="w-4 h-4 mr-2" />
-                    <span className="text-xs sm:text-sm">{age} anos</span>
-                  </> : <span className="text-xs sm:text-sm text-muted-foreground/50">Idade não informada</span>;
+                    <span className="text-xs sm:text-sm">{age} {content.years}</span>
+                  </> : <span className="text-xs sm:text-sm text-muted-foreground/50">{content.ageNotInformed}</span>;
             })()}
             </div>
             <div className="flex items-center gap-4">
@@ -218,32 +292,32 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                     <div className="flex items-center">
                       <Favorite className="w-4 h-4 mr-2" />
                       <span className="text-xs sm:text-sm">
-                        {memoriesCount} {memoriesCount === 1 ? 'memória' : 'memórias'}
+                        {memoriesCount} {memoriesCount === 1 ? content.memory : content.memories}
                       </span>
                     </div>
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden">
                   <DialogHeader>
-                    <DialogTitle>Memórias de {name}</DialogTitle>
+                    <DialogTitle>{content.memoriesOf} {name}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
                     {memories.length === 0 ? <div className="text-center py-8 text-muted-foreground">
                         <Favorite className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                        <p>Nenhuma memória registrada ainda.</p>
+                        <p>{content.noMemories}</p>
                         {onAddMemory && <Button variant="outline" onClick={() => {
                       setIsMemoriesDialogOpen(false);
                       onAddMemory(id);
                     }} className="mt-4">
                             <Add className="w-4 h-4 mr-2" />
-                            Adicionar primeira memória
+                            {content.addFirstMemory}
                           </Button>}
                       </div> : <>
                         <div className="grid gap-4">
                           {memories.map(memory => <Card key={memory.id} className="p-4">
                               <div className="space-y-3">
                                 {memory.mediaUrl && <div className="relative">
-                                    {memory.mediaType === 'image' && <img src={memory.mediaUrl} alt="Memória" className="w-full h-32 object-cover rounded-lg" />}
+                                    {memory.mediaType === 'image' && <img src={memory.mediaUrl} alt={content.memory} className="w-full h-32 object-cover rounded-lg" />}
                                     {memory.mediaType === 'video' && <video src={memory.mediaUrl} controls className="w-full h-32 rounded-lg" />}
                                     {memory.mediaType === 'audio' && <audio src={memory.mediaUrl} controls className="w-full" />}
                                     <div className="absolute top-2 left-2 bg-primary/50 rounded-full p-1">
@@ -299,7 +373,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         onAddMemory(id);
       }} className="w-full mb-4 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all">
             <Add className="w-4 h-4 mr-2" />
-            <span className="text-xs sm:text-sm">Adicionar Memória</span>
+            <span className="text-xs sm:text-sm">{content.addMemory}</span>
           </Button>}
 
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
@@ -312,7 +386,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               aria-label={`Conversar com ${name}`}
             >
               <Chat className="w-6 h-6 mr-3" />
-              Conversar
+              {content.chat}
             </Button>
 
           {/* Botões secundários - Grid responsivo */}
@@ -330,7 +404,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                       className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
                     >
                       <VolumeUpFilled className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span>Audio</span>
+                      <span>{content.voiceMessage}</span>
                     </Button>
                 } 
               />
@@ -360,7 +434,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                       className="w-full h-12 md:h-14 hover:bg-gradient-to-r hover:from-secondary/80 hover:to-secondary/60 transition-all"
                     >
                       <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      <span>Call</span>
+                      <span>{content.call}</span>
                     </Button>
                 } 
               />
@@ -373,7 +447,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 variant="secondary"
               >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span>Call</span>
+                <span>{content.call}</span>
               </Button>
             )}
           </div>
