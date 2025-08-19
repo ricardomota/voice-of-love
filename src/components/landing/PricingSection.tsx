@@ -455,59 +455,59 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="mb-16"
+            className="mb-12 max-w-6xl mx-auto"
           >
-            <Accordion type="single" collapsible className="w-full max-w-4xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="comparison" className="border-0">
-                <AccordionTrigger className="flex flex-col items-center justify-center gap-4 py-8 px-6 bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl border-2 border-primary/20 hover:border-primary/40 transition-all duration-300 hover:no-underline group data-[state=open]:rounded-b-none">
-                  <div className="text-center space-y-2">
-                    <h3 className="text-2xl font-serif font-bold text-foreground group-hover:text-primary transition-colors">
+                <AccordionTrigger className="flex flex-col items-center justify-center gap-3 py-6 px-5 bg-gradient-to-r from-muted/30 to-muted/20 rounded-xl border border-border/50 hover:border-border transition-all duration-300 hover:no-underline group data-[state=open]:rounded-b-none">
+                  <div className="text-center space-y-1">
+                    <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                       {content.comparison.title}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       {content.comparison.buttonText}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
-                    <span className="text-sm font-medium">{content.comparison.seeDetails}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-200" />
+                  <div className="flex items-center gap-2 text-muted-foreground group-hover:text-primary group-hover:gap-3 transition-all">
+                    <span className="text-xs font-medium">{content.comparison.seeDetails}</span>
+                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
                   </div>
                 </AccordionTrigger>
                 
-                <AccordionContent className="px-6 pb-6 bg-gradient-to-r from-primary/5 to-primary/10 rounded-b-2xl border-x-2 border-b-2 border-primary/20">
-                  <div className="overflow-x-auto pt-4">
+                <AccordionContent className="px-5 pb-5 bg-gradient-to-r from-muted/30 to-muted/20 rounded-b-xl border-x border-b border-border/50">
+                  <div className="overflow-x-auto pt-3">
                     <table className="w-full bg-card rounded-lg border border-border">
                       <thead>
                         <tr className="border-b border-border">
-                          <th className="text-left p-4 font-semibold text-foreground">{content.comparison.headers[0]}</th>
-                          <th className="text-center p-4 font-semibold text-foreground">{content.comparison.headers[1]}</th>
-                          <th className="text-center p-4 font-semibold text-foreground">{content.comparison.headers[2]}</th>
-                          <th className="text-center p-4 font-semibold text-foreground bg-primary/5">{content.comparison.headers[3]}</th>
+                          <th className="text-left p-3 font-medium text-foreground text-sm">{content.comparison.headers[0]}</th>
+                          <th className="text-center p-3 font-medium text-foreground text-sm">{content.comparison.headers[1]}</th>
+                          <th className="text-center p-3 font-medium text-foreground text-sm">{content.comparison.headers[2]}</th>
+                          <th className="text-center p-3 font-medium text-foreground text-sm bg-primary/5">{content.comparison.headers[3]}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {content.comparison.features.map((feature, index) => (
                           <tr key={index} className="border-b border-border/50">
-                            <td className="p-4 text-muted-foreground">{feature.name}</td>
-                            <td className="p-4 text-center">
+                            <td className="p-3 text-muted-foreground text-sm">{feature.name}</td>
+                            <td className="p-3 text-center">
                               {typeof feature.free === 'boolean' ? (
-                                feature.free ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                                feature.free ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
                               ) : (
-                                <span className="text-foreground font-medium">{feature.free}</span>
+                                <span className="text-foreground font-medium text-sm">{feature.free}</span>
                               )}
                             </td>
-                            <td className="p-4 text-center">
+                            <td className="p-3 text-center">
                               {typeof feature.essential === 'boolean' ? (
-                                feature.essential ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                                feature.essential ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
                               ) : (
-                                <span className="text-foreground font-medium">{feature.essential}</span>
+                                <span className="text-foreground font-medium text-sm">{feature.essential}</span>
                               )}
                             </td>
-                            <td className="p-4 text-center bg-primary/5">
+                            <td className="p-3 text-center bg-primary/5">
                               {typeof feature.complete === 'boolean' ? (
-                                feature.complete ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                                feature.complete ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
                               ) : (
-                                <span className="text-foreground font-medium">{feature.complete}</span>
+                                <span className="text-foreground font-medium text-sm">{feature.complete}</span>
                               )}
                             </td>
                           </tr>
@@ -522,23 +522,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           {/* FAQ */}
           <div id="faq">
-            <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mb-20"
-          >
-            <h3 className="text-2xl font-serif font-bold text-center mb-12">
-              {content.faq.title}
-            </h3>
-            <div className="max-w-4xl mx-auto space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+              className="mb-16 max-w-6xl mx-auto"
+            >
+              <h3 className="text-xl font-semibold text-center mb-10 text-muted-foreground">
+                {content.faq.title}
+              </h3>
+            <div className="space-y-6">
               {content.faq.items.map((item, index) => (
-                <Card key={index} className="p-8 hover:shadow-lg transition-shadow duration-200">
-                  <h4 className="font-semibold text-foreground mb-4 text-lg">
+                <Card key={index} className="p-6 hover:shadow-md transition-shadow duration-200 bg-muted/20 border-muted/30">
+                  <h4 className="font-medium text-foreground mb-3 text-base">
                     {item.question}
                   </h4>
-                  <p className="text-muted-foreground leading-relaxed text-base">
+                  <p className="text-muted-foreground leading-relaxed text-sm">
                     {item.answer}
                   </p>
                 </Card>
@@ -548,7 +548,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
           {/* Footer notes */}
-          <div className="text-center space-y-4 max-w-4xl mx-auto">
+          <div className="text-center space-y-4 max-w-6xl mx-auto">
             {content.footer.notes.map((note, index) => (
               <p key={index} className="text-xs text-muted-foreground">
                 {note}
