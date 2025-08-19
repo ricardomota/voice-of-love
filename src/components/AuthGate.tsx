@@ -1,4 +1,4 @@
-import { useState, useMemo, memo, useCallback } from 'react';
+import { useState, useMemo, memo, useCallback, useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { InputWithVoice } from '@/components/ui/input-with-voice';
@@ -104,6 +104,11 @@ export const AuthGate = memo(({
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showProfileSetup, setShowProfileSetup] = useState(false);
+  
+  // Apple TV card animation state
+  const cardRef = useRef<HTMLDivElement>(null);
+  const highlightRef = useRef<HTMLDivElement>(null);
+  const [isCardTransitioning, setIsCardTransitioning] = useState(false);
   const {
     toast
   } = useToast();
@@ -152,6 +157,49 @@ export const AuthGate = memo(({
     }
    }, [email, password, content, toast, signIn, signUp, navigate]);
    
+   // Apple TV card animation handlers
+   const handleCardMouseEnter = useCallback(() => {
+     setIsCardTransitioning(true);
+     setTimeout(() => setIsCardTransitioning(false), 250);
+   }, []);
+
+   const handleCardMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+     if (!cardRef.current || !highlightRef.current) return;
+     
+     const card = cardRef.current;
+     const highlight = highlightRef.current;
+     const rect = card.getBoundingClientRect();
+     
+     const x = event.clientX - rect.left;
+     const y = event.clientY - rect.top;
+     const cardWidth = card.offsetWidth;
+     const cardHeight = card.offsetHeight;
+     const rotationLimit = 8;
+     const middleX = cardWidth / 2;
+     const middleY = cardHeight / 2;
+     
+     const rotateX = (x - middleX) * (rotationLimit / middleX);
+     const rotateY = (middleY - y) * (rotationLimit / middleY);
+     
+     card.style.transform = `perspective(1200px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) translateZ(20px)`;
+     highlight.style.top = `-${100 + (rotateY * 20)}px`;
+     highlight.style.right = `-${100 - (rotateX * 20)}px`;
+   }, []);
+
+   const handleCardMouseLeave = useCallback(() => {
+     if (!cardRef.current || !highlightRef.current) return;
+     
+     setIsCardTransitioning(true);
+     setTimeout(() => {
+       if (cardRef.current && highlightRef.current) {
+         cardRef.current.style.transform = '';
+         highlightRef.current.style.top = '';
+         highlightRef.current.style.right = '';
+       }
+     }, 250);
+     setTimeout(() => setIsCardTransitioning(false), 500);
+   }, []);
+   
   const handleProfileSetupComplete = () => {
     setShowProfileSetup(false);
     // Don't navigate anywhere, let the user stay on the current page
@@ -183,26 +231,54 @@ export const AuthGate = memo(({
               </ul>
             </div>
 
-            {/* Story Section */}
-            <Card className="group relative bg-gradient-to-br from-background via-card to-background border border-border/10 rounded-2xl shadow-2xl shadow-black/20 hover:shadow-3xl hover:shadow-primary/20 transition-all duration-700 hover:-translate-y-2 hover:scale-[1.02] cursor-default overflow-hidden backdrop-blur-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <CardContent className="relative p-8 z-10">
+            {/* Apple TV Style Interactive Story Card */}
+            <div 
+              ref={cardRef}
+              className={`
+                relative w-full bg-gradient-to-br from-card via-card/95 to-card/90 
+                border-4 border-primary/20 rounded-2xl overflow-hidden cursor-pointer
+                shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.16)]
+                transform-gpu will-change-transform
+                ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
+              `}
+              style={{ 
+                transformStyle: 'preserve-3d',
+                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.25))'
+              }}
+              onMouseEnter={handleCardMouseEnter}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+            >
+              {/* Moving highlight overlay */}
+              <div 
+                ref={highlightRef}
+                className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full opacity-25 blur-[50px] pointer-events-none z-10"
+                style={{ 
+                  top: '-100px', 
+                  right: '-100px',
+                  transition: isCardTransitioning ? 'all 0.5s ease-out' : 'none'
+                }}
+              />
+              
+              {/* Card content */}
+              <div className="relative p-8 z-20">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-300">
-                    <Heart className="h-5 w-5 text-primary" />
+                  <div className="p-3 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full">
+                    <Heart className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">{content.story.title}</h3>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                    {content.story.title}
+                  </h3>
                 </div>
-                <p className="text-muted-foreground/90 leading-relaxed mb-6 text-base group-hover:text-muted-foreground transition-colors duration-300">
+                <p className="text-muted-foreground leading-relaxed mb-6 text-base">
                   {content.story.text}
                 </p>
-                <div className="flex items-center gap-2 text-primary">
-                  <span className="text-2xl animate-pulse">{content.story.heart}</span>
-                  <span className="text-sm font-medium opacity-70">Made with love</span>
+                <div className="flex items-center gap-3 text-primary">
+                  <span className="text-2xl">{content.story.heart}</span>
+                  <span className="text-sm font-medium opacity-80">Made with love</span>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </section>
 
           {/* Right side - Authentication */}
