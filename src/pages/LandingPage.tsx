@@ -40,9 +40,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         <FeaturesSection />
       </div>
 
-      {/* Story Card - Personal touch */}
-      <StoryCard />
-
       {/* How It Works - Enhanced spacing */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
@@ -57,6 +54,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
           onSeePricing={scrollToPricing}
         />
       </div>
+      {/* Story Card - Personal touch */}
+      <StoryCard />
 
       {/* Footer with enhanced top spacing */}
       <div className="mt-12 sm:mt-16 lg:mt-20">
