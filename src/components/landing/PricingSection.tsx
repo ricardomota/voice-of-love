@@ -99,7 +99,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   } = useLanguage();
   const content = getContent(currentLanguage);
   const plans = [content.free, content.paid];
-  return <section id="pricing" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
+  return <section id="pricing" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
       {/* Background Elements */}
       <motion.div className="absolute top-0 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" animate={{
       scale: [1, 1.2, 1],

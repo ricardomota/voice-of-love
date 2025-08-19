@@ -46,7 +46,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       </div>
 
       {/* Pricing - Enhanced spacing */}
-      <div className="relative">
+      <div className="relative py-8 sm:py-12 lg:py-16">
         <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
         <PricingSection 
           onTryFree={onTryFree}
@@ -54,11 +54,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         />
       </div>
 
-      {/* Footer */}
-      <LandingFooter 
-        onTryFree={onTryFree}
-        onSignIn={onLogin}
-      />
+      {/* Footer with enhanced top spacing */}
+      <div className="mt-12 sm:mt-16 lg:mt-20">
+        <LandingFooter 
+          onTryFree={onTryFree}
+          onSignIn={onLogin}
+        />
+      </div>
     </div>
   );
 };
