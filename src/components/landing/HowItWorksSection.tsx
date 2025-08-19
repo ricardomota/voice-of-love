@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
-import { SettingsAdjust, Microphone, Chat, Share, ArrowRight } from '@carbon/icons-react';
+import { SettingsAdjust, Microphone, FolderDetails, Chat, Share, ArrowRight } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
 
 const getContent = (language: string) => {
   const content = {
     en: {
       title: "How It Works",
-      subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
+      subtitle: "Five simple steps to preserve and interact with cherished voices 💖",
       steps: [{
         title: "Configure",
         description: "Pick language, style, and personality traits with love.",
@@ -16,6 +16,10 @@ const getContent = (language: string) => {
         title: "Record",
         description: "Upload a short voice sample or choose a base voice - it's that easy!",
         detail: "Just a few minutes of clear audio is enough to get started ✨"
+      }, {
+        title: "Add Memories",
+        description: "Upload photos, texts, stories, and personal moments.",
+        detail: "Build a rich foundation of memories for authentic conversations 📸"
       }, {
         title: "Chat & listen",
         description: "Ask questions and hear authentic responses - pure magic!",
@@ -30,7 +34,7 @@ const getContent = (language: string) => {
     },
     'pt-BR': {
       title: "Como funciona",
-      subtitle: "Quatro passos simples para preservar e interagir com vozes queridas 💖",
+      subtitle: "Cinco passos simples para preservar e interagir com vozes queridas 💖",
       steps: [{
         title: "Configurar",
         description: "Escolha idioma, estilo e traços de personalidade com carinho.",
@@ -39,6 +43,10 @@ const getContent = (language: string) => {
         title: "Gravar",
         description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
         detail: "Apenas alguns minutos de áudio claro são suficientes para começar ✨"
+      }, {
+        title: "Adicionar Memórias",
+        description: "Envie fotos, textos, histórias e momentos pessoais.",
+        detail: "Construa uma rica base de memórias para conversas autênticas 📸"
       }, {
         title: "Conversar",
         description: "Faça perguntas e ouça respostas autênticas - pura magia!",
@@ -53,7 +61,7 @@ const getContent = (language: string) => {
     },
     es: {
       title: "Cómo funciona",
-      subtitle: "Cuatro pasos simples para preservar e interactuar con voces queridas",
+      subtitle: "Cinco pasos simples para preservar e interactuar con voces queridas",
       steps: [{
         title: "Configurar",
         description: "Elige idioma, estilo y rasgos de personalidad.",
@@ -62,6 +70,10 @@ const getContent = (language: string) => {
         title: "Grabar",
         description: "Sube una muestra de voz o elige una voz base.",
         detail: "Solo unos minutos de audio claro son suficientes para empezar."
+      }, {
+        title: "Añadir Memorias",
+        description: "Sube fotos, textos, historias y momentos personales.",
+        detail: "Construye una base rica de memorias para conversaciones auténticas 📸"
       }, {
         title: "Charlar",
         description: "Haz preguntas y escucha respuestas auténticas.",
@@ -81,7 +93,7 @@ const getContent = (language: string) => {
 export const HowItWorksSection: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const icons = [SettingsAdjust, Microphone, Chat, Share];
+  const icons = [SettingsAdjust, Microphone, FolderDetails, Chat, Share];
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
@@ -198,7 +210,7 @@ export const HowItWorksSection: React.FC = () => {
           {/* Connection Line */}
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-4">
             {content.steps.map((step, index) => {
               const IconComponent = icons[index];
               
