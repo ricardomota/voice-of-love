@@ -220,7 +220,7 @@ export const AuthGate = memo(({
           </Button>
         </div>
 
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start pt-8">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-start px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16">
           {/* Left side - Introduction & Story */}
           <section className="space-y-8" aria-label="Introdução">
             <div>
