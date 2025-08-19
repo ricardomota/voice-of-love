@@ -103,6 +103,72 @@ export type Database = {
         }
         Relationships: []
       }
+      circle_memberships: {
+        Row: {
+          circle_id: string | null
+          created_at: string
+          id: string
+          person_id: string | null
+          role: string
+        }
+        Insert: {
+          circle_id?: string | null
+          created_at?: string
+          id?: string
+          person_id?: string | null
+          role: string
+        }
+        Update: {
+          circle_id?: string | null
+          created_at?: string
+          id?: string
+          person_id?: string | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "circle_memberships_circle_id_fkey"
+            columns: ["circle_id"]
+            isOneToOne: false
+            referencedRelation: "circles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "circle_memberships_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      circles: {
+        Row: {
+          created_at: string
+          id: string
+          members: Json | null
+          name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          members?: Json | null
+          name: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          members?: Json | null
+          name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           created_at: string
@@ -123,6 +189,50 @@ export type Database = {
           value?: string
         }
         Relationships: []
+      }
+      consents: {
+        Row: {
+          consent_data: Json | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          person_id: string | null
+          recorder: string
+          timestamp: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          consent_data?: Json | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          person_id?: string | null
+          recorder: string
+          timestamp?: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          consent_data?: Json | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          person_id?: string | null
+          recorder?: string
+          timestamp?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consents_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       conversation_analytics: {
         Row: {
@@ -267,6 +377,187 @@ export type Database = {
           memory_type?: string
           person_id?: string
           source_conversation_id?: string | null
+        }
+        Relationships: []
+      }
+      eterna_memories: {
+        Row: {
+          created_at: string
+          id: string
+          is_private: boolean
+          kind: string
+          media_url: string | null
+          mood_tags: string[] | null
+          person_id: string | null
+          preview_url: string | null
+          title: string
+          transcript: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_private?: boolean
+          kind: string
+          media_url?: string | null
+          mood_tags?: string[] | null
+          person_id?: string | null
+          preview_url?: string | null
+          title: string
+          transcript?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_private?: boolean
+          kind?: string
+          media_url?: string | null
+          mood_tags?: string[] | null
+          person_id?: string | null
+          preview_url?: string | null
+          title?: string
+          transcript?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eterna_memories_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      eterna_user_settings: {
+        Row: {
+          accessibility_settings: Json | null
+          created_at: string
+          panic_pause_enabled: boolean
+          preferred_language: string | null
+          privacy_settings: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accessibility_settings?: Json | null
+          created_at?: string
+          panic_pause_enabled?: boolean
+          preferred_language?: string | null
+          privacy_settings?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accessibility_settings?: Json | null
+          created_at?: string
+          panic_pause_enabled?: boolean
+          preferred_language?: string | null
+          privacy_settings?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      eterna_voices: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          model_ref: string | null
+          person_id: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          model_ref?: string | null
+          person_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          model_ref?: string | null
+          person_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eterna_voices_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_logs: {
+        Row: {
+          anon_id: string | null
+          created_at: string
+          id: string
+          name: string
+          payload_json: Json | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          anon_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          payload_json?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          anon_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          payload_json?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      feature_flags: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          key: string
+          updated_at: string
+          user_targeting: Json | null
+          variant: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          key: string
+          updated_at?: string
+          user_targeting?: Json | null
+          variant?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          key?: string
+          updated_at?: string
+          user_targeting?: Json | null
+          variant?: string
         }
         Relationships: []
       }
@@ -451,6 +742,36 @@ export type Database = {
           new_traits?: Json | null
           person_id?: string
           previous_traits?: Json | null
+        }
+        Relationships: []
+      }
+      persons: {
+        Row: {
+          avatar_url: string | null
+          consent_status: string
+          created_at: string
+          display_name: string
+          id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          consent_status?: string
+          created_at?: string
+          display_name: string
+          id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          consent_status?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
