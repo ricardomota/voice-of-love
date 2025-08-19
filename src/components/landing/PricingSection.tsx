@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Check, X, Heart, MessageCircle, Users, Mic, Clock } from 'lucide-react';
+import { Check, X, Heart, MessageCircle, Users, Mic, Clock, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { WaitlistModal } from './WaitlistModal';
 import { Separator } from '@/components/ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface PricingSectionProps {
   onTryFree: () => void;
@@ -93,6 +94,9 @@ const getContent = (language: string) => {
       },
       comparison: {
         title: "Compare todos os recursos",
+        buttonText: "Ver comparação detalhada",
+        seeDetails: "Ver detalhes",
+        headers: ["Recurso", "Free", "Essencial", "Completo"],
         features: [
           { name: "Pessoas (clones)", free: "1", essential: "1", complete: "3" },
           { name: "Minutos de voz/mês", free: "5", essential: "30", complete: "120" },
@@ -197,6 +201,9 @@ const getContent = (language: string) => {
       },
       comparison: {
         title: "Compare all features",
+        buttonText: "See detailed comparison",
+        seeDetails: "See details",
+        headers: ["Feature", "Free", "Essential", "Complete"],
         features: [
           { name: "People (clones)", free: "1", essential: "1", complete: "3" },
           { name: "Voice minutes/month", free: "5", essential: "30", complete: "120" },
@@ -442,7 +449,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             ))}
           </div>
 
-          {/* Comparison Table */}
+          {/* Comparison Table - Now as Accordion */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -450,53 +457,72 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             transition={{ duration: 0.8 }}
             className="mb-16"
           >
-            <h3 className="text-2xl font-serif font-bold text-center mb-8">
-              {content.comparison.title}
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full max-w-4xl mx-auto bg-card rounded-lg border border-border">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left p-4 font-semibold text-foreground">Recurso</th>
-                    <th className="text-center p-4 font-semibold text-foreground">Free</th>
-                    <th className="text-center p-4 font-semibold text-foreground">Essencial</th>
-                    <th className="text-center p-4 font-semibold text-foreground bg-primary/5">Completo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {content.comparison.features.map((feature, index) => (
-                    <tr key={index} className="border-b border-border/50">
-                      <td className="p-4 text-muted-foreground">{feature.name}</td>
-                      <td className="p-4 text-center">
-                        {typeof feature.free === 'boolean' ? (
-                          feature.free ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
-                        ) : (
-                          <span className="text-foreground font-medium">{feature.free}</span>
-                        )}
-                      </td>
-                      <td className="p-4 text-center">
-                        {typeof feature.essential === 'boolean' ? (
-                          feature.essential ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
-                        ) : (
-                          <span className="text-foreground font-medium">{feature.essential}</span>
-                        )}
-                      </td>
-                      <td className="p-4 text-center bg-primary/5">
-                        {typeof feature.complete === 'boolean' ? (
-                          feature.complete ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
-                        ) : (
-                          <span className="text-foreground font-medium">{feature.complete}</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Accordion type="single" collapsible className="w-full max-w-4xl mx-auto">
+              <AccordionItem value="comparison" className="border-0">
+                <AccordionTrigger className="flex flex-col items-center justify-center gap-4 py-8 px-6 bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl border-2 border-primary/20 hover:border-primary/40 transition-all duration-300 hover:no-underline group data-[state=open]:rounded-b-none">
+                  <div className="text-center space-y-2">
+                    <h3 className="text-2xl font-serif font-bold text-foreground group-hover:text-primary transition-colors">
+                      {content.comparison.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {content.comparison.buttonText}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
+                    <span className="text-sm font-medium">{content.comparison.seeDetails}</span>
+                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-200" />
+                  </div>
+                </AccordionTrigger>
+                
+                <AccordionContent className="px-6 pb-6 bg-gradient-to-r from-primary/5 to-primary/10 rounded-b-2xl border-x-2 border-b-2 border-primary/20">
+                  <div className="overflow-x-auto pt-4">
+                    <table className="w-full bg-card rounded-lg border border-border">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left p-4 font-semibold text-foreground">{content.comparison.headers[0]}</th>
+                          <th className="text-center p-4 font-semibold text-foreground">{content.comparison.headers[1]}</th>
+                          <th className="text-center p-4 font-semibold text-foreground">{content.comparison.headers[2]}</th>
+                          <th className="text-center p-4 font-semibold text-foreground bg-primary/5">{content.comparison.headers[3]}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {content.comparison.features.map((feature, index) => (
+                          <tr key={index} className="border-b border-border/50">
+                            <td className="p-4 text-muted-foreground">{feature.name}</td>
+                            <td className="p-4 text-center">
+                              {typeof feature.free === 'boolean' ? (
+                                feature.free ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                              ) : (
+                                <span className="text-foreground font-medium">{feature.free}</span>
+                              )}
+                            </td>
+                            <td className="p-4 text-center">
+                              {typeof feature.essential === 'boolean' ? (
+                                feature.essential ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                              ) : (
+                                <span className="text-foreground font-medium">{feature.essential}</span>
+                              )}
+                            </td>
+                            <td className="p-4 text-center bg-primary/5">
+                              {typeof feature.complete === 'boolean' ? (
+                                feature.complete ? <Check className="w-4 h-4 text-green-600 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />
+                              ) : (
+                                <span className="text-foreground font-medium">{feature.complete}</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </motion.div>
 
           {/* FAQ */}
-          <motion.div 
+          <div id="faq">
+            <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -518,7 +544,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 </Card>
               ))}
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* Footer notes */}
           <div className="text-center space-y-4 max-w-4xl mx-auto">
