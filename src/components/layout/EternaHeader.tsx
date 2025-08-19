@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Settings, Logout, User, Help, Information } from '@carbon/icons-react';
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/hooks/useAuth';
+import { useProfile } from '@/hooks/useProfile';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +17,7 @@ import {
 import { useLanguage } from '@/hooks/useLanguage';
 import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { ProfileModal } from '@/components/ProfileModal';
 
 interface EternaHeaderProps {
   onSettingsClick?: () => void;
@@ -55,9 +58,11 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
   onSettingsClick
 }) => {
   const { user, signOut } = useAuth();
+  const { profile } = useProfile();
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -94,16 +99,26 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg bg-foreground text-background flex items-center justify-center hover:bg-foreground/90 transition-colors">
-                  <span className="text-sm font-semibold">
-                    {user.email?.[0]?.toUpperCase() || 'U'}
-                  </span>
+                <button className="w-9 h-9 rounded-lg bg-foreground text-background flex items-center justify-center hover:bg-foreground/90 transition-colors overflow-hidden">
+                  {profile?.avatar_url ? (
+                    <img 
+                      src={profile.avatar_url} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <span className="text-sm font-semibold">
+                      {profile?.display_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
+                    </span>
+                  )}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{content.account}</p>
+                    <p className="text-sm font-medium leading-none">
+                      {profile?.display_name || content.account}
+                    </p>
                     <p className="text-xs leading-none text-muted-foreground">
                       {user.email}
                     </p>
@@ -111,7 +126,10 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                <DropdownMenuItem 
+                  onClick={() => setShowProfileModal(true)}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <User size={16} />
                   {content.profile}
                 </DropdownMenuItem>
@@ -150,6 +168,12 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
           )}
         </div>
       </div>
+      
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={showProfileModal} 
+        onClose={() => setShowProfileModal(false)} 
+      />
     </header>
   );
 };

@@ -8,6 +8,7 @@ import { Loader2, ArrowLeft, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
+import { ProfileSetupModal } from '@/components/ProfileSetupModal';
 interface AuthGateProps {
   children: React.ReactNode;
 }
@@ -102,6 +103,7 @@ export const AuthGate = memo(({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showProfileSetup, setShowProfileSetup] = useState(false);
   const {
     toast
   } = useToast();
@@ -134,6 +136,8 @@ export const AuthGate = memo(({
           title: content.success.title,
           description: content.success.accountCreated
         });
+        // Show profile setup modal after successful signup
+        setShowProfileSetup(true);
       } else {
         navigate('/auth');
       }
@@ -146,7 +150,13 @@ export const AuthGate = memo(({
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, content, toast, signIn, signUp, navigate]);
+   }, [email, password, content, toast, signIn, signUp, navigate]);
+   
+  const handleProfileSetupComplete = () => {
+    setShowProfileSetup(false);
+    // Don't navigate anywhere, let the user stay on the current page
+    // They will be redirected by the auth state change
+  };
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -233,5 +243,14 @@ export const AuthGate = memo(({
         </div>
       </main>;
   }
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {/* Profile Setup Modal for new users */}
+      <ProfileSetupModal 
+        isOpen={showProfileSetup} 
+        onComplete={handleProfileSetupComplete} 
+      />
+    </>
+  );
 });
