@@ -104,7 +104,7 @@ export const AuthGate = memo(({
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showProfileSetup, setShowProfileSetup] = useState(false);
-  
+
   // Apple TV card animation state
   const cardRef = useRef<HTMLDivElement>(null);
   const highlightRef = useRef<HTMLDivElement>(null);
@@ -116,7 +116,7 @@ export const AuthGate = memo(({
   const {
     currentLanguage
   } = useLanguage();
-  
+
   // Memoize content to prevent recalculation
   const content = useMemo(() => getContent(currentLanguage), [currentLanguage]);
 
@@ -155,51 +155,43 @@ export const AuthGate = memo(({
     } finally {
       setIsLoading(false);
     }
-   }, [email, password, content, toast, signIn, signUp, navigate]);
-   
-   // Apple TV card animation handlers
-   const handleCardMouseEnter = useCallback(() => {
-     setIsCardTransitioning(true);
-     setTimeout(() => setIsCardTransitioning(false), 250);
-   }, []);
+  }, [email, password, content, toast, signIn, signUp, navigate]);
 
-   const handleCardMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-     if (!cardRef.current || !highlightRef.current) return;
-     
-     const card = cardRef.current;
-     const highlight = highlightRef.current;
-     const rect = card.getBoundingClientRect();
-     
-     const x = event.clientX - rect.left;
-     const y = event.clientY - rect.top;
-     const cardWidth = card.offsetWidth;
-     const cardHeight = card.offsetHeight;
-     const rotationLimit = 8;
-     const middleX = cardWidth / 2;
-     const middleY = cardHeight / 2;
-     
-     const rotateX = (x - middleX) * (rotationLimit / middleX);
-     const rotateY = (middleY - y) * (rotationLimit / middleY);
-     
-     card.style.transform = `perspective(1200px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) translateZ(20px)`;
-     highlight.style.top = `-${100 + (rotateY * 20)}px`;
-     highlight.style.right = `-${100 - (rotateX * 20)}px`;
-   }, []);
-
-   const handleCardMouseLeave = useCallback(() => {
-     if (!cardRef.current || !highlightRef.current) return;
-     
-     setIsCardTransitioning(true);
-     setTimeout(() => {
-       if (cardRef.current && highlightRef.current) {
-         cardRef.current.style.transform = '';
-         highlightRef.current.style.top = '';
-         highlightRef.current.style.right = '';
-       }
-     }, 250);
-     setTimeout(() => setIsCardTransitioning(false), 500);
-   }, []);
-   
+  // Apple TV card animation handlers
+  const handleCardMouseEnter = useCallback(() => {
+    setIsCardTransitioning(true);
+    setTimeout(() => setIsCardTransitioning(false), 250);
+  }, []);
+  const handleCardMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || !highlightRef.current) return;
+    const card = cardRef.current;
+    const highlight = highlightRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const cardWidth = card.offsetWidth;
+    const cardHeight = card.offsetHeight;
+    const rotationLimit = 8;
+    const middleX = cardWidth / 2;
+    const middleY = cardHeight / 2;
+    const rotateX = (x - middleX) * (rotationLimit / middleX);
+    const rotateY = (middleY - y) * (rotationLimit / middleY);
+    card.style.transform = `perspective(1200px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) translateZ(20px)`;
+    highlight.style.top = `-${100 + rotateY * 20}px`;
+    highlight.style.right = `-${100 - rotateX * 20}px`;
+  }, []);
+  const handleCardMouseLeave = useCallback(() => {
+    if (!cardRef.current || !highlightRef.current) return;
+    setIsCardTransitioning(true);
+    setTimeout(() => {
+      if (cardRef.current && highlightRef.current) {
+        cardRef.current.style.transform = '';
+        highlightRef.current.style.top = '';
+        highlightRef.current.style.right = '';
+      }
+    }, 250);
+    setTimeout(() => setIsCardTransitioning(false), 500);
+  }, []);
   const handleProfileSetupComplete = () => {
     setShowProfileSetup(false);
     // Don't navigate anywhere, let the user stay on the current page
@@ -232,59 +224,39 @@ export const AuthGate = memo(({
             </div>
 
             {/* Apple TV Style Interactive Story Card */}
-            <div 
-              ref={cardRef}
-              className={`
+            <div ref={cardRef} className={`
                 relative w-full bg-gradient-to-br from-amber-50/95 via-orange-50/90 to-rose-50/85 
                 backdrop-blur-md border-4 border-amber-200/60 rounded-2xl overflow-hidden cursor-pointer
                 shadow-[0_8px_32px_rgba(251,146,60,0.25)] hover:shadow-[0_16px_64px_rgba(251,146,60,0.35)]
                 transform-gpu will-change-transform group
                 ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
-              `}
-              style={{ 
-                transformStyle: 'preserve-3d',
-                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.25))'
-              }}
-              onMouseEnter={handleCardMouseEnter}
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
-            >
+              `} style={{
+            transformStyle: 'preserve-3d',
+            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.25))'
+          }} onMouseEnter={handleCardMouseEnter} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave}>
               
               {/* Shimmer/Shine Effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                  animate-[shimmer_2s_ease-in-out_infinite] transform -skew-x-12"
-                  style={{
-                    background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%)',
-                    animation: 'shimmer 3s ease-in-out infinite'
-                  }}
-                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+                  animate-[shimmer_2s_ease-in-out_infinite] transform -skew-x-12" style={{
+                background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%)',
+                animation: 'shimmer 3s ease-in-out infinite'
+              }} />
               </div>
 
               {/* Moving highlight overlay */}
-              <div 
-                ref={highlightRef}
-                className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full opacity-25 blur-[50px] pointer-events-none z-10"
-                style={{ 
-                  top: '-100px', 
-                  right: '-100px',
-                  transition: isCardTransitioning ? 'all 0.5s ease-out' : 'none'
-                }}
-              />
+              <div ref={highlightRef} className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full opacity-25 blur-[50px] pointer-events-none z-10" style={{
+              top: '-100px',
+              right: '-100px',
+              transition: isCardTransitioning ? 'all 0.5s ease-out' : 'none'
+            }} />
               
               {/* Card content */}
               <div className="relative p-8 z-20">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex items-center gap-3">
-                    <img 
-                      src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" 
-                      alt="Family portrait"
-                      className="w-16 h-16 rounded-full object-cover shadow-lg"
-                    />
-                    <div className="p-3 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full">
-                      <Heart className="h-6 w-6 text-primary" />
-                    </div>
+                    <img src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" alt="Family portrait" className="w-16 h-16 rounded-full object-cover shadow-lg" />
+                    
                   </div>
                   <h3 className="text-xl font-bold bg-gradient-to-r from-amber-800 to-rose-700 bg-clip-text text-transparent">
                     {content.story.title}
@@ -348,14 +320,9 @@ export const AuthGate = memo(({
         </div>
       </main>;
   }
-  return (
-    <>
+  return <>
       {children}
       {/* Profile Setup Modal for new users */}
-      <ProfileSetupModal 
-        isOpen={showProfileSetup} 
-        onComplete={handleProfileSetupComplete} 
-      />
-    </>
-  );
+      <ProfileSetupModal isOpen={showProfileSetup} onComplete={handleProfileSetupComplete} />
+    </>;
 });
