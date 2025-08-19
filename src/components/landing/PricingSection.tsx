@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useSubscriptionInfo } from '@/hooks/useSubscriptionInfo';
+import { SubscriptionService } from '@/services/subscriptionService';
 import { 
   Check, 
   X, 
@@ -27,20 +29,6 @@ interface PricingSectionProps {
   onSeePricing: () => void;
   onUpgrade?: (planId: string) => void;
 }
-
-// Simulated state variables - connect to backend when available
-const mockState = {
-  plan: 'free' as 'free' | 'essential' | 'complete',
-  slotsDisponiveis: 30, // Current available slots
-  maxSlots: 30,
-  autoUpgradeThreshold: 30,
-  waitlistLength: 0,
-  monthly_voice_minutes_essential: 30,
-  monthly_voice_minutes_complete: 120,
-  monthly_chat_limits: { free: 20, essential: 200, complete: -1 },
-  genericVoicesEnabled: { free: false, essential: true, complete: true },
-  personalizedVoiceEnabled: { free: false, essential: false, complete: true }
-};
 
 interface PlanData {
   title: string;
@@ -299,27 +287,61 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const [waitlistForm, setWaitlistForm] = useState({ name: '', email: '', consent: false });
   const { toast } = useToast();
   
-  const slotsAvailable = mockState.slotsDisponiveis > 0;
+  // Use real subscription data
+  const { 
+    subscriptionInfo, 
+    loading: subscriptionLoading,
+    slotsAvailable, 
+    isSlotAvailable,
+    canUseVoiceDemo,
+    getRemainingDemoSeconds,
+    refresh: refreshSubscription
+  } = useSubscriptionInfo();
+  
   const planOrder = [content.plans.free, content.plans.essential, content.plans.complete];
 
-  // Event handlers with proper IDs
+  // Event handlers with proper IDs for analytics
   const handleFreeTrial = () => {
     console.log('Analytics: pricing_free_start');
     onTryFree();
   };
 
-  const handleEssentialSubscribe = () => {
+  const handleEssentialSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_essential');
-    onUpgrade?.('essential');
+    try {
+      const { url } = await SubscriptionService.createCheckoutSession('essential');
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Failed to create checkout session:', error);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "Erro" : "Error",
+        description: currentLanguage === 'pt-BR' ? 
+          "Falha ao iniciar processo de assinatura. Tente novamente." : 
+          "Failed to start subscription process. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
-  const handleCompleteSubscribe = () => {
+  const handleCompleteSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_complete');
-    onUpgrade?.('complete');
+    try {
+      const { url } = await SubscriptionService.createCheckoutSession('complete');
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Failed to create checkout session:', error);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "Erro" : "Error",
+        description: currentLanguage === 'pt-BR' ? 
+          "Falha ao iniciar processo de assinatura. Tente novamente." : 
+          "Failed to start subscription process. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleCreateVoice = () => {
-    if (!slotsAvailable) return;
+    if (!isSlotAvailable) return;
     console.log('Analytics: voice_create_now_click');
     toast({
       title: currentLanguage === 'pt-BR' ? "Iniciando criação de voz" : "Starting voice creation",
@@ -327,6 +349,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
         "Redirecionando para o processo de clonagem..." : 
         "Redirecting to cloning process...",
     });
+    // Navigate to voice creation flow
+    if (onUpgrade) {
+      onUpgrade('voice-creation');
+    }
   };
 
   const handleJoinWaitlist = () => {
@@ -334,19 +360,32 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     setShowWaitlistModal(true);
   };
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!waitlistForm.name || !waitlistForm.email || !waitlistForm.consent) return;
     
-    console.log('Analytics: waitlist_submit_success', waitlistForm);
-    toast({
-      title: currentLanguage === 'pt-BR' ? "Adicionado à lista de espera" : "Added to waitlist",
-      description: currentLanguage === 'pt-BR' ? 
-        "Você será notificado quando uma vaga for liberada." : 
-        "You'll be notified when a slot becomes available.",
-    });
-    setShowWaitlistModal(false);
-    setWaitlistForm({ name: '', email: '', consent: false });
+    try {
+      console.log('Analytics: waitlist_submit_success', { name: waitlistForm.name, email: waitlistForm.email });
+      
+      const response = await SubscriptionService.joinVoiceWaitlist(waitlistForm.name, waitlistForm.email);
+      
+      toast({
+        title: currentLanguage === 'pt-BR' ? "Adicionado à lista de espera" : "Added to waitlist",
+        description: response.message,
+      });
+      
+      setShowWaitlistModal(false);
+      setWaitlistForm({ name: '', email: '', consent: false });
+    } catch (error) {
+      console.error('Failed to join waitlist:', error);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "Erro" : "Error",
+        description: currentLanguage === 'pt-BR' ? 
+          "Falha ao entrar na lista de espera. Tente novamente." : 
+          "Failed to join waitlist. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -451,19 +490,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       ))}
                     </div>
 
-
                     {/* Complete plan slot availability */}
                     {index === 2 && (
                       <div className={`p-4 rounded-lg border ${
-                        slotsAvailable 
+                        isSlotAvailable 
                           ? 'bg-green-50 border-green-200 availability-ok' 
                           : 'bg-amber-50 border-amber-200 availability-warn'
                       }`}>
                         <p className={`text-sm font-medium text-center ${
-                          slotsAvailable ? 'text-green-700' : 'text-amber-700'
+                          isSlotAvailable ? 'text-green-700' : 'text-amber-700'
                         }`}>
-                          {slotsAvailable ? content.slots.available : content.slots.unavailable}
+                          {isSlotAvailable ? content.slots.available : content.slots.unavailable}
                         </p>
+                        {subscriptionInfo && (
+                          <p className="text-xs text-center mt-1 opacity-75">
+                            {subscriptionInfo.capacity.slots_active}/{subscriptionInfo.capacity.plan_capacity.max_slots} slots em uso
+                          </p>
+                        )}
                       </div>
                     )}
 
@@ -486,6 +529,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                         variant={plan.popular ? "default" : "outline"}
                         size="lg" 
                         className="w-full h-12 font-semibold"
+                        disabled={subscriptionLoading}
                       >
                         {plan.cta}
                       </Button>
@@ -493,14 +537,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       {/* Complete plan secondary CTA */}
                       {index === 2 && plan.ctaCustomVoice && (
                         <Button 
-                          id={slotsAvailable ? 'voice_create_now' : 'voice_join_waitlist'}
-                          onClick={slotsAvailable ? handleCreateVoice : handleJoinWaitlist}
+                          id={isSlotAvailable ? 'voice_create_now' : 'voice_join_waitlist'}
+                          onClick={isSlotAvailable ? handleCreateVoice : handleJoinWaitlist}
                           variant="ghost" 
                           size="lg"
                           className="w-full h-12 border border-primary/20 hover:bg-primary/5"
+                          disabled={subscriptionLoading}
                         >
                           <Volume2 className="w-4 h-4 mr-2" />
-                          {slotsAvailable ? plan.ctaCustomVoice : plan.ctaWaitlist}
+                          {isSlotAvailable ? plan.ctaCustomVoice : plan.ctaWaitlist}
                         </Button>
                       )}
                     </div>
