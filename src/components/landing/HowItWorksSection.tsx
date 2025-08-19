@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const getContent = (language: string) => {
   const content = {
     en: {
-      title: "Como funciona",
+      title: "How It Works",
       subtitle: "Four simple steps to preserve and interact with cherished voices 💖",
       steps: [{
         title: "Configure",
