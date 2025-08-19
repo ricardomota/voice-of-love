@@ -14,8 +14,8 @@ const getContent = (language: string) => {
         detail: "Customize how your loved one's voice sounds and responds 💖"
       }, {
         title: "Add Memories",
-        description: "Upload photos, texts, stories, and personal moments to build their essence.",
-        detail: "Share photos, voice notes, texts, and memories to create their unique personality 📸"
+        description: "Upload texts, stories, and personal moments to build their essence.",
+        detail: "Share voice notes, texts, and memories to create their unique personality"
       }, {
         title: "Record",
         description: "Upload a short voice sample or choose a base voice - it's that easy!",
@@ -41,8 +41,8 @@ const getContent = (language: string) => {
         detail: "Personalize como a voz do seu ente querido soa e responde 💖"
       }, {
         title: "Adicionar Memórias",
-        description: "Envie fotos, textos, histórias e momentos pessoais para criar sua essência.",
-        detail: "Compartilhe fotos, notas de voz, textos e memórias para criar sua personalidade única 📸"
+        description: "Envie textos, histórias e momentos pessoais para criar sua essência.",
+        detail: "Compartilhe notas de voz, textos e memórias para criar sua personalidade única"
       }, {
         title: "Gravar",
         description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
@@ -68,8 +68,8 @@ const getContent = (language: string) => {
         detail: "Personaliza cómo suena y responde la voz de tu ser querido."
       }, {
         title: "Añadir Memorias",
-        description: "Sube fotos, textos, historias y momentos personales para crear su esencia.",
-        detail: "Comparte fotos, notas de voz, textos y memorias para crear su personalidad única 📸"
+        description: "Sube textos, historias y momentos personales para crear su esencia.",
+        detail: "Comparte notas de voz, textos y memorias para crear su personalidad única"
       }, {
         title: "Grabar",
         description: "Sube una muestra de voz o elige una voz base.",
