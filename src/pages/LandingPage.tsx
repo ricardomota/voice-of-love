@@ -58,7 +58,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       </div>
 
       {/* Pricing - Enhanced spacing */}
-      <div className="relative py-8 sm:py-12 lg:py-16">
+      <div className="relative py-4 sm:py-6 lg:py-8">
         <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
         <PricingSection 
           onTryFree={onTryFree}
