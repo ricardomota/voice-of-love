@@ -767,6 +767,17 @@ html {
     }
   }
 
+  /* Hero Background Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
   .grainy-shadow {
     box-shadow: 
       0 20px 25px -5px hsl(315 30% 25% / 0.08),
