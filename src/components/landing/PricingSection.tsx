@@ -420,9 +420,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           index === 1 ? (onUpgrade ? () => onUpgrade('essential') : onSeePricing) :
                           (onUpgrade ? () => onUpgrade('complete') : onSeePricing)
                         }
-                        variant={plan.popular ? "default" : "outline"}
+                        variant={plan.popular ? "default" : (index === 0 ? "secondary" : "outline")}
                         size="lg"
-                        className="w-full font-semibold transition-all duration-300"
+                        className={`w-full font-semibold transition-all duration-300 ${
+                          index === 0 ? 'bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border-2 border-primary' : ''
+                        }`}
                       >
                         {plan.cta}
                       </Button>
@@ -436,7 +438,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                           } : () => setShowWaitlistModal(true)}
                           variant="ghost"
                           size="sm"
-                          className="w-full text-sm"
+                          className="w-full text-sm bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                         >
                           <Mic className="w-4 h-4 mr-2" />
                           {slotsAvailable ? plan.ctaCustomVoice : plan.ctaWaitlist}

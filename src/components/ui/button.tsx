@@ -11,9 +11,9 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 hover:scale-[1.02] active:scale-95 px-6 py-3 font-semibold shadow-lg hover:shadow-xl",
         destructive: "rounded-2xl bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:scale-[1.02] active:scale-95 px-6 py-3 shadow-lg hover:shadow-xl",
-        outline: "rounded-xl border border-input bg-background hover:bg-accent/10 hover:text-accent-foreground hover:scale-[1.01] px-6 py-3",
-        secondary: "rounded-xl bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:scale-[1.01] active:scale-95 px-6 py-3 shadow-md hover:shadow-lg",
-        ghost: "rounded-xl hover:bg-accent/10 hover:text-accent-foreground hover:scale-[1.01] px-4 py-2",
+        outline: "rounded-xl border-2 border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground hover:scale-[1.01] px-6 py-3 transition-all duration-300",
+        secondary: "rounded-xl bg-secondary text-secondary-foreground hover:bg-secondary/90 hover:scale-[1.01] active:scale-95 px-6 py-3 shadow-md hover:shadow-lg",
+        ghost: "rounded-xl hover:bg-primary/10 hover:text-primary hover:scale-[1.01] px-4 py-2 transition-all duration-300",
         link: "text-accent underline-offset-4 hover:underline rounded-lg px-2 py-1 hover:scale-[1.01]",
         glass: "floating-button parallax-slow px-6 py-3 rounded-2xl hover:scale-[1.02]",
         cta: "bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 hover:scale-[1.02] active:scale-95 px-6 py-3 font-bold shadow-lg hover:shadow-xl text-lg",
