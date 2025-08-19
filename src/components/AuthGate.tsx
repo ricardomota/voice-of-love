@@ -235,9 +235,9 @@ export const AuthGate = memo(({
             <div 
               ref={cardRef}
               className={`
-                relative w-full bg-gradient-to-br from-card via-card/95 to-card/90 
-                border-4 border-primary/20 rounded-2xl overflow-hidden cursor-pointer
-                shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.16)]
+                relative w-full bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-rose-50/40 
+                border-4 border-amber-200/40 rounded-2xl overflow-hidden cursor-pointer
+                shadow-[0_8px_32px_rgba(251,146,60,0.15)] hover:shadow-[0_16px_64px_rgba(251,146,60,0.25)]
                 transform-gpu will-change-transform group
                 ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
               `}
@@ -274,11 +274,18 @@ export const AuthGate = memo(({
               
               {/* Card content */}
               <div className="relative p-8 z-20">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full">
-                    <Heart className="h-6 w-6 text-primary" />
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <img 
+                      src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" 
+                      alt="Mother's portrait" 
+                      className="w-12 h-12 rounded-full object-cover border-2 border-amber-200/60 shadow-lg"
+                    />
+                    <div className="p-3 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full">
+                      <Heart className="h-6 w-6 text-primary" />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-amber-800 to-rose-700 bg-clip-text text-transparent">
                     {content.story.title}
                   </h3>
                 </div>
