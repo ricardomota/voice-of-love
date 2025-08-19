@@ -2,7 +2,7 @@ import React from 'react';
 import { LandingHeader } from '@/components/landing/LandingHeader';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
-
+import { WhyICreatedSection } from '@/components/landing/WhyICreatedSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { PricingSection } from '@/components/landing/PricingSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
@@ -38,6 +38,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/10 to-transparent pointer-events-none" />
         <FeaturesSection />
       </div>
+
+      {/* Why I Created Eterna - Netflix/Apple TV style */}
+      <WhyICreatedSection />
 
       {/* How It Works - Enhanced spacing */}
       <div className="relative">
