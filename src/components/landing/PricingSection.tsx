@@ -448,58 +448,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </div>
 
 
-          {/* Testimonials */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-20"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {content.testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="text-center"
-                >
-                  <Card className="p-6 bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-colors">
-                    <Quote className="w-8 h-8 text-primary/30 mx-auto mb-4" />
-                    <p className="text-muted-foreground italic leading-relaxed">
-                      "{testimonial}"
-                    </p>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
 
-          {/* FAQ */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto"
-          >
-            <h3 className="font-serif text-3xl font-bold text-center text-foreground mb-12">
-              {content.faq.title}
-            </h3>
-            
-            <Accordion type="single" collapsible className="space-y-4">
-              {content.faq.items.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border border-border/50 rounded-lg px-6">
-                  <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
-                    {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </motion.div>
         </div>
       </section>
     </>
