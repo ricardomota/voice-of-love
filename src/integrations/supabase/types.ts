@@ -76,6 +76,33 @@ export type Database = {
         }
         Relationships: []
       }
+      capacity: {
+        Row: {
+          active_slots: number
+          buffer_slots: number
+          id: number
+          max_slots: number
+          plan_name: string
+          updated_at: string
+        }
+        Insert: {
+          active_slots?: number
+          buffer_slots?: number
+          id?: number
+          max_slots?: number
+          plan_name?: string
+          updated_at?: string
+        }
+        Update: {
+          active_slots?: number
+          buffer_slots?: number
+          id?: number
+          max_slots?: number
+          plan_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           created_at: string
@@ -460,7 +487,11 @@ export type Database = {
           bio: string | null
           created_at: string
           display_name: string | null
+          email_verified: boolean | null
+          entitlements: Json | null
           id: string
+          plan: string | null
+          stripe_customer_id: string | null
           updated_at: string
           user_id: string
         }
@@ -469,7 +500,11 @@ export type Database = {
           bio?: string | null
           created_at?: string
           display_name?: string | null
+          email_verified?: boolean | null
+          entitlements?: Json | null
           id?: string
+          plan?: string | null
+          stripe_customer_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -478,7 +513,11 @@ export type Database = {
           bio?: string | null
           created_at?: string
           display_name?: string | null
+          email_verified?: boolean | null
+          entitlements?: Json | null
           id?: string
+          plan?: string | null
+          stripe_customer_id?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -522,28 +561,37 @@ export type Database = {
       }
       usage_counters: {
         Row: {
+          chat_interactions_used: number | null
           created_at: string
+          free_demo_seconds_used: number | null
           messages_used: number
           period: string
           tts_seconds_used: number
           updated_at: string
           user_id: string
+          voice_seconds_used: number | null
         }
         Insert: {
+          chat_interactions_used?: number | null
           created_at?: string
+          free_demo_seconds_used?: number | null
           messages_used?: number
           period: string
           tts_seconds_used?: number
           updated_at?: string
           user_id: string
+          voice_seconds_used?: number | null
         }
         Update: {
+          chat_interactions_used?: number | null
           created_at?: string
+          free_demo_seconds_used?: number | null
           messages_used?: number
           period?: string
           tts_seconds_used?: number
           updated_at?: string
           user_id?: string
+          voice_seconds_used?: number | null
         }
         Relationships: []
       }
@@ -636,6 +684,39 @@ export type Database = {
         }
         Relationships: []
       }
+      voices: {
+        Row: {
+          created_at: string
+          eleven_voice_id: string | null
+          id: string
+          last_used_at: string | null
+          status: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          eleven_voice_id?: string | null
+          id?: string
+          last_used_at?: string | null
+          status?: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          eleven_voice_id?: string | null
+          id?: string
+          last_used_at?: string | null
+          status?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       voices_base: {
         Row: {
           created_at: string
@@ -681,8 +762,11 @@ export type Database = {
           id: string
           message: string | null
           primary_interest: string | null
+          processed_at: string | null
+          requested_at: string | null
           status: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -692,8 +776,11 @@ export type Database = {
           id?: string
           message?: string | null
           primary_interest?: string | null
+          processed_at?: string | null
+          requested_at?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -703,8 +790,11 @@ export type Database = {
           id?: string
           message?: string | null
           primary_interest?: string | null
+          processed_at?: string | null
+          requested_at?: string | null
           status?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -713,9 +803,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      compute_entitlements: {
+        Args: { user_plan: string }
+        Returns: Json
+      }
       ensure_usage_row: {
         Args: { p_period: string; p_user_id: string }
         Returns: undefined
+      }
+      get_user_subscription_info: {
+        Args: { user_id: string }
+        Returns: Json
       }
       schedule_memory_cleanup: {
         Args: Record<PropertyKey, never>
