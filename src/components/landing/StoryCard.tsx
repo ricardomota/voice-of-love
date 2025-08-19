@@ -28,7 +28,7 @@ export const StoryCard: React.FC = () => {
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
-  return <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-muted/20 to-background relative overflow-hidden">
+  return <section className="pt-12 pb-6 sm:pt-16 sm:pb-8 lg:pt-20 lg:pb-10 bg-gradient-to-r from-muted/20 to-background relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{
         opacity: 0,
