@@ -54,7 +54,7 @@ export const ConversionBand: React.FC<ConversionBandProps> = ({ onTryFree }) => 
               <Sparkles className="w-8 h-8 text-primary" />
             </div>
             
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground">
               {content.title}
             </h2>
             

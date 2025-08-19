@@ -97,7 +97,7 @@ export const PrivacySection: React.FC = () => {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
             {content.title}
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">

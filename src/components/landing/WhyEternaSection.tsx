@@ -88,7 +88,7 @@ export const WhyEternaSection: React.FC = () => {
           {/* Story Content */}
           <div className="space-y-10 text-center lg:text-left">
             <div className="space-y-8">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
                 {content.title}
               </h2>
               

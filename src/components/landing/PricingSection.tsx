@@ -315,7 +315,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto mb-16"
           >
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight leading-tight">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight leading-tight">
               {content.title}
             </h2>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed font-light max-w-3xl mx-auto">

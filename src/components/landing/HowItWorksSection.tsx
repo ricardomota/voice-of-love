@@ -196,7 +196,7 @@ export const HowItWorksSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 sm:mb-20"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             {content.title}
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
