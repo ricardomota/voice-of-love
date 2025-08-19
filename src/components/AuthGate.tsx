@@ -184,18 +184,18 @@ export const AuthGate = memo(({
             </div>
 
             {/* Story Section */}
-            <Card className="bg-card/50 border-border/50">
-              <CardContent className="p-6">
+            <Card className="group relative bg-gradient-to-br from-card/80 to-card/40 border-border/20 backdrop-blur-sm hover:from-card/90 hover:to-card/60 hover:border-primary/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 cursor-default overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="relative p-6 z-10">
                 <div className="flex items-center gap-2 mb-4">
-                  
-                  <h3 className="text-lg font-semibold">{content.story.title}</h3>
+                  <Heart className="h-5 w-5 text-primary group-hover:text-primary/80 transition-colors duration-300" />
+                  <h3 className="text-lg font-semibold group-hover:text-foreground/90 transition-colors duration-300">{content.story.title}</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-4">
+                <p className="text-muted-foreground leading-relaxed mb-4 group-hover:text-muted-foreground/80 transition-colors duration-300">
                   {content.story.text}
                 </p>
-                <div className="flex items-center gap-2 text-sm text-primary">
-                  
-                  <span className="font-medium">{content.story.heart}</span>
+                <div className="flex items-center gap-2 text-sm text-primary group-hover:text-primary/80 transition-colors duration-300">
+                  <span className="font-medium text-lg">{content.story.heart}</span>
                 </div>
               </CardContent>
             </Card>
