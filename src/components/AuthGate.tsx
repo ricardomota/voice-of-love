@@ -4,11 +4,12 @@ import { Button } from '@/components/ui/button';
 import { InputWithVoice } from '@/components/ui/input-with-voice';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2, ArrowLeft, Heart } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
 import { ProfileSetupModal } from '@/components/ProfileSetupModal';
+import { motion } from 'framer-motion';
 interface AuthGateProps {
   children: React.ReactNode;
 }
@@ -27,8 +28,14 @@ const getContent = (language: string) => {
       backToHome: "Back to Home",
       story: {
         title: "Why I Created Eterna",
-        text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones.",
-        heart: "❤️"
+        subtitle: "A Personal Journey",
+        paragraphs: [
+          "When my grandmother passed away, I realized that while we preserve photos and videos, we lose something irreplaceable—their voice, their wisdom, their unique way of seeing the world.",
+          "I spent countless nights wondering: What if technology could help us preserve not just memories, but the essence of who someone is? What if we could have one more conversation?",
+          "Eterna was born from this deeply personal need—to create a bridge between memory and presence, allowing love to transcend time itself."
+        ],
+        conclusion: "Every conversation on Eterna is a testament to the enduring power of human connection.",
+        founder: "— Riley Chen, Founder"
       },
       errors: {
         fillFields: "Please fill in email and password",
@@ -51,8 +58,14 @@ const getContent = (language: string) => {
       backToHome: "Voltar ao Início",
       story: {
         title: "Por que Criei o Eterna",
-        text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos.",
-        heart: "❤️"
+        subtitle: "Uma Jornada Pessoal",
+        paragraphs: [
+          "Quando minha avó faleceu, percebi que embora preservemos fotos e vídeos, perdemos algo insubstituível—sua voz, sua sabedoria, seu jeito único de ver o mundo.",
+          "Passei inúmeras noites me perguntando: E se a tecnologia pudesse nos ajudar a preservar não apenas memórias, mas a essência de quem alguém é? E se pudéssemos ter mais uma conversa?",
+          "A Eterna nasceu dessa necessidade profundamente pessoal—criar uma ponte entre memória e presença, permitindo que o amor transcenda o próprio tempo."
+        ],
+        conclusion: "Cada conversa na Eterna é um testemunho do poder duradouro da conexão humana.",
+        founder: "— Riley Chen, Fundadora"
       },
       errors: {
         fillFields: "Por favor, preencha email e senha",
@@ -75,8 +88,14 @@ const getContent = (language: string) => {
       backToHome: "Volver al Inicio",
       story: {
         title: "Por qué Creé Eterna",
-        text: "Creé Eterna después de perder a mi abuela por Alzheimer. Me di cuenta de que, aunque tomamos miles de fotos, rara vez preservamos las voces e historias de quienes amamos. Eterna nació del deseo de asegurar que las futuras generaciones puedan no solo ver, sino también escuchar e interactuar con los recuerdos de sus seres queridos.",
-        heart: "❤️"
+        subtitle: "Un Viaje Personal",
+        paragraphs: [
+          "Cuando mi abuela falleció, me di cuenta de que aunque preservamos fotos y videos, perdemos algo irreemplazable: su voz, su sabiduría, su forma única de ver el mundo.",
+          "Pasé incontables noches preguntándome: ¿Y si la tecnología pudiera ayudarnos a preservar no solo recuerdos, sino la esencia de quien es alguien? ¿Y si pudiéramos tener una conversación más?",
+          "Eterna nació de esta necesidad profundamente personal: crear un puente entre la memoria y la presencia, permitiendo que el amor trascienda el tiempo mismo."
+        ],
+        conclusion: "Cada conversación en Eterna es un testimonio del poder duradero de la conexión humana.",
+        founder: "— Riley Chen, Fundadora"
       },
       errors: {
         fillFields: "Por favor, completa email y contraseña",
@@ -163,47 +182,102 @@ export const AuthGate = memo(({
       </div>;
   }
   if (!user) {
-    return <main className="min-h-screen bg-background px-4">
+    return <main className="min-h-screen bg-background">
         {/* Back Button */}
-        <div className="pt-6 pb-4">
+        <div className="pt-6 pb-4 px-4">
           <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" />
             {content.backToHome}
           </Button>
         </div>
 
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start pt-8">
-          {/* Left side - Introduction & Story */}
-          <section className="space-y-8" aria-label="Introdução">
-            <div>
-              <h1 className="text-4xl font-bold tracking-tight mb-4">{content.welcome}</h1>
-              <p className="text-muted-foreground mb-8">{content.subtitle}</p>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                {content.features.map((feature, index) => <li key={index}>{feature}</li>)}
-              </ul>
-            </div>
+        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-6rem)]">
+          {/* Left side - Netflix/Apple TV Style Story Section */}
+          <section className="relative overflow-hidden">
+            {/* Dark background with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-black" />
+            
+            {/* Ambient lighting effect */}
+            <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent opacity-30" />
+            
+            {/* Subtle grain texture overlay */}
+            <div className="absolute inset-0 opacity-20" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }} />
+            
+            <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-12 py-16">
+              <motion.div
+                initial={{ opacity: 0, y: 60 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="space-y-8"
+              >
+                {/* Subtitle */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="mb-6"
+                >
+                  <span className="inline-block px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white/80 text-sm font-medium tracking-wide uppercase">
+                    {content.story.subtitle}
+                  </span>
+                </motion.div>
 
-            {/* Story Section */}
-            <Card className="bg-card/50 border-border/50">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  
-                  <h3 className="text-lg font-semibold">{content.story.title}</h3>
+                {/* Main title */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight tracking-tight mb-8"
+                >
+                  {content.story.title}
+                </motion.h1>
+
+                {/* Story content */}
+                <div className="space-y-6 max-w-2xl">
+                  {content.story.paragraphs.map((paragraph, index) => (
+                    <motion.p
+                      key={index}
+                      initial={{ opacity: 0, y: 40 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.6 + (index * 0.2) }}
+                      className="text-lg md:text-xl text-white/90 leading-relaxed font-light"
+                    >
+                      {paragraph}
+                    </motion.p>
+                  ))}
+
+                  {/* Conclusion */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 1.4 }}
+                    className="mt-12 pt-8 border-t border-white/10"
+                  >
+                    <p className="text-xl text-white/95 leading-relaxed mb-4 font-medium italic">
+                      "{content.story.conclusion}"
+                    </p>
+                    <p className="text-sm text-white/70 font-light tracking-wider">
+                      {content.story.founder}
+                    </p>
+                  </motion.div>
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {content.story.text}
-                </p>
-                <div className="flex items-center gap-2 text-sm text-primary">
-                  
-                  <span className="font-medium">{content.story.heart}</span>
-                </div>
-              </CardContent>
-            </Card>
+
+                {/* Decorative elements */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.8 }}
+                  className="absolute top-1/4 left-4 w-1 h-24 bg-gradient-to-b from-primary/30 to-transparent rounded-full"
+                />
+              </motion.div>
+            </div>
           </section>
 
           {/* Right side - Authentication */}
-          <section aria-label="Autenticação" className="lg:pt-12">
-            <Card className="w-full max-w-md shadow-xl mx-auto border-2 border-primary/20">
+          <section className="flex items-center justify-center p-8 bg-background">
+            <Card className="w-full max-w-md shadow-xl border-2 border-primary/20">
               <CardHeader className="text-center space-y-2">
                 <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
                 <p className="text-sm text-muted-foreground">{content.subtitle}</p>
