@@ -27,7 +27,7 @@ const getContent = (language: string) => {
       backToHome: "Back to Home",
       story: {
         title: "Why I Created Eterna",
-        text: "I created Eterna after losing my grandmother to Alzheimer's. I realized that while we take thousands of photos, we rarely preserve the voices and stories of those we love. Eterna was born from the desire to ensure that future generations can not only see, but also hear and interact with the memories of their loved ones.",
+        text: "I created Eterna after witnessing my mother's journey with Alzheimer's. I realized how fragile our memories can be, and how easily the voices, stories, and essence of those we love can fade. Eterna was born from the desire to preserve these traces, so that future generations can not only remember, but also feel connected to the people who shaped their lives.",
         heart: "❤️"
       },
       errors: {
@@ -51,7 +51,7 @@ const getContent = (language: string) => {
       backToHome: "Voltar ao Início",
       story: {
         title: "Por que Criei o Eterna",
-        text: "Criei o Eterna após perder minha avó para o Alzheimer. Percebi que, embora tiremos milhares de fotos, raramente preservamos as vozes e histórias daqueles que amamos. O Eterna nasceu do desejo de garantir que as futuras gerações possam não apenas ver, mas também ouvir e interagir com as memórias de seus entes queridos.",
+        text: "Criei o Eterna após testemunhar a jornada da minha mãe com o Alzheimer. Percebi como nossas memórias podem ser frágeis, e como facilmente as vozes, histórias e essência daqueles que amamos podem desvanecer. O Eterna nasceu do desejo de preservar esses vestígios, para que as futuras gerações possam não apenas lembrar, mas também se sentir conectadas às pessoas que moldaram suas vidas.",
         heart: "❤️"
       },
       errors: {
@@ -75,7 +75,7 @@ const getContent = (language: string) => {
       backToHome: "Volver al Inicio",
       story: {
         title: "Por qué Creé Eterna",
-        text: "Creé Eterna después de perder a mi abuela por Alzheimer. Me di cuenta de que, aunque tomamos miles de fotos, rara vez preservamos las voces e historias de quienes amamos. Eterna nació del deseo de asegurar que las futuras generaciones puedan no solo ver, sino también escuchar e interactuar con los recuerdos de sus seres queridos.",
+        text: "Creé Eterna después de presenciar el viaje de mi madre con el Alzheimer. Me di cuenta de lo frágiles que pueden ser nuestros recuerdos, y con qué facilidad pueden desvanecerse las voces, historias y esencia de quienes amamos. Eterna nació del deseo de preservar estos vestigios, para que las futuras generaciones puedan no solo recordar, sino también sentirse conectadas con las personas que moldearon sus vidas.",
         heart: "❤️"
       },
       errors: {
