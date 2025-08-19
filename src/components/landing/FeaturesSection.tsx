@@ -186,40 +186,40 @@ export const FeaturesSection: React.FC = () => {
           {content.features.map((feature, index) => {
           const IconComponent = feature.icon;
           return <motion.div key={index} variants={itemVariants} className="group">
-                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20 holographic-feature-card grainy-card-bg">
-                  {/* Simple background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="p-0 h-full">
+                <Card className="relative overflow-hidden holographic-feature-card grainy-card-bg shadow-lg hover:shadow-xl transition-all duration-300 h-full border-2 hover:border-primary/30">
+                  {/* Holographic noise overlay */}
+                  <div className="holographic-isolate pointer-events-none">
+                    <div className="holographic-noise" />
+                    <div className="holographic-overlay" />
+                  </div>
+                  <CardContent className="relative z-10 p-0 h-full">
                     <div className="relative h-64 sm:h-80 md:h-88 lg:h-80 xl:h-88 overflow-hidden">
                       {/* Feature Image with responsive sizing */}
                       <div className="relative w-full h-full">
                         <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                        
                         {/* Enhanced overlay gradient */}
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
                       </div>
-                      
-                      {/* Simple icon overlay */}
+
+                      {/* Icon overlay with foil effect */}
                       <div className="absolute top-6 right-6">
-                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl border border-primary/10">
+                        <div className="w-14 h-14 bg-card/95 backdrop-blur-md rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl border border-primary/10 holographic-foil">
                           <IconComponent className="w-7 h-7 text-primary" />
                         </div>
                       </div>
-                      
-                      
                     </div>
 
-                    {/* Simple Content */}
+                    {/* Content */}
                     <div className="p-6 sm:p-8 lg:p-10 space-y-4 sm:space-y-6 lg:space-y-8">
                       <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                         {feature.title}
                       </h3>
-                      
+
                       <p className="text-muted-foreground leading-relaxed text-base sm:text-lg">
                         {feature.description}
                       </p>
-                      
-                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 cursor-pointer hover:scale-105 ${index === 0 ? "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 border border-violet-400/40 text-violet-800 dark:text-violet-200" : index === 1 ? "bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-teal-500/20 border border-blue-400/40 text-blue-800 dark:text-blue-200" : index === 2 ? "bg-gradient-to-r from-emerald-500/20 via-green-500/20 to-lime-500/20 border border-emerald-400/40 text-emerald-800 dark:text-emerald-200" : "bg-gradient-to-r from-orange-500/20 via-red-500/20 to-pink-500/20 border border-orange-400/40 text-orange-800 dark:text-orange-200"}`}>
+
+                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-sm font-semibold backdrop-blur-sm transition-all duration-300 cursor-pointer hover:scale-105 grainy-gradient ${index === 0 ? "border border-violet-400/40 text-violet-800 dark:text-violet-200" : index === 1 ? "border border-blue-400/40 text-blue-800 dark:text-blue-200" : index === 2 ? "border border-emerald-400/40 text-emerald-800 dark:text-emerald-200" : "border border-orange-400/40 text-orange-800 dark:text-orange-200"}`}>
                         {feature.highlight}
                       </div>
                     </div>
