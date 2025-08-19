@@ -853,4 +853,21 @@ html {
   main > section:nth-of-type(even) {
     background: hsl(var(--muted));
   }
+
+  /* Hero Grainy Overlay */
+  .grainy-hero-overlay {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,1), rgba(0,0,0,0)),
+      var(--noise-filter);
+    filter: contrast(145%) brightness(650%) invert(100%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
+    .grainy-hero-overlay {
+      filter: contrast(125%) brightness(650%) invert(100%);
+      mix-blend-mode: color-dodge;
+    }
+  }
 }
