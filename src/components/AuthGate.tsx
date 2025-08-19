@@ -235,9 +235,9 @@ export const AuthGate = memo(({
             <div 
               ref={cardRef}
               className={`
-                relative w-full bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-rose-50/40 
-                border-4 border-amber-200/40 rounded-2xl overflow-hidden cursor-pointer
-                shadow-[0_8px_32px_rgba(251,146,60,0.15)] hover:shadow-[0_16px_64px_rgba(251,146,60,0.25)]
+                relative w-full bg-gradient-to-br from-amber-50/95 via-orange-50/90 to-rose-50/85 
+                backdrop-blur-md border-4 border-amber-200/60 rounded-2xl overflow-hidden cursor-pointer
+                shadow-[0_8px_32px_rgba(251,146,60,0.25)] hover:shadow-[0_16px_64px_rgba(251,146,60,0.35)]
                 transform-gpu will-change-transform group
                 ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
               `}
