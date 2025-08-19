@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useLanguage } from '@/hooks/useLanguage';
-import { Check, X, Heart, MessageCircle, Users, Mic, Clock, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { WaitlistModal } from './WaitlistModal';
-import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { useLanguage } from '@/hooks/useLanguage';
+import { 
+  Check, 
+  X, 
+  Heart, 
+  MessageCircle, 
+  Users, 
+  Mic, 
+  Lock, 
+  Play,
+  Quote,
+  Volume2,
+  Clock
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 
 interface PricingSectionProps {
   onTryFree: () => void;
@@ -15,8 +31,22 @@ interface PricingSectionProps {
   onUpgrade?: (planId: string) => void;
 }
 
-// Simulated slots availability - connect to backend when available
-const AVAILABLE_SLOTS = 30;
+// Simulated state variables - connect to backend when available
+const mockState = {
+  plan: 'free' as 'free' | 'essential' | 'complete',
+  slotsDisponiveis: 30, // Current available slots
+  maxSlots: 30,
+  autoUpgradeThreshold: 30,
+  waitlistLength: 0,
+  free_voice_demo_seconds_total: 60,
+  free_voice_demo_seconds_used: 0,
+  require_onboarding_to_unlock_demo: true,
+  monthly_voice_minutes_essential: 30,
+  monthly_voice_minutes_complete: 120,
+  monthly_chat_limits: { free: 20, essential: 200, complete: -1 },
+  genericVoicesEnabled: { free: false, essential: true, complete: true },
+  personalizedVoiceEnabled: { free: false, essential: false, complete: true }
+};
 
 interface PlanData {
   title: string;
@@ -36,38 +66,37 @@ const getContent = (language: string) => {
   const content = {
     'pt-BR': {
       title: "Escolha como manter quem você ama sempre por perto",
-      subtitle: "Experimente a Eterna por 7 dias grátis. Depois, escolha seu plano para continuar ouvindo, lembrando e sentindo.",
+      subtitle: "Experimente o Eterna por 7 dias grátis (sem voz contínua). Depois, escolha um plano para desbloquear áudio e presença.",
       plans: {
         free: {
           title: "Primeiro Olhar",
-          slogan: "Uma voz. Uma memória. Um começo.",
+          slogan: "Uma memória em texto. Um começo.",
           price: "Grátis por 7 dias",
           features: [
             "1 pessoa (clone)",
-            "5 minutos de voz gerada",
-            "20 interações de chat",
-            "Vozes humanas genéricas (pré-criadas)",
-            "Sem exportação de conteúdo",
-            "Sem personalização de personalidade"
+            "20 interações de chat (TEXTO)",
+            "Upload de memórias em texto e fotos (sem áudio contínuo)",
+            "Demo único de 60s de voz (vozes genéricas, one-time) 🔒",
+            "Sem exportação"
           ],
           cta: "Comece grátis",
-          note: "Ao final do teste, escolha um plano para continuar usando.",
+          note: "O teste gratuito não inclui voz contínua. O demo de 60s é único por conta.",
           popular: false
         } as PlanData,
         essential: {
           title: "Essencial",
-          slogan: "Presença contínua, simples e reconfortante.",
+          slogan: "Presença contínua, com voz humana.",
           price: "US$ 29",
           period: "/mês",
           features: [
             "1 pessoa",
-            "30 minutos/mês de voz gerada",
+            "30 minutos/mês de voz gerada (vozes pré-criadas, NÃO personalizadas)",
             "200 interações/mês de chat",
-            "Vozes humanas pré-criadas (não personalizadas)",
-            "Personalidade básica (tom e estilo)",
+            "Personalidade básica (tom/estilo)",
             "Exportação básica de áudio"
           ],
           cta: "Assine Essencial",
+          note: "Vozes genéricas, sem uso de slots personalizados.",
           popular: false
         } as PlanData,
         complete: {
@@ -79,53 +108,53 @@ const getContent = (language: string) => {
             "Até 3 pessoas",
             "120 minutos/mês de voz",
             "Interações ilimitadas de chat",
-            "Personalidade avançada (temperamento e emoção)",
-            "Upload de textos, áudios, fotos e memórias",
+            "Personalidade avançada (temperamento/emoção)",
+            "Upload de textos, fotos e áudios",
             "Exportação completa de áudio",
             "Compartilhamento com até 3 convidados",
-            "Voz personalizada baseada em gravações reais"
+            "Voz personalizada com gravações reais (consome slot global)"
           ],
           cta: "Assine Completo",
           ctaCustomVoice: "Criar minha voz agora",
-          ctaWaitlist: "Entrar na fila",
+          ctaWaitlist: "Entrar na lista de espera",
           popular: true,
           specialNote: "Limite global de capacidade: 30 vozes simultâneas"
         } as PlanData
       },
       comparison: {
-        title: "Compare todos os recursos",
+        title: "Barra comparativa",
         buttonText: "Ver comparação detalhada",
         seeDetails: "Ver detalhes",
-        headers: ["Recurso", "Free", "Essencial", "Completo"],
+        headers: ["Recursos", "Free", "Essencial", "Completo"],
         features: [
           { name: "Pessoas (clones)", free: "1", essential: "1", complete: "3" },
-          { name: "Minutos de voz/mês", free: "5", essential: "30", complete: "120" },
+          { name: "Minutos de voz/mês", free: "—", essential: "30", complete: "120" },
           { name: "Interações de chat/mês", free: "20", essential: "200", complete: "Ilimitado" },
-          { name: "Vozes genéricas pré-criadas", free: true, essential: true, complete: true },
-          { name: "Personalidade avançada", free: false, essential: false, complete: true },
-          { name: "Exportação completa de áudio", free: false, essential: false, complete: true },
-          { name: "Compartilhamento com convidados", free: false, essential: false, complete: "Até 3" },
-          { name: "Voz personalizada (slots limitados)", free: false, essential: false, complete: true }
+          { name: "Vozes pré-criadas", free: "—", essential: "✔", complete: "✔" },
+          { name: "Demo de voz (60s, one-time)", free: "✔ (genéricas)", essential: "—", complete: "—" },
+          { name: "Voz personalizada (slots)", free: "—", essential: "—", complete: "✔ (fila se necessário)" },
+          { name: "Exportação de áudio", free: "—", essential: "Básica", complete: "Completa" },
+          { name: "Convidados", free: "—", essential: "—", complete: "✔ (até 3)" }
         ]
       },
       faq: {
-        title: "Dúvidas Frequentes",
+        title: "FAQ rápido",
         items: [
           {
-            question: "Como funciona o teste grátis?",
-            answer: "Você tem 7 dias de acesso. Ao final, escolha um plano para continuar usando suas memórias e vozes."
+            question: "O teste grátis tem voz?",
+            answer: "O Free não inclui voz contínua. Você tem um demo único de 60s com vozes genéricas para experimentar."
           },
           {
-            question: "O que é voz personalizada?",
-            answer: "Criamos uma voz única baseada em gravações reais. Há 30 slots globais ativos; se estiver cheio, você pode entrar na fila."
+            question: "Qual a diferença entre voz pré-criada e personalizada?",
+            answer: "A pré-criada usa timbres humanos genéricos; a personalizada é treinada com gravações reais (apenas no Completo e sujeita a slots)."
           },
           {
-            question: "Perco minha voz personalizada se eu cancelar?",
-            answer: "Podemos desativá-la após um período sem uso para liberar o slot. Avisaremos antes."
+            question: "E se os slots acabarem?",
+            answer: "Você pode entrar na lista de espera; avisaremos assim que houver vaga."
           },
           {
             question: "Posso mudar de plano depois?",
-            answer: "Sim, você pode alterar ou cancelar a qualquer momento."
+            answer: "Sim, a qualquer momento."
           }
         ]
       },
@@ -138,43 +167,61 @@ const getContent = (language: string) => {
       },
       slots: {
         available: "Vagas disponíveis para voz personalizada agora",
-        unavailable: "Todas as vagas ocupadas no momento. Entre na fila e avisaremos assim que liberar."
+        unavailable: "Todas as vagas ocupadas — entre na lista de espera"
+      },
+      testimonials: [
+        "Voltar a ouvir a voz da minha mãe foi como um abraço.",
+        "Ela me chamou de filho de novo. Eu chorei.",
+        "É como manter uma parte dela viva aqui comigo."
+      ],
+      demo: {
+        play: "Ouvir demonstração (60s)",
+        upsell: "Desbloqueie a voz no Essencial",
+        progress: "Demo de voz (60s total)"
+      },
+      waitlist: {
+        title: "Entrar na lista de espera",
+        description: "Avisaremos você por email assim que uma vaga de voz personalizada for liberada.",
+        nameLabel: "Nome",
+        emailLabel: "Email",
+        consentLabel: "Concordo em receber notificações sobre disponibilidade de vagas",
+        cancel: "Cancelar",
+        submit: "Entrar na lista"
       }
     },
     en: {
       title: "Choose how to keep your loved ones always close",
-      subtitle: "Try Eterna for 7 days free. Then choose your plan to keep listening, remembering and feeling.",
+      subtitle: "Try Eterna for 7 days free (no continuous voice). Then choose a plan to unlock audio and presence.",
       plans: {
         free: {
           title: "First Look",
-          slogan: "One voice. One memory. A beginning.",
+          slogan: "A text memory. A beginning.",
           price: "Free for 7 days",
           features: [
             "1 person (clone)",
-            "5 minutes of generated voice",
-            "20 chat interactions",
-            "Generic human voices (pre-created)",
-            "No content export",
-            "No personality customization"
+            "20 chat interactions (TEXT)",
+            "Upload text and photo memories (no continuous audio)",
+            "Single 60s voice demo (generic voices, one-time) 🔒",
+            "No export"
           ],
           cta: "Start free",
-          note: "At the end of the test, choose a plan to continue using.",
+          note: "The free trial doesn't include continuous voice. The 60s demo is one-time per account.",
           popular: false
         } as PlanData,
         essential: {
           title: "Essential",
-          slogan: "Continuous, simple and comforting presence.",
+          slogan: "Continuous presence, with human voice.",
           price: "US$ 29",
           period: "/month",
           features: [
             "1 person",
-            "30 minutes/month of generated voice",
+            "30 minutes/month of generated voice (pre-created voices, NOT personalized)",
             "200 chat interactions/month",
-            "Pre-created human voices (not personalized)",
-            "Basic personality (tone and style)",
+            "Basic personality (tone/style)",
             "Basic audio export"
           ],
           cta: "Subscribe Essential",
+          note: "Generic voices, no personalized slots used.",
           popular: false
         } as PlanData,
         complete: {
@@ -186,11 +233,11 @@ const getContent = (language: string) => {
             "Up to 3 people",
             "120 minutes/month of voice",
             "Unlimited chat interactions",
-            "Advanced personality (temperament and emotion)",
-            "Upload texts, audios, photos and memories",
+            "Advanced personality (temperament/emotion)",
+            "Upload texts, photos and audios",
             "Complete audio export",
             "Share with up to 3 guests",
-            "Custom voice based on real recordings"
+            "Custom voice with real recordings (consumes global slot)"
           ],
           cta: "Subscribe Complete",
           ctaCustomVoice: "Create my voice now",
@@ -200,39 +247,39 @@ const getContent = (language: string) => {
         } as PlanData
       },
       comparison: {
-        title: "Compare all features",
+        title: "Comparison table",
         buttonText: "See detailed comparison",
         seeDetails: "See details",
-        headers: ["Feature", "Free", "Essential", "Complete"],
+        headers: ["Features", "Free", "Essential", "Complete"],
         features: [
           { name: "People (clones)", free: "1", essential: "1", complete: "3" },
-          { name: "Voice minutes/month", free: "5", essential: "30", complete: "120" },
+          { name: "Voice minutes/month", free: "—", essential: "30", complete: "120" },
           { name: "Chat interactions/month", free: "20", essential: "200", complete: "Unlimited" },
-          { name: "Generic pre-created voices", free: true, essential: true, complete: true },
-          { name: "Advanced personality", free: false, essential: false, complete: true },
-          { name: "Complete audio export", free: false, essential: false, complete: true },
-          { name: "Guest sharing", free: false, essential: false, complete: "Up to 3" },
-          { name: "Custom voice (limited slots)", free: false, essential: false, complete: true }
+          { name: "Pre-created voices", free: "—", essential: "✔", complete: "✔" },
+          { name: "Voice demo (60s, one-time)", free: "✔ (generic)", essential: "—", complete: "—" },
+          { name: "Custom voice (slots)", free: "—", essential: "—", complete: "✔ (queue if needed)" },
+          { name: "Audio export", free: "—", essential: "Basic", complete: "Complete" },
+          { name: "Guests", free: "—", essential: "—", complete: "✔ (up to 3)" }
         ]
       },
       faq: {
-        title: "Frequently Asked Questions",
+        title: "Quick FAQ",
         items: [
           {
-            question: "How does the free trial work?",
-            answer: "You have 7 days of access. At the end, choose a plan to continue using your memories and voices."
+            question: "Does the free trial have voice?",
+            answer: "Free doesn't include continuous voice. You have a single 60s demo with generic voices to try."
           },
           {
-            question: "What is custom voice?",
-            answer: "We create a unique voice based on real recordings. There are 30 global active slots; if it's full, you can join the queue."
+            question: "What's the difference between pre-created and custom voice?",
+            answer: "Pre-created uses generic human timbres; custom is trained with real recordings (Complete plan only, subject to slots)."
           },
           {
-            question: "Do I lose my custom voice if I cancel?",
-            answer: "We may deactivate it after a period without use to free up the slot. We'll notify you beforehand."
+            question: "What if slots run out?",
+            answer: "You can join the waitlist; we'll notify you when a slot becomes available."
           },
           {
             question: "Can I change plans later?",
-            answer: "Yes, you can change or cancel at any time."
+            answer: "Yes, at any time."
           }
         ]
       },
@@ -245,7 +292,26 @@ const getContent = (language: string) => {
       },
       slots: {
         available: "Slots available for custom voice now",
-        unavailable: "All slots occupied at the moment. Join the queue and we'll notify you when available."
+        unavailable: "All slots occupied — join the waitlist"
+      },
+      testimonials: [
+        "Hearing my mother's voice again was like a hug.",
+        "She called me son again. I cried.",
+        "It's like keeping a part of her alive with me."
+      ],
+      demo: {
+        play: "Listen to demo (60s)",
+        upsell: "Unlock voice in Essential",
+        progress: "Voice demo (60s total)"
+      },
+      waitlist: {
+        title: "Join waitlist",
+        description: "We'll notify you by email as soon as a custom voice slot becomes available.",
+        nameLabel: "Name",
+        emailLabel: "Email",
+        consentLabel: "I agree to receive notifications about slot availability",
+        cancel: "Cancel",
+        submit: "Join waitlist"
       }
     }
   };
@@ -260,105 +326,158 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+  const [waitlistForm, setWaitlistForm] = useState({ name: '', email: '', consent: false });
+  const [demoProgress, setDemoProgress] = useState(mockState.free_voice_demo_seconds_used);
+  const { toast } = useToast();
   
-  const slotsAvailable = AVAILABLE_SLOTS > 0;
+  const slotsAvailable = mockState.slotsDisponiveis > 0;
+  const demoExhausted = demoProgress >= mockState.free_voice_demo_seconds_total;
   const planOrder = [content.plans.free, content.plans.essential, content.plans.complete];
+
+  // Event handlers with proper IDs
+  const handleFreeTrial = () => {
+    console.log('Analytics: pricing_free_start');
+    onTryFree();
+  };
+
+  const handleVoiceDemo = () => {
+    if (mockState.plan !== 'free') return;
+    if (demoProgress >= mockState.free_voice_demo_seconds_total) return;
+    
+    console.log('Analytics: free_demo_play_start');
+    
+    const playDuration = Math.min(15, mockState.free_voice_demo_seconds_total - demoProgress);
+    setDemoProgress(prev => Math.min(prev + playDuration, mockState.free_voice_demo_seconds_total));
+    
+    toast({
+      title: currentLanguage === 'pt-BR' ? "Demonstração reproduzida" : "Demo played",
+      description: currentLanguage === 'pt-BR' ? 
+        `${playDuration}s de demonstração utilizada` : 
+        `${playDuration}s of demo used`,
+    });
+
+    if (demoProgress + playDuration >= mockState.free_voice_demo_seconds_total) {
+      console.log('Analytics: free_demo_play_complete');
+    }
+  };
+
+  const handleEssentialSubscribe = () => {
+    console.log('Analytics: pricing_subscribe_essential');
+    onUpgrade?.('essential');
+  };
+
+  const handleCompleteSubscribe = () => {
+    console.log('Analytics: pricing_subscribe_complete');
+    onUpgrade?.('complete');
+  };
+
+  const handleCreateVoice = () => {
+    if (!slotsAvailable) return;
+    console.log('Analytics: voice_create_now_click');
+    toast({
+      title: currentLanguage === 'pt-BR' ? "Iniciando criação de voz" : "Starting voice creation",
+      description: currentLanguage === 'pt-BR' ? 
+        "Redirecionando para o processo de clonagem..." : 
+        "Redirecting to cloning process...",
+    });
+  };
+
+  const handleJoinWaitlist = () => {
+    console.log('Analytics: voice_join_waitlist_click');
+    setShowWaitlistModal(true);
+  };
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!waitlistForm.name || !waitlistForm.email || !waitlistForm.consent) return;
+    
+    console.log('Analytics: waitlist_submit_success', waitlistForm);
+    toast({
+      title: currentLanguage === 'pt-BR' ? "Adicionado à lista de espera" : "Added to waitlist",
+      description: currentLanguage === 'pt-BR' ? 
+        "Você será notificado quando uma vaga for liberada." : 
+        "You'll be notified when a slot becomes available.",
+    });
+    setShowWaitlistModal(false);
+    setWaitlistForm({ name: '', email: '', consent: false });
+  };
+
+  const handleUpsellToEssential = () => {
+    console.log('Analytics: upsell_to_essential');
+    onUpgrade?.('essential');
+  };
 
   return (
     <>
-      <section id="pricing" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-background via-background/90 to-muted/20 relative overflow-hidden">
+      <section id="pricing" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-background via-background/95 to-background/90 relative overflow-hidden">
         {/* Subtle background elements */}
-        <motion.div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.4, 0.2, 0.4]
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 5
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Header */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto mb-16 sm:mb-20"
+            className="text-center max-w-4xl mx-auto mb-16"
           >
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight leading-tight">
               {content.title}
             </h2>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed font-light max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed font-light max-w-3xl mx-auto">
               {content.subtitle}
             </p>
           </motion.div>
 
           {/* Pricing Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
             {planOrder.map((plan, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className={`${plan.popular ? 'lg:scale-105' : ''}`}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className={`${plan.popular ? 'md:scale-105 md:-mt-4' : ''}`}
               >
-                <Card className={`relative group transition-all duration-300 h-full border-2 ${
+                <Card className={`relative h-full transition-all duration-300 ${
                   plan.popular 
-                    ? 'border-primary shadow-2xl bg-gradient-to-br from-card via-primary/5 to-primary/10' 
-                    : 'border-border/50 hover:border-primary/30 hover:shadow-lg bg-gradient-to-br from-card to-card/95'
+                    ? 'border-2 border-primary shadow-2xl bg-gradient-to-br from-card via-card to-primary/5' 
+                    : 'border border-border/50 hover:border-primary/30 hover:shadow-lg bg-card'
                 }`}>
                   {/* Popular badge */}
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                      <Badge className="bg-primary text-primary-foreground px-4 py-1 text-sm font-semibold shadow-lg">
-                        Mais Popular
+                      <Badge className="bg-primary text-primary-foreground px-6 py-2 text-sm font-semibold shadow-lg">
+                        {currentLanguage === 'pt-BR' ? 'Mais popular' : 'Most popular'}
                       </Badge>
                     </div>
                   )}
 
-                  <CardContent className="p-8 space-y-6">
+                  <CardContent className="p-8 space-y-8">
                     {/* Plan header */}
-                    <div className="text-center space-y-3">
-                      <div className={`w-16 h-16 mx-auto rounded-3xl flex items-center justify-center ${
+                    <div className="text-center space-y-4">
+                      <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center ${
                         index === 0 ? 'bg-gradient-to-br from-accent/20 to-accent/10' :
                         index === 1 ? 'bg-gradient-to-br from-primary/20 to-primary/10' :
                         'bg-gradient-to-br from-primary/30 to-primary/20'
                       }`}>
-                        {index === 0 && <Heart className="w-8 h-8 text-accent" />}
+                        {index === 0 && <Heart className={`w-8 h-8 ${index === 0 ? 'text-accent' : 'text-primary'}`} />}
                         {index === 1 && <MessageCircle className="w-8 h-8 text-primary" />}
                         {index === 2 && <Users className="w-8 h-8 text-primary" />}
                       </div>
                       
-                      <h3 className="font-serif text-2xl font-bold text-foreground">
-                        {plan.title}
-                      </h3>
-                      <p className="text-muted-foreground text-base italic leading-relaxed">
-                        "{plan.slogan}"
-                      </p>
-                    </div>
+                      <div>
+                        <h3 className="font-serif text-2xl font-bold text-foreground mb-2">
+                          {plan.title}
+                        </h3>
+                        <p className="text-muted-foreground italic text-base leading-relaxed">
+                          "{plan.slogan}"
+                        </p>
+                      </div>
 
-                    {/* Price */}
-                    <div className="text-center space-y-2">
+                      {/* Price */}
                       <div className="flex items-baseline justify-center gap-1">
                         <span className="text-4xl font-bold text-foreground">
                           {plan.price}
@@ -372,36 +491,72 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     </div>
 
                     {/* Features */}
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {plan.features.map((feature, featureIndex) => (
                         <div key={featureIndex} className="flex items-start gap-3">
-                          <div className="p-1 bg-primary/10 rounded-full mt-0.5">
-                            <Check className="w-3 h-3 text-primary flex-shrink-0" />
+                          <div className="flex-shrink-0 w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5">
+                            <Check className="w-3 h-3 text-primary" />
                           </div>
-                          <span className="text-muted-foreground leading-relaxed text-sm">
-                            {feature}
+                          <span className="text-muted-foreground text-sm leading-relaxed">
+                            {feature.includes('🔒') ? (
+                              <>
+                                {feature.replace(' 🔒', '')}
+                                <Lock className="inline w-4 h-4 ml-1 text-muted-foreground/60" />
+                              </>
+                            ) : feature}
                           </span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Special note for Complete plan */}
-                    {index === 2 && (
-                      <div className="space-y-3">
-                        <p className="text-xs text-muted-foreground italic text-center">
-                          {plan.specialNote}
-                        </p>
-                        <div className={`text-center p-3 rounded-lg ${
-                          slotsAvailable 
-                            ? 'bg-green-50 border border-green-200' 
-                            : 'bg-amber-50 border border-amber-200'
-                        }`}>
-                          <p className={`text-sm font-medium ${
-                            slotsAvailable ? 'text-green-700' : 'text-amber-700'
-                          }`}>
-                            {slotsAvailable ? content.slots.available : content.slots.unavailable}
-                          </p>
+                    {/* Free plan demo section */}
+                    {index === 0 && (
+                      <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-foreground">{content.demo.progress}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {demoProgress}/{mockState.free_voice_demo_seconds_total}s
+                          </span>
                         </div>
+                        <Progress value={(demoProgress / mockState.free_voice_demo_seconds_total) * 100} className="h-2" />
+                        
+                        {!demoExhausted ? (
+                          <Button 
+                            id="free_demo_play"
+                            onClick={handleVoiceDemo}
+                            variant="outline" 
+                            size="sm"
+                            className="w-full"
+                          >
+                            <Play className="w-4 h-4 mr-2" />
+                            {content.demo.play}
+                          </Button>
+                        ) : (
+                          <Button 
+                            id="upsell_to_essential"
+                            onClick={handleUpsellToEssential}
+                            variant="default" 
+                            size="sm"
+                            className="w-full"
+                          >
+                            {content.demo.upsell}
+                          </Button>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Complete plan slot availability */}
+                    {index === 2 && (
+                      <div className={`p-4 rounded-lg border ${
+                        slotsAvailable 
+                          ? 'bg-green-50 border-green-200 availability-ok' 
+                          : 'bg-amber-50 border-amber-200 availability-warn'
+                      }`}>
+                        <p className={`text-sm font-medium text-center ${
+                          slotsAvailable ? 'text-green-700' : 'text-amber-700'
+                        }`}>
+                          {slotsAvailable ? content.slots.available : content.slots.unavailable}
+                        </p>
                       </div>
                     )}
 
@@ -415,32 +570,29 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                     {/* CTA Buttons */}
                     <div className="space-y-3">
                       <Button 
+                        id={`pricing_${index === 0 ? 'free_start' : index === 1 ? 'subscribe_essential' : 'subscribe_complete'}`}
                         onClick={
-                          index === 0 ? onTryFree : 
-                          index === 1 ? (onUpgrade ? () => onUpgrade('essential') : onSeePricing) :
-                          (onUpgrade ? () => onUpgrade('complete') : onSeePricing)
+                          index === 0 ? handleFreeTrial :
+                          index === 1 ? handleEssentialSubscribe :
+                          handleCompleteSubscribe
                         }
-                        variant={plan.popular ? "default" : (index === 0 ? "secondary" : "outline")}
-                        size="lg"
-                        className={`w-full font-semibold transition-all duration-300 ${
-                          index === 0 ? 'bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border-2 border-primary' : ''
-                        }`}
+                        variant={plan.popular ? "default" : "outline"}
+                        size="lg" 
+                        className="w-full h-12 font-semibold"
                       >
                         {plan.cta}
                       </Button>
 
-                      {/* Secondary CTA for Complete plan */}
-                      {index === 2 && (
+                      {/* Complete plan secondary CTA */}
+                      {index === 2 && plan.ctaCustomVoice && (
                         <Button 
-                          onClick={slotsAvailable ? () => {
-                            // Navigate to voice creation
-                            if (onUpgrade) onUpgrade('complete-voice');
-                          } : () => setShowWaitlistModal(true)}
-                          variant="ghost"
-                          size="sm"
-                          className="w-full text-sm bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                          id={slotsAvailable ? 'voice_create_now' : 'voice_join_waitlist'}
+                          onClick={slotsAvailable ? handleCreateVoice : handleJoinWaitlist}
+                          variant="ghost" 
+                          size="lg"
+                          className="w-full h-12 border border-primary/20 hover:bg-primary/5"
                         >
-                          <Mic className="w-4 h-4 mr-2" />
+                          <Volume2 className="w-4 h-4 mr-2" />
                           {slotsAvailable ? plan.ctaCustomVoice : plan.ctaWaitlist}
                         </Button>
                       )}
@@ -451,119 +603,179 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             ))}
           </div>
 
-          {/* Comparison Table - Now as Accordion */}
-          <motion.div 
+          {/* Comparison Table */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mb-12 max-w-6xl mx-auto"
+            viewport={{ once: true }}
+            className="mb-20 bg-card/50 backdrop-blur-sm rounded-xl border border-border/50 overflow-hidden"
           >
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="comparison" className="border-0">
-                <AccordionTrigger className="flex flex-col items-center justify-center gap-3 py-6 px-5 bg-gradient-to-r from-muted/30 to-muted/20 rounded-xl border border-border/50 hover:border-border transition-all duration-300 hover:no-underline group data-[state=open]:rounded-b-none">
-                  <div className="text-center space-y-1">
-                    <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {content.comparison.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {content.comparison.buttonText}
+            <div className="p-8">
+              <h3 className="font-serif text-2xl font-bold text-center text-foreground mb-8">
+                {content.comparison.title}
+              </h3>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border">
+                      {content.comparison.headers.map((header, index) => (
+                        <th key={index} className={`py-4 px-4 font-semibold text-foreground ${
+                          index === 0 ? 'text-left' : 'text-center'
+                        }`}>
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm">
+                    {content.comparison.features.map((feature, index) => (
+                      <tr key={index} className="border-b border-border/50">
+                        <td className="py-3 px-4 text-muted-foreground">{feature.name}</td>
+                        <td className="py-3 px-4 text-center">
+                          {typeof feature.free === 'boolean' ? (
+                            feature.free ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
+                          ) : (
+                            feature.free
+                          )}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          {typeof feature.essential === 'boolean' ? (
+                            feature.essential ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
+                          ) : (
+                            feature.essential
+                          )}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          {typeof feature.complete === 'boolean' ? (
+                            feature.complete ? <Check className="w-4 h-4 text-primary mx-auto" /> : <X className="w-4 h-4 text-muted-foreground/40 mx-auto" />
+                          ) : (
+                            feature.complete
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Testimonials */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-20"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {content.testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 }}
+                  className="text-center"
+                >
+                  <Card className="p-6 bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/20 transition-colors">
+                    <Quote className="w-8 h-8 text-primary/30 mx-auto mb-4" />
+                    <p className="text-muted-foreground italic leading-relaxed">
+                      "{testimonial}"
                     </p>
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground group-hover:text-primary group-hover:gap-3 transition-all">
-                    <span className="text-xs font-medium">{content.comparison.seeDetails}</span>
-                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                  </div>
-                </AccordionTrigger>
-                
-                <AccordionContent className="px-5 pb-5 bg-gradient-to-r from-muted/30 to-muted/20 rounded-b-xl border-x border-b border-border/50">
-                  <div className="overflow-x-auto pt-3">
-                    <table className="w-full bg-card rounded-lg border border-border">
-                      <thead>
-                        <tr className="border-b border-border">
-                          <th className="text-left p-3 font-medium text-foreground text-sm">{content.comparison.headers[0]}</th>
-                          <th className="text-center p-3 font-medium text-foreground text-sm">{content.comparison.headers[1]}</th>
-                          <th className="text-center p-3 font-medium text-foreground text-sm">{content.comparison.headers[2]}</th>
-                          <th className="text-center p-3 font-medium text-foreground text-sm bg-primary/5">{content.comparison.headers[3]}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {content.comparison.features.map((feature, index) => (
-                          <tr key={index} className="border-b border-border/50">
-                            <td className="p-3 text-muted-foreground text-sm">{feature.name}</td>
-                            <td className="p-3 text-center">
-                              {typeof feature.free === 'boolean' ? (
-                                feature.free ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
-                              ) : (
-                                <span className="text-foreground font-medium text-sm">{feature.free}</span>
-                              )}
-                            </td>
-                            <td className="p-3 text-center">
-                              {typeof feature.essential === 'boolean' ? (
-                                feature.essential ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
-                              ) : (
-                                <span className="text-foreground font-medium text-sm">{feature.essential}</span>
-                              )}
-                            </td>
-                            <td className="p-3 text-center bg-primary/5">
-                              {typeof feature.complete === 'boolean' ? (
-                                feature.complete ? <Check className="w-3 h-3 text-green-600 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />
-                              ) : (
-                                <span className="text-foreground font-medium text-sm">{feature.complete}</span>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* FAQ */}
-          <div id="faq">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="mb-16 max-w-6xl mx-auto"
-            >
-              <h3 className="text-xl font-semibold text-center mb-10 text-muted-foreground">
-                {content.faq.title}
-              </h3>
-            <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto"
+          >
+            <h3 className="font-serif text-3xl font-bold text-center text-foreground mb-12">
+              {content.faq.title}
+            </h3>
+            
+            <Accordion type="single" collapsible className="space-y-4">
               {content.faq.items.map((item, index) => (
-                <Card key={index} className="p-6 hover:shadow-md transition-shadow duration-200 bg-muted/20 border-muted/30">
-                  <h4 className="font-medium text-foreground mb-3 text-base">
+                <AccordionItem key={index} value={`item-${index}`} className="border border-border/50 rounded-lg px-6">
+                  <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
                     {item.question}
-                  </h4>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
                     {item.answer}
-                  </p>
-                </Card>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
-            </motion.div>
-          </div>
-
-          {/* Footer notes */}
-          <div className="text-center space-y-4 max-w-6xl mx-auto">
-            {content.footer.notes.map((note, index) => (
-              <p key={index} className="text-xs text-muted-foreground">
-                {note}
-              </p>
-            ))}
-          </div>
+            </Accordion>
+          </motion.div>
         </div>
       </section>
 
-      <WaitlistModal 
-        isOpen={showWaitlistModal}
-        onClose={() => setShowWaitlistModal(false)}
-      />
+      {/* Waitlist Modal */}
+      <Dialog open={showWaitlistModal} onOpenChange={setShowWaitlistModal}>
+        <DialogContent id="waitlist_modal" className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{content.waitlist.title}</DialogTitle>
+            <DialogDescription>
+              {content.waitlist.description}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="name">{content.waitlist.nameLabel}</Label>
+              <Input
+                id="name"
+                type="text"
+                value={waitlistForm.name}
+                onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
+                required
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="email">{content.waitlist.emailLabel}</Label>
+              <Input
+                id="email"
+                type="email"
+                value={waitlistForm.email}
+                onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
+                required
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="consent"
+                checked={waitlistForm.consent}
+                onCheckedChange={(checked) => setWaitlistForm(prev => ({ ...prev, consent: !!checked }))}
+                required
+              />
+              <Label htmlFor="consent" className="text-sm text-muted-foreground">
+                {content.waitlist.consentLabel}
+              </Label>
+            </div>
+            
+            <div className="flex gap-3">
+              <Button type="button" variant="outline" onClick={() => setShowWaitlistModal(false)}>
+                {content.waitlist.cancel}
+              </Button>
+              <Button 
+                type="submit" 
+                id="waitlist_submit"
+                disabled={!waitlistForm.name || !waitlistForm.email || !waitlistForm.consent}
+              >
+                {content.waitlist.submit}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
