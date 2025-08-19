@@ -27,9 +27,10 @@ serve(async (req) => {
   try {
     logStep("Function started");
 
-    const { planId } = await req.json();
+    const body = await req.json();
+    const { planId, mode = 'checkout' } = body;
     if (!planId) throw new Error("Plan ID is required");
-    logStep("Plan ID received", { planId });
+    logStep("Plan ID received", { planId, mode });
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
@@ -75,28 +76,62 @@ serve(async (req) => {
       throw new Error("Invalid plan ID");
     }
 
-    logStep("Creating checkout session", { planId, priceData });
+    logStep("Creating checkout session", { planId, priceData, mode });
 
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : user.email,
-      line_items: [
-        {
-          price_data: priceData,
-          quantity: 1,
-        },
-      ],
-      mode: "subscription",
-      success_url: `${req.headers.get("origin")}/app/dashboard?subscription=success`,
-      cancel_url: `${req.headers.get("origin")}/app/dashboard?subscription=cancelled`,
-    });
+    if (mode === 'setup') {
+      // Create a subscription for Stripe Elements (Payment page) with incomplete payment behavior
+      // This allows us to get a client_secret for the payment intent
+      
+      // First create or get customer
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: user.email,
+        });
+        customerId = customer.id;
+        logStep("Created new Stripe customer", { customerId });
+      }
 
-    logStep("Checkout session created", { sessionId: session.id, url: session.url });
+      const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [{ price_data: priceData }],
+        payment_behavior: 'default_incomplete',
+        payment_settings: { save_default_payment_method: 'on_subscription' },
+        expand: ['latest_invoice.payment_intent'],
+      });
 
-    return new Response(JSON.stringify({ url: session.url }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
+      const invoice = subscription.latest_invoice as Stripe.Invoice;
+      const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
+
+      return new Response(JSON.stringify({ 
+        client_secret: paymentIntent.client_secret,
+        subscription_id: subscription.id
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    } else {
+      // Create traditional checkout session (existing flow)
+      const session = await stripe.checkout.sessions.create({
+        customer: customerId,
+        customer_email: customerId ? undefined : user.email,
+        line_items: [
+          {
+            price_data: priceData,
+            quantity: 1,
+          },
+        ],
+        mode: "subscription",
+        success_url: `${req.headers.get("origin")}/app/dashboard?subscription=success`,
+        cancel_url: `${req.headers.get("origin")}/app/dashboard?subscription=cancelled`,
+      });
+
+      logStep("Checkout session created", { sessionId: session.id, url: session.url });
+
+      return new Response(JSON.stringify({ url: session.url }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR in create-checkout", { message: errorMessage });

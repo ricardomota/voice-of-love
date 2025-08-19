@@ -47,7 +47,7 @@ export const Payment: React.FC = () => {
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { 
           planId,
-          mode: 'setup' // For subscription setup
+          mode: 'setup'
         },
         headers: {
           Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
@@ -163,7 +163,7 @@ export const Payment: React.FC = () => {
 
           {/* Payment Form */}
           {clientSecret ? (
-            <StripeProvider>
+            <StripeProvider clientSecret={clientSecret}>
               <CheckoutForm
                 planId={planId}
                 planName={plan.name}

@@ -2,17 +2,18 @@ import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-// Initialize Stripe with publishable key
-const stripePromise = loadStripe('pk_test_51P0X4dJlDu8qhMNEHrEcZI7GE6NhxYHJLBmUUIgLCx8hNmJQHEkXLCN8HgNlOpwKDTGvhRXgTtczKSN6JK9nPaDU00wZejGEbW');
+// Initialize Stripe with publishable key - using test key for now
+// In production, this should be your live publishable key
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 interface StripeProviderProps {
   children: React.ReactNode;
+  clientSecret: string;
 }
 
-export const StripeProvider: React.FC<StripeProviderProps> = ({ children }) => {
+export const StripeProvider: React.FC<StripeProviderProps> = ({ children, clientSecret }) => {
   const options = {
-    mode: 'subscription' as const,
-    currency: 'usd',
+    clientSecret,
     appearance: {
       theme: 'stripe' as const,
       variables: {
