@@ -302,7 +302,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
   return (
     <>
-      <section id="pricing" className="pt-16 pb-4 sm:pt-20 sm:pb-6 md:pt-24 md:pb-8 lg:pt-32 lg:pb-12 bg-gradient-to-br from-background via-background/95 to-background/90 relative overflow-hidden">
+      <section id="pricing" className="pt-16 pb-4 sm:pt-20 sm:pb-6 md:pt-24 md:pb-6 lg:pt-32 lg:pb-6 bg-gradient-to-br from-background via-background/95 to-background/90 relative overflow-hidden">
         {/* Subtle background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-30" />
         
