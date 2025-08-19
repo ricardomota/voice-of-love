@@ -22,23 +22,23 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 bg-gradient-to-br from-primary via-primary/95 to-accent border-primary-foreground/20">
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 bg-gradient-to-br from-primary via-primary/95 to-accent border-primary-foreground/20 [&>button]:hidden">
         <div className="relative p-8">
           {/* Close button */}
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="absolute top-4 right-4 text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10"
+            className="absolute top-4 right-4 text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10 z-10"
           >
             <Close size={20} />
           </Button>
 
           <DialogHeader className="space-y-6 text-center">
-            <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground">
+            <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground text-center">
               Experience Eterna Demo
             </DialogTitle>
-            <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
+            <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
               See how Eterna preserves memories and creates meaningful connections with AI that captures the essence of your loved ones.
             </p>
           </DialogHeader>
@@ -69,7 +69,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 >
                   <div className="text-center text-primary-foreground">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary mx-auto mb-4"></div>
-                    <p className="text-lg">Loading demo...</p>
+                    <p className="text-lg text-center">Loading demo...</p>
                   </div>
                 </motion.div>
               )}
