@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { PlayFilled, Close } from '@carbon/icons-react';
+import { Close, ArrowRight } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
+import { DemoChat } from '@/components/demo/DemoChat';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -10,14 +11,14 @@ interface DemoModalProps {
 }
 
 export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
 
-  const handlePlayDemo = () => {
-    setIsPlaying(true);
-    // Redirect to actual demo page after a brief animation
-    setTimeout(() => {
-      window.location.href = '/demo';
-    }, 1000);
+  const handleStartDemo = () => {
+    setShowDemo(true);
+  };
+
+  const handleTryFull = () => {
+    window.location.href = '/auth';
   };
 
   return (
@@ -34,89 +35,119 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
             <Close size={20} />
           </Button>
 
-          <DialogHeader className="space-y-6 text-center">
+          <DialogHeader className="space-y-6 text-center mb-8">
             <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground text-center">
               Experience Eterna Demo
             </DialogTitle>
             <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
-              See how Eterna preserves memories and creates meaningful connections with AI that captures the essence of your loved ones.
+              Experience what it feels like to have a conversation with an AI version of a loved one.
             </p>
           </DialogHeader>
 
-          {/* Demo Preview Area */}
-          <div className="mt-8 space-y-8">
-            {/* Video/Preview Container */}
-            <div className="relative rounded-2xl overflow-hidden aspect-video bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20">
-              {!isPlaying ? (
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: isPlaying ? 0 : 1 }}
-                >
-                  <Button
-                    onClick={handlePlayDemo}
-                    size="xl"
-                    className="h-20 w-20 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-2xl"
-                  >
-                    <PlayFilled size={32} />
-                  </Button>
-                </motion.div>
-              ) : (
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center bg-primary/20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <div className="text-center text-primary-foreground">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary mx-auto mb-4"></div>
-                    <p className="text-lg text-center">Loading demo...</p>
-                  </div>
-                </motion.div>
-              )}
-              
-              {/* Background pattern */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:30px_30px]" />
-              </div>
-            </div>
-
-            {/* Demo Features */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto">
-                  <PlayFilled size={24} className="text-secondary" />
-                </div>
-                <h3 className="font-semibold text-primary-foreground">Interactive Conversations</h3>
-                <p className="text-sm text-primary-foreground/80">Experience natural dialogue with AI personas</p>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto">
-                  <PlayFilled size={24} className="text-secondary" />
-                </div>
-                <h3 className="font-semibold text-primary-foreground">Memory Preservation</h3>
-                <p className="text-sm text-primary-foreground/80">See how stories and wisdom are captured</p>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto">
-                  <PlayFilled size={24} className="text-secondary" />
-                </div>
-                <h3 className="font-semibold text-primary-foreground">Privacy First</h3>
-                <p className="text-sm text-primary-foreground/80">Your data remains secure and private</p>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="text-center pt-4">
-              <Button
-                onClick={handlePlayDemo}
-                size="xl"
-                variant="secondary"
-                className="min-w-[200px] h-14 text-lg font-semibold"
-                disabled={isPlaying}
+          {/* Demo Area */}
+          <div className="space-y-6">
+            {!showDemo ? (
+              <motion.div 
+                className="space-y-8"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: showDemo ? 0 : 1 }}
               >
-                {isPlaying ? 'Loading...' : 'Start Demo'}
-              </Button>
-            </div>
+                {/* Preview Card */}
+                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20 p-8 text-center">
+                  <div className="space-y-4">
+                    <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="w-12 h-12 bg-secondary/40 rounded-full flex items-center justify-center">
+                        <span className="text-2xl">👵</span>
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-serif text-primary-foreground">Meet Avó Maria</h3>
+                    <p className="text-primary-foreground/80 max-w-md mx-auto">
+                      Chat with an AI version of a loving grandmother who remembers your favorite recipes, 
+                      shares family stories, and offers wise advice.
+                    </p>
+                  </div>
+                  
+                  {/* Background pattern */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:30px_30px]" />
+                  </div>
+                </div>
+
+                {/* Features Preview */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      icon: "💬",
+                      title: "Natural Conversations",
+                      description: "Chat naturally with AI that captures personality and memories"
+                    },
+                    {
+                      icon: "🎵",
+                      title: "Voice Memories",
+                      description: "Hear responses in their familiar voice (simulated in demo)"
+                    },
+                    {
+                      icon: "❤️",
+                      title: "Emotional Connection",
+                      description: "Experience the warmth and wisdom of your loved ones"
+                    }
+                  ].map((feature, index) => (
+                    <div key={index} className="text-center space-y-3">
+                      <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto">
+                        <span className="text-2xl">{feature.icon}</span>
+                      </div>
+                      <h4 className="font-semibold text-primary-foreground">{feature.title}</h4>
+                      <p className="text-sm text-primary-foreground/80">{feature.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <div className="text-center pt-4">
+                  <Button
+                    onClick={handleStartDemo}
+                    size="xl"
+                    variant="secondary"
+                    className="min-w-[200px] h-14 text-lg font-semibold"
+                  >
+                    Start Demo Chat
+                  </Button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="space-y-6"
+              >
+                {/* Interactive Demo */}
+                <DemoChat />
+                
+                {/* Post-Demo CTA */}
+                <div className="text-center space-y-4 pt-4">
+                  <p className="text-primary-foreground/90">
+                    Ready to create AI versions of your own loved ones?
+                  </p>
+                  <div className="flex gap-4 justify-center">
+                    <Button
+                      onClick={() => setShowDemo(false)}
+                      variant="outline"
+                      className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                    >
+                      Try Again
+                    </Button>
+                    <Button
+                      onClick={handleTryFull}
+                      variant="secondary"
+                      className="min-w-[160px] flex items-center gap-2"
+                    >
+                      Try Eterna Free
+                      <ArrowRight size={16} />
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
       </DialogContent>
