@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Upload, X, User } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Upload as UploadIcon, Close, UserAvatar } from '@carbon/icons-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useProfile } from '@/hooks/useProfile';
@@ -20,6 +20,9 @@ export const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
 }) => {
   const { uploadAvatar, deleteAvatar, loading } = useProfile();
   const [previewImage, setPreviewImage] = useState<string | null>(currentImage || null);
+  useEffect(() => {
+    setPreviewImage(currentImage || null);
+  }, [currentImage]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const sizeClasses = {
@@ -54,7 +57,9 @@ export const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
     // Upload to Supabase
     const uploadedUrl = await uploadAvatar(file);
     if (uploadedUrl) {
+      setPreviewImage(uploadedUrl);
       onImageChange?.(uploadedUrl);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -76,7 +81,7 @@ export const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
         <Avatar className={cn(sizeClasses[size], "border-2 border-border")}>
           <AvatarImage src={previewImage || undefined} />
           <AvatarFallback className="bg-muted">
-            <User className="w-6 h-6 text-muted-foreground" />
+            <UserAvatar size={24} className="text-muted-foreground" />
           </AvatarFallback>
         </Avatar>
 
@@ -89,7 +94,7 @@ export const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
             onClick={handleRemoveImage}
             disabled={loading}
           >
-            <X className="h-3 w-3" />
+            <Close size={12} />
           </Button>
         )}
       </div>
@@ -103,7 +108,7 @@ export const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
           disabled={loading}
           className="text-xs"
         >
-          <Upload className="w-4 h-4 mr-2" />
+          <UploadIcon size={16} className="mr-2" />
           {previewImage ? 'Alterar' : 'Adicionar'}
         </Button>
       </div>

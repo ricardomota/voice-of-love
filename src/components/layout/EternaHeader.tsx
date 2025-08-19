@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Settings, Logout, User, Help, Information, Language } from '@carbon/icons-react';
-import { Heart } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -151,7 +151,15 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                 </DropdownMenuItem>
                 
                 <DropdownMenuItem 
-                  onClick={onSettingsClick}
+                  onClick={() => {
+                    if (onSettingsClick) onSettingsClick();
+                    else {
+                      toast({
+                        title: content.settings,
+                        description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.'
+                      });
+                    }
+                  }}
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <Settings size={16} />
@@ -181,12 +189,12 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
                 
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => toast({ title: content.help, description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.' })}>
                   <Help size={16} />
                   {content.help}
                 </DropdownMenuItem>
                 
-                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => toast({ title: content.about, description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.' })}>
                   <Information size={16} />
                   {content.about}
                 </DropdownMenuItem>
