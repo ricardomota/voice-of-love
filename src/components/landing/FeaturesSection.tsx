@@ -186,7 +186,7 @@ export const FeaturesSection: React.FC = () => {
           {content.features.map((feature, index) => {
           const IconComponent = feature.icon;
           return <motion.div key={index} variants={itemVariants} className="group">
-                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20">
+                <Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-card to-card/90 h-full border-2 hover:border-primary/20 holographic-feature-card grainy-card-bg">
                   {/* Simple background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <CardContent className="p-0 h-full">

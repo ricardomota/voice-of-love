@@ -120,6 +120,18 @@ export default {
 					"50%": { backgroundPosition: "100% 50%" },
 					"100%": { backgroundPosition: "0% 50%" },
 				},
+				"holographic-rotate": {
+					from: { transform: "perspective(600px) rotate3d(0.6, 0.05, 0.2, 0deg)" },
+					to: { transform: "perspective(600px) rotate3d(0.6, 0.05, 0.2, 15deg)" }
+				},
+				"holographic-shimmer": {
+					from: { filter: "contrast(190%) brightness(500%)" },
+					to: { filter: "contrast(190%) brightness(130%)" }
+				},
+				"holographic-sweep": {
+					"0%": { transform: "rotate(45deg) translate(-150%, -150%)" },
+					"100%": { transform: "rotate(45deg) translate(50%, 50%)" }
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -134,6 +146,9 @@ export default {
 				"flow": "flow 3s ease-in-out infinite alternate",
 				"slide-down": "slide-down 0.3s ease-out",
 				"gradient-shift": "gradient-shift 3s ease-in-out infinite",
+				"holographic-rotate": "holographic-rotate 4s ease-in-out infinite alternate",
+				"holographic-shimmer": "holographic-shimmer 3s ease-in-out infinite alternate",
+				"holographic-sweep": "holographic-sweep 1.5s ease-out",
 			},
 		},
 	},
