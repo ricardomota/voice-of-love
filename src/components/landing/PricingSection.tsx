@@ -501,18 +501,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="mb-16"
+            className="mb-20"
           >
-            <h3 className="text-2xl font-serif font-bold text-center mb-8">
+            <h3 className="text-2xl font-serif font-bold text-center mb-12">
               {content.faq.title}
             </h3>
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-8">
               {content.faq.items.map((item, index) => (
-                <Card key={index} className="p-6">
-                  <h4 className="font-semibold text-foreground mb-3">
+                <Card key={index} className="p-8 hover:shadow-lg transition-shadow duration-200">
+                  <h4 className="font-semibold text-foreground mb-4 text-lg">
                     {item.question}
                   </h4>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-base">
                     {item.answer}
                   </p>
                 </Card>
@@ -521,7 +521,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           </motion.div>
 
           {/* Footer notes */}
-          <div className="text-center space-y-2 max-w-3xl mx-auto">
+          <div className="text-center space-y-4 max-w-4xl mx-auto">
             {content.footer.notes.map((note, index) => (
               <p key={index} className="text-xs text-muted-foreground">
                 {note}

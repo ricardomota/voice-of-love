@@ -80,19 +80,19 @@ export const WhyEternaSection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-muted/30 to-background">
+    <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-muted/30 to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Story Content */}
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="space-y-6">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground">
+          <div className="space-y-10 text-center lg:text-left">
+            <div className="space-y-8">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
                 {content.title}
               </h2>
               
-              <blockquote className="text-xl sm:text-2xl text-muted-foreground italic leading-relaxed border-l-4 border-primary/30 pl-6 lg:pl-8">
+              <blockquote className="text-xl sm:text-2xl text-muted-foreground italic leading-relaxed border-l-4 border-primary/30 pl-6 lg:pl-8 py-4">
                 "{content.story}"
               </blockquote>
               
@@ -102,16 +102,16 @@ export const WhyEternaSection: React.FC = () => {
             </div>
 
             {/* Features */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               {content.features.map((feature, index) => {
                 const IconComponent = feature.icon;
                 return (
-                  <div key={index} className="flex items-start gap-4 text-left">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <IconComponent className="w-6 h-6 text-primary" />
+                  <div key={index} className="flex items-start gap-6 text-left">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <IconComponent className="w-7 h-7 text-primary" />
                     </div>
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-foreground">
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground text-lg">
                         {feature.title}
                       </h3>
                       <p className="text-muted-foreground leading-relaxed">
