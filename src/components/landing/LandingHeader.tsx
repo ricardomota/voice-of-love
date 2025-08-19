@@ -17,21 +17,18 @@ const getContent = (language: string) => {
     en: {
       howItWorks: "How it Works",
       pricing: "Pricing",
-      faq: "FAQ",
       tryFree: "Try Eterna Free",
       signIn: "Sign In"
     },
     'pt-BR': {
       howItWorks: "Como Funciona",
       pricing: "Preços",
-      faq: "FAQ",
       tryFree: "Testar Grátis", 
       signIn: "Entrar"
     },
     es: {
       howItWorks: "Cómo Funciona",
       pricing: "Precios",
-      faq: "FAQ",
       tryFree: "Probar Gratis",
       signIn: "Iniciar Sesión"
     }
@@ -68,10 +65,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
     } else if (section === 'pricing') {
       // Scroll to pricing section on same page
       scrollToSection('pricing');
-    } else if (section === 'faq') {
-      // Scroll to FAQ section within pricing
-      scrollToSection('pricing');
-      setTimeout(() => scrollToSection('faq'), 300);
     } else {
       // Fallback to scroll for same-page sections
       scrollToSection(section);
@@ -120,12 +113,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
               className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
             >
               {content.pricing}
-            </button>
-            <button 
-              onClick={() => handleNavigation('faq')}
-              className="text-muted-foreground hover:text-foreground transition-all duration-300 relative group text-lg font-medium px-4 py-2 rounded-xl hover:bg-primary/10 hover:scale-105"
-            >
-              {content.faq}
             </button>
             
             <div className="flex items-center gap-6">
@@ -184,7 +171,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
                 {[
                   { label: content.howItWorks, action: () => handleNavigation('how-it-works') },
                   { label: content.pricing, action: () => handleNavigation('pricing') },
-                  { label: content.faq, action: () => handleNavigation('faq') },
                   { label: content.signIn, action: onSignIn }
                 ].map((item, index) => (
                   <motion.button
