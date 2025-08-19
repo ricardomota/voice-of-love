@@ -15,7 +15,7 @@ const getContent = (language: string) => {
       }, {
         title: "Add Memories",
         description: "Upload texts, stories, and personal moments to build their essence.",
-        detail: "Share voice notes, texts, and memories to create their unique personality"
+        detail: "Share voice notes, texts, and memories to create their unique personality 🧠"
       }, {
         title: "Record",
         description: "Upload a short voice sample or choose a base voice - it's that easy!",
@@ -42,7 +42,7 @@ const getContent = (language: string) => {
       }, {
         title: "Adicionar Memórias",
         description: "Envie textos, histórias e momentos pessoais para criar sua essência.",
-        detail: "Compartilhe notas de voz, textos e memórias para criar sua personalidade única"
+        detail: "Compartilhe notas de voz, textos e memórias para criar sua personalidade única 🧠"
       }, {
         title: "Gravar",
         description: "Envie uma amostra de voz ou escolha uma voz base - é assim fácil!",
@@ -69,7 +69,7 @@ const getContent = (language: string) => {
       }, {
         title: "Añadir Memorias",
         description: "Sube textos, historias y momentos personales para crear su esencia.",
-        detail: "Comparte notas de voz, textos y memorias para crear su personalidad única"
+        detail: "Comparte notas de voz, textos y memorias para crear su personalidad única 🧠"
       }, {
         title: "Grabar",
         description: "Sube una muestra de voz o elige una voz base.",
