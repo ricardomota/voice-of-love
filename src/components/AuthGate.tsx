@@ -250,6 +250,28 @@ export const AuthGate = memo(({
               onMouseLeave={handleCardMouseLeave}
             >
               {/* Background photo */} <img src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" alt="Family portrait in warm light" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-35 md:opacity-40 blur-[1px] scale-105 pointer-events-none z-0" loading="eager" decoding="async" />
+              {/* Shimmer/Shine Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+                  animate-[shimmer_2s_ease-in-out_infinite] transform -skew-x-12"
+                  style={{
+                    background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%)',
+                    animation: 'shimmer 3s ease-in-out infinite'
+                  }}
+                />
+              </div>
+
+              {/* Moving highlight overlay */}
+              <div 
+                ref={highlightRef}
+                className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full opacity-25 blur-[50px] pointer-events-none z-10"
+                style={{ 
+                  top: '-100px', 
+                  right: '-100px',
+                  transition: isCardTransitioning ? 'all 0.5s ease-out' : 'none'
+                }}
+              />
               
               {/* Card content */}
               <div className="relative p-8 z-20">
