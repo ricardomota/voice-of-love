@@ -794,16 +794,24 @@ html {
     position: absolute;
     top: -50%;
     left: -50%;
-    width: 200%;
-    height: 200%;
-    background: 
-      linear-gradient(45deg, transparent 30%, hsl(var(--primary) / 0.1) 50%, transparent 70%),
+    width: 220%;
+    height: 220%;
+    background:
+      linear-gradient(90deg,
+        rgba(255, 0, 122, 0.18) 0%,
+        rgba(0, 200, 255, 0.18) 25%,
+        rgba(123, 31, 162, 0.18) 50%,
+        rgba(255, 200, 0, 0.18) 75%,
+        rgba(255, 0, 122, 0.18) 100%
+      ),
       var(--noise-filter);
+    background-size: 300% 300%;
     transform: rotate(45deg) translate(-50%, -50%);
-    opacity: 0;
+    opacity: 0.35;
     transition: opacity 0.6s ease;
-    filter: contrast(150%) brightness(200%);
+    filter: contrast(160%) brightness(230%);
     pointer-events: none;
+    animation: gradient-shift 6s ease-in-out infinite, holographic-shimmer 3s ease-in-out infinite alternate;
   }
 
   .holographic-feature-card:hover::before {
