@@ -249,7 +249,7 @@ export const AuthGate = memo(({
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
             >
-              {/* Background photo */} <img src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" alt="Family portrait in warm light" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-35 md:opacity-40 blur-[1px] scale-105 pointer-events-none z-0" loading="eager" decoding="async" />
+              
               {/* Shimmer/Shine Effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 <div 
