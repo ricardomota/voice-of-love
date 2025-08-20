@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Close, ArrowRight } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
@@ -11,7 +11,11 @@ interface DemoModalProps {
 }
 
 export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
-  const [showDemo, setShowDemo] = useState(false);
+  const [showDemo, setShowDemo] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) setShowDemo(true);
+  }, [isOpen]);
 
   const handleStartDemo = () => {
     setShowDemo(true);
@@ -39,9 +43,9 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
             <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground text-center">
               Experience Eterna Demo
             </DialogTitle>
-            <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
+            <DialogDescription className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
               Experience what it feels like to have a conversation with an AI version of a loved one.
-            </p>
+            </DialogDescription>
           </DialogHeader>
 
           {/* Demo Area */}
