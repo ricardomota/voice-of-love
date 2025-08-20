@@ -19,21 +19,48 @@ const getContent = (language: string) => {
       subtitle: "This helps us set tone and word choices.",
       nameLabel: "What should they call you? (optional)",
       namePlaceholder: "e.g., my dear, sweetheart, John, honey...",
-      nameHelp: "How this person addressed you - a nickname, term of endearment, or your name"
+      nameHelp: "How this person addressed you - a nickname, term of endearment, or your name",
+      relationships: {
+        'Mom': 'Mom',
+        'Dad': 'Dad', 
+        'Grandma': 'Grandma',
+        'Grandpa': 'Grandpa',
+        'Partner': 'Partner',
+        'Friend': 'Friend',
+        'Other': 'Other'
+      }
     },
     'pt-BR': {
       title: "Como quem a Eterna deve falar?",
       subtitle: "Isso nos ajuda a definir o tom e a escolha das palavras.",
       nameLabel: "Como eles devem te chamar? (opcional)",
       namePlaceholder: "ex: meu querido, amor, João, docinho...",
-      nameHelp: "Como essa pessoa te chamava - um apelido, termo carinhoso ou seu nome"
+      nameHelp: "Como essa pessoa te chamava - um apelido, termo carinhoso ou seu nome",
+      relationships: {
+        'Mom': 'Mãe',
+        'Dad': 'Pai',
+        'Grandma': 'Vovó',
+        'Grandpa': 'Vovô',
+        'Partner': 'Parceiro(a)',
+        'Friend': 'Amigo(a)',
+        'Other': 'Outro'
+      }
     },
     es: {
       title: "¿Como quién debería hablar Eterna?",
       subtitle: "Esto nos ayuda a establecer el tono y la elección de palabras.",
       nameLabel: "¿Cómo deberían llamarte? (opcional)",
       namePlaceholder: "ej: mi querido, amor, Juan, cariño...",
-      nameHelp: "Cómo esta persona te llamaba - un apodo, término de cariño o tu nombre"
+      nameHelp: "Cómo esta persona te llamaba - un apodo, término de cariño o tu nombre",
+      relationships: {
+        'Mom': 'Mamá',
+        'Dad': 'Papá',
+        'Grandma': 'Abuela',
+        'Grandpa': 'Abuelo',
+        'Partner': 'Pareja',
+        'Friend': 'Amigo(a)',
+        'Other': 'Otro'
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -59,7 +86,7 @@ export const StepRelationship: React.FC<Props> = ({ state, setState }) => {
             onClick={() => setState({ relationship: rel })}
             aria-pressed={state.relationship === rel}
           >
-            {rel}
+            {content.relationships[rel]}
           </Button>
         ))}
       </div>

@@ -1,6 +1,15 @@
 import { DemoState, Topic, Warmth, Formality, Energy, Pace } from './types';
 import { Language } from '@/contexts/LanguageContext';
 
+const getLanguageCode = (language: string): string => {
+  const languageMap: Record<string, string> = {
+    'en': 'en-US',
+    'pt-BR': 'pt-BR', 
+    'es': 'es-ES'
+  };
+  return languageMap[language] || 'en-US';
+};
+
 const getTopicContent = (language: string) => {
   const content = {
     en: {
@@ -153,5 +162,10 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
   const followStyled = applyStyleTone(followSeed, state.style, language);
   const followUp = followStyled.length > 100 ? followStyled.slice(0, 97).trimEnd() + '…' : followStyled;
 
-  return { primary, followUp };
+  return { 
+    primary, 
+    followUp, 
+    voiceLanguage: getLanguageCode(language),
+    context: `Generated for ${state.relationship} speaking to ${state.name || 'you'} about ${state.topic}`
+  };
 }

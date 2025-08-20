@@ -20,6 +20,12 @@ const getContent = (language: string) => {
         formality: 'Formality', 
         energy: 'Energy',
         pace: 'Pace'
+      },
+      options: {
+        warmth: { 'Gentle': 'Gentle', 'Balanced': 'Balanced', 'Direct': 'Direct' },
+        formality: { 'Casual': 'Casual', 'Neutral': 'Neutral', 'Polite': 'Polite' },
+        energy: { 'Calm': 'Calm', 'Balanced': 'Balanced', 'Lively': 'Lively' },
+        pace: { 'Slow': 'Slow', 'Normal': 'Normal', 'Fast': 'Fast' }
       }
     },
     'pt-BR': {
@@ -30,6 +36,12 @@ const getContent = (language: string) => {
         formality: 'Formalidade',
         energy: 'Energia', 
         pace: 'Ritmo'
+      },
+      options: {
+        warmth: { 'Gentle': 'Carinhoso', 'Balanced': 'Equilibrado', 'Direct': 'Direto' },
+        formality: { 'Casual': 'Casual', 'Neutral': 'Neutro', 'Polite': 'Educado' },
+        energy: { 'Calm': 'Calmo', 'Balanced': 'Equilibrado', 'Lively': 'Animado' },
+        pace: { 'Slow': 'Devagar', 'Normal': 'Normal', 'Fast': 'Rápido' }
       }
     },
     es: {
@@ -40,6 +52,12 @@ const getContent = (language: string) => {
         formality: 'Formalidad',
         energy: 'Energía',
         pace: 'Ritmo'
+      },
+      options: {
+        warmth: { 'Gentle': 'Gentil', 'Balanced': 'Equilibrado', 'Direct': 'Directo' },
+        formality: { 'Casual': 'Casual', 'Neutral': 'Neutral', 'Polite': 'Cortés' },
+        energy: { 'Calm': 'Calmado', 'Balanced': 'Equilibrado', 'Lively': 'Enérgico' },
+        pace: { 'Slow': 'Lento', 'Normal': 'Normal', 'Fast': 'Rápido' }
       }
     }
   };
@@ -80,7 +98,7 @@ export const StepStyle: React.FC<Props> = ({ state, setState }) => {
                     aria-pressed={active}
                     className="rounded-full"
                   >
-                    {opt}
+                    {content.options[g.key][opt as keyof typeof content.options[typeof g.key]]}
                   </Button>
                 );
               })}

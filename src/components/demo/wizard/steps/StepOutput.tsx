@@ -21,7 +21,17 @@ const getContent = (language: string) => {
       voiceSample: "Short voice sample (~5s)",
       aiDisclaimer: "AI voice, not a real person.",
       timbre: "Timbre",
-      age: "Age"
+      age: "Age",
+      timbres: {
+        'Feminine': 'Feminine',
+        'Masculine': 'Masculine', 
+        'Neutral': 'Neutral'
+      },
+      ages: {
+        'Young': 'Young',
+        'Adult': 'Adult',
+        'Senior': 'Senior'
+      }
     },
     'pt-BR': {
       title: "Formato de visualização",
@@ -29,7 +39,17 @@ const getContent = (language: string) => {
       voiceSample: "Amostra de voz curta (~5s)",
       aiDisclaimer: "Voz de IA, não uma pessoa real.",
       timbre: "Timbre",
-      age: "Idade"
+      age: "Idade",
+      timbres: {
+        'Feminine': 'Feminino',
+        'Masculine': 'Masculino',
+        'Neutral': 'Neutro'
+      },
+      ages: {
+        'Young': 'Jovem',
+        'Adult': 'Adulto',
+        'Senior': 'Idoso'
+      }
     },
     es: {
       title: "Formato de vista previa",
@@ -37,7 +57,17 @@ const getContent = (language: string) => {
       voiceSample: "Muestra de voz corta (~5s)",
       aiDisclaimer: "Voz de IA, no una persona real.",
       timbre: "Timbre",
-      age: "Edad"
+      age: "Edad",
+      timbres: {
+        'Feminine': 'Femenino',
+        'Masculine': 'Masculino',
+        'Neutral': 'Neutro'
+      },
+      ages: {
+        'Young': 'Joven',
+        'Adult': 'Adulto',
+        'Senior': 'Mayor'
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -84,7 +114,7 @@ export const StepOutput: React.FC<Props> = ({ state, setState }) => {
                   className={`px-3 py-2 rounded-full border text-sm ${state.output.voice?.timbre === t ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
                   onClick={() => setState({ output: { ...state.output, voice: { ...(state.output.voice || { age: 'Adult', timbre: t }), timbre: t } } })}
                 >
-                  {t}
+                  {content.timbres[t]}
                 </button>
               ))}
             </div>
@@ -98,7 +128,7 @@ export const StepOutput: React.FC<Props> = ({ state, setState }) => {
                   className={`px-3 py-2 rounded-full border text-sm ${state.output.voice?.age === a ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
                   onClick={() => setState({ output: { ...state.output, voice: { ...(state.output.voice || { timbre: 'Feminine', age: a }), age: a } } })}
                 >
-                  {a}
+                  {content.ages[a]}
                 </button>
               ))}
             </div>
