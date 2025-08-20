@@ -9,6 +9,7 @@ import { StepStyle } from './steps/StepStyle';
 import { StepTopic } from './steps/StepTopic';
 import { StepOutput } from './steps/StepOutput';
 import { StepPreview } from './steps/StepPreview';
+import { StepProgress } from './steps/StepProgress';
 import { DemoState } from './types';
 import { Close } from '@carbon/icons-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -68,6 +69,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const [step, setStep] = useState(1);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [state, setStateInternal] = useState<DemoState>({
     style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
     output: { type: 'text' },
@@ -76,6 +78,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
   useEffect(() => {
     if (isOpen) {
       setStep(1);
+      setCompletedSteps([]);
       setStateInternal({
         style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
         output: { type: 'text' },
@@ -99,7 +102,12 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
     }
   };
 
-  const goNext = () => setStep((s) => Math.min(totalSteps, s + 1));
+  const goNext = () => {
+    if (canNext()) {
+      setCompletedSteps(prev => [...prev.filter(s => s !== step), step]);
+      setStep((s) => Math.min(totalSteps, s + 1));
+    }
+  };
   const goBack = () => setStep((s) => Math.max(1, s - 1));
 
   const onComplete = () => {
@@ -171,9 +179,16 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             </DialogDescription>
             <div className={isMobile ? 'pt-3' : 'pt-4'}>
               <Progress value={progress} />
-              <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'}`}>
+              <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'} mb-4`}>
                  {content.step(step, totalSteps)}
               </div>
+              {!isMobile && (
+                <StepProgress 
+                  currentStep={step} 
+                  totalSteps={totalSteps} 
+                  completedSteps={completedSteps}
+                />
+              )}
             </div>
           </DialogHeader>
 

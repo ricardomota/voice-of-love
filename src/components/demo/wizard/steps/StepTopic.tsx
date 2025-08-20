@@ -2,19 +2,21 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { DemoState, Topic } from '../types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { motion } from 'framer-motion';
+import { Cake, Heart, Utensils, Moon, Clock, Smile } from 'lucide-react';
 
 interface Props {
   state: DemoState;
   setState: (s: Partial<DemoState>) => void;
 }
 
-const topics: Topic[] = [
-  'Birthday message',
-  'Words of encouragement',
-  'Sunday lunch memory',
-  'Bedtime story',
-  'Gentle reminder',
-  'A funny story',
+const topics: { key: Topic; icon: React.ComponentType<any> }[] = [
+  { key: 'Birthday message', icon: Cake },
+  { key: 'Words of encouragement', icon: Heart },
+  { key: 'Sunday lunch memory', icon: Utensils },
+  { key: 'Bedtime story', icon: Moon },
+  { key: 'Gentle reminder', icon: Clock },
+  { key: 'A funny story', icon: Smile },
 ];
 
 const getContent = (language: string) => {
@@ -70,20 +72,43 @@ export const StepTopic: React.FC<Props> = ({ state, setState }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {topics.map((t) => {
-          const active = state.topic === t;
+        {topics.map((item, index) => {
+          const active = state.topic === item.key;
+          const Icon = item.icon;
           return (
-            <Card
-              key={t}
-              role="button"
-              tabIndex={0}
-              onClick={() => setState({ topic: t })}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setState({ topic: t }); }}
-              className={`p-4 md:p-5 cursor-pointer transition-all ${active ? 'ring-2 ring-primary bg-primary/10' : 'hover:bg-muted/50'}`}
+            <motion.div
+              key={item.key}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <div className="font-medium">{content.topics[t]}</div>
-              <div className="text-sm text-muted-foreground">{content.description}</div>
-            </Card>
+              <Card
+                role="button"
+                tabIndex={0}
+                onClick={() => setState({ topic: item.key })}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setState({ topic: item.key }); }}
+                className={`
+                  p-4 md:p-5 cursor-pointer transition-all duration-300 group
+                  ${active 
+                    ? 'ring-2 ring-primary bg-primary/10 scale-[1.02] shadow-lg' 
+                    : 'hover:bg-muted/50 hover:scale-[1.01] hover:shadow-md'
+                  }
+                `}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`
+                    p-2 rounded-full transition-colors duration-300
+                    ${active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground group-hover:bg-primary/20'}
+                  `}>
+                    <Icon size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium">{content.topics[item.key]}</div>
+                    <div className="text-sm text-muted-foreground">{content.description}</div>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
           );
         })}
       </div>
