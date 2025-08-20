@@ -73,9 +73,10 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
     const voices = window.speechSynthesis.getVoices();
     const prefGender = state.output.voice?.timbre === 'Masculine' ? 'male' : state.output.voice?.timbre === 'Feminine' ? 'female' : '';
     const prefAge = state.output.voice?.age === 'Senior' ? 'old' : state.output.voice?.age === 'Young' ? 'young' : '';
-    const match = voices.find(v => v.lang.startsWith('en') && (
+    const langPrefix = currentLanguage === 'pt-BR' ? 'pt' : currentLanguage === 'es' ? 'es' : 'en';
+    const match = voices.find(v => v.lang.toLowerCase().startsWith(langPrefix) && (
       (prefGender && v.name.toLowerCase().includes(prefGender)) || (prefAge && v.name.toLowerCase().includes(prefAge))
-    )) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    )) || voices.find(v => v.lang.toLowerCase().startsWith(langPrefix)) || voices[0];
     if (match) utter.voice = match;
     utter.rate = state.style.pace === 'Fast' ? 1.15 : state.style.pace === 'Slow' ? 0.9 : 1;
     speechSynthesis.cancel();
@@ -106,7 +107,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
     <div className="space-y-6">
       <div className="text-center space-y-2">
         <h3 className="text-2xl md:text-3xl font-serif">{content.title}</h3>
-        <p className="text-muted-foreground text-sm">This is a brief demo using generic data. In the app you’ll personalize with real memories.</p>
+        <p className="text-muted-foreground text-sm">{content.subtitle}</p>
       </div>
 
       <Card className="p-5 space-y-4">

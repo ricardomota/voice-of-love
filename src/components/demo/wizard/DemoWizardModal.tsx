@@ -12,6 +12,7 @@ import { StepPreview } from './steps/StepPreview';
 import { DemoState } from './types';
 import { Close } from '@carbon/icons-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DemoWizardModalProps {
   isOpen: boolean;
@@ -20,8 +21,52 @@ interface DemoWizardModalProps {
 
 const totalSteps = 6;
 
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      title: "Try a 60s Demo",
+      description: "A gentle, 6-step preview of Eterna's memory companion.",
+      step: (s: number, t: number) => `Step ${s} of ${t}`,
+      back: "Back",
+      next: "Next",
+      startShort: "Start Trial",
+      startLong: "Start Free Trial",
+      ariaClose: "Close demo",
+      ariaBack: "Go back",
+      ariaNext: "Next step",
+    },
+    'pt-BR': {
+      title: "Experimente uma demo de 60s",
+      description: "Uma prévia suave, em 6 passos, do companheiro de memórias da Eterna.",
+      step: (s: number, t: number) => `Passo ${s} de ${t}`,
+      back: "Voltar",
+      next: "Avançar",
+      startShort: "Iniciar teste",
+      startLong: "Iniciar teste grátis",
+      ariaClose: "Fechar demonstração",
+      ariaBack: "Voltar",
+      ariaNext: "Próximo passo",
+    },
+    es: {
+      title: "Prueba una demo de 60s",
+      description: "Una vista previa amable, en 6 pasos, del compañero de memoria de Eterna.",
+      step: (s: number, t: number) => `Paso ${s} de ${t}`,
+      back: "Atrás",
+      next: "Siguiente",
+      startShort: "Iniciar prueba",
+      startLong: "Iniciar prueba gratis",
+      ariaClose: "Cerrar demostración",
+      ariaBack: "Volver",
+      ariaNext: "Siguiente paso",
+    },
+  } as const;
+  return content[language as keyof typeof content] || content.en;
+};
+
 export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClose }) => {
   const isMobile = useIsMobile();
+  const { currentLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
   const [step, setStep] = useState(1);
   const [state, setStateInternal] = useState<DemoState>({
     style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
@@ -97,7 +142,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             variant="ghost"
             size={isMobile ? "default" : "sm"}
             onClick={onClose}
-            aria-label="Close demo"
+            aria-label={content.ariaClose}
             className={`
               absolute ${isMobile ? 'top-3 right-3 h-10 w-10' : 'top-4 right-4'} 
               text-muted-foreground hover:text-foreground hover:bg-muted z-20
@@ -117,17 +162,17 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
               ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl'} 
               font-serif leading-tight
             `}>
-              Try a 60s Demo
+              {content.title}
             </DialogTitle>
             <DialogDescription className={`
               text-muted-foreground ${isMobile ? 'text-sm' : 'text-base'}
             `}>
-              A gentle, 5‑step preview of Eterna's memory companion.
+              {content.description}
             </DialogDescription>
             <div className={isMobile ? 'pt-3' : 'pt-4'}>
               <Progress value={progress} />
               <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'}`}>
-                Step {step} of {totalSteps}
+                 {content.step(step, totalSteps)}
               </div>
             </div>
           </DialogHeader>
@@ -163,7 +208,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
               {/* Step indicator for mobile */}
               {isMobile && (
                 <div className="text-center text-sm text-muted-foreground">
-                  Step {step} of {totalSteps}
+                   {content.step(step, totalSteps)}
                 </div>
               )}
               
@@ -179,16 +224,16 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
                     ${isMobile ? 'flex-1 h-11 text-sm min-h-[44px]' : 'min-w-[120px] h-12 text-base'} 
                     font-medium
                   `}
-                  aria-label="Go back" 
+                  aria-label={content.ariaBack} 
                   type="button"
                 >
-                  Back
+                  {content.back}
                 </Button>
                 
                 {/* Step indicator for desktop */}
                 {!isMobile && (
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    Step {step} of {totalSteps}
+                    {content.step(step, totalSteps)}
                   </div>
                 )}
                 
@@ -199,10 +244,10 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
                     ${isMobile ? 'flex-1 h-11 text-sm min-h-[44px]' : 'min-w-[120px] h-12 text-base'} 
                     font-semibold bg-primary hover:bg-primary/90
                   `}
-                  aria-label="Next step" 
+                  aria-label={content.ariaNext} 
                   type="button"
                 >
-                  {step === totalSteps ? (isMobile ? 'Start Trial' : 'Start Free Trial') : 'Next'}
+                  {step === totalSteps ? (isMobile ? content.startShort : content.startLong) : content.next}
                 </Button>
               </div>
             </div>
