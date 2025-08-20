@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Volume2, Heart, Sparkles } from 'lucide-react';
+import { Send, Volume2, Heart, Sparkles, Brain, Mic } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
@@ -28,29 +28,37 @@ const demoPersona: DemoPersona = {
   personality: "carinhosa e sábia",
   responses: {
     "olá": [
-      "Oi meu bem! Como está meu neto querido? Que saudade de você!",
-      "Olá meu amor! Que alegria te ver aqui. Como tem passado?"
+      "Oi meu bem! Como está meu netinho querido? Que saudade de você! Estava aqui lembrando daquela vez que fazíamos pão juntos...",
+      "Olá meu amor! Que alegria te ver aqui. Sabia que outro dia sonhei com você? Estava me ajudando no jardim como sempre fazia."
     ],
     "saudade": [
-      "Eu também sinto muita saudade sua, meu anjo. Lembra quando fazíamos biscoitos juntos na cozinha?",
-      "Ah, que saudade boa essa! Você sempre foi meu netinho especial."
+      "Eu também sinto muita saudade sua, meu anjo. Lembra quando você vinha correndo me abraçar depois da escola? Ainda sinto o cheiro do seu cabelo...",
+      "Ah, que saudade boa essa! Você sempre foi meu netinho especial. Lembra quando você me ensinava a usar o celular e eu ficava perdida?"
     ],
     "receita": [
-      "Ah! Você quer a receita do meu famoso bolo de chocolate? Era 3 ovos, 2 xícaras de açúcar... mas o segredo era o carinho que eu colocava!",
-      "Claro, meu bem! Para fazer aquele brigadeiro que você adorava: leite condensado, chocolate em pó e muito amor!"
+      "Ah! Você quer a receita do meu famoso bolo de chocolate? Era assim: 3 ovos, 2 xícaras de açúcar, 1 xícara de farinha... mas o segredo mesmo era o carinho que eu colocava em cada movimento!",
+      "Claro, meu bem! Para fazer aquele brigadeiro que você adorava: 1 lata de leite condensado, 3 colheres de chocolate em pó, 1 colher de manteiga e muito amor! Você sempre lambia a panela toda!"
     ],
     "história": [
-      "Deixa eu te contar sobre quando você era pequeno... Você sempre corria pelo quintal atrás das galinhas! Era uma travessura só!",
-      "Ah, que memória boa! Lembro quando você perdeu o primeiro dentinho e colocou debaixo do travesseiro esperando a fada..."
+      "Deixa eu te contar sobre quando você era pequeno... Você tinha uns 5 anos e sempre corria pelo quintal atrás das galinhas! Uma vez você trouxe um pintinho pra dentro de casa escondido no bolso. Sua mãe ficou uma fera!",
+      "Ah, que memória boa! Lembro quando você perdeu o primeiro dentinho brincando na minha casa. Ficou chorando, mas eu disse que a fada do dente ia dar um presente especial. No dia seguinte, 'magicamente' apareceu uma moeda debaixo do seu travesseiro!"
     ],
     "conselho": [
-      "Meu neto, a vida é como fazer um bolo - às vezes não sai perfeito, mas sempre é feito com amor. Continue sendo essa pessoa boa que você é.",
-      "Lembre-se sempre: as pessoas podem esquecer o que você disse, mas nunca vão esquecer como você as fez sentir."
+      "Meu neto, a vida é como fazer um bolo - às vezes não sai perfeito na primeira tentativa, mas sempre é feito com amor. Continue sendo essa pessoa boa que você é, com esse coração generoso.",
+      "Lembre-se sempre do que eu te dizia: as pessoas podem esquecer o que você disse ou fez, mas nunca vão esquecer como você as fez sentir. Seja sempre gentil, meu bem."
+    ],
+    "trabalho": [
+      "Ah, trabalho... Na minha época era diferente, mas sei que você é dedicado como sempre foi. Lembra quando você 'trabalhava' comigo no jardim? Pagava você com biscoitos!",
+      "Trabalhe com paixão, meu anjo, mas não esqueça de descansar. Como eu sempre dizia: 'Quem não descansa não aguenta a caminhada'."
+    ],
+    "família": [
+      "A família é tudo, meu bem. Mesmo longe, mesmo com diferenças, o amor sempre une. Você sempre foi o orgulho da família, sabia disso?",
+      "Cuide bem da sua família, como eu cuidei da minha. E lembra: casa não é lugar, é onde estão as pessoas que amamos."
     ],
     "default": [
-      "Que bom ouvir você, meu bem! Me conta mais sobre sua vida.",
-      "Você sempre foi tão especial para mim. O que mais você gostaria de saber?",
-      "Ah, como é bom ter essa conversa com você! Continue, estou aqui te ouvindo."
+      "Que bom ouvir você, meu bem! Me conta mais sobre sua vida. Como estão os seus estudos?",
+      "Você sempre foi tão especial para mim. Desde pequeno tinha esse jeitinho carinhoso... O que mais você gostaria de conversar?",
+      "Ah, como é bom ter essa conversa com você! Parece que estou te vendo aqui na minha cozinha de novo. Continue, estou aqui te ouvindo com todo carinho."
     ]
   }
 };
@@ -58,9 +66,11 @@ const demoPersona: DemoPersona = {
 const suggestedMessages = [
   "Olá vovó, como está?",
   "Sinto saudade da senhora",
-  "Pode me contar uma história?",
-  "Qual era mesmo a receita do seu bolo?",
-  "Preciso de um conselho"
+  "Pode me contar uma história da minha infância?",
+  "Qual era mesmo a receita do seu bolo de chocolate?",
+  "Preciso de um conselho sobre trabalho",
+  "Como está a família?",
+  "Me conta uma memória especial nossa"
 ];
 
 export const DemoChat: React.FC = () => {
@@ -68,6 +78,9 @@ export const DemoChat: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [isLearning, setIsLearning] = useState(false);
+  const [conversationCount, setConversationCount] = useState(0);
+  const [hasVoiceEnabled, setHasVoiceEnabled] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -92,9 +105,15 @@ export const DemoChat: React.FC = () => {
   const getAIResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase();
     
-    for (const [key, responses] of Object.entries(demoPersona.responses)) {
+    // Check for keywords in order of specificity
+    const keywords = ['receita', 'história', 'conselho', 'trabalho', 'família', 'saudade', 'olá', 'oi'];
+    
+    for (const key of keywords) {
       if (message.includes(key)) {
-        return responses[Math.floor(Math.random() * responses.length)];
+        const responses = demoPersona.responses[key];
+        if (responses) {
+          return responses[Math.floor(Math.random() * responses.length)];
+        }
       }
     }
     
@@ -129,18 +148,43 @@ export const DemoChat: React.FC = () => {
       
       setMessages(prev => [...prev, aiResponse]);
       setIsTyping(false);
-    }, 1500 + Math.random() * 1000);
+      setConversationCount(prev => prev + 1);
+      
+      // Simulate learning after every 3 messages
+      if ((conversationCount + 1) % 3 === 0) {
+        simulateLearning();
+      }
+    }, 1200 + Math.random() * 800);
   };
 
   const handleSuggestedMessage = (message: string) => {
     sendMessage(message);
   };
 
+  const simulateLearning = () => {
+    setIsLearning(true);
+    setTimeout(() => {
+      setIsLearning(false);
+    }, 2000);
+  };
+
   const playVoice = () => {
+    if (!hasVoiceEnabled) {
+      setHasVoiceEnabled(true);
+    }
     // Simulated voice playback
-    const utterance = new SpeechSynthesisUtterance("Esta é uma simulação da voz clonada da sua avó");
+    const utterance = new SpeechSynthesisUtterance("Esta é uma simulação da voz clonada da sua avó Maria");
     utterance.lang = 'pt-BR';
     utterance.rate = 0.8;
+    utterance.pitch = 1.1;
+    speechSynthesis.speak(utterance);
+  };
+
+  const playMessageVoice = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'pt-BR';
+    utterance.rate = 0.8;
+    utterance.pitch = 1.1;
     speechSynthesis.speak(utterance);
   };
 
@@ -155,15 +199,32 @@ export const DemoChat: React.FC = () => {
         <div className="flex-1">
           <h3 className="font-serif text-lg text-primary-foreground">{demoPersona.name}</h3>
           <p className="text-sm text-primary-foreground/70">{demoPersona.relationship}</p>
+          {hasVoiceEnabled && (
+            <div className="flex items-center gap-1 mt-1">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-xs text-primary-foreground/60">Voz ativada</span>
+            </div>
+          )}
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={playVoice}
-          className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10"
-        >
-          <Volume2 size={18} />
-        </Button>
+        <div className="flex items-center gap-2">
+          {isLearning && (
+            <div className="flex items-center gap-2 bg-accent/20 px-3 py-1 rounded-full">
+              <Brain className="w-4 h-4 text-accent animate-pulse" />
+              <span className="text-xs text-accent">Aprendendo...</span>
+            </div>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={playVoice}
+            className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10 relative"
+          >
+            <Volume2 size={18} />
+            {!hasVoiceEnabled && (
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-bounce"></div>
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Messages */}
@@ -180,8 +241,19 @@ export const DemoChat: React.FC = () => {
                 message.sender === 'user' 
                   ? 'bg-secondary text-secondary-foreground' 
                   : 'bg-primary-foreground/10 text-primary-foreground'
-              } rounded-2xl px-4 py-2`}>
+              } rounded-2xl px-4 py-2 relative group`}>
                 <p className="text-sm">{message.text}</p>
+                {message.sender === 'ai' && hasVoiceEnabled && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => playMessageVoice(message.text)}
+                    className="opacity-0 group-hover:opacity-100 absolute -bottom-8 right-0 h-6 px-2 text-xs text-primary-foreground/60 hover:text-primary-foreground"
+                  >
+                    <Mic className="w-3 h-3 mr-1" />
+                    Ouvir
+                  </Button>
+                )}
               </div>
             </motion.div>
           ))}
@@ -213,18 +285,21 @@ export const DemoChat: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="px-4 pb-2"
         >
-          <div className="flex flex-wrap gap-2">
-            {suggestedMessages.slice(0, 3).map((suggestion, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                size="sm"
-                onClick={() => handleSuggestedMessage(suggestion)}
-                className="text-xs bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                {suggestion}
-              </Button>
-            ))}
+          <div className="space-y-2">
+            <p className="text-xs text-primary-foreground/60 text-center">Experimente algumas dessas conversas:</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {suggestedMessages.slice(0, 4).map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleSuggestedMessage(suggestion)}
+                  className="text-xs bg-primary-foreground/5 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
           </div>
         </motion.div>
       )}
@@ -250,11 +325,26 @@ export const DemoChat: React.FC = () => {
         </div>
       </div>
 
-      {/* Demo Badge */}
-      <div className="absolute top-2 right-2">
+      {/* Demo Features */}
+      <div className="absolute top-2 left-2 right-2 flex justify-between items-start">
         <div className="bg-accent/20 backdrop-blur-sm border border-accent/30 rounded-full px-3 py-1 flex items-center gap-1">
           <Sparkles size={12} className="text-accent" />
-          <span className="text-xs text-accent font-medium">Demo</span>
+          <span className="text-xs text-accent font-medium">Demo Interativo</span>
+        </div>
+        
+        <div className="flex gap-2">
+          {conversationCount >= 3 && (
+            <div className="bg-green-500/20 backdrop-blur-sm border border-green-500/30 rounded-full px-2 py-1 flex items-center gap-1">
+              <Brain size={10} className="text-green-400" />
+              <span className="text-xs text-green-400 font-medium">AI Aprendendo</span>
+            </div>
+          )}
+          {hasVoiceEnabled && (
+            <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-2 py-1 flex items-center gap-1">
+              <Volume2 size={10} className="text-blue-400" />
+              <span className="text-xs text-blue-400 font-medium">Voz Ativa</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
