@@ -10,6 +10,7 @@ import { StepOutput } from './steps/StepOutput';
 import { StepPreview } from './steps/StepPreview';
 import { DemoState } from './types';
 import { Close } from '@carbon/icons-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface DemoWizardModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface DemoWizardModalProps {
 const totalSteps = 5;
 
 export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClose }) => {
+  const isMobile = useIsMobile();
   const [step, setStep] = useState(1);
   const [state, setStateInternal] = useState<DemoState>({
     style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
@@ -82,32 +84,56 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl w-[95vw] h-[85vh] p-0 bg-card border overflow-hidden [&>button]:hidden">
+      <DialogContent className={`
+        ${isMobile ? 'max-w-[100vw] w-[100vw] h-[100vh] rounded-none' : 'max-w-3xl w-[95vw] h-[85vh] rounded-lg'} 
+        p-0 bg-card border overflow-hidden [&>button]:hidden
+      `}>
         <div className="relative h-full min-h-0 flex flex-col" onKeyDown={handleKeyDown}>
           {/* Close */}
           <Button
             variant="ghost"
-            size="sm"
+            size={isMobile ? "default" : "sm"}
             onClick={onClose}
             aria-label="Close demo"
-            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground hover:bg-muted z-20"
+            className={`
+              absolute ${isMobile ? 'top-3 right-3 h-10 w-10' : 'top-4 right-4'} 
+              text-muted-foreground hover:text-foreground hover:bg-muted z-20
+              ${isMobile ? 'min-h-[44px] min-w-[44px]' : ''}
+            `}
             type="button"
           >
-            <Close size={20} />
+            <Close size={isMobile ? 24 : 20} />
           </Button>
 
           {/* Header */}
-          <DialogHeader className="px-6 md:px-8 pt-6 md:pt-8 space-y-2 pr-12">
-            <DialogTitle className="text-2xl md:text-3xl font-serif">Try a 60s Demo</DialogTitle>
-            <DialogDescription className="text-muted-foreground">A gentle, 5‑step preview of Eterna’s memory companion.</DialogDescription>
-            <div className="pt-4">
+          <DialogHeader className={`
+            ${isMobile ? 'px-4 pt-4 pb-3' : 'px-6 md:px-8 pt-6 md:pt-8'} 
+            space-y-2 ${isMobile ? 'pr-14' : 'pr-12'}
+          `}>
+            <DialogTitle className={`
+              ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl'} 
+              font-serif leading-tight
+            `}>
+              Try a 60s Demo
+            </DialogTitle>
+            <DialogDescription className={`
+              text-muted-foreground ${isMobile ? 'text-sm' : 'text-base'}
+            `}>
+              A gentle, 5‑step preview of Eterna's memory companion.
+            </DialogDescription>
+            <div className={isMobile ? 'pt-3' : 'pt-4'}>
               <Progress value={progress} />
-              <div className="text-xs text-muted-foreground pt-2">Step {step} of {totalSteps}</div>
+              <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'}`}>
+                Step {step} of {totalSteps}
+              </div>
             </div>
           </DialogHeader>
 
           {/* Content */}
-          <div className="flex-1 min-h-0 overflow-y-auto px-6 md:px-8 py-6 md:py-8">
+          <div className={`
+            flex-1 min-h-0 overflow-y-auto 
+            ${isMobile ? 'px-4 py-4' : 'px-6 md:px-8 py-6 md:py-8'}
+          `}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -115,38 +141,67 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.98 }}
                 transition={{ duration: 0.2 }}
-                className="max-w-2xl mx-auto"
+                className={isMobile ? 'w-full' : 'max-w-2xl mx-auto'}
               >
                 {renderStep()}
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Footer - Enhanced visibility */}
-          <div className="sticky bottom-0 border-t-2 bg-card px-6 md:px-8 py-6 shadow-lg z-30">
-            <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
-              <Button 
-                variant="outline" 
-                onClick={goBack} 
-                disabled={step === 1} 
-                className="w-full sm:w-auto min-w-[120px] h-12 text-base font-medium" 
-                aria-label="Go back" 
-                type="button"
-              >
-                Back
-              </Button>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                Step {step} of {totalSteps}
+          {/* Footer - Mobile optimized */}
+          <div className={`
+            sticky bottom-0 border-t bg-card shadow-lg z-30
+            ${isMobile ? 'px-4 py-4' : 'px-6 md:px-8 py-6'}
+          `}>
+            <div className={`
+              ${isMobile ? 'w-full' : 'max-w-2xl mx-auto'} 
+              flex ${isMobile ? 'flex-col gap-3' : 'flex-col sm:flex-row gap-4 justify-between items-center'}
+            `}>
+              {/* Step indicator for mobile */}
+              {isMobile && (
+                <div className="text-center text-sm text-muted-foreground">
+                  Step {step} of {totalSteps}
+                </div>
+              )}
+              
+              {/* Buttons container */}
+              <div className={`
+                flex ${isMobile ? 'gap-3' : 'gap-4 justify-between items-center w-full sm:w-auto'}
+              `}>
+                <Button 
+                  variant="outline" 
+                  onClick={goBack} 
+                  disabled={step === 1} 
+                  className={`
+                    ${isMobile ? 'flex-1 h-11 text-sm min-h-[44px]' : 'min-w-[120px] h-12 text-base'} 
+                    font-medium
+                  `}
+                  aria-label="Go back" 
+                  type="button"
+                >
+                  Back
+                </Button>
+                
+                {/* Step indicator for desktop */}
+                {!isMobile && (
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    Step {step} of {totalSteps}
+                  </div>
+                )}
+                
+                <Button 
+                  onClick={step === totalSteps ? onComplete : goNext} 
+                  disabled={!canNext()} 
+                  className={`
+                    ${isMobile ? 'flex-1 h-11 text-sm min-h-[44px]' : 'min-w-[120px] h-12 text-base'} 
+                    font-semibold bg-primary hover:bg-primary/90
+                  `}
+                  aria-label="Next step" 
+                  type="button"
+                >
+                  {step === totalSteps ? (isMobile ? 'Start Trial' : 'Start Free Trial') : 'Next'}
+                </Button>
               </div>
-              <Button 
-                onClick={step === totalSteps ? onComplete : goNext} 
-                disabled={!canNext()} 
-                className="w-full sm:w-auto min-w-[120px] h-12 text-base font-semibold bg-primary hover:bg-primary/90" 
-                aria-label="Next step" 
-                type="button"
-              >
-                {step === totalSteps ? 'Start Free Trial' : 'Next'}
-              </Button>
             </div>
           </div>
         </div>
