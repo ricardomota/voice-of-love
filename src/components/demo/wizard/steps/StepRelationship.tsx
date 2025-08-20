@@ -98,7 +98,7 @@ export const StepRelationship: React.FC<Props> = ({ state, setState }) => {
           placeholder={content.namePlaceholder}
           value={state.name || ''}
           onChange={(e) => setState({ name: e.target.value })}
-          aria-label="What they should call you"
+          aria-label={content.nameLabel}
         />
         <p className="text-xs text-muted-foreground mt-2">{content.nameHelp}</p>
       </Card>

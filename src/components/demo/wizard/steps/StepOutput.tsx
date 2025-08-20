@@ -89,7 +89,7 @@ export const StepOutput: React.FC<Props> = ({ state, setState }) => {
           value={state.output.type}
           onValueChange={(v) => setState({ output: { type: v as OutputType, voice: v === 'voice' ? (state.output.voice || { timbre: 'Feminine', age: 'Adult' }) : undefined } })}
           className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-          aria-label="Preview format"
+          aria-label={content.title}
         >
           <div className="flex items-center space-x-2 p-3 rounded-lg border">
             <RadioGroupItem value="text" id="out-text" />

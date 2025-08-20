@@ -59,7 +59,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
   const [sampleError, setSampleError] = useState(false);
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const { primary, followUp } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
+  const { primary, followUp, voiceLanguage } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -69,14 +69,21 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
 
   const speakLocal = () => {
     const utter = new SpeechSynthesisUtterance(primary);
-    // try to pick a matching voice
+    // Ensure utterance language matches selection
+    try {
+      utter.lang = voiceLanguage;
+    } catch {}
+    // try to pick a matching voice for the locale
     const voices = window.speechSynthesis.getVoices();
     const prefGender = state.output.voice?.timbre === 'Masculine' ? 'male' : state.output.voice?.timbre === 'Feminine' ? 'female' : '';
     const prefAge = state.output.voice?.age === 'Senior' ? 'old' : state.output.voice?.age === 'Young' ? 'young' : '';
-    const langPrefix = currentLanguage === 'pt-BR' ? 'pt' : currentLanguage === 'es' ? 'es' : 'en';
-    const match = voices.find(v => v.lang.toLowerCase().startsWith(langPrefix) && (
-      (prefGender && v.name.toLowerCase().includes(prefGender)) || (prefAge && v.name.toLowerCase().includes(prefAge))
-    )) || voices.find(v => v.lang.toLowerCase().startsWith(langPrefix)) || voices[0];
+    const langPrefix = (voiceLanguage || 'en-US').toLowerCase().split('-')[0];
+    const locale = (voiceLanguage || 'en-US').toLowerCase();
+    const match =
+      voices.find(v => v.lang?.toLowerCase() === locale && ((prefGender && v.name.toLowerCase().includes(prefGender)) || (prefAge && v.name.toLowerCase().includes(prefAge)))) ||
+      voices.find(v => v.lang?.toLowerCase() === locale) ||
+      voices.find(v => v.lang?.toLowerCase().startsWith(langPrefix)) ||
+      voices[0];
     if (match) utter.voice = match;
     utter.rate = state.style.pace === 'Fast' ? 1.15 : state.style.pace === 'Slow' ? 0.9 : 1;
     speechSynthesis.cancel();
@@ -85,6 +92,11 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
 
   const play = () => {
     if (state.output.type === 'voice') {
+      // For non-English locales, use local TTS to respect language
+      if (voiceLanguage !== 'en-US') {
+        speakLocal();
+        return;
+      }
       const src = getSamplePath(state.output.voice?.timbre, state.output.voice?.age);
       if (!src || sampleError) {
         speakLocal();
@@ -115,7 +127,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
         <p className="text-muted-foreground">{followUp}</p>
         {state.output.type === 'voice' && (
           <div className="pt-2">
-            <Button onClick={play} className="flex items-center gap-2" aria-label="Play voice sample">
+            <Button onClick={play} className="flex items-center gap-2" aria-label={content.playButton}>
               <Play className="w-4 h-4" /> {content.playButton}
             </Button>
             <audio src={getSamplePath(state.output.voice?.timbre, state.output.voice?.age)} onError={() => setSampleError(true)} hidden />

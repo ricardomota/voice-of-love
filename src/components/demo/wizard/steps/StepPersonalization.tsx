@@ -91,7 +91,7 @@ export const StepPersonalization: React.FC<Props> = ({ state, setState }) => {
             value={state.personalization?.favoriteMemory || ''}
             onChange={(e) => updatePersonalization({ favoriteMemory: e.target.value })}
             className="min-h-[80px] resize-none"
-            aria-label="Favorite memory"
+            aria-label={content.memoryLabel}
           />
         </Card>
 
@@ -124,7 +124,7 @@ export const StepPersonalization: React.FC<Props> = ({ state, setState }) => {
             value={state.personalization?.personalDetail || ''}
             onChange={(e) => updatePersonalization({ personalDetail: e.target.value })}
             className="min-h-[80px] resize-none"
-            aria-label="Personal detail"
+            aria-label={content.detailLabel}
           />
         </Card>
       </div>
