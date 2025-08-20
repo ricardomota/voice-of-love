@@ -255,25 +255,27 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-background rounded-xl border shadow-lg p-6 md:p-8 lg:p-10 space-y-6 md:space-y-8">
+    <div className="max-w-3xl mx-auto bg-card rounded-xl border shadow-lg overflow-hidden">
       {/* Progress Bar */}
-      <div className="w-full bg-muted rounded-full h-2.5">
-        <div 
-          className="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out"
-          style={{ width: `${(step / totalSteps) * 100}%` }}
-        />
-      </div>
+      <div className="px-6 md:px-8 pt-6 md:pt-8">
+        <div className="w-full bg-muted rounded-full h-2.5">
+          <div 
+            className="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${(step / totalSteps) * 100}%` }}
+          />
+        </div>
 
-      {/* Step Counter */}
-      <div className="text-center">
-        <span className="text-sm font-medium text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
-          Passo {step} de {totalSteps}
-        </span>
+        {/* Step Counter */}
+        <div className="text-center pt-4">
+          <span className="text-sm font-medium text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+            Passo {step} de {totalSteps}
+          </span>
+        </div>
       </div>
 
       {/* Step Content */}
-      <div className="min-h-[320px] md:min-h-[400px] flex items-center justify-center">
-        <div className="w-full max-w-2xl">
+      <div className="px-6 md:px-8 py-6 md:py-8">
+        <div className="w-full max-w-2xl mx-auto">
           <AnimatePresence mode="wait">
             {renderStep()}
           </AnimatePresence>
@@ -281,29 +283,31 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
       </div>
 
       {/* Navigation */}
-      <div className="flex flex-col-reverse sm:flex-row justify-between gap-4 pt-6 border-t">
-        <Button 
-          onClick={handleBack}
-          variant="ghost"
-          disabled={step === 1}
-          className="w-full sm:w-auto"
-        >
-          Voltar
-        </Button>
-        <Button 
-          onClick={handleNext}
-          disabled={!canProceed()}
-          className="min-w-[120px] w-full sm:w-auto"
-        >
-          {step === totalSteps ? (
-            <>
-              Começar Chat
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </>
-          ) : (
-            'Próximo'
-          )}
-        </Button>
+      <div className="px-6 md:px-8 pb-6 md:pb-8 border-t bg-muted/20">
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-4 pt-4">
+          <Button 
+            onClick={handleBack}
+            variant="ghost"
+            disabled={step === 1}
+            className="w-full sm:w-auto"
+          >
+            Voltar
+          </Button>
+          <Button 
+            onClick={handleNext}
+            disabled={!canProceed()}
+            className="min-w-[120px] w-full sm:w-auto"
+          >
+            {step === totalSteps ? (
+              <>
+                Começar Chat
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </>
+            ) : (
+              'Próximo'
+            )}
+          </Button>
+        </div>
       </div>
     </div>
   );

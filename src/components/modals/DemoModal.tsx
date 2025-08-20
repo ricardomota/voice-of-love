@@ -51,8 +51,8 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-[95vw] max-h-[95vh] p-0 bg-background border [&>button]:hidden">
-        <div className="relative p-4 md:p-6 lg:p-8">
+      <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] p-0 bg-background border [&>button]:hidden overflow-hidden">
+        <div className="relative h-full flex flex-col p-4 md:p-6 lg:p-8">
           {/* Close button */}
           <Button
             variant="ghost"
