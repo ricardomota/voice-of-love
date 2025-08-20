@@ -51,23 +51,23 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 bg-gradient-to-br from-primary via-primary/95 to-accent border-primary-foreground/20 [&>button]:hidden">
+      <DialogContent className="max-w-5xl w-full max-h-[90vh] p-0 bg-background border [&>button]:hidden">
         <div className="relative p-8">
           {/* Close button */}
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="absolute top-4 right-4 text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10 z-10"
+            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground hover:bg-muted z-10"
           >
             <Close size={20} />
           </Button>
 
           <DialogHeader className="space-y-6 text-center mb-8">
-            <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground text-center">
+            <DialogTitle className="text-3xl md:text-4xl font-serif text-foreground text-center">
               {showConfigurator ? 'Crie Sua Pessoa Especial' : 'Experience Eterna Demo'}
             </DialogTitle>
-            <DialogDescription className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
+            <DialogDescription className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
               {showConfigurator 
                 ? 'Configure a personalidade e características da pessoa com quem você quer conversar'
                 : 'Agora converse com a pessoa que você criou'
@@ -96,20 +96,18 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 
                 {/* Post-Demo CTA */}
                 <div className="text-center space-y-4 pt-4">
-                  <p className="text-primary-foreground/90">
+                  <p className="text-muted-foreground">
                     Pronto para criar versões de IA dos seus próprios entes queridos?
                   </p>
                   <div className="flex gap-4 justify-center">
                     <Button
                       onClick={handleReconfigure}
                       variant="outline"
-                      className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                     >
                       Configurar Novamente
                     </Button>
                     <Button
                       onClick={handleTryFull}
-                      variant="secondary"
                       className="min-w-[160px] flex items-center gap-2"
                     >
                       Usar Eterna Grátis
