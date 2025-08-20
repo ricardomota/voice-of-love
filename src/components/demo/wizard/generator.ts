@@ -130,37 +130,108 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
   const topicContent = getTopicContent(language);
   
   const helloName = state.name && state.name.trim().length > 0 ? state.name.trim() : greetingContent.dear;
-  const base = greetingContent.greeting(helloName);
+  let base = greetingContent.greeting(helloName);
 
-  // Get topic seed and add personalization
+  // Get topic seed and enhance with personalization
   let topicText = topicSeed(state.topic, language);
   
-  // Add personalization if available
+  // Create more personalized and engaging content
+  const personalizations = [];
+  
+  // Add favorite memory with more context
   if (state.personalization?.favoriteMemory) {
-    const memoryReference = language === 'pt-BR' 
-      ? ` Lembro de ${state.personalization.favoriteMemory.toLowerCase()}.`
-      : language === 'es'
-      ? ` Recuerdo ${state.personalization.favoriteMemory.toLowerCase()}.`
-      : ` I remember ${state.personalization.favoriteMemory.toLowerCase()}.`;
-    topicText += memoryReference;
+    const memoryText = state.personalization.favoriteMemory.trim();
+    if (memoryText.length > 0) {
+      const memoryReference = language === 'pt-BR' 
+        ? `Lembro especialmente de ${memoryText.toLowerCase()}... aqueles momentos eram tão especiais.`
+        : language === 'es'
+        ? `Recuerdo especialmente ${memoryText.toLowerCase()}... esos momentos eran tan especiales.`
+        : `I especially remember ${memoryText.toLowerCase()}... those moments were so special.`;
+      personalizations.push(memoryReference);
+    }
   }
   
+  // Add personal detail with warmth
   if (state.personalization?.personalDetail) {
-    const detailReference = language === 'pt-BR'
-      ? ` ${state.personalization.personalDetail}.`
-      : language === 'es' 
-      ? ` ${state.personalization.personalDetail}.`
-      : ` ${state.personalization.personalDetail}.`;
-    topicText += detailReference;
+    const detailText = state.personalization.personalDetail.trim();
+    if (detailText.length > 0) {
+      const detailReference = language === 'pt-BR'
+        ? `E como eu amava isso em você: ${detailText.toLowerCase()}. Isso sempre me fazia sorrir.`
+        : language === 'es' 
+        ? `Y cómo amaba eso de ti: ${detailText.toLowerCase()}. Eso siempre me hacía sonreír.`
+        : `And how I loved this about you: ${detailText.toLowerCase()}. That always made me smile.`;
+      personalizations.push(detailReference);
+    }
+  }
+  
+  // Add time context if available
+  if (state.personalization?.preferredTime) {
+    const timeContexts = {
+      morning: {
+        'pt-BR': 'Nossas manhãs juntos eram sempre tão pacíficas.',
+        'es': 'Nuestras mañanas juntos siempre fueron tan pacíficas.',
+        'en': 'Our mornings together were always so peaceful.'
+      },
+      afternoon: {
+        'pt-BR': 'Aquelas tardes que passávamos conversando...',
+        'es': 'Esas tardes que pasábamos conversando...',
+        'en': 'Those afternoons we spent talking...'
+      },
+      evening: {
+        'pt-BR': 'Nossas noites eram sempre cheias de carinho.',
+        'es': 'Nuestras noches siempre estaban llenas de cariño.',
+        'en': 'Our evenings were always filled with warmth.'
+      }
+    };
+    const timeText = timeContexts[state.personalization.preferredTime][language as keyof typeof timeContexts.morning];
+    personalizations.push(timeText);
+  }
+
+  // Combine personalization in a natural way
+  if (personalizations.length > 0) {
+    const connector = language === 'pt-BR' ? ' ' : language === 'es' ? ' ' : ' ';
+    topicText = topicText + connector + personalizations.slice(0, 2).join(' ');
+  }
+
+  // Apply relationship-specific tone adjustments
+  if (state.relationship) {
+    const relationshipAdjustments = {
+      'Mom': {
+        'pt-BR': (text: string) => text.replace('querido', 'meu amor'),
+        'es': (text: string) => text.replace('querido', 'mi amor'),
+        'en': (text: string) => text.replace('dear', 'my sweetheart')
+      },
+      'Dad': {
+        'pt-BR': (text: string) => text.replace('querido', 'meu filho'),
+        'es': (text: string) => text.replace('querido', 'mi hijo'),
+        'en': (text: string) => text.replace('dear', 'kiddo')
+      },
+      'Grandma': {
+        'pt-BR': (text: string) => text.replace('querido', 'meu netinho'),
+        'es': (text: string) => text.replace('querido', 'mi nietito'),
+        'en': (text: string) => text.replace('dear', 'my grandchild')
+      },
+      'Grandpa': {
+        'pt-BR': (text: string) => text.replace('querido', 'meu netinho'),
+        'es': (text: string) => text.replace('querido', 'mi nietito'),
+        'en': (text: string) => text.replace('dear', 'my grandchild')
+      }
+    };
+    
+    const adjustment = relationshipAdjustments[state.relationship]?.[language as keyof typeof relationshipAdjustments.Mom];
+    if (adjustment) {
+      base = adjustment(base);
+      topicText = adjustment(topicText);
+    }
   }
 
   const primarySeed = `${applyStyleTone(base, state.style, language)} ${topicText}`;
-  // Keep within 120–180 chars by slicing if needed
-  const primary = primarySeed.length > 180 ? primarySeed.slice(0, 177).trimEnd() + '…' : primarySeed;
+  // Keep within reasonable length but allow more space for personalization
+  const primary = primarySeed.length > 250 ? primarySeed.slice(0, 247).trimEnd() + '…' : primarySeed;
 
   const followSeed = topicContent.followUp;
   const followStyled = applyStyleTone(followSeed, state.style, language);
-  const followUp = followStyled.length > 100 ? followStyled.slice(0, 97).trimEnd() + '…' : followStyled;
+  const followUp = followStyled.length > 120 ? followStyled.slice(0, 117).trimEnd() + '…' : followStyled;
 
   return { 
     primary, 

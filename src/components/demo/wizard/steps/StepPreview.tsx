@@ -4,7 +4,8 @@ import { Card } from '@/components/ui/card';
 import { DemoState } from '../types';
 import { generatePreviewText } from '../generator';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Play, RefreshCcw } from 'lucide-react';
+import { Play, RefreshCcw, Share2 } from 'lucide-react';
+import { SocialShare } from '../../SocialShare';
 
 interface Props {
   state: DemoState;
@@ -26,6 +27,7 @@ const getContent = (language: string) => {
       subtitle: "This is a brief demo using generic data. In the app you'll personalize with real memories.",
       playButton: "Play",
       regenerateButton: "Regenerate",
+      shareButton: "Share",
       ctaButton: "Create your first Memory (Free)",
       ctaSubtext: "Includes 5 minutes of voice generation.",
       seePlans: "See Plans",
@@ -36,6 +38,7 @@ const getContent = (language: string) => {
       subtitle: "Esta é uma breve demonstração usando dados genéricos. No app você personalizará com memórias reais.",
       playButton: "Reproduzir",
       regenerateButton: "Regenerar",
+      shareButton: "Compartilhar",
       ctaButton: "Crie sua primeira Memória (Grátis)",
       ctaSubtext: "Inclui 5 minutos de geração de voz.",
       seePlans: "Ver Planos",
@@ -46,6 +49,7 @@ const getContent = (language: string) => {
       subtitle: "Esta es una breve demostración usando datos genéricos. En la app personalizarás con recuerdos reales.",
       playButton: "Reproducir",
       regenerateButton: "Regenerar",
+      shareButton: "Compartir",
       ctaButton: "Crea tu primer Recuerdo (Gratis)",
       ctaSubtext: "Incluye 5 minutos de generación de voz.",
       seePlans: "Ver Planes",
@@ -57,6 +61,7 @@ const getContent = (language: string) => {
 
 export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) => {
   const [sampleError, setSampleError] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { primary, followUp, voiceLanguage } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
@@ -139,6 +144,9 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
         <Button variant="outline" onClick={regenerate} className="flex items-center gap-2">
           <RefreshCcw className="w-4 h-4" /> {content.regenerateButton}
         </Button>
+        <Button variant="outline" onClick={() => setShowShare(true)} className="flex items-center gap-2">
+          <Share2 className="w-4 h-4" /> {content.shareButton}
+        </Button>
       </div>
 
       <div className="pt-2 text-center space-y-2">
@@ -149,6 +157,12 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
           <button className="underline" onClick={() => (document.activeElement as HTMLElement)?.blur()}>{content.continueExploring}</button>
         </div>
       </div>
+
+      <SocialShare 
+        message={primary}
+        isOpen={showShare}
+        onClose={() => setShowShare(false)}
+      />
     </div>
   );
 };
