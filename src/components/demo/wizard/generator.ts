@@ -1,4 +1,5 @@
 import { DemoState, Topic, Warmth, Formality, Energy, Pace } from './types';
+import { Language } from '@/contexts/LanguageContext';
 
 const getTopicContent = (language: string) => {
   const content = {
@@ -115,14 +116,36 @@ function topicSeed(topic: Topic | undefined, language: string) {
   return content[topic as keyof typeof content] || content.default;
 }
 
-export function generatePreviewText(state: DemoState, language: string = 'en') {
+export function generatePreviewText(state: DemoState, language: Language = 'en') {
   const greetingContent = getGreetingContent(language);
   const topicContent = getTopicContent(language);
   
   const helloName = state.name && state.name.trim().length > 0 ? state.name.trim() : greetingContent.dear;
   const base = greetingContent.greeting(helloName);
 
-  const primarySeed = `${applyStyleTone(base, state.style, language)} ${topicSeed(state.topic, language)}`;
+  // Get topic seed and add personalization
+  let topicText = topicSeed(state.topic, language);
+  
+  // Add personalization if available
+  if (state.personalization?.favoriteMemory) {
+    const memoryReference = language === 'pt-BR' 
+      ? ` Lembro de ${state.personalization.favoriteMemory.toLowerCase()}.`
+      : language === 'es'
+      ? ` Recuerdo ${state.personalization.favoriteMemory.toLowerCase()}.`
+      : ` I remember ${state.personalization.favoriteMemory.toLowerCase()}.`;
+    topicText += memoryReference;
+  }
+  
+  if (state.personalization?.personalDetail) {
+    const detailReference = language === 'pt-BR'
+      ? ` ${state.personalization.personalDetail}.`
+      : language === 'es' 
+      ? ` ${state.personalization.personalDetail}.`
+      : ` ${state.personalization.personalDetail}.`;
+    topicText += detailReference;
+  }
+
+  const primarySeed = `${applyStyleTone(base, state.style, language)} ${topicText}`;
   // Keep within 120–180 chars by slicing if needed
   const primary = primarySeed.length > 180 ? primarySeed.slice(0, 177).trimEnd() + '…' : primarySeed;
 

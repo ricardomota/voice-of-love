@@ -40,9 +40,16 @@ export interface DemoPreview {
   audioUrl?: string;
 }
 
+export interface DemoPersonalization {
+  favoriteMemory?: string;
+  preferredTime?: 'morning' | 'afternoon' | 'evening';
+  personalDetail?: string;
+}
+
 export interface DemoState {
   relationship?: Relationship;
   name?: string;
+  personalization?: DemoPersonalization;
   style: DemoStyle;
   topic?: Topic;
   output: DemoOutput;

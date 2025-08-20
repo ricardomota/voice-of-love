@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DemoState } from '../types';
 import { generatePreviewText } from '../generator';
-import { useLanguage } from '@/hooks/useLanguage';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Play, RefreshCcw } from 'lucide-react';
 
 interface Props {

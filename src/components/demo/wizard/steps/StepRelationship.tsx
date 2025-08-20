@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { DemoState, Relationship } from '../types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Props {
   state: DemoState;
@@ -11,12 +12,42 @@ interface Props {
 
 const relationships: Relationship[] = ['Mom','Dad','Grandma','Grandpa','Partner','Friend','Other'];
 
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      title: "Who should Eterna speak as?",
+      subtitle: "This helps us set tone and word choices.",
+      nameLabel: "What should they call you? (optional)",
+      namePlaceholder: "e.g., my dear, sweetheart, John, honey...",
+      nameHelp: "How this person addressed you - a nickname, term of endearment, or your name"
+    },
+    'pt-BR': {
+      title: "Como quem a Eterna deve falar?",
+      subtitle: "Isso nos ajuda a definir o tom e a escolha das palavras.",
+      nameLabel: "Como eles devem te chamar? (opcional)",
+      namePlaceholder: "ex: meu querido, amor, João, docinho...",
+      nameHelp: "Como essa pessoa te chamava - um apelido, termo carinhoso ou seu nome"
+    },
+    es: {
+      title: "¿Como quién debería hablar Eterna?",
+      subtitle: "Esto nos ayuda a establecer el tono y la elección de palabras.",
+      nameLabel: "¿Cómo deberían llamarte? (opcional)",
+      namePlaceholder: "ej: mi querido, amor, Juan, cariño...",
+      nameHelp: "Cómo esta persona te llamaba - un apodo, término de cariño o tu nombre"
+    }
+  };
+  return content[language as keyof typeof content] || content.en;
+};
+
 export const StepRelationship: React.FC<Props> = ({ state, setState }) => {
+  const { currentLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
+  
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="text-2xl md:text-3xl font-serif">Who should Eterna speak as?</h3>
-        <p className="text-muted-foreground">This helps us set tone and word choices.</p>
+        <h3 className="text-2xl md:text-3xl font-serif">{content.title}</h3>
+        <p className="text-muted-foreground">{content.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -34,15 +65,15 @@ export const StepRelationship: React.FC<Props> = ({ state, setState }) => {
       </div>
 
       <Card className="p-4 md:p-5">
-        <label htmlFor="demo-name" className="block text-sm font-medium mb-2">What should they call you? (optional)</label>
+        <label htmlFor="demo-name" className="block text-sm font-medium mb-2">{content.nameLabel}</label>
         <Input
           id="demo-name"
-          placeholder="e.g., my dear, sweetheart, John, honey..."
+          placeholder={content.namePlaceholder}
           value={state.name || ''}
           onChange={(e) => setState({ name: e.target.value })}
           aria-label="What they should call you"
         />
-        <p className="text-xs text-muted-foreground mt-2">How this person addressed you - a nickname, term of endearment, or your name</p>
+        <p className="text-xs text-muted-foreground mt-2">{content.nameHelp}</p>
       </Card>
     </div>
   );

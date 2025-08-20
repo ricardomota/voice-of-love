@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { AnimatePresence, motion } from 'framer-motion';
 import { StepRelationship } from './steps/StepRelationship';
+import { StepPersonalization } from './steps/StepPersonalization';
 import { StepStyle } from './steps/StepStyle';
 import { StepTopic } from './steps/StepTopic';
 import { StepOutput } from './steps/StepOutput';
@@ -17,7 +18,7 @@ interface DemoWizardModalProps {
   onClose: () => void;
 }
 
-const totalSteps = 5;
+const totalSteps = 6;
 
 export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClose }) => {
   const isMobile = useIsMobile();
@@ -44,10 +45,11 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
   const canNext = () => {
     switch (step) {
       case 1: return Boolean(state.relationship);
-      case 2: return true;
-      case 3: return Boolean(state.topic);
-      case 4: return Boolean(state.output?.type);
-      case 5: return true;
+      case 2: return true; // personalization is optional
+      case 3: return true; // style is always valid
+      case 4: return Boolean(state.topic);
+      case 5: return Boolean(state.output?.type);
+      case 6: return true;
       default: return false;
     }
   };
@@ -66,10 +68,11 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
   const renderStep = () => {
     switch (step) {
       case 1: return <StepRelationship state={state} setState={setState} />;
-      case 2: return <StepStyle state={state} setState={setState} />;
-      case 3: return <StepTopic state={state} setState={setState} />;
-      case 4: return <StepOutput state={state} setState={setState} />;
-      case 5: return <StepPreview state={state} setState={setState} onComplete={onComplete} />;
+      case 2: return <StepPersonalization state={state} setState={setState} />;
+      case 3: return <StepStyle state={state} setState={setState} />;
+      case 4: return <StepTopic state={state} setState={setState} />;
+      case 5: return <StepOutput state={state} setState={setState} />;
+      case 6: return <StepPreview state={state} setState={setState} onComplete={onComplete} />;
       default: return null;
     }
   };
