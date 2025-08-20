@@ -83,7 +83,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl w-[95vw] h-[85vh] p-0 bg-card border overflow-hidden [&>button]:hidden">
-        <div className="relative h-full flex flex-col" onKeyDown={handleKeyDown}>
+        <div className="relative h-full min-h-0 flex flex-col" onKeyDown={handleKeyDown}>
           {/* Close */}
           <Button
             variant="ghost"
@@ -107,7 +107,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
           </DialogHeader>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6 md:py-8">
+          <div className="flex-1 min-h-0 overflow-y-auto px-6 md:px-8 py-6 md:py-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -123,7 +123,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
           </div>
 
           {/* Footer - Enhanced visibility */}
-          <div className="border-t-2 bg-card px-6 md:px-8 py-6 shadow-lg z-30">
+          <div className="sticky bottom-0 border-t-2 bg-card px-6 md:px-8 py-6 shadow-lg z-30">
             <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
               <Button 
                 variant="outline" 
