@@ -4,13 +4,14 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { Group, PlayFilled, Security } from '@carbon/icons-react';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
-import { DemoModal } from '@/components/modals/DemoModal';
+
 interface HeroSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
   onLogin: () => void;
   onTryDemo?: () => void;
 }
+
 const getContent = (language: string) => {
   const content = {
     en: {
@@ -48,7 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const [userCount, setUserCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+
   const {
     currentLanguage
   } = useLanguage();
@@ -80,9 +81,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
   const isWaitlistMode = userCount >= 10;
   
-  const handleDemoClick = () => {
-    setIsDemoModalOpen(true);
-  };
 
   return (
     <>
@@ -166,7 +164,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </Button>
                   
                   <Button 
-                    onClick={handleDemoClick} 
+                    onClick={onTryDemo}
                     variant="outline" 
                     size="xl" 
                     className="w-full sm:w-auto min-w-[240px] h-16 text-lg font-semibold bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:scale-105"
@@ -217,11 +215,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </section>
 
-      {/* Demo Modal */}
-      <DemoModal 
-        isOpen={isDemoModalOpen} 
-        onClose={() => setIsDemoModalOpen(false)} 
-      />
     </>
   );
 };

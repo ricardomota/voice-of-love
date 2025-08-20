@@ -90,7 +90,7 @@ const getContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
-export const HowItWorksSection: React.FC = () => {
+export const HowItWorksSection: React.FC<{ onTryDemo?: () => void }> = ({ onTryDemo }) => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const icons = [SettingsAdjust, FolderDetails, Microphone, Chat, Share];
@@ -287,6 +287,17 @@ export const HowItWorksSection: React.FC = () => {
         </div>
 
 
+      </div>
+
+      {/* CTA after section */}
+      <div className="relative z-10 mt-10 flex justify-center">
+        <a
+          onClick={onTryDemo}
+          className="cursor-pointer inline-flex items-center justify-center px-6 py-3 rounded-xl border bg-white/10 text-white hover:bg-white/20 transition-colors"
+          aria-label="Try a 60s Demo"
+        >
+          Try a 60s Demo
+        </a>
       </div>
     </section>
   );
