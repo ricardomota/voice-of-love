@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DemoState } from '../types';
 import { generatePreviewText } from '../generator';
+import { useLanguage } from '@/hooks/useLanguage';
 import { Play, RefreshCcw } from 'lucide-react';
 
 interface Props {
@@ -18,9 +19,47 @@ function getSamplePath(timbre?: string, age?: string) {
   return `/demo-voices/${t}-${a}.mp3`;
 }
 
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      title: "Preview",
+      subtitle: "This is a brief demo using generic data. In the app you'll personalize with real memories.",
+      playButton: "Play",
+      regenerateButton: "Regenerate",
+      ctaButton: "Create your first Memory (Free)",
+      ctaSubtext: "Includes 5 minutes of voice generation.",
+      seePlans: "See Plans",
+      continueExploring: "Continue exploring the site"
+    },
+    'pt-BR': {
+      title: "Visualizar",
+      subtitle: "Esta é uma breve demonstração usando dados genéricos. No app você personalizará com memórias reais.",
+      playButton: "Reproduzir",
+      regenerateButton: "Regenerar",
+      ctaButton: "Crie sua primeira Memória (Grátis)",
+      ctaSubtext: "Inclui 5 minutos de geração de voz.",
+      seePlans: "Ver Planos",
+      continueExploring: "Continue explorando o site"
+    },
+    es: {
+      title: "Vista previa",
+      subtitle: "Esta es una breve demostración usando datos genéricos. En la app personalizarás con recuerdos reales.",
+      playButton: "Reproducir",
+      regenerateButton: "Regenerar",
+      ctaButton: "Crea tu primer Recuerdo (Gratis)",
+      ctaSubtext: "Incluye 5 minutos de generación de voz.",
+      seePlans: "Ver Planes",
+      continueExploring: "Continúa explorando el sitio"
+    }
+  };
+  return content[language as keyof typeof content] || content.en;
+};
+
 export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) => {
   const [sampleError, setSampleError] = useState(false);
-  const { primary, followUp } = useMemo(() => generatePreviewText(state), [state]);
+  const { currentLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
+  const { primary, followUp } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -57,7 +96,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
   };
 
   const regenerate = () => {
-    const { primary: p, followUp: f } = generatePreviewText(state);
+    const { primary: p, followUp: f } = generatePreviewText(state, currentLanguage);
     setState({ preview: { primary: p, followUp: f } });
   };
 
@@ -66,7 +105,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h3 className="text-2xl md:text-3xl font-serif">Preview</h3>
+        <h3 className="text-2xl md:text-3xl font-serif">{content.title}</h3>
         <p className="text-muted-foreground text-sm">This is a brief demo using generic data. In the app you’ll personalize with real memories.</p>
       </div>
 
@@ -76,7 +115,7 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
         {state.output.type === 'voice' && (
           <div className="pt-2">
             <Button onClick={play} className="flex items-center gap-2" aria-label="Play voice sample">
-              <Play className="w-4 h-4" /> Play
+              <Play className="w-4 h-4" /> {content.playButton}
             </Button>
             <audio src={getSamplePath(state.output.voice?.timbre, state.output.voice?.age)} onError={() => setSampleError(true)} hidden />
           </div>
@@ -85,16 +124,16 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
 
       <div className="flex flex-wrap gap-3">
         <Button variant="outline" onClick={regenerate} className="flex items-center gap-2">
-          <RefreshCcw className="w-4 h-4" /> Regenerate
+          <RefreshCcw className="w-4 h-4" /> {content.regenerateButton}
         </Button>
       </div>
 
       <div className="pt-2 text-center space-y-2">
-        <Button onClick={onComplete} className="min-w-[240px] h-12 text-base">Create your first Memory (Free)</Button>
-        <div className="text-xs text-muted-foreground">Includes 5 minutes of voice generation.</div>
+        <Button onClick={onComplete} className="min-w-[240px] h-12 text-base">{content.ctaButton}</Button>
+        <div className="text-xs text-muted-foreground">{content.ctaSubtext}</div>
         <div className="flex justify-center gap-4 text-sm">
-          <a href="/pricing#pro" className="underline">See Plans</a>
-          <button className="underline" onClick={() => (document.activeElement as HTMLElement)?.blur()}>Continue exploring the site</button>
+          <a href="/pricing#pro" className="underline">{content.seePlans}</a>
+          <button className="underline" onClick={() => (document.activeElement as HTMLElement)?.blur()}>{content.continueExploring}</button>
         </div>
       </div>
     </div>
