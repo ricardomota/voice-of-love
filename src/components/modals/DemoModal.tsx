@@ -51,23 +51,23 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl w-full max-h-[90vh] p-0 bg-background border [&>button]:hidden">
-        <div className="relative p-8">
+      <DialogContent className="max-w-6xl w-[95vw] max-h-[95vh] p-0 bg-background border [&>button]:hidden">
+        <div className="relative p-4 md:p-6 lg:p-8">
           {/* Close button */}
           <Button
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground hover:bg-muted z-10"
+            className="absolute top-3 right-3 md:top-4 md:right-4 text-muted-foreground hover:text-foreground hover:bg-muted z-10"
           >
             <Close size={20} />
           </Button>
 
-          <DialogHeader className="space-y-6 text-center mb-8">
-            <DialogTitle className="text-3xl md:text-4xl font-serif text-foreground text-center">
+          <DialogHeader className="space-y-4 md:space-y-6 text-center mb-6 md:mb-8 pr-8">
+            <DialogTitle className="text-2xl md:text-3xl lg:text-4xl font-serif text-foreground text-center">
               {showConfigurator ? 'Crie Sua Pessoa Especial' : 'Experience Eterna Demo'}
             </DialogTitle>
-            <DialogDescription className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
+            <DialogDescription className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-center">
               {showConfigurator 
                 ? 'Configure a personalidade e características da pessoa com quem você quer conversar'
                 : 'Agora converse com a pessoa que você criou'
@@ -95,20 +95,21 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 <DemoChat config={personaConfig} onReconfigure={handleReconfigure} />
                 
                 {/* Post-Demo CTA */}
-                <div className="text-center space-y-4 pt-4">
-                  <p className="text-muted-foreground">
+                <div className="text-center space-y-4 md:space-y-6 pt-6 md:pt-8">
+                  <p className="text-sm md:text-base text-muted-foreground px-4 md:px-0">
                     Pronto para criar versões de IA dos seus próprios entes queridos?
                   </p>
-                  <div className="flex gap-4 justify-center">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4 md:px-0">
                     <Button
                       onClick={handleReconfigure}
                       variant="outline"
+                      className="w-full sm:w-auto"
                     >
                       Configurar Novamente
                     </Button>
                     <Button
                       onClick={handleTryFull}
-                      className="min-w-[160px] flex items-center gap-2"
+                      className="min-w-[160px] flex items-center gap-2 w-full sm:w-auto"
                     >
                       Usar Eterna Grátis
                       <ArrowRight size={16} />

@@ -97,25 +97,27 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <User className="w-8 h-8 text-primary" />
+            <div className="text-center space-y-4 md:space-y-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <User className="w-8 h-8 md:w-10 md:h-10 text-primary" />
               </div>
-              <div>
-                <h3 className="font-serif text-2xl text-foreground mb-2">
+              <div className="space-y-2 md:space-y-3">
+                <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-foreground">
                   Qual o nome desta pessoa especial?
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground px-4 md:px-0">
                   Vamos começar criando sua pessoa querida
                 </p>
               </div>
             </div>
-            <Input
-              placeholder="Ex: Vovó Maria, Mamãe..."
-              value={config.name}
-              onChange={(e) => setConfig(prev => ({ ...prev, name: e.target.value }))}
-              className="text-lg h-14"
-            />
+            <div className="px-4 md:px-0">
+              <Input
+                placeholder="Ex: Vovó Maria, Mamãe..."
+                value={config.name}
+                onChange={(e) => setConfig(prev => ({ ...prev, name: e.target.value }))}
+                className="text-base md:text-lg h-12 md:h-14 w-full"
+              />
+            </div>
           </motion.div>
         );
 
@@ -128,38 +130,38 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <Heart className="w-8 h-8 text-primary" />
+            <div className="text-center space-y-4 md:space-y-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <Heart className="w-8 h-8 md:w-10 md:h-10 text-primary" />
               </div>
-              <div>
-                <h3 className="font-serif text-2xl text-foreground mb-2">
+              <div className="space-y-2 md:space-y-3">
+                <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-foreground">
                   Qual é a sua relação?
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground px-4 md:px-0">
                   Escolha o tipo de relacionamento que vocês tinham
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 px-4 md:px-0">
               {relationshipOptions.map((option) => (
                 <Card
                   key={option.id}
-                  className={`p-4 cursor-pointer transition-all hover:scale-105 ${
+                  className={`p-4 md:p-6 cursor-pointer transition-all duration-200 hover:scale-[1.02] ${
                     config.relationship === option.label
                       ? 'ring-2 ring-primary bg-primary/10'
-                      : 'hover:bg-muted/50'
+                      : 'hover:bg-muted/50 hover:shadow-md'
                   }`}
                   onClick={() => selectRelationship(option.label, option.avatar)}
                 >
                   <div className="flex flex-col items-center space-y-3">
-                    <Avatar className="w-16 h-16">
+                    <Avatar className="w-14 h-14 md:w-16 md:h-16">
                       <AvatarImage src={option.avatar} />
-                      <AvatarFallback className="bg-primary/10 text-primary">
+                      <AvatarFallback className="bg-primary/10 text-primary text-sm">
                         {option.label.slice(0, 2)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="font-medium text-foreground text-center">
+                    <span className="font-medium text-foreground text-center text-sm md:text-base">
                       {option.label}
                     </span>
                   </div>
@@ -178,25 +180,27 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <MessageSquare className="w-8 h-8 text-primary" />
+            <div className="text-center space-y-4 md:space-y-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <MessageSquare className="w-8 h-8 md:w-10 md:h-10 text-primary" />
               </div>
-              <div>
-                <h3 className="font-serif text-2xl text-foreground mb-2">
+              <div className="space-y-2 md:space-y-3">
+                <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-foreground">
                   Como {config.name} te chamava?
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground px-4 md:px-0">
                   Esses detalhes fazem toda diferença na conversa
                 </p>
               </div>
             </div>
-            <Input
-              placeholder="Ex: meu bem, filho, amor, querido..."
-              value={config.howTheyCallYou}
-              onChange={(e) => setConfig(prev => ({ ...prev, howTheyCallYou: e.target.value }))}
-              className="text-lg h-14"
-            />
+            <div className="px-4 md:px-0">
+              <Input
+                placeholder="Ex: meu bem, filho, amor, querido..."
+                value={config.howTheyCallYou}
+                onChange={(e) => setConfig(prev => ({ ...prev, howTheyCallYou: e.target.value }))}
+                className="text-base md:text-lg h-12 md:h-14 w-full"
+              />
+            </div>
           </motion.div>
         );
 
@@ -209,25 +213,25 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                <Brain className="w-8 h-8 text-primary" />
+            <div className="text-center space-y-4 md:space-y-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <Brain className="w-8 h-8 md:w-10 md:h-10 text-primary" />
               </div>
-              <div>
-                <h3 className="font-serif text-2xl text-foreground mb-2">
+              <div className="space-y-2 md:space-y-3">
+                <h3 className="font-serif text-xl md:text-2xl lg:text-3xl text-foreground">
                   Como era a personalidade de {config.name}?
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground px-4 md:px-0">
                   Escolha até 3 características que mais definem essa pessoa
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 px-4 md:px-0">
               {personalityOptions.map((trait) => (
                 <Badge
                   key={trait.id}
                   variant={config.personality.includes(trait.id) ? "default" : "outline"}
-                  className="p-3 cursor-pointer transition-all hover:scale-105 justify-center"
+                  className="p-3 md:p-4 cursor-pointer transition-all duration-200 hover:scale-[1.02] justify-center text-sm md:text-base"
                   onClick={() => togglePersonality(trait.id)}
                 >
                   <span className="mr-2">{trait.icon}</span>
@@ -236,8 +240,8 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
               ))}
             </div>
             {config.personality.length > 0 && (
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
+              <div className="text-center pt-2">
+                <p className="text-sm text-muted-foreground bg-muted/30 px-3 py-1 rounded-full inline-block">
                   {config.personality.length}/3 características selecionadas
                 </p>
               </div>
@@ -251,25 +255,25 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-background rounded-lg border shadow-sm p-8 space-y-8">
+    <div className="max-w-3xl mx-auto bg-background rounded-xl border shadow-lg p-6 md:p-8 lg:p-10 space-y-6 md:space-y-8">
       {/* Progress Bar */}
-      <div className="w-full bg-muted rounded-full h-2">
+      <div className="w-full bg-muted rounded-full h-2.5">
         <div 
-          className="bg-primary h-2 rounded-full transition-all duration-300"
+          className="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${(step / totalSteps) * 100}%` }}
         />
       </div>
 
       {/* Step Counter */}
       <div className="text-center">
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm font-medium text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
           Passo {step} de {totalSteps}
         </span>
       </div>
 
       {/* Step Content */}
-      <div className="min-h-[400px] flex items-center">
-        <div className="w-full">
+      <div className="min-h-[320px] md:min-h-[400px] flex items-center justify-center">
+        <div className="w-full max-w-2xl">
           <AnimatePresence mode="wait">
             {renderStep()}
           </AnimatePresence>
@@ -277,18 +281,19 @@ export const DemoConfigurator: React.FC<DemoConfiguratorProps> = ({ onComplete }
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse sm:flex-row justify-between gap-4 pt-6 border-t">
         <Button 
           onClick={handleBack}
           variant="ghost"
           disabled={step === 1}
+          className="w-full sm:w-auto"
         >
           Voltar
         </Button>
         <Button 
           onClick={handleNext}
           disabled={!canProceed()}
-          className="min-w-[120px]"
+          className="min-w-[120px] w-full sm:w-auto"
         >
           {step === totalSteps ? (
             <>
