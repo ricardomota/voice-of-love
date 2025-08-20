@@ -34,14 +34,15 @@ export const StepRelationship: React.FC<Props> = ({ state, setState }) => {
       </div>
 
       <Card className="p-4 md:p-5">
-        <label htmlFor="demo-name" className="block text-sm font-medium mb-2">Name/Nickname (optional)</label>
+        <label htmlFor="demo-name" className="block text-sm font-medium mb-2">What should they call you? (optional)</label>
         <Input
           id="demo-name"
-          placeholder="e.g., Maria, Vó Lúcia"
+          placeholder="e.g., my dear, sweetheart, John, honey..."
           value={state.name || ''}
           onChange={(e) => setState({ name: e.target.value })}
-          aria-label="Name or nickname"
+          aria-label="What they should call you"
         />
+        <p className="text-xs text-muted-foreground mt-2">How this person addressed you - a nickname, term of endearment, or your name</p>
       </Card>
     </div>
   );
