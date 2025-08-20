@@ -138,29 +138,43 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
   // Create more personalized and engaging content
   const personalizations = [];
   
-  // Add favorite memory with more context
+  // Add favorite memory with more context (preserve user's wording)
   if (state.personalization?.favoriteMemory) {
     const memoryText = state.personalization.favoriteMemory.trim();
     if (memoryText.length > 0) {
-      const memoryReference = language === 'pt-BR' 
-        ? `Lembro especialmente de ${memoryText.toLowerCase()}... aqueles momentos eram tão especiais.`
-        : language === 'es'
-        ? `Recuerdo especialmente ${memoryText.toLowerCase()}... esos momentos eran tan especiales.`
-        : `I especially remember ${memoryText.toLowerCase()}... those moments were so special.`;
+      const memoryReference =
+        language === 'pt-BR'
+          ? `Lembro especialmente de ${memoryText}. Isso sempre nos fazia sorrir.`
+          : language === 'es'
+          ? `Recuerdo especialmente ${memoryText}. Eso siempre nos hacía sonreír.`
+          : `I especially remember ${memoryText}. It always made us smile.`;
       personalizations.push(memoryReference);
     }
   }
   
-  // Add personal detail with warmth
+  // Add personal detail with warmth and detect signature phrases
   if (state.personalization?.personalDetail) {
     const detailText = state.personalization.personalDetail.trim();
     if (detailText.length > 0) {
-      const detailReference = language === 'pt-BR'
-        ? `E como eu amava isso em você: ${detailText.toLowerCase()}. Isso sempre me fazia sorrir.`
-        : language === 'es' 
-        ? `Y cómo amaba eso de ti: ${detailText.toLowerCase()}. Eso siempre me hacía sonreír.`
-        : `And how I loved this about you: ${detailText.toLowerCase()}. That always made me smile.`;
-      personalizations.push(detailReference);
+      const quoteMatch = detailText.match(/["“”'«»](.+?)["“”'«»]/);
+      if (quoteMatch && quoteMatch[1]) {
+        const quoted = quoteMatch[1].trim();
+        const signatureReference =
+          language === 'pt-BR'
+            ? `Como você sempre dizia: "${quoted}".`
+            : language === 'es'
+            ? `Como siempre decías: "${quoted}".`
+            : `As you always said: "${quoted}."`;
+        personalizations.push(signatureReference);
+      } else {
+        const detailReference =
+          language === 'pt-BR'
+            ? `E eu sempre amei isso em você: ${detailText}.`
+            : language === 'es'
+            ? `Y siempre amé esto de ti: ${detailText}.`
+            : `And I always loved this about you: ${detailText}.`;
+        personalizations.push(detailReference);
+      }
     }
   }
   
@@ -189,8 +203,8 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
 
   // Combine personalization in a natural way
   if (personalizations.length > 0) {
-    const connector = language === 'pt-BR' ? ' ' : language === 'es' ? ' ' : ' ';
-    topicText = topicText + connector + personalizations.slice(0, 2).join(' ');
+    const connector = ' ';
+    topicText = `${topicText}${connector}${personalizations.join(' ')}`;
   }
 
   // Apply relationship-specific tone adjustments
@@ -227,7 +241,7 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
 
   const primarySeed = `${applyStyleTone(base, state.style, language)} ${topicText}`;
   // Keep within reasonable length but allow more space for personalization
-  const primary = primarySeed.length > 250 ? primarySeed.slice(0, 247).trimEnd() + '…' : primarySeed;
+  const primary = primarySeed.length > 360 ? primarySeed.slice(0, 357).trimEnd() + '…' : primarySeed;
 
   const followSeed = topicContent.followUp;
   const followStyled = applyStyleTone(followSeed, state.style, language);
