@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { DemoState, Warmth, Formality, Energy, Pace } from '../wizard/types';
-import { generatePreviewText } from '../wizard/generator';
+import { DemoState, Warmth, Formality, Energy, Pace } from '../types';
+import { generatePreviewText } from '../generator';
 
 interface Props {
   state: DemoState;

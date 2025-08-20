@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { DemoState, Relationship } from '../wizard/types';
+import { DemoState, Relationship } from '../types';
 
 interface Props {
   state: DemoState;

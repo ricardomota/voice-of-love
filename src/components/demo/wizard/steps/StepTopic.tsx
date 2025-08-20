@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { DemoState, Topic } from '../wizard/types';
+import { DemoState, Topic } from '../types';
 
 interface Props {
   state: DemoState;

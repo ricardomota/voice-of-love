@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { DemoState } from '../wizard/types';
-import { generatePreviewText } from '../wizard/generator';
+import { DemoState } from '../types';
+import { generatePreviewText } from '../generator';
 import { Play, RefreshCcw } from 'lucide-react';
 
 interface Props {
