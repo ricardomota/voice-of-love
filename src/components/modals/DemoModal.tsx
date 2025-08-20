@@ -4,18 +4,42 @@ import { Button } from '@/components/ui/button';
 import { Close, ArrowRight } from '@carbon/icons-react';
 import { motion } from 'framer-motion';
 import { DemoChat } from '@/components/demo/DemoChat';
+import { DemoConfigurator } from '@/components/demo/DemoConfigurator';
 
 interface DemoModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+interface DemoPersonaConfig {
+  name: string;
+  relationship: string;
+  howTheyCallYou: string;
+  personality: string[];
+  avatar: string;
+}
+
 export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
   const [showDemo, setShowDemo] = useState(true);
+  const [showConfigurator, setShowConfigurator] = useState(true);
+  const [personaConfig, setPersonaConfig] = useState<DemoPersonaConfig | undefined>();
 
   useEffect(() => {
-    if (isOpen) setShowDemo(true);
+    if (isOpen) {
+      setShowDemo(true);
+      setShowConfigurator(true);
+      setPersonaConfig(undefined);
+    }
   }, [isOpen]);
+
+  const handleConfigComplete = (config: DemoPersonaConfig) => {
+    setPersonaConfig(config);
+    setShowConfigurator(false);
+  };
+
+  const handleReconfigure = () => {
+    setShowConfigurator(true);
+  };
 
   const handleStartDemo = () => {
     setShowDemo(true);
@@ -41,82 +65,25 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
 
           <DialogHeader className="space-y-6 text-center mb-8">
             <DialogTitle className="text-3xl md:text-4xl font-serif text-primary-foreground text-center">
-              Experience Eterna Demo
+              {showConfigurator ? 'Crie Sua Pessoa Especial' : 'Experience Eterna Demo'}
             </DialogTitle>
             <DialogDescription className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-center">
-              Experience what it feels like to have a conversation with an AI version of a loved one.
+              {showConfigurator 
+                ? 'Configure a personalidade e características da pessoa com quem você quer conversar'
+                : 'Agora converse com a pessoa que você criou'
+              }
             </DialogDescription>
           </DialogHeader>
 
           {/* Demo Area */}
           <div className="space-y-6">
-            {!showDemo ? (
-              <motion.div 
-                className="space-y-8"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: showDemo ? 0 : 1 }}
+            {showConfigurator ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="space-y-6"
               >
-                {/* Preview Card */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary-foreground/10 to-transparent backdrop-blur-sm border border-primary-foreground/20 p-8 text-center">
-                  <div className="space-y-4">
-                    <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <div className="w-12 h-12 bg-secondary/40 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">👵</span>
-                      </div>
-                    </div>
-                    <h3 className="text-2xl font-serif text-primary-foreground">Meet Avó Maria</h3>
-                    <p className="text-primary-foreground/80 max-w-md mx-auto">
-                      Chat with an AI version of a loving grandmother who remembers your favorite recipes, 
-                      shares family stories, and offers wise advice.
-                    </p>
-                  </div>
-                  
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:30px_30px]" />
-                  </div>
-                </div>
-
-                {/* Features Preview */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {[
-                    {
-                      icon: "💬",
-                      title: "Natural Conversations",
-                      description: "Chat naturally with AI that captures personality and memories"
-                    },
-                    {
-                      icon: "🎵",
-                      title: "Voice Memories",
-                      description: "Hear responses in their familiar voice (simulated in demo)"
-                    },
-                    {
-                      icon: "❤️",
-                      title: "Emotional Connection",
-                      description: "Experience the warmth and wisdom of your loved ones"
-                    }
-                  ].map((feature, index) => (
-                    <div key={index} className="text-center space-y-3">
-                      <div className="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center mx-auto">
-                        <span className="text-2xl">{feature.icon}</span>
-                      </div>
-                      <h4 className="font-semibold text-primary-foreground">{feature.title}</h4>
-                      <p className="text-sm text-primary-foreground/80">{feature.description}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div className="text-center pt-4">
-                  <Button
-                    onClick={handleStartDemo}
-                    size="xl"
-                    variant="secondary"
-                    className="min-w-[200px] h-14 text-lg font-semibold"
-                  >
-                    Start Demo Chat
-                  </Button>
-                </div>
+                <DemoConfigurator onComplete={handleConfigComplete} />
               </motion.div>
             ) : (
               <motion.div
@@ -125,27 +92,27 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 className="space-y-6"
               >
                 {/* Interactive Demo */}
-                <DemoChat />
+                <DemoChat config={personaConfig} onReconfigure={handleReconfigure} />
                 
                 {/* Post-Demo CTA */}
                 <div className="text-center space-y-4 pt-4">
                   <p className="text-primary-foreground/90">
-                    Ready to create AI versions of your own loved ones?
+                    Pronto para criar versões de IA dos seus próprios entes queridos?
                   </p>
                   <div className="flex gap-4 justify-center">
                     <Button
-                      onClick={() => setShowDemo(false)}
+                      onClick={handleReconfigure}
                       variant="outline"
                       className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                     >
-                      Try Again
+                      Configurar Novamente
                     </Button>
                     <Button
                       onClick={handleTryFull}
                       variant="secondary"
                       className="min-w-[160px] flex items-center gap-2"
                     >
-                      Try Eterna Free
+                      Usar Eterna Grátis
                       <ArrowRight size={16} />
                     </Button>
                   </div>

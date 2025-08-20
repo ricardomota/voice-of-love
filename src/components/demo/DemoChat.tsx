@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Volume2, Heart, Sparkles, Brain, Mic } from 'lucide-react';
+import { Send, Volume2, Heart, Sparkles, Brain, Mic, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
@@ -13,54 +13,121 @@ interface Message {
   timestamp: Date;
 }
 
+interface DemoPersonaConfig {
+  name: string;
+  relationship: string;
+  howTheyCallYou: string;
+  personality: string[];
+  avatar: string;
+}
+
 interface DemoPersona {
   name: string;
   relationship: string;
   avatar: string;
   personality: string;
+  howTheyCallYou: string;
   responses: { [key: string]: string[] };
 }
 
-const demoPersona: DemoPersona = {
-  name: "Avó Maria",
-  relationship: "Sua avó querida",
-  avatar: "/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png",
-  personality: "carinhosa e sábia",
-  responses: {
-    "olá": [
-      "Oi meu bem! Como está meu netinho querido? Que saudade de você! Estava aqui lembrando daquela vez que fazíamos pão juntos...",
-      "Olá meu amor! Que alegria te ver aqui. Sabia que outro dia sonhei com você? Estava me ajudando no jardim como sempre fazia."
-    ],
-    "saudade": [
-      "Eu também sinto muita saudade sua, meu anjo. Lembra quando você vinha correndo me abraçar depois da escola? Ainda sinto o cheiro do seu cabelo...",
-      "Ah, que saudade boa essa! Você sempre foi meu netinho especial. Lembra quando você me ensinava a usar o celular e eu ficava perdida?"
-    ],
-    "receita": [
-      "Ah! Você quer a receita do meu famoso bolo de chocolate? Era assim: 3 ovos, 2 xícaras de açúcar, 1 xícara de farinha... mas o segredo mesmo era o carinho que eu colocava em cada movimento!",
-      "Claro, meu bem! Para fazer aquele brigadeiro que você adorava: 1 lata de leite condensado, 3 colheres de chocolate em pó, 1 colher de manteiga e muito amor! Você sempre lambia a panela toda!"
-    ],
-    "história": [
-      "Deixa eu te contar sobre quando você era pequeno... Você tinha uns 5 anos e sempre corria pelo quintal atrás das galinhas! Uma vez você trouxe um pintinho pra dentro de casa escondido no bolso. Sua mãe ficou uma fera!",
-      "Ah, que memória boa! Lembro quando você perdeu o primeiro dentinho brincando na minha casa. Ficou chorando, mas eu disse que a fada do dente ia dar um presente especial. No dia seguinte, 'magicamente' apareceu uma moeda debaixo do seu travesseiro!"
-    ],
-    "conselho": [
-      "Meu neto, a vida é como fazer um bolo - às vezes não sai perfeito na primeira tentativa, mas sempre é feito com amor. Continue sendo essa pessoa boa que você é, com esse coração generoso.",
-      "Lembre-se sempre do que eu te dizia: as pessoas podem esquecer o que você disse ou fez, mas nunca vão esquecer como você as fez sentir. Seja sempre gentil, meu bem."
-    ],
-    "trabalho": [
-      "Ah, trabalho... Na minha época era diferente, mas sei que você é dedicado como sempre foi. Lembra quando você 'trabalhava' comigo no jardim? Pagava você com biscoitos!",
-      "Trabalhe com paixão, meu anjo, mas não esqueça de descansar. Como eu sempre dizia: 'Quem não descansa não aguenta a caminhada'."
-    ],
-    "família": [
-      "A família é tudo, meu bem. Mesmo longe, mesmo com diferenças, o amor sempre une. Você sempre foi o orgulho da família, sabia disso?",
-      "Cuide bem da sua família, como eu cuidei da minha. E lembra: casa não é lugar, é onde estão as pessoas que amamos."
-    ],
-    "default": [
-      "Que bom ouvir você, meu bem! Me conta mais sobre sua vida. Como estão os seus estudos?",
-      "Você sempre foi tão especial para mim. Desde pequeno tinha esse jeitinho carinhoso... O que mais você gostaria de conversar?",
-      "Ah, como é bom ter essa conversa com você! Parece que estou te vendo aqui na minha cozinha de novo. Continue, estou aqui te ouvindo com todo carinho."
-    ]
+interface DemoChatProps {
+  config?: DemoPersonaConfig;
+  onReconfigure?: () => void;
+}
+
+const createDemoPersona = (config?: DemoPersonaConfig): DemoPersona => {
+  if (!config) {
+    return {
+      name: "Avó Maria",
+      relationship: "Sua avó querida", 
+      avatar: "/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png",
+      personality: "carinhosa e sábia",
+      howTheyCallYou: "meu bem",
+      responses: {
+        // ... keep existing responses
+        "olá": [
+          "Oi meu bem! Como está meu netinho querido? Que saudade de você! Estava aqui lembrando daquela vez que fazíamos pão juntos...",
+          "Olá meu amor! Que alegria te ver aqui. Sabia que outro dia sonhei com você? Estava me ajudando no jardim como sempre fazia."
+        ],
+        "saudade": [
+          "Eu também sinto muita saudade sua, meu anjo. Lembra quando você vinha correndo me abraçar depois da escola? Ainda sinto o cheiro do seu cabelo...",
+          "Ah, que saudade boa essa! Você sempre foi meu netinho especial. Lembra quando você me ensinava a usar o celular e eu ficava perdida?"
+        ],
+        "receita": [
+          "Ah! Você quer a receita do meu famoso bolo de chocolate? Era assim: 3 ovos, 2 xícaras de açúcar, 1 xícara de farinha... mas o segredo mesmo era o carinho que eu colocava em cada movimento!",
+          "Claro, meu bem! Para fazer aquele brigadeiro que você adorava: 1 lata de leite condensado, 3 colheres de chocolate em pó, 1 colher de manteiga e muito amor! Você sempre lambia a panela toda!"
+        ],
+        "história": [
+          "Deixa eu te contar sobre quando você era pequeno... Você tinha uns 5 anos e sempre corria pelo quintal atrás das galinhas! Uma vez você trouxe um pintinho pra dentro de casa escondido no bolso. Sua mãe ficou uma fera!",
+          "Ah, que memória boa! Lembro quando você perdeu o primeiro dentinho brincando na minha casa. Ficou chorando, mas eu disse que a fada do dente ia dar um presente especial. No dia seguinte, 'magicamente' apareceu uma moeda debaixo do seu travesseiro!"
+        ],
+        "conselho": [
+          "Meu neto, a vida é como fazer um bolo - às vezes não sai perfeito na primeira tentativa, mas sempre é feito com amor. Continue sendo essa pessoa boa que você é, com esse coração generoso.",
+          "Lembre-se sempre do que eu te dizia: as pessoas podem esquecer o que você disse ou fez, mas nunca vão esquecer como você as fez sentir. Seja sempre gentil, meu bem."
+        ],
+        "trabalho": [
+          "Ah, trabalho... Na minha época era diferente, mas sei que você é dedicado como sempre foi. Lembra quando você 'trabalhava' comigo no jardim? Pagava você com biscoitos!",
+          "Trabalhe com paixão, meu anjo, mas não esqueça de descansar. Como eu sempre dizia: 'Quem não descansa não aguenta a caminhada'."
+        ],
+        "família": [
+          "A família é tudo, meu bem. Mesmo longe, mesmo com diferenças, o amor sempre une. Você sempre foi o orgulho da família, sabia disso?",
+          "Cuide bem da sua família, como eu cuidei da minha. E lembra: casa não é lugar, é onde estão as pessoas que amamos."
+        ],
+        "default": [
+          "Que bom ouvir você, meu bem! Me conta mais sobre sua vida. Como estão os seus estudos?",
+          "Você sempre foi tão especial para mim. Desde pequeno tinha esse jeitinho carinhoso... O que mais você gostaria de conversar?",
+          "Ah, como é bom ter essa conversa com você! Parece que estou te vendo aqui na minha cozinha de novo. Continue, estou aqui te ouvindo com todo carinho."
+        ]
+      }
+    };
   }
+
+  const personalityText = config.personality.length > 0 
+    ? config.personality.join(' e ') 
+    : 'carinhosa';
+
+  const getPersonalizedResponses = () => {
+    const baseResponses = {
+      "olá": [
+        `Oi ${config.howTheyCallYou}! Como você está? Que saudade!`,
+        `Olá ${config.howTheyCallYou}! Que alegria te ver aqui!`
+      ],
+      "saudade": [
+        `Eu também sinto muita saudade sua, ${config.howTheyCallYou}.`,
+        `Ah, que saudade boa! Você sempre foi especial para mim.`
+      ],
+      "default": [
+        `Que bom ouvir você, ${config.howTheyCallYou}! Me conta mais sobre sua vida.`,
+        `Você sempre foi tão especial para mim. O que mais gostaria de conversar?`
+      ]
+    };
+
+    // Add personality-specific responses
+    if (config.personality.includes('divertida')) {
+      baseResponses["piada"] = [
+        "Haha! Você sempre gostou das minhas piadas! Deixa eu te contar uma...",
+        "Sempre fui a palhaça da família mesmo! Lembra das nossas risadas?"
+      ];
+    }
+
+    if (config.personality.includes('sabia')) {
+      baseResponses["conselho"] = [
+        `${config.howTheyCallYou}, a vida nos ensina que cada experiência tem seu valor. O importante é sempre seguir com o coração aberto.`,
+        `Como sempre digo, ${config.howTheyCallYou}: as dificuldades são apenas lições disfarçadas.`
+      ];
+    }
+
+    return baseResponses;
+  };
+
+  return {
+    name: config.name,
+    relationship: config.relationship,
+    avatar: config.avatar,
+    personality: personalityText,
+    howTheyCallYou: config.howTheyCallYou,
+    responses: getPersonalizedResponses()
+  };
 };
 
 const suggestedMessages = [
@@ -73,7 +140,7 @@ const suggestedMessages = [
   "Me conta uma memória especial nossa"
 ];
 
-export const DemoChat: React.FC = () => {
+export const DemoChat: React.FC<DemoChatProps> = ({ config, onReconfigure }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -82,6 +149,8 @@ export const DemoChat: React.FC = () => {
   const [conversationCount, setConversationCount] = useState(0);
   const [hasVoiceEnabled, setHasVoiceEnabled] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const demoPersona = createDemoPersona(config);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -92,15 +161,15 @@ export const DemoChat: React.FC = () => {
   }, [messages]);
 
   useEffect(() => {
-    // Welcome message
+    // Welcome message with personalized greeting
     const welcomeMessage: Message = {
       id: '1',
-      text: "Oi meu bem! Que alegria te ver aqui! Sou sua Avó Maria. Como você tem passado?",
+      text: `Oi ${demoPersona.howTheyCallYou}! Que alegria te ver aqui! Como você tem passado?`,
       sender: 'ai',
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
-  }, []);
+  }, [demoPersona]);
 
   const getAIResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase();
@@ -207,6 +276,16 @@ export const DemoChat: React.FC = () => {
           )}
         </div>
         <div className="flex items-center gap-2">
+          {onReconfigure && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onReconfigure}
+              className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10"
+            >
+              <Settings size={16} />
+            </Button>
+          )}
           {isLearning && (
             <div className="flex items-center gap-2 bg-accent/20 px-3 py-1 rounded-full">
               <Brain className="w-4 h-4 text-accent animate-pulse" />
