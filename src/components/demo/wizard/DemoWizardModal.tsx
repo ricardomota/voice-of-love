@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -24,6 +24,16 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
     style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
     output: { type: 'text' },
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setStep(1);
+      setStateInternal({
+        style: { warmth: 'Gentle', formality: 'Neutral', energy: 'Calm', pace: 'Normal' },
+        output: { type: 'text' },
+      });
+    }
+  }, [isOpen]);
 
   const setState = (patch: Partial<DemoState>) => setStateInternal((prev) => ({ ...prev, ...patch }));
 
@@ -62,10 +72,18 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && canNext()) {
+      e.preventDefault();
+      if (step === totalSteps) onComplete();
+      else goNext();
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl w-[95vw] h-[85vh] p-0 bg-card border overflow-hidden">
-        <div className="relative h-full flex flex-col">
+        <div className="relative h-full flex flex-col" onKeyDown={handleKeyDown}>
           {/* Close */}
           <Button
             variant="ghost"
@@ -73,6 +91,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             onClick={onClose}
             aria-label="Close demo"
             className="absolute top-3 right-3 text-muted-foreground hover:text-foreground hover:bg-muted z-10"
+            type="button"
           >
             <Close size={18} />
           </Button>
@@ -104,10 +123,10 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
           </div>
 
           {/* Footer */}
-          <div className="border-t bg-muted/30 px-6 md:px-8 py-4">
+          <div className="border-t bg-muted/30 px-6 md:px-8 py-4 z-10">
             <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 justify-between">
-              <Button variant="ghost" onClick={goBack} disabled={step === 1} className="w-full sm:w-auto" aria-label="Go back">Back</Button>
-              <Button onClick={step === totalSteps ? onComplete : goNext} disabled={!canNext()} className="w-full sm:w-auto min-w-[120px]" aria-label="Next step">
+              <Button variant="ghost" onClick={goBack} disabled={step === 1} className="w-full sm:w-auto" aria-label="Go back" type="button">Back</Button>
+              <Button onClick={step === totalSteps ? onComplete : goNext} disabled={!canNext()} className="w-full sm:w-auto min-w-[120px]" aria-label="Next step" type="button">
                 {step === totalSteps ? 'Finish' : 'Next'}
               </Button>
             </div>
