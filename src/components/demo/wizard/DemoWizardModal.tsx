@@ -82,7 +82,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl w-[95vw] h-[85vh] p-0 bg-card border overflow-hidden">
+      <DialogContent className="max-w-3xl w-[95vw] h-[85vh] p-0 bg-card border overflow-hidden [&>button]:hidden">
         <div className="relative h-full flex flex-col" onKeyDown={handleKeyDown}>
           {/* Close */}
           <Button
@@ -90,10 +90,10 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             size="sm"
             onClick={onClose}
             aria-label="Close demo"
-            className="absolute top-3 right-3 text-muted-foreground hover:text-foreground hover:bg-muted z-10"
+            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground hover:bg-muted z-20"
             type="button"
           >
-            <Close size={18} />
+            <Close size={20} />
           </Button>
 
           {/* Header */}
@@ -122,12 +122,30 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             </AnimatePresence>
           </div>
 
-          {/* Footer */}
-          <div className="border-t bg-muted/30 px-6 md:px-8 py-4 z-10">
-            <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 justify-between">
-              <Button variant="ghost" onClick={goBack} disabled={step === 1} className="w-full sm:w-auto" aria-label="Go back" type="button">Back</Button>
-              <Button onClick={step === totalSteps ? onComplete : goNext} disabled={!canNext()} className="w-full sm:w-auto min-w-[120px]" aria-label="Next step" type="button">
-                {step === totalSteps ? 'Finish' : 'Next'}
+          {/* Footer - Enhanced visibility */}
+          <div className="border-t-2 bg-card px-6 md:px-8 py-6 shadow-lg z-30">
+            <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-between items-center">
+              <Button 
+                variant="outline" 
+                onClick={goBack} 
+                disabled={step === 1} 
+                className="w-full sm:w-auto min-w-[120px] h-12 text-base font-medium" 
+                aria-label="Go back" 
+                type="button"
+              >
+                Back
+              </Button>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                Step {step} of {totalSteps}
+              </div>
+              <Button 
+                onClick={step === totalSteps ? onComplete : goNext} 
+                disabled={!canNext()} 
+                className="w-full sm:w-auto min-w-[120px] h-12 text-base font-semibold bg-primary hover:bg-primary/90" 
+                aria-label="Next step" 
+                type="button"
+              >
+                {step === totalSteps ? 'Start Free Trial' : 'Next'}
               </Button>
             </div>
           </div>
