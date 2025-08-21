@@ -65,15 +65,28 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
   const [sampleError, setSampleError] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [showMicroInteractions, setShowMicroInteractions] = useState(false);
+  const [currentText, setCurrentText] = useState<{primary: string, followUp: string} | null>(null);
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const { primary, followUp, voiceLanguage } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
+  
+  // Generate initial text
+  const initialText = useMemo(() => {
+    const result = generatePreviewText(state, currentLanguage);
+    console.log('Generated initial preview text:', result);
+    return result;
+  }, [state, currentLanguage]);
+  
+  // Use current text or fall back to initial text
+  const { primary, followUp } = currentText || initialText;
+  const voiceLanguage = initialText.voiceLanguage;
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    setState({ preview: { primary, followUp } });
+    // Reset current text when state changes
+    setCurrentText(null);
+    setState({ preview: { primary: initialText.primary, followUp: initialText.followUp } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [primary, followUp]);
+  }, [initialText.primary, initialText.followUp]);
 
   const speakLocal = () => {
     const utter = new SpeechSynthesisUtterance(primary);
@@ -117,8 +130,12 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
   };
 
   const regenerate = () => {
-    const { primary: p, followUp: f } = generatePreviewText(state, currentLanguage);
-    setState({ preview: { primary: p, followUp: f } });
+    console.log('Regenerate button clicked, current state:', state);
+    const newText = generatePreviewText(state, currentLanguage);
+    console.log('Generated new text:', newText);
+    setCurrentText({ primary: newText.primary, followUp: newText.followUp });
+    setState({ preview: { primary: newText.primary, followUp: newText.followUp } });
+    console.log('State updated with new preview');
   };
 
   const canContinue = Boolean(primary);
