@@ -19,6 +19,7 @@ import { ProgressBar } from './ProgressBar';
 import { supabase } from '@/integrations/supabase/client';
 import { peopleService } from '@/services/peopleService';
 import { transcriptionAnalysisService } from '@/services/transcritionAnalysisService';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface PersonFormProps {
   person?: Person;
@@ -26,7 +27,98 @@ interface PersonFormProps {
   onBack: () => void;
 }
 
+
+const getPersonFormContent = (language: string) => {
+  const content = {
+    en: {
+      totalSteps: 16,
+      saveAndExit: "Save and Exit",
+      next: "Next",
+      previous: "Previous",
+      save: "Save",
+      steps: {
+        1: "Basic Information",
+        2: "Relationship", 
+        3: "Personality",
+        4: "Memorable Phrases",
+        5: "Values",
+        6: "Interests",
+        7: "Communication Style",
+        8: "Memories",
+        9: "Photos",
+        10: "Audio",
+        11: "Voice Clone",
+        12: "Age",
+        13: "Physical Description",
+        14: "Education",
+        15: "Profession",
+        16: "Review"
+      },
+      fields: {
+        name: "Name",
+        relationship: "Relationship",
+        personality: "Personality traits",
+        phrases: "Memorable phrases",
+        values: "Values and beliefs",
+        interests: "Interests and hobbies", 
+        talkingStyle: "Communication style",
+        memories: "Precious memories",
+        photos: "Photos",
+        audio: "Audio recordings",
+        age: "Age",
+        physicalDescription: "Physical description",
+        education: "Education",
+        profession: "Profession"
+      }
+    },
+    'pt-BR': {
+      totalSteps: 16,
+      saveAndExit: "Salvar e Sair",
+      next: "Próximo",
+      previous: "Anterior", 
+      save: "Salvar",
+      steps: {
+        1: "Informações Básicas",
+        2: "Relacionamento",
+        3: "Personalidade", 
+        4: "Frases Marcantes",
+        5: "Valores",
+        6: "Interesses",
+        7: "Estilo de Comunicação",
+        8: "Memórias",
+        9: "Fotos",
+        10: "Áudio",
+        11: "Clone de Voz",
+        12: "Idade",
+        13: "Descrição Física",
+        14: "Educação",
+        15: "Profissão",
+        16: "Revisão"
+      },
+      fields: {
+        name: "Nome",
+        relationship: "Relacionamento",
+        personality: "Traços de personalidade",
+        phrases: "Frases marcantes",
+        values: "Valores e crenças",
+        interests: "Interesses e hobbies",
+        talkingStyle: "Estilo de comunicação", 
+        memories: "Memórias preciosas",
+        photos: "Fotos",
+        audio: "Gravações de áudio",
+        age: "Idade",
+        physicalDescription: "Descrição física",
+        education: "Educação",
+        profession: "Profissão"
+      }
+    }
+  };
+  return content[language as keyof typeof content] || content.en;
+};
+
 export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
+  const { currentLanguage } = useLanguage();
+  const content = getPersonFormContent(currentLanguage);
   const [currentStep, setCurrentStep] = useState(1);
   const { formData, updateFormData, addField, removeField, updateField, updateMemoryMedia } = useFormData(person);
   const { canProceed, isFormValid } = useFormValidation(formData);
@@ -35,7 +127,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   const currentGender = transcriptionAnalysisService.getGender(formData.relationship);
   const pronouns = transcriptionAnalysisService.getPronouns(currentGender);
 
-  const totalSteps = 16; // Aumentamos para 16 passos (incluindo idade)
+  const totalSteps = content.totalSteps;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -183,14 +275,14 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
             <div className="text-center mb-8">
               <h2 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground mb-4 leading-tight">
-                Vamos começar! ✨
+                {currentLanguage === 'en' ? "Let's start! ✨" : "Vamos começar! ✨"}
               </h2>
               <p className="text-lg text-muted-foreground">
-                Qual o nome desta pessoa especial?
+                {currentLanguage === 'en' ? "What is the name of this special person?" : "Qual o nome desta pessoa especial?"}
               </p>
             </div>
             <Input
-              placeholder="Digite o nome..."
+              placeholder={currentLanguage === 'en' ? "Enter the name..." : "Digite o nome..."}
               value={formData.name}
               onChange={(e) => updateFormData({ name: e.target.value })}
               className="text-lg h-14 rounded-xl"
@@ -201,14 +293,14 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                 variant="outline"
                 className="px-6 py-3"
               >
-                Voltar
+                {content.previous}
               </Button>
               <Button 
                 onClick={handleNext}
                 disabled={!canProceed(currentStep)}
                 className="px-6 py-3"
               >
-                Próximo
+                {content.next}
               </Button>
             </div>
           </div>
@@ -763,7 +855,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                   onClick={handleSaveAndExit}
                   className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border-border/50"
                 >
-                  💾 Salvar e sair
+                  💾 {content.saveAndExit}
                 </Button>
               </div>
             )}
