@@ -13,18 +13,25 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
 import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
-
 type AuthMode = 'signin' | 'signup';
-
 interface AuthProps {
   language?: string;
 }
+export const Auth: React.FC<AuthProps> = ({
+  language = 'pt'
+}) => {
+  const {
+    signIn,
+    signUp,
+    user
+  } = useAuth();
+  const {
+    toast
+  } = useToast();
+  const {
+    currentLanguage
+  } = useLanguage();
 
-export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
-  const { signIn, signUp, user } = useAuth();
-  const { toast } = useToast();
-  const { currentLanguage } = useLanguage();
-  
   // Translations
   const translations = {
     'pt-BR': {
@@ -118,12 +125,10 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
       signedInSuccessfully: 'You have been signed in successfully.'
     }
   };
-
   const getText = (key: string) => {
-    return translations[currentLanguage as keyof typeof translations]?.[key as keyof typeof translations['en']] || 
-           translations['en'][key as keyof typeof translations['en']];
+    return translations[currentLanguage as keyof typeof translations]?.[key as keyof typeof translations['en']] || translations['en'][key as keyof typeof translations['en']];
   };
-  
+
   // State management
   const [mode, setMode] = useState<AuthMode>('signin');
   const [email, setEmail] = useState('');
@@ -151,27 +156,22 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
       setError(getText('enterEmailAddress'));
       return false;
     }
-    
     if (!email.includes('@')) {
       setError(getText('enterValidEmail'));
       return false;
     }
-    
     if (!password) {
       setError(getText('enterPasswordField'));
       return false;
     }
-    
     if (password.length < 6) {
       setError(getText('passwordMinLength'));
       return false;
     }
-    
     if (mode === 'signup' && password !== confirmPassword) {
       setError(getText('passwordsNoMatch'));
       return false;
     }
-    
     return true;
   };
 
@@ -180,21 +180,18 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-    
     if (!validateForm()) return;
-    
     setLoading(true);
-    
     try {
       let result;
-      
       if (mode === 'signup') {
         result = await signUp(email.trim(), password, language);
-        
         if (!result.error) {
-          await analyticsIntegrations.trackEvent('auth_signup_success', { email: email.trim() });
+          await analyticsIntegrations.trackEvent('auth_signup_success', {
+            email: email.trim()
+          });
           setSuccess(getText('accountCreated'));
-          
+
           // Auto-switch to sign in after a delay
           setTimeout(() => {
             setMode('signin');
@@ -203,19 +200,19 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
         }
       } else {
         result = await signIn(email.trim(), password);
-        
         if (!result.error) {
-          await analyticsIntegrations.trackEvent('auth_signin_success', { email: email.trim() });
+          await analyticsIntegrations.trackEvent('auth_signin_success', {
+            email: email.trim()
+          });
           toast({
             title: getText('welcomeBackToast'),
             description: getText('signedInSuccessfully'),
             variant: 'default'
           });
-          
+
           // Redirect will happen automatically via useEffect
         }
       }
-      
       if (result.error) {
         // Handle specific error types
         switch (result.error.message) {
@@ -240,7 +237,6 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
       setLoading(false);
     }
   };
-
   const switchMode = () => {
     setMode(mode === 'signin' ? 'signup' : 'signin');
     setError('');
@@ -248,34 +244,29 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
     setPassword('');
     setConfirmPassword('');
   };
-
-  return (
-    <>
+  return <>
       {/* Show header if user is logged in */}
       {user && <EternaHeader />}
       
       <div className={`min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4 ${user ? 'pt-20' : ''}`}>
       <div className="w-full max-w-md">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.5
+        }}>
           {/* Logo and Title */}
           <div className="text-center mb-8">
-            <img 
-              src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
-              alt="Eterna Logo" 
-              className="h-8 mx-auto mb-6"
-            />
+            
             <h1 className="text-2xl md:text-3xl font-bold mb-2">
               {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
             </h1>
             <p className="text-muted-foreground">
-              {mode === 'signin' 
-                ? getText('signInToAccess')
-                : getText('startPreserving')
-              }
+              {mode === 'signin' ? getText('signInToAccess') : getText('startPreserving')}
             </p>
           </div>
 
@@ -295,16 +286,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 h-11"
-                      placeholder={getText('enterEmail')}
-                      disabled={loading}
-                      autoComplete="email"
-                    />
+                    <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="pl-10 h-11" placeholder={getText('enterEmail')} disabled={loading} autoComplete="email" />
                   </div>
                 </div>
 
@@ -315,87 +297,48 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10 pr-10 h-11"
-                      placeholder={getText('enterPassword')}
-                      disabled={loading}
-                      autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
+                    <Input id="password" type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} className="pl-10 pr-10 h-11" placeholder={getText('enterPassword')} disabled={loading} autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground">
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
-                  {mode === 'signup' && password && (
-                    <div className="text-xs text-muted-foreground">
+                  {mode === 'signup' && password && <div className="text-xs text-muted-foreground">
                       {getText('passwordStrength')}: {password.length < 6 ? getText('tooShort') : password.length < 8 ? getText('fair') : getText('good')}
-                    </div>
-                  )}
+                    </div>}
                 </div>
 
                 {/* Confirm Password Field (Signup only) */}
-                {mode === 'signup' && (
-                  <div className="space-y-2">
+                {mode === 'signup' && <div className="space-y-2">
                     <Label htmlFor="confirmPassword" className="text-sm font-medium">
                       {getText('confirmPassword')}
                     </Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="confirmPassword"
-                        type={showPassword ? 'text' : 'password'}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="pl-10 h-11"
-                        placeholder={getText('confirmPasswordPlaceholder')}
-                        disabled={loading}
-                        autoComplete="new-password"
-                      />
+                      <Input id="confirmPassword" type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="pl-10 h-11" placeholder={getText('confirmPasswordPlaceholder')} disabled={loading} autoComplete="new-password" />
                     </div>
-                  </div>
-                )}
+                  </div>}
 
                 {/* Error Alert */}
-                {error && (
-                  <Alert variant="destructive">
+                {error && <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
+                  </Alert>}
 
                 {/* Success Alert */}
-                {success && (
-                  <Alert className="border-green-200 bg-green-50">
+                {success && <Alert className="border-green-200 bg-green-50">
                     <CheckCircle className="h-4 w-4 text-green-600" />
                     <AlertDescription className="text-green-800">{success}</AlertDescription>
-                  </Alert>
-                )}
+                  </Alert>}
 
                 {/* Submit Button */}
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full h-11 text-base font-medium"
-                  size="lg"
-                >
-                  {loading ? (
-                    <div className="flex items-center gap-2">
+                <Button type="submit" disabled={loading} className="w-full h-11 text-base font-medium" size="lg">
+                  {loading ? <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                       {mode === 'signin' ? getText('signingIn') : getText('creatingAccount')}
-                    </div>
-                  ) : (
-                    <>
+                    </div> : <>
                       {mode === 'signin' ? getText('signIn') : getText('createAccountBtn')}
                       <ArrowRight className="h-4 w-4 ml-2" />
-                    </>
-                  )}
+                    </>}
                 </Button>
 
                 {/* Mode Switch */}
@@ -408,13 +351,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   </div>
                 </div>
 
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={switchMode}
-                  disabled={loading}
-                  className="w-full"
-                >
+                <Button type="button" variant="ghost" onClick={switchMode} disabled={loading} className="w-full">
                   {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
                 </Button>
               </form>
@@ -433,19 +370,13 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
 
           {/* Back to Home */}
           <div className="text-center mt-6">
-            <Button
-              variant="ghost"
-              onClick={() => window.location.href = '/'}
-              className="text-muted-foreground"
-            >
+            <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-muted-foreground">
               {getText('backToHome')}
             </Button>
           </div>
         </motion.div>
       </div>
       </div>
-    </>
-  );
+    </>;
 };
-
 export default Auth;
