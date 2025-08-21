@@ -123,6 +123,51 @@ export const Auth: React.FC<AuthProps> = ({
       accountCreated: 'Account created! Please check your email to verify your account.',
       welcomeBackToast: 'Welcome back!',
       signedInSuccessfully: 'You have been signed in successfully.'
+    },
+    'es': {
+      welcomeBack: 'Bienvenido de nuevo',
+      createAccount: 'Crea tu cuenta',
+      signInToAccess: 'Inicia sesión para acceder a tu Cartera de Recuerdos',
+      startPreserving: 'Comienza a preservar tus recuerdos preciados',
+      signIn: 'Iniciar sesión',
+      signUp: 'Registrarse',
+      emailAddress: 'Correo electrónico',
+      enterEmail: 'Ingresa tu correo electrónico',
+      password: 'Contraseña',
+      enterPassword: 'Ingresa tu contraseña',
+      confirmPassword: 'Confirmar contraseña',
+      confirmPasswordPlaceholder: 'Confirma tu contraseña',
+      passwordStrength: 'Fortaleza de la contraseña',
+      tooShort: 'Demasiado corta',
+      fair: 'Aceptable',
+      good: 'Buena',
+      signingIn: 'Iniciando sesión...',
+      creatingAccount: 'Creando cuenta...',
+      createAccountBtn: 'Crear cuenta',
+      dontHaveAccount: '¿No tienes una cuenta?',
+      alreadyHaveAccount: '¿Ya tienes una cuenta?',
+      createNewAccount: 'Crear una nueva cuenta',
+      signInExisting: 'Iniciar sesión en una cuenta existente',
+      byContinuing: 'Al continuar, aceptas nuestros',
+      termsOfService: 'Términos del Servicio',
+      and: 'y',
+      privacyPolicy: 'Política de Privacidad',
+      backToHome: '← Volver al inicio',
+      // Error messages
+      enterEmailAddress: 'Por favor, ingresa tu correo electrónico',
+      enterValidEmail: 'Por favor, ingresa un correo electrónico válido',
+      enterPasswordField: 'Por favor, ingresa tu contraseña',
+      passwordMinLength: 'La contraseña debe tener al menos 6 caracteres',
+      passwordsNoMatch: 'Las contraseñas no coinciden',
+      invalidCredentials: 'Correo o contraseña inválidos. Verifica tus credenciales e inténtalo de nuevo.',
+      userAlreadyRegistered: 'Ya existe una cuenta con este correo. Intenta iniciar sesión.',
+      emailNotConfirmed: 'Revisa tu correo y haz clic en el enlace de confirmación antes de iniciar sesión.',
+      errorOccurred: 'Ocurrió un error. Inténtalo de nuevo.',
+      unexpectedError: 'Ocurrió un error inesperado. Inténtalo de nuevo.',
+      // Success messages
+      accountCreated: '¡Cuenta creada! Revisa tu correo para verificar tu cuenta.',
+      welcomeBackToast: '¡Bienvenido de nuevo!',
+      signedInSuccessfully: 'Has iniciado sesión correctamente.'
     }
   };
   const getText = (key: string) => {
@@ -185,7 +230,7 @@ export const Auth: React.FC<AuthProps> = ({
     try {
       let result;
       if (mode === 'signup') {
-        result = await signUp(email.trim(), password, language);
+        result = await signUp(email.trim(), password, currentLanguage);
         if (!result.error) {
           await analyticsIntegrations.trackEvent('auth_signup_success', {
             email: email.trim()
