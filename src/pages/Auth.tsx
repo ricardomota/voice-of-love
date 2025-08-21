@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { analyticsIntegrations } from '@/lib/integrations';
+import { EternaHeader } from '@/components/layout/EternaHeader';
 
 type AuthMode = 'signin' | 'signup';
 
@@ -144,7 +145,11 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
+    <>
+      {/* Show header if user is logged in */}
+      {user && <EternaHeader />}
+      
+      <div className={`min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4 ${user ? 'pt-20' : ''}`}>
       <div className="w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -333,6 +338,7 @@ export const Auth: React.FC = () => {
           </div>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
