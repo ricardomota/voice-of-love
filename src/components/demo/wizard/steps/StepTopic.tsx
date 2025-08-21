@@ -95,18 +95,13 @@ export const StepTopic: React.FC<Props> = ({ state, setState }) => {
                   }
                 `}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`
-                    p-2 rounded-full transition-colors duration-300
-                    ${active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground group-hover:bg-primary/20'}
-                  `}>
-                    <Icon size={18} />
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`p-2 rounded-lg transition-colors ${active ? 'bg-primary text-primary-foreground' : 'bg-muted group-hover:bg-primary/10'}`}>
+                    <Icon size={20} />
                   </div>
-                  <div className="flex-1">
-                    <div className="font-medium">{content.topics[item.key]}</div>
-                    <div className="text-sm text-muted-foreground">{content.description}</div>
-                  </div>
+                  <div className="text-lg font-medium">{content.topics[item.key]}</div>
                 </div>
+                <div className="text-sm text-muted-foreground ml-11">{content.description}</div>
               </Card>
             </motion.div>
           );

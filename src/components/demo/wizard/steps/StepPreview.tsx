@@ -6,6 +6,8 @@ import { generatePreviewText } from '../generator';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Play, RefreshCcw, Share2 } from 'lucide-react';
 import { SocialShare } from '../../SocialShare';
+import { StepMicroInteractions } from './StepMicroInteractions';
+import { motion } from 'framer-motion';
 
 interface Props {
   state: DemoState;
@@ -62,6 +64,7 @@ const getContent = (language: string) => {
 export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) => {
   const [sampleError, setSampleError] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showMicroInteractions, setShowMicroInteractions] = useState(false);
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { primary, followUp, voiceLanguage } = useMemo(() => generatePreviewText(state, currentLanguage), [state, currentLanguage]);
@@ -127,9 +130,17 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
         <p className="text-muted-foreground text-sm">{content.subtitle}</p>
       </div>
 
-      <Card className="p-5 space-y-4">
-        <p className="text-lg leading-relaxed">{primary}</p>
-        <p className="text-muted-foreground">{followUp}</p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        onAnimationComplete={() => {
+          setTimeout(() => setShowMicroInteractions(true), 1500);
+        }}
+      >
+        <Card className="p-5 space-y-4 bg-gradient-to-br from-card to-card/50 border-primary/20">
+          <p className="text-lg leading-relaxed font-medium">{primary}</p>
+          <p className="text-muted-foreground">{followUp}</p>
         {state.output.type === 'voice' && (
           <div className="pt-2">
             <Button onClick={play} className="flex items-center gap-2" aria-label={content.playButton}>
@@ -138,30 +149,54 @@ export const StepPreview: React.FC<Props> = ({ state, setState, onComplete }) =>
             <audio src={getSamplePath(state.output.voice?.timbre, state.output.voice?.age)} onError={() => setSampleError(true)} hidden />
           </div>
         )}
-      </Card>
+        </Card>
+      </motion.div>
 
-      <div className="flex flex-wrap gap-3">
-        <Button variant="outline" onClick={regenerate} className="flex items-center gap-2">
-          <RefreshCcw className="w-4 h-4" /> {content.regenerateButton}
-        </Button>
-        <Button variant="outline" onClick={() => setShowShare(true)} className="flex items-center gap-2">
-          <Share2 className="w-4 h-4" /> {content.shareButton}
-        </Button>
-      </div>
+      <motion.div 
+        className="flex flex-wrap gap-3"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+      >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button variant="outline" onClick={regenerate} className="flex items-center gap-2">
+            <RefreshCcw className="w-4 h-4" /> {content.regenerateButton}
+          </Button>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button variant="outline" onClick={() => setShowShare(true)} className="flex items-center gap-2">
+            <Share2 className="w-4 h-4" /> {content.shareButton}
+          </Button>
+        </motion.div>
+      </motion.div>
 
-      <div className="pt-2 text-center space-y-2">
-        <Button onClick={onComplete} className="min-w-[240px] h-12 text-base">{content.ctaButton}</Button>
+      <motion.div 
+        className="pt-2 text-center space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button onClick={onComplete} className="min-w-[240px] h-12 text-base bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg">
+            {content.ctaButton}
+          </Button>
+        </motion.div>
         <div className="text-xs text-muted-foreground">{content.ctaSubtext}</div>
         <div className="flex justify-center gap-4 text-sm">
-          <a href="/pricing#pro" className="underline">{content.seePlans}</a>
-          <button className="underline" onClick={() => (document.activeElement as HTMLElement)?.blur()}>{content.continueExploring}</button>
+          <a href="/pricing#pro" className="underline hover:text-primary transition-colors">{content.seePlans}</a>
+          <button className="underline hover:text-primary transition-colors" onClick={() => (document.activeElement as HTMLElement)?.blur()}>{content.continueExploring}</button>
         </div>
-      </div>
+      </motion.div>
 
       <SocialShare 
         message={primary}
         isOpen={showShare}
         onClose={() => setShowShare(false)}
+      />
+
+      <StepMicroInteractions 
+        isVisible={showMicroInteractions}
+        onInteract={() => setShowMicroInteractions(false)}
       />
     </div>
   );
