@@ -211,7 +211,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
           `}>
             <div className={`
               ${isMobile ? 'w-full' : 'max-w-2xl mx-auto'} 
-              flex ${isMobile ? 'flex-col gap-3' : 'flex-col sm:flex-row gap-4 justify-between items-center'}
+              flex ${isMobile ? 'flex-col gap-3' : 'justify-between items-center'}
             `}>
               {/* Step indicator for mobile */}
               {isMobile && (
@@ -222,7 +222,7 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
               
               {/* Buttons container */}
               <div className={`
-                flex ${isMobile ? 'gap-3' : 'gap-4 justify-between items-center w-full sm:w-auto'}
+                flex ${isMobile ? 'gap-3' : 'gap-4 justify-between items-center w-full'}
               `}>
                 <Button 
                   variant="outline" 
@@ -238,9 +238,8 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
                   {content.back}
                 </Button>
                 
-                {/* Step indicator for desktop */}
                 {!isMobile && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="absolute left-1/2 transform -translate-x-1/2 text-sm text-muted-foreground">
                     {content.step(step, totalSteps)}
                   </div>
                 )}
