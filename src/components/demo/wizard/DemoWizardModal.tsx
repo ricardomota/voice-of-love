@@ -179,23 +179,16 @@ export const DemoWizardModal: React.FC<DemoWizardModalProps> = ({ isOpen, onClos
             </DialogDescription>
             <div className={isMobile ? 'pt-3' : 'pt-4'}>
               <Progress value={progress} />
-              <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'} mb-4`}>
+              <div className={`text-xs text-muted-foreground ${isMobile ? 'pt-1' : 'pt-2'}`}>
                  {content.step(step, totalSteps)}
               </div>
-              {!isMobile && (
-                <StepProgress 
-                  currentStep={step} 
-                  totalSteps={totalSteps} 
-                  completedSteps={completedSteps}
-                />
-              )}
             </div>
           </DialogHeader>
 
           {/* Content */}
           <div className={`
             flex-1 min-h-0 overflow-y-auto 
-            ${isMobile ? 'px-4 py-4' : 'px-6 md:px-8 py-6 md:py-8'}
+            ${isMobile ? 'px-4 py-2' : 'px-6 md:px-8 py-4 md:py-6'}
           `}>
             <AnimatePresence mode="wait">
               <motion.div
