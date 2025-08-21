@@ -300,9 +300,10 @@ Respond as ${currentPerson.name} in a UNIQUE, NATURAL and PERSONALIZED way, inte
         
         {isTyping && <TypingIndicator personName={person.name} personAvatar={person.avatar} />}
         
-        {messages.length === 1 && (
+        {messages.length <= 2 && !isTyping && (
           <SuggestedMessages 
             onSelectMessage={handleSendMessage}
+            personName={person.name}
           />
         )}
 
