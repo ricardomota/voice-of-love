@@ -68,71 +68,71 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
   }, [onCreatePerson]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 gap-8">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 gap-6 sm:gap-8">
         {/* Main Welcome Card */}
-        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-12 text-center will-change-transform">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-sm font-medium mb-8">
+        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-8 sm:p-12 text-center">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-xs sm:text-sm font-medium mb-6 sm:mb-8">
             {content.madeWithLove}
           </div>
           
-          <div className="w-16 h-16 mx-auto mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-xl">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-6 sm:mb-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg">
             E
           </div>
           
-          <h1 className="font-serif text-[clamp(2rem,5vw,4rem)] text-foreground mb-4 leading-none tracking-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-foreground mb-4 sm:mb-6 leading-tight tracking-tight">
             {content.welcome}
           </h1>
           
-          <p className="text-muted-foreground leading-relaxed text-lg mb-8 max-w-md mx-auto">
+          <p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-8 sm:mb-10 max-w-lg mx-auto">
             {content.description}
           </p>
           
           <Button 
             onClick={handleCreatePerson}
             size="lg"
-            className="w-full max-w-xs mx-auto mb-10 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all will-change-transform"
+            className="w-full sm:w-auto min-w-[280px] h-12 sm:h-14 text-base sm:text-lg font-semibold mb-8 sm:mb-10 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             <Add className="w-5 h-5 mr-3" />
             {content.createButton}
           </Button>
           
-          <div className="pt-8 border-t border-border">
-            <h3 className="font-medium text-foreground mb-6 text-lg">{content.howItWorks}</h3>
+          <div className="pt-6 sm:pt-8 border-t border-border/50">
+            <h3 className="font-semibold text-foreground mb-6 text-base sm:text-lg">{content.howItWorks}</h3>
             
-            <div className="space-y-6 text-left">
-              <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
+            <div className="space-y-4 sm:space-y-6 text-left">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center font-bold text-sm sm:text-lg shadow-lg flex-shrink-0">
                   1
                 </div>
-                <p className="text-muted-foreground leading-relaxed">{content.steps[0]}</p>
+                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base pt-2">{content.steps[0]}</p>
               </div>
               
-              <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground flex items-center justify-center font-bold text-lg shadow-lg">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground flex items-center justify-center font-bold text-sm sm:text-lg shadow-lg flex-shrink-0">
                   2
                 </div>
-                <p className="text-muted-foreground leading-relaxed">{content.steps[1]}</p>
+                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base pt-2">{content.steps[1]}</p>
               </div>
               
-              <div className="flex items-start gap-4 will-change-transform">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground flex items-center justify-center font-bold text-sm sm:text-lg shadow-lg flex-shrink-0">
                   3
                 </div>
-                <p className="text-muted-foreground leading-relaxed">{content.steps[2]}</p>
+                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base pt-2">{content.steps[2]}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Mission Card */}
-        <div className="bg-card border border-border rounded-xl shadow-sm max-w-xl w-full p-8 text-center will-change-transform">
-          <h3 className="text-lg font-semibold text-foreground mb-4">{content.whyCreated}</h3>
-          <p className="text-muted-foreground leading-relaxed text-sm mb-6">
+        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-6 sm:p-8 text-center">
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">{content.whyCreated}</h3>
+          <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
             {content.mission}
           </p>
           
-          <div className="flex items-center justify-center pt-4 border-t border-border">
+          <div className="flex items-center justify-center pt-4 border-t border-border/50">
             <a 
               href="https://www.alz.org/?form=FUNDHYMMBXU" 
               target="_blank" 
@@ -142,7 +142,7 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
               <img 
                 src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
                 alt="Alzheimer's Association" 
-                className="h-6 opacity-80"
+                className="h-5 sm:h-6 opacity-80"
               />
             </a>
           </div>

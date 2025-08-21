@@ -29,6 +29,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     const loadLanguage = async () => {
       try {
+        // First, check localStorage for saved preference
+        const savedLanguage = localStorage.getItem('eterna_language') as Language;
+        if (savedLanguage && ['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+          setCurrentLanguage(savedLanguage);
+        }
+
+        // Then check if user is authenticated and has database preference
         const { data: user } = await supabase.auth.getUser();
         
         if (user.user) {
@@ -39,25 +46,24 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             .maybeSingle();
 
           if (settings?.ui_language) {
-            setCurrentLanguage(settings.ui_language as Language);
-          } else {
-            // Even for authenticated users, if no preference is saved, detect browser language
+            const dbLanguage = settings.ui_language as Language;
+            setCurrentLanguage(dbLanguage);
+            localStorage.setItem('eterna_language', dbLanguage);
+          } else if (!savedLanguage) {
+            // Only detect browser language if no preference exists at all
             detectBrowserLanguage();
           }
-        } else {
-          // Check if there's a saved preference in localStorage first
-          const savedLanguage = localStorage.getItem('eterna_language') as Language;
-          if (savedLanguage && ['en', 'pt-BR', 'es'].includes(savedLanguage)) {
-            setCurrentLanguage(savedLanguage);
-          } else {
-            // For non-authenticated users, detect browser language
-            detectBrowserLanguage();
-          }
+        } else if (!savedLanguage) {
+          // For non-authenticated users without saved preference, detect browser language
+          detectBrowserLanguage();
         }
       } catch (error) {
         console.error('Error loading language preference:', error);
-        // Fallback to browser detection on error
-        detectBrowserLanguage();
+        // Only fallback to browser detection if no localStorage preference exists
+        const savedLanguage = localStorage.getItem('eterna_language') as Language;
+        if (!savedLanguage || !['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+          detectBrowserLanguage();
+        }
       }
     };
 
@@ -68,16 +74,22 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       // Check if any of the browser languages match our supported languages
       for (const lang of browserLangs) {
         if (lang.startsWith('pt')) {
-          setCurrentLanguage('pt-BR');
+          const detectedLanguage = 'pt-BR';
+          setCurrentLanguage(detectedLanguage);
+          localStorage.setItem('eterna_language', detectedLanguage);
           return;
         } else if (lang.startsWith('es')) {
-          setCurrentLanguage('es');
+          const detectedLanguage = 'es';
+          setCurrentLanguage(detectedLanguage);
+          localStorage.setItem('eterna_language', detectedLanguage);
           return;
         }
       }
       
       // Default to English if no Portuguese or Spanish is detected
-      setCurrentLanguage('en');
+      const defaultLanguage = 'en';
+      setCurrentLanguage(defaultLanguage);
+      localStorage.setItem('eterna_language', defaultLanguage);
     };
 
     loadLanguage();

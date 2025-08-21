@@ -745,29 +745,31 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-4 py-8">
-        <div className="mb-8">
-          <ProgressBar 
-            currentStep={currentStep} 
-            totalSteps={totalSteps}
-            className="mb-6"
-          />
-          
-          {/* Botão Salvar e Sair - visível quando nome e relacionamento estão preenchidos */}
-          {formData.name.trim() && formData.relationship.trim() && (
-            <div className="flex justify-end mb-4">
-              <Button
-                variant="outline"
-                onClick={handleSaveAndExit}
-                className="flex items-center gap-2"
-              >
-                💾 Salvar e sair
-              </Button>
-            </div>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 py-6 sm:py-8 lg:py-12">
+        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg p-6 sm:p-8 lg:p-10">
+          <div className="mb-6 sm:mb-8">
+            <ProgressBar 
+              currentStep={currentStep} 
+              totalSteps={totalSteps}
+              className="mb-6"
+            />
+            
+            {/* Botão Salvar e Sair - visível quando nome e relacionamento estão preenchidos */}
+            {formData.name.trim() && formData.relationship.trim() && (
+              <div className="flex justify-end mb-4">
+                <Button
+                  variant="outline"
+                  onClick={handleSaveAndExit}
+                  className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border-border/50"
+                >
+                  💾 Salvar e sair
+                </Button>
+              </div>
+            )}
+          </div>
+          {renderStep()}
         </div>
-        {renderStep()}
       </div>
     </div>
   );
