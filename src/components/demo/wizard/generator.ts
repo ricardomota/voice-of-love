@@ -46,6 +46,41 @@ const getTopicContent = (language: string) => {
   return content[language as keyof typeof content] || content.en;
 };
 
+// Helpers to improve personalization quality
+function normalizeText(input: string) {
+  if (!input) return '';
+  let s = input.replace(/\s+/g, ' ').trim();
+  // remove duplicated consecutive words (e.g., "palavras palavras" -> "palavras")
+  s = s.replace(/\b(\p{L}+)\s+\1\b/giu, '$1');
+  return s;
+}
+
+function toSecondPersonPT(text: string) {
+  return text
+    .replace(/\b(a\s+)?minha\s+m[aã]e\b/gi, 'você')
+    .replace(/\b(a\s+)?minha\s+mama[eé]\b/gi, 'você')
+    .replace(/\b(o\s+)?meu\s+pai\b/gi, 'você');
+}
+function toSecondPersonES(text: string) {
+  return text
+    .replace(/\b(mi\s+mam[áa]|mi\s+madre)\b/gi, 'tú')
+    .replace(/\b(mi\s+padre)\b/gi, 'tú');
+}
+function toSecondPersonEN(text: string) {
+  return text.replace(/\bmy\s+(mom|mother|dad|father)\b/gi, 'you');
+}
+
+function adjustPerspective(text: string, language: string) {
+  if (!text) return text;
+  if (language === 'pt-BR') return toSecondPersonPT(text);
+  if (language === 'es') return toSecondPersonES(text);
+  return toSecondPersonEN(text);
+}
+
+function containsItalianCue(text: string) {
+  return /italian(o|a)?|italiano/gi.test(text || '');
+}
+
 const getGreetingContent = (language: string) => {
   const content = {
     en: {
@@ -138,25 +173,26 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
   // Create more personalized and engaging content
   const personalizations = [];
   
-  // Add favorite memory with more context (preserve user's wording)
+  // Add favorite memory with more context (preserve user's wording but fix perspective)
   if (state.personalization?.favoriteMemory) {
-    const memoryText = state.personalization.favoriteMemory.trim();
-    if (memoryText.length > 0) {
+    const raw = state.personalization.favoriteMemory.trim();
+    const adjusted = normalizeText(adjustPerspective(raw, language));
+    if (adjusted.length > 0) {
       const memoryReference =
         language === 'pt-BR'
-          ? `Lembro especialmente de ${memoryText}. Isso sempre nos fazia sorrir.`
+          ? `Guardo com carinho: ${adjusted}.`
           : language === 'es'
-          ? `Recuerdo especialmente ${memoryText}. Eso siempre nos hacía sonreír.`
-          : `I especially remember ${memoryText}. It always made us smile.`;
+          ? `Guardo con cariño: ${adjusted}.`
+          : `I hold this close: ${adjusted}.`;
       personalizations.push(memoryReference);
     }
   }
   
   // Add personal detail with warmth and detect signature phrases
   if (state.personalization?.personalDetail) {
-    const detailText = state.personalization.personalDetail.trim();
-    if (detailText.length > 0) {
-      const quoteMatch = detailText.match(/["“”'«»](.+?)["“”'«»]/);
+    const rawDetail = state.personalization.personalDetail.trim();
+    if (rawDetail.length > 0) {
+      const quoteMatch = rawDetail.match(/["“”'«»](.+?)["“”'«»]/);
       if (quoteMatch && quoteMatch[1]) {
         const quoted = quoteMatch[1].trim();
         const signatureReference =
@@ -167,12 +203,13 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
             : `As you always said: "${quoted}."`;
         personalizations.push(signatureReference);
       } else {
+        const adjustedDetail = normalizeText(adjustPerspective(rawDetail, language));
         const detailReference =
           language === 'pt-BR'
-            ? `E eu sempre amei isso em você: ${detailText}.`
+            ? `E eu sempre amei isso em você: ${adjustedDetail}.`
             : language === 'es'
-            ? `Y siempre amé esto de ti: ${detailText}.`
-            : `And I always loved this about you: ${detailText}.`;
+            ? `Y siempre amé esto de ti: ${adjustedDetail}.`
+            : `And I always loved this about you: ${adjustedDetail}.`;
         personalizations.push(detailReference);
       }
     }
@@ -202,6 +239,12 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
   }
 
   // Combine personalization in a natural way
+  // Add small stylistic cues based on details (e.g., Italian mix)
+  const combinedRaw = `${state.personalization?.favoriteMemory || ''} ${state.personalization?.personalDetail || ''}`;
+  if (language === 'pt-BR' && containsItalianCue(combinedRaw)) {
+    personalizations.push('E, como você adora misturar italiano e português: "ti voglio bene".');
+  }
+
   if (personalizations.length > 0) {
     const connector = ' ';
     topicText = `${topicText}${connector}${personalizations.join(' ')}`;
@@ -239,7 +282,8 @@ export function generatePreviewText(state: DemoState, language: Language = 'en')
     }
   }
 
-  const primarySeed = `${applyStyleTone(base, state.style, language)} ${topicText}`;
+  const primaryRaw = `${applyStyleTone(base, state.style, language)} ${topicText}`;
+  const primarySeed = normalizeText(primaryRaw);
   // Keep within reasonable length but allow more space for personalization
   const primary = primarySeed.length > 360 ? primarySeed.slice(0, 357).trimEnd() + '…' : primarySeed;
 
