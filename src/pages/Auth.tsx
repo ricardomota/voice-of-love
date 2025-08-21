@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/hooks/useLanguage';
 import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
 
@@ -22,6 +23,106 @@ interface AuthProps {
 export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
   const { signIn, signUp, user } = useAuth();
   const { toast } = useToast();
+  const { currentLanguage } = useLanguage();
+  
+  // Translations
+  const translations = {
+    'pt-BR': {
+      welcomeBack: 'Bem-vindo de volta',
+      createAccount: 'Crie sua conta',
+      signInToAccess: 'Entre para acessar sua Carteira de Memórias',
+      startPreserving: 'Comece a preservar suas memórias preciosas',
+      signIn: 'Entrar',
+      signUp: 'Cadastrar',
+      emailAddress: 'Endereço de email',
+      enterEmail: 'Digite seu email',
+      password: 'Senha',
+      enterPassword: 'Digite sua senha',
+      confirmPassword: 'Confirmar senha',
+      confirmPasswordPlaceholder: 'Confirme sua senha',
+      passwordStrength: 'Força da senha',
+      tooShort: 'Muito curta',
+      fair: 'Razoável',
+      good: 'Boa',
+      signingIn: 'Entrando...',
+      creatingAccount: 'Criando conta...',
+      createAccountBtn: 'Criar Conta',
+      dontHaveAccount: "Não tem uma conta?",
+      alreadyHaveAccount: "Já tem uma conta?",
+      createNewAccount: 'Criar uma nova conta',
+      signInExisting: 'Entrar na conta existente',
+      byContinuing: 'Ao continuar, você concorda com nossos',
+      termsOfService: 'Termos de Serviço',
+      and: 'e',
+      privacyPolicy: 'Política de Privacidade',
+      backToHome: '← Voltar para Home',
+      // Error messages
+      enterEmailAddress: 'Por favor, digite seu endereço de email',
+      enterValidEmail: 'Por favor, digite um endereço de email válido',
+      enterPasswordField: 'Por favor, digite sua senha',
+      passwordMinLength: 'A senha deve ter pelo menos 6 caracteres',
+      passwordsNoMatch: 'As senhas não coincidem',
+      invalidCredentials: 'Email ou senha inválidos. Verifique suas credenciais e tente novamente.',
+      userAlreadyRegistered: 'Uma conta com este email já existe. Tente entrar.',
+      emailNotConfirmed: 'Verifique seu email e clique no link de confirmação antes de entrar.',
+      errorOccurred: 'Ocorreu um erro. Tente novamente.',
+      unexpectedError: 'Ocorreu um erro inesperado. Tente novamente.',
+      // Success messages
+      accountCreated: 'Conta criada! Verifique seu email para confirmar sua conta.',
+      welcomeBackToast: 'Bem-vindo de volta!',
+      signedInSuccessfully: 'Você entrou com sucesso.'
+    },
+    'en': {
+      welcomeBack: 'Welcome back',
+      createAccount: 'Create your account',
+      signInToAccess: 'Sign in to access your Memory Wallet',
+      startPreserving: 'Start preserving your precious memories',
+      signIn: 'Sign In',
+      signUp: 'Sign Up',
+      emailAddress: 'Email address',
+      enterEmail: 'Enter your email',
+      password: 'Password',
+      enterPassword: 'Enter your password',
+      confirmPassword: 'Confirm password',
+      confirmPasswordPlaceholder: 'Confirm your password',
+      passwordStrength: 'Password strength',
+      tooShort: 'Too short',
+      fair: 'Fair',
+      good: 'Good',
+      signingIn: 'Signing in...',
+      creatingAccount: 'Creating account...',
+      createAccountBtn: 'Create Account',
+      dontHaveAccount: "Don't have an account?",
+      alreadyHaveAccount: "Already have an account?",
+      createNewAccount: 'Create a new account',
+      signInExisting: 'Sign in to existing account',
+      byContinuing: 'By continuing, you agree to our',
+      termsOfService: 'Terms of Service',
+      and: 'and',
+      privacyPolicy: 'Privacy Policy',
+      backToHome: '← Back to Home',
+      // Error messages
+      enterEmailAddress: 'Please enter your email address',
+      enterValidEmail: 'Please enter a valid email address',
+      enterPasswordField: 'Please enter your password',
+      passwordMinLength: 'Password must be at least 6 characters',
+      passwordsNoMatch: 'Passwords do not match',
+      invalidCredentials: 'Invalid email or password. Please check your credentials and try again.',
+      userAlreadyRegistered: 'An account with this email already exists. Try signing in instead.',
+      emailNotConfirmed: 'Please check your email and click the confirmation link before signing in.',
+      errorOccurred: 'An error occurred. Please try again.',
+      unexpectedError: 'An unexpected error occurred. Please try again.',
+      // Success messages
+      accountCreated: 'Account created! Please check your email to verify your account.',
+      welcomeBackToast: 'Welcome back!',
+      signedInSuccessfully: 'You have been signed in successfully.'
+    }
+  };
+
+  const getText = (key: string) => {
+    return translations[currentLanguage as keyof typeof translations]?.[key as keyof typeof translations['en']] || 
+           translations['en'][key as keyof typeof translations['en']];
+  };
   
   // State management
   const [mode, setMode] = useState<AuthMode>('signin');
@@ -47,27 +148,27 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
   // Form validation
   const validateForm = () => {
     if (!email.trim()) {
-      setError('Please enter your email address');
+      setError(getText('enterEmailAddress'));
       return false;
     }
     
     if (!email.includes('@')) {
-      setError('Please enter a valid email address');
+      setError(getText('enterValidEmail'));
       return false;
     }
     
     if (!password) {
-      setError('Please enter your password');
+      setError(getText('enterPasswordField'));
       return false;
     }
     
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(getText('passwordMinLength'));
       return false;
     }
     
     if (mode === 'signup' && password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(getText('passwordsNoMatch'));
       return false;
     }
     
@@ -92,7 +193,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
         
         if (!result.error) {
           await analyticsIntegrations.trackEvent('auth_signup_success', { email: email.trim() });
-          setSuccess('Account created! Please check your email to verify your account.');
+          setSuccess(getText('accountCreated'));
           
           // Auto-switch to sign in after a delay
           setTimeout(() => {
@@ -106,8 +207,8 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
         if (!result.error) {
           await analyticsIntegrations.trackEvent('auth_signin_success', { email: email.trim() });
           toast({
-            title: 'Welcome back!',
-            description: 'You have been signed in successfully.',
+            title: getText('welcomeBackToast'),
+            description: getText('signedInSuccessfully'),
             variant: 'default'
           });
           
@@ -119,22 +220,22 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
         // Handle specific error types
         switch (result.error.message) {
           case 'Invalid login credentials':
-            setError('Invalid email or password. Please check your credentials and try again.');
+            setError(getText('invalidCredentials'));
             break;
           case 'User already registered':
-            setError('An account with this email already exists. Try signing in instead.');
+            setError(getText('userAlreadyRegistered'));
             setMode('signin');
             break;
           case 'Email not confirmed':
-            setError('Please check your email and click the confirmation link before signing in.');
+            setError(getText('emailNotConfirmed'));
             break;
           default:
-            setError(result.error.message || 'An error occurred. Please try again.');
+            setError(result.error.message || getText('errorOccurred'));
         }
       }
     } catch (error) {
       console.error('Auth error:', error);
-      setError('An unexpected error occurred. Please try again.');
+      setError(getText('unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -168,12 +269,12 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
               className="h-8 mx-auto mb-6"
             />
             <h1 className="text-2xl md:text-3xl font-bold mb-2">
-              {mode === 'signin' ? 'Welcome back' : 'Create your account'}
+              {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
             </h1>
             <p className="text-muted-foreground">
               {mode === 'signin' 
-                ? 'Sign in to access your Memory Wallet'
-                : 'Start preserving your precious memories'
+                ? getText('signInToAccess')
+                : getText('startPreserving')
               }
             </p>
           </div>
@@ -181,7 +282,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
           <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm">
             <CardHeader className="pb-4">
               <CardTitle className="text-center text-lg">
-                {mode === 'signin' ? 'Sign In' : 'Sign Up'}
+                {mode === 'signin' ? getText('signIn') : getText('signUp')}
               </CardTitle>
             </CardHeader>
             
@@ -190,7 +291,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                 {/* Email Field */}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-sm font-medium">
-                    Email address
+                    {getText('emailAddress')}
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -200,7 +301,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="pl-10 h-11"
-                      placeholder="Enter your email"
+                      placeholder={getText('enterEmail')}
                       disabled={loading}
                       autoComplete="email"
                     />
@@ -210,7 +311,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                 {/* Password Field */}
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-sm font-medium">
-                    Password
+                    {getText('password')}
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -220,7 +321,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 pr-10 h-11"
-                      placeholder="Enter your password"
+                      placeholder={getText('enterPassword')}
                       disabled={loading}
                       autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                     />
@@ -234,7 +335,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   </div>
                   {mode === 'signup' && password && (
                     <div className="text-xs text-muted-foreground">
-                      Password strength: {password.length < 6 ? 'Too short' : password.length < 8 ? 'Fair' : 'Good'}
+                      {getText('passwordStrength')}: {password.length < 6 ? getText('tooShort') : password.length < 8 ? getText('fair') : getText('good')}
                     </div>
                   )}
                 </div>
@@ -243,7 +344,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                 {mode === 'signup' && (
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                      Confirm password
+                      {getText('confirmPassword')}
                     </Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -253,7 +354,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="pl-10 h-11"
-                        placeholder="Confirm your password"
+                        placeholder={getText('confirmPasswordPlaceholder')}
                         disabled={loading}
                         autoComplete="new-password"
                       />
@@ -287,11 +388,11 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      {mode === 'signin' ? 'Signing in...' : 'Creating account...'}
+                      {mode === 'signin' ? getText('signingIn') : getText('creatingAccount')}
                     </div>
                   ) : (
                     <>
-                      {mode === 'signin' ? 'Sign In' : 'Create Account'}
+                      {mode === 'signin' ? getText('signIn') : getText('createAccountBtn')}
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </>
                   )}
@@ -302,7 +403,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   <Separator className="my-6" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="bg-card px-3 text-xs text-muted-foreground">
-                      {mode === 'signin' ? "Don't have an account?" : "Already have an account?"}
+                      {mode === 'signin' ? getText('dontHaveAccount') : getText('alreadyHaveAccount')}
                     </div>
                   </div>
                 </div>
@@ -314,17 +415,17 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
                   disabled={loading}
                   className="w-full"
                 >
-                  {mode === 'signin' ? 'Create a new account' : 'Sign in to existing account'}
+                  {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
                 </Button>
               </form>
 
               {/* Privacy Notice */}
               <div className="mt-6 pt-4 border-t text-center">
                 <p className="text-xs text-muted-foreground">
-                  By continuing, you agree to our{' '}
-                  <a href="/terms" className="underline hover:text-foreground">Terms of Service</a>
-                  {' '}and{' '}
-                  <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a>
+                  {getText('byContinuing')}{' '}
+                  <a href="/terms" className="underline hover:text-foreground">{getText('termsOfService')}</a>
+                  {' '}{getText('and')}{' '}
+                  <a href="/privacy" className="underline hover:text-foreground">{getText('privacyPolicy')}</a>
                 </p>
               </div>
             </CardContent>
@@ -337,7 +438,7 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
               onClick={() => window.location.href = '/'}
               className="text-muted-foreground"
             >
-              ← Back to Home
+              {getText('backToHome')}
             </Button>
           </div>
         </motion.div>
