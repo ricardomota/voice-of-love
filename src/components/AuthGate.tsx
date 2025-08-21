@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
 import { ProfileSetupModal } from '@/components/ProfileSetupModal';
+import { Auth } from '@/pages/Auth';
 interface AuthGateProps {
   children: React.ReactNode;
 }
@@ -134,7 +135,7 @@ export const AuthGate = memo(({
     try {
       const {
         error
-      } = type === 'signin' ? await signIn(email, password) : await signUp(email, password);
+      } = type === 'signin' ? await signIn(email, password) : await signUp(email, password, currentLanguage);
       if (error) throw error;
       if (type === 'signup') {
         toast({
@@ -203,126 +204,14 @@ export const AuthGate = memo(({
       </div>;
   }
   if (!user) {
-    return <main className="min-h-screen bg-background px-4">
-        {/* Back Button */}
-        <div className="pt-6 pb-4">
-          <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="h-4 w-4" />
-            {content.backToHome}
-          </Button>
-        </div>
-
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-start px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16">
-          {/* Left side - Introduction & Story */}
-          <section className="space-y-8" aria-label="Introdução">
-            <div>
-              <h1 className="text-4xl font-bold tracking-tight mb-4">{content.welcome}</h1>
-              <p className="text-muted-foreground mb-8">{content.subtitle}</p>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                {content.features.map((feature, index) => <li key={index}>{feature}</li>)}
-              </ul>
-            </div>
-
-            {/* Apple TV Style Interactive Story Card */}
-            <div ref={cardRef} className={`
-                relative w-full bg-gradient-to-br from-amber-50/95 via-orange-50/90 to-rose-50/85 
-                backdrop-blur-md border-4 border-amber-200/60 rounded-2xl overflow-hidden cursor-pointer
-                shadow-[0_8px_32px_rgba(251,146,60,0.25)] hover:shadow-[0_16px_64px_rgba(251,146,60,0.35)]
-                transform-gpu will-change-transform group
-                ${isCardTransitioning ? 'transition-all duration-500 ease-out' : ''}
-              `} style={{
-            transformStyle: 'preserve-3d',
-            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.25))'
-          }} onMouseEnter={handleCardMouseEnter} onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave}>
-              
-              {/* Shimmer/Shine Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                  animate-[shimmer_2s_ease-in-out_infinite] transform -skew-x-12" style={{
-                background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%)',
-                animation: 'shimmer 3s ease-in-out infinite'
-              }} />
-              </div>
-
-              {/* Moving highlight overlay */}
-              <div ref={highlightRef} className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full opacity-25 blur-[50px] pointer-events-none z-10" style={{
-              top: '-100px',
-              right: '-100px',
-              transition: isCardTransitioning ? 'all 0.5s ease-out' : 'none'
-            }} />
-              
-              {/* Card content */}
-              <div className="relative p-8 z-20">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <img src="/lovable-uploads/2cade104-d8aa-4b3b-bbc1-10cb24bf11b3.png" alt="Family portrait" className="w-16 h-16 rounded-full object-cover shadow-lg" />
-                    
-                  </div>
-                  <h3 className="text-xl font-bold bg-gradient-to-r from-amber-800 to-rose-700 bg-clip-text text-transparent">
-                    {content.story.title}
-                  </h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6 text-base">
-                  {content.story.text}
-                </p>
-                <div className="flex items-center gap-3 text-primary">
-                  <span className="text-2xl">{content.story.heart}</span>
-                  <span className="text-sm font-medium opacity-80">Made with love</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Right side - Authentication */}
-          <section aria-label="Autenticação" className="lg:pt-12">
-            <Card className="w-full max-w-md shadow-xl mx-auto border-2 border-primary/20">
-              <CardHeader className="text-center space-y-4">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="p-3 bg-primary/10 rounded-full">
-                    <User className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Eterna</CardTitle>
-                </div>
-                <p className="text-sm text-muted-foreground">{content.subtitle}</p>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="signin" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 mb-6">
-                    <TabsTrigger value="signin" className="text-sm">{content.signin}</TabsTrigger>
-                    <TabsTrigger value="signup" className="text-sm">{content.signup}</TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="signin" className="space-y-4">
-                    <div className="space-y-3">
-                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-12" />
-                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-12" />
-                    </div>
-                    <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signin')} disabled={isLoading}>
-                      {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      {content.signin}
-                    </Button>
-                  </TabsContent>
-                  
-                  <TabsContent value="signup" className="space-y-4">
-                    <div className="space-y-3">
-                      <InputWithVoice type="email" placeholder={content.email} value={email} onChange={e => setEmail(e.target.value)} className="h-12" />
-                      <InputWithVoice type="password" placeholder={content.password} value={password} onChange={e => setPassword(e.target.value)} className="h-12" />
-                    </div>
-                    <Button className="w-full h-12 font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all" onClick={() => handleAuth('signup')} disabled={isLoading}>
-                      {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      {content.createAccount}
-                    </Button>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </section>
-        </div>
-      </main>;
+    return <Auth language={currentLanguage} />;
   }
-  return <>
+  
+  return (
+    <>
       {children}
       {/* Profile Setup Modal for new users */}
       <ProfileSetupModal isOpen={showProfileSetup} onComplete={handleProfileSetupComplete} />
-    </>;
+    </>
+  );
 });

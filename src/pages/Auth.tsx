@@ -15,7 +15,11 @@ import { EternaHeader } from '@/components/layout/EternaHeader';
 
 type AuthMode = 'signin' | 'signup';
 
-export const Auth: React.FC = () => {
+interface AuthProps {
+  language?: string;
+}
+
+export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
   const { signIn, signUp, user } = useAuth();
   const { toast } = useToast();
   
@@ -84,7 +88,7 @@ export const Auth: React.FC = () => {
       let result;
       
       if (mode === 'signup') {
-        result = await signUp(email.trim(), password);
+        result = await signUp(email.trim(), password, language);
         
         if (!result.error) {
           await analyticsIntegrations.trackEvent('auth_signup_success', { email: email.trim() });

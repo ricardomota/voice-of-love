@@ -46,7 +46,8 @@ export function useAuth() {
     user,
     session,
     loading,
-    signUp: authService.signUp,
+    signUp: (email: string, password: string, language?: string) => 
+      authService.signUp(email, password, language),
     signIn: authService.signIn,
     signOut: authService.signOut,
   };

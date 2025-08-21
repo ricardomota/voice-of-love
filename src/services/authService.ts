@@ -1,12 +1,15 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const authService = {
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string, language?: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/`
+        emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          language: language || 'pt'
+        }
       }
     });
     return { data, error };
