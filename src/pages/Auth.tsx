@@ -346,3 +346,5 @@ export const Auth: React.FC<AuthProps> = ({ language = 'pt' }) => {
     </>
   );
 };
+
+export default Auth;
