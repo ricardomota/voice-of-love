@@ -33,7 +33,7 @@ const mapEnum = (v?: string) => {
     "casual":"casual","neutro":"neutral","educado":"polite",
     "neutral":"neutral","polite":"polite",
     "calmo":"calm","animado":"lively",
-    "calm":"calm","lively":"lively","balanced":"balanced",
+    "calm":"calm","lively":"lively",
     "devagar":"slow","normal":"normal","rápido":"fast","fast":"fast"
   };
   return dict[x] ?? v;
