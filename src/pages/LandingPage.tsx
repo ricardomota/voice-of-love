@@ -9,7 +9,7 @@ import { PricingSection } from '@/components/landing/PricingSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useToast } from '@/hooks/use-toast';
-import { DemoWizardModal } from '@/components/demo/wizard/DemoWizardModal';
+
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -19,7 +19,7 @@ interface LandingPageProps {
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
   const { createCheckout } = useSubscription();
   const { toast } = useToast();
-  const [demoOpen, setDemoOpen] = useState(false);
+  
 
   const scrollToPricing = () => {
     const element = document.getElementById('pricing');
@@ -44,7 +44,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         onTryFree={onTryFree}
         onSeePricing={scrollToPricing}
         onLogin={onLogin}
-        onTryDemo={() => setDemoOpen(true)}
       />
 
       {/* Features Section - Enhanced spacing */}
@@ -56,7 +55,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       {/* How It Works - Enhanced spacing */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
-        <HowItWorksSection onTryDemo={() => setDemoOpen(true)} />
+        <HowItWorksSection />
       </div>
 
       {/* Pricing - Enhanced spacing */}
@@ -79,8 +78,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         />
       </div>
 
-      {/* Demo Modal */}
-      <DemoWizardModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
     </div>
   );
 };

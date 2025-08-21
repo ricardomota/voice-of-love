@@ -9,7 +9,6 @@ interface HeroSectionProps {
   onTryFree: () => void;
   onSeePricing: () => void;
   onLogin: () => void;
-  onTryDemo?: () => void;
 }
 
 const getContent = (language: string) => {
@@ -18,7 +17,6 @@ const getContent = (language: string) => {
       headline: "Where memories become eternal. ✨",
       subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
       tryFree: "Try Eterna Free",
-      tryDemo: "Try a quick demo",
       seePricing: "See Pricing",
       altText: "Family sharing warm moments together"
     },
@@ -26,7 +24,6 @@ const getContent = (language: string) => {
       headline: "Onde lembranças se tornam eternas✨",
       subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
       tryFree: "Testar Grátis",
-      tryDemo: "Experimente uma demo rápida",
       seePricing: "Ver Preços",
       altText: "Família compartilhando momentos especiais"
     },
@@ -34,7 +31,6 @@ const getContent = (language: string) => {
       headline: "Donde los recuerdos se vuelven eternos. ✨",
       subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
       tryFree: "Probar Gratis",
-      tryDemo: "Prueba una demo rápida",
       seePricing: "Ver Precios",
       altText: "Familia compartiendo momentos especiales"
     }
@@ -44,8 +40,7 @@ const getContent = (language: string) => {
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onTryFree,
   onSeePricing,
-  onLogin,
-  onTryDemo
+  onLogin
 }) => {
   const [userCount, setUserCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -163,15 +158,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     {isWaitlistMode ? 'Join Waitlist' : content.tryFree}
                   </Button>
                   
-                  <Button 
-                    onClick={onTryDemo}
-                    variant="outline" 
-                    size="xl" 
-                    className="w-full sm:w-auto min-w-[240px] h-16 text-lg font-semibold bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:scale-105"
-                  >
-                    <PlayFilled size={20} className="mr-3" />
-                    {content.tryDemo}
-                  </Button>
                   
                   <Button 
                     onClick={onSeePricing} 
