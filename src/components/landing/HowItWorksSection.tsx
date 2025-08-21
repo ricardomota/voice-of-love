@@ -97,7 +97,7 @@ export const HowItWorksSection: React.FC = () => {
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
-    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 overflow-hidden">
       
       {/* Hero-style Background */}
       <div className="absolute inset-0">
@@ -194,12 +194,12 @@ export const HowItWorksSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16 sm:mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight px-4">
             {content.title}
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed px-4">
             {content.subtitle}
           </p>
         </motion.div>
@@ -210,7 +210,7 @@ export const HowItWorksSection: React.FC = () => {
           {/* Connection Line */}
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 lg:gap-4">
             {content.steps.map((step, index) => {
               const IconComponent = icons[index];
               
@@ -232,32 +232,32 @@ export const HowItWorksSection: React.FC = () => {
                 >
                   
                   {/* Step Card */}
-                  <div className="relative bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
+                  <div className="relative bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-7 lg:p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
                     
                     {/* Step Number */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-sm">
+                    <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-7 h-7 sm:w-8 sm:h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
                       {index + 1}
                     </div>
                     
                     {/* Icon with responsive sizing */}
                     <div 
-                      className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:bg-white/30 transition-colors duration-300"
+                      className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 lg:mb-6 group-hover:bg-white/30 transition-colors duration-300"
                     >
-                      <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-white" size={40} />
+                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" size={28} />
                     </div>
                     
                     {/* Content with responsive text */}
                     <div className="space-y-3 sm:space-y-4">
-                      <h3 className="font-serif text-lg sm:text-xl font-bold text-white">
+                      <h3 className="font-serif text-xl sm:text-xl lg:text-2xl font-bold text-white">
                         {step.title}
                       </h3>
                       
-                      <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                      <p className="text-white/80 text-sm sm:text-base lg:text-base leading-relaxed">
                         {step.description}
                       </p>
                       
                       <motion.p 
-                        className="text-xs sm:text-sm text-white/60 leading-relaxed"
+                        className="text-xs sm:text-sm lg:text-sm text-white/60 leading-relaxed px-2 sm:px-0"
                         initial={{ opacity: 0.7 }}
                         animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
                       >
