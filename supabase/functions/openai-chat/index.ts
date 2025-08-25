@@ -1,7 +1,10 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.0';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+const supabaseServiceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,7 +18,39 @@ serve(async (req) => {
   }
 
   try {
+    // Initialize Supabase client for authentication
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+
+    // Get the authorization header
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Missing authorization header');
+    }
+
+    // Verify the JWT token
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    
+    if (authError || !user) {
+      throw new Error('Invalid or expired token');
+    }
+
     const { messages, systemPrompt, temperature = 0.7 } = await req.json();
+
+    // Input validation
+    if (!messages || !Array.isArray(messages)) {
+      throw new Error('Messages must be a non-empty array');
+    }
+
+    if (messages.length === 0) {
+      throw new Error('Messages array cannot be empty');
+    }
+
+    // Limit message length to prevent abuse
+    const totalLength = messages.reduce((acc, msg) => acc + (msg.content?.length || 0), 0);
+    if (totalLength > 10000) {
+      throw new Error('Message content too long');
+    }
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
