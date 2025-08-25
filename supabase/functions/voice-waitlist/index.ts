@@ -28,9 +28,27 @@ serve(async (req) => {
     const { action, name, email } = await req.json();
 
     if (action === "join") {
-      // Join waitlist - can be done without authentication for flexibility
+      // Join waitlist - requires authentication to prevent abuse
+      const authHeader = req.headers.get('authorization');
+      if (!authHeader) {
+        throw new Error("Authentication required");
+      }
+
+      // Verify the JWT token
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
+      
+      if (authError || !user) {
+        throw new Error("Invalid authentication");
+      }
+
       if (!name || !email) {
         throw new Error("Name and email are required");
+      }
+
+      // Verify email matches authenticated user
+      if (email.toLowerCase() !== user.email?.toLowerCase()) {
+        throw new Error("Email must match authenticated user");
       }
 
       logStep("Adding to waitlist", { name, email });
@@ -40,6 +58,7 @@ serve(async (req) => {
         .insert({
           full_name: name,
           email: email,
+          user_id: user.id,
           status: 'queued',
           primary_interest: 'voice_personalization',
           message: 'Joined waitlist for personalized voice slots'
@@ -81,15 +100,34 @@ serve(async (req) => {
       });
 
     } else if (action === "status") {
-      // Check waitlist status
+      // Check waitlist status - requires authentication
+      const authHeader = req.headers.get('authorization');
+      if (!authHeader) {
+        throw new Error("Authentication required");
+      }
+
+      // Verify the JWT token
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
+      
+      if (authError || !user) {
+        throw new Error("Invalid authentication");
+      }
+
       if (!email) {
         throw new Error("Email is required to check status");
+      }
+
+      // Only allow users to check their own status
+      if (email.toLowerCase() !== user.email?.toLowerCase()) {
+        throw new Error("Can only check your own waitlist status");
       }
 
       const { data: waitlistEntry } = await supabaseClient
         .from('waitlist')
         .select('*')
         .eq('email', email)
+        .eq('user_id', user.id)
         .eq('primary_interest', 'voice_personalization')
         .order('created_at', { ascending: false })
         .limit(1)

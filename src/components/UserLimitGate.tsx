@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +16,7 @@ interface UserLimitGateProps {
 }
 
 export const UserLimitGate: React.FC<UserLimitGateProps> = ({ children }) => {
+  const { user } = useAuth();
   const [userCount, setUserCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showWaitlist, setShowWaitlist] = useState(false);
@@ -98,12 +101,23 @@ export const UserLimitGate: React.FC<UserLimitGateProps> = ({ children }) => {
     setIsSubmitting(true);
 
     try {
+      // Check if user is authenticated, if not, guide them to sign in first
+      if (!user?.id) {
+        toast({
+          title: "Autenticação necessária",
+          description: "Faça login primeiro para entrar na lista de espera",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from('waitlist')
         .insert([
           {
             full_name: formData.fullName,
             email: formData.email,
+            user_id: user.id,
             message: formData.message || null,
             primary_interest: formData.primaryInterest || null
           }

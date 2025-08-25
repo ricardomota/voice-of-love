@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from "sonner";
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -10,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Heart, Users, Clock, CheckCircle, Sparkles, Mail, ArrowRight } from 'lucide-react';
 
 export const WaitlistSection: React.FC = () => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -74,6 +77,16 @@ export const WaitlistSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      // Check if user is authenticated, if not, guide them to sign in first
+      if (!user?.id) {
+        toast({
+          title: "Autenticação necessária",
+          description: "Faça login primeiro para entrar na lista de espera",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const position = await getWaitlistPosition();
       
       const { error } = await supabase
@@ -82,6 +95,7 @@ export const WaitlistSection: React.FC = () => {
           {
             full_name: formData.fullName,
             email: formData.email,
+            user_id: user.id,
             message: formData.message || null,
             primary_interest: formData.primaryInterest || null
           }

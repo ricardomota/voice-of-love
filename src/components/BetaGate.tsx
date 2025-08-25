@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -15,6 +17,7 @@ interface BetaGateProps {
 }
 
 export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
+  const { user } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userCount, setUserCount] = useState(0);
@@ -167,12 +170,23 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
     try {
       const position = await getWaitlistPosition();
       
+      // Check if user is authenticated, if not, guide them to sign in first
+      if (!user?.id) {
+        toast({
+          title: "Autenticação necessária",
+          description: "Faça login primeiro para entrar na lista de espera",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from('waitlist')
         .insert([
           {
             full_name: formData.fullName,
             email: formData.email,
+            user_id: user.id,
             message: formData.message || null,
             primary_interest: formData.primaryInterest || null
           }
