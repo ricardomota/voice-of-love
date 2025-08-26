@@ -268,8 +268,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const handleEssentialSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_essential');
     try {
-      const { url } = await SubscriptionService.createCheckoutSession('essential');
-      window.open(url, '_blank');
+      const checkoutUrl = await SubscriptionService.createCheckoutSession('essential');
+      if (checkoutUrl?.url) {
+        window.open(checkoutUrl.url, '_blank');
+      }
     } catch (error) {
       console.error('Failed to create checkout session:', error);
       toast({
@@ -285,8 +287,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const handleCompleteSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_complete');
     try {
-      const { url } = await SubscriptionService.createCheckoutSession('complete');
-      window.open(url, '_blank');
+      const checkoutUrl = await SubscriptionService.createCheckoutSession('complete');
+      if (checkoutUrl?.url) {
+        window.open(checkoutUrl.url, '_blank');
+      }
     } catch (error) {
       console.error('Failed to create checkout session:', error);
       toast({

@@ -97,12 +97,12 @@ export const paymentsService = {
   /**
    * Cria sessão de checkout do Stripe
    */
-  async createCheckoutSession(planId: string): Promise<{ url: string } | null> {
+  async createCheckoutSession(planId: string): Promise<{ url: string }> {
     const { supabase } = await import('@/integrations/supabase/client');
     
     try {
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { planId },
+        body: { plan: planId },
         headers: {
           Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
         }
@@ -112,7 +112,7 @@ export const paymentsService = {
       return { url: data.url };
     } catch (error) {
       console.error('Error creating checkout session:', error);
-      return null;
+      throw error;
     }
   },
 

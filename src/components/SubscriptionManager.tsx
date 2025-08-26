@@ -2,67 +2,155 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { useSubscription } from '@/hooks/useSubscription';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useSubscriptionInfo } from '@/hooks/useSubscriptionInfo';
 import { useLanguage } from '@/hooks/useLanguage';
-import { paymentsService } from '@/services/paymentsService';
+import { SubscriptionService } from '@/services/subscriptionService';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Crown, Users, Zap } from 'lucide-react';
+import { Loader2, Crown, Users, Zap, ArrowUp, ArrowDown, ExternalLink, Settings } from 'lucide-react';
 
 const getContent = (language: string) => {
   const content = {
     en: {
       title: 'Subscription Management',
       currentPlan: 'Current Plan',
-      free: 'Free Plan',
-      premium: 'Premium',
-      family: 'Family',
-      subscribed: 'Active',
-      notSubscribed: 'Not subscribed',
-      manageSubscription: 'Manage Subscription',
-      upgradeToFamily: 'Upgrade to Family',
-      upgradeToPremium: 'Upgrade to Premium',
-      loading: 'Loading...',
-      error: 'Error loading subscription',
-      refreshing: 'Refreshing...',
-      refresh: 'Refresh Status',
+      planTitles: {
+        free: 'First Look',
+        essential: 'Essential',
+        complete: 'Complete'
+      },
+      planSlogans: {
+        free: 'A text memory. A beginning.',
+        essential: 'Continuous presence, with human voice.',
+        complete: 'To preserve a real presence in the family.'
+      },
+      active: 'Active',
+      notSubscribed: 'Free Plan',
+      features: 'Included Features',
+      actions: {
+        manageSubscription: 'Manage Subscription',
+        upgradeToEssential: 'Upgrade to Essential',
+        upgradeToComplete: 'Upgrade to Complete',
+        downgradeToEssential: 'Downgrade to Essential',
+        downgradeToFree: 'Cancel Subscription',
+        loading: 'Processing...',
+        refresh: 'Refresh Status'
+      },
+      usage: {
+        chatInteractions: 'Chat interactions',
+        voiceMinutes: 'Voice minutes',
+        people: 'People',
+        unlimited: 'Unlimited',
+        used: 'used',
+        remaining: 'remaining',
+        of: 'of'
+      },
       renewsOn: 'Renews on',
-      unlimited: 'Unlimited'
+      endsOn: 'Ends on',
+      upgradePrompts: {
+        fromFree: 'Ready for voice and advanced features?',
+        fromEssential: 'Need unlimited chat and custom voices?'
+      },
+      downgradeWarning: 'Downgrading will limit your access to features. Are you sure?',
+      success: {
+        upgrade: 'Subscription upgraded successfully!',
+        downgrade: 'Subscription downgraded successfully!',
+        refresh: 'Subscription status updated!'
+      }
     },
     'pt-BR': {
       title: 'Gerenciamento de Assinatura',
       currentPlan: 'Plano Atual',
-      free: 'Plano Gratuito',
-      premium: 'Premium',
-      family: 'Família',
-      subscribed: 'Ativo',
-      notSubscribed: 'Não inscrito',
-      manageSubscription: 'Gerenciar Assinatura',
-      upgradeToFamily: 'Upgrade para Família',
-      upgradeToPremium: 'Upgrade para Premium',
-      loading: 'Carregando...',
-      error: 'Erro ao carregar assinatura',
-      refreshing: 'Atualizando...',
-      refresh: 'Atualizar Status',
+      planTitles: {
+        free: 'Primeiro Olhar',
+        essential: 'Essencial',
+        complete: 'Completo'
+      },
+      planSlogans: {
+        free: 'Uma memória em texto. Um começo.',
+        essential: 'Presença contínua, com voz humana.',
+        complete: 'Para preservar uma presença real em família.'
+      },
+      active: 'Ativo',
+      notSubscribed: 'Plano Gratuito',
+      features: 'Recursos Inclusos',
+      actions: {
+        manageSubscription: 'Gerenciar Assinatura',
+        upgradeToEssential: 'Upgrade para Essencial',
+        upgradeToComplete: 'Upgrade para Completo',
+        downgradeToEssential: 'Downgrade para Essencial',
+        downgradeToFree: 'Cancelar Assinatura',
+        loading: 'Processando...',
+        refresh: 'Atualizar Status'
+      },
+      usage: {
+        chatInteractions: 'Interações de chat',
+        voiceMinutes: 'Minutos de voz',
+        people: 'Pessoas',
+        unlimited: 'Ilimitado',
+        used: 'usado',
+        remaining: 'restante',
+        of: 'de'
+      },
       renewsOn: 'Renova em',
-      unlimited: 'Ilimitado'
+      endsOn: 'Termina em',
+      upgradePrompts: {
+        fromFree: 'Pronto para voz e recursos avançados?',
+        fromEssential: 'Precisa de chat ilimitado e vozes personalizadas?'
+      },
+      downgradeWarning: 'O downgrade limitará seu acesso a recursos. Tem certeza?',
+      success: {
+        upgrade: 'Assinatura atualizada com sucesso!',
+        downgrade: 'Assinatura rebaixada com sucesso!',
+        refresh: 'Status da assinatura atualizado!'
+      }
     },
     es: {
       title: 'Gestión de Suscripción',
       currentPlan: 'Plan Actual',
-      free: 'Plan Gratuito',
-      premium: 'Premium',
-      family: 'Familia',
-      subscribed: 'Activo',
-      notSubscribed: 'No suscrito',
-      manageSubscription: 'Gestionar Suscripción',
-      upgradeToFamily: 'Actualizar a Familia',
-      upgradeToPremium: 'Actualizar a Premium',
-      loading: 'Cargando...',
-      error: 'Error al cargar suscripción',
-      refreshing: 'Actualizando...',
-      refresh: 'Actualizar Estado',
+      planTitles: {
+        free: 'Primera Mirada',
+        essential: 'Esencial',
+        complete: 'Completo'
+      },
+      planSlogans: {
+        free: 'Una memoria en texto. Un comienzo.',
+        essential: 'Presencia continua, con voz humana.',
+        complete: 'Para preservar una presencia real en familia.'
+      },
+      active: 'Activo',
+      notSubscribed: 'Plan Gratuito',
+      features: 'Características Incluidas',
+      actions: {
+        manageSubscription: 'Gestionar Suscripción',
+        upgradeToEssential: 'Actualizar a Esencial',
+        upgradeToComplete: 'Actualizar a Completo',
+        downgradeToEssential: 'Bajar a Esencial',
+        downgradeToFree: 'Cancelar Suscripción',
+        loading: 'Procesando...',
+        refresh: 'Actualizar Estado'
+      },
+      usage: {
+        chatInteractions: 'Interacciones de chat',
+        voiceMinutes: 'Minutos de voz',
+        people: 'Personas',
+        unlimited: 'Ilimitado',
+        used: 'usado',
+        remaining: 'restante',
+        of: 'de'
+      },
       renewsOn: 'Se renueva el',
-      unlimited: 'Ilimitado'
+      endsOn: 'Termina el',
+      upgradePrompts: {
+        fromFree: '¿Listo para voz y características avanzadas?',
+        fromEssential: '¿Necesitas chat ilimitado y voces personalizadas?'
+      },
+      downgradeWarning: 'Bajar de plan limitará tu acceso a características. ¿Estás seguro?',
+      success: {
+        upgrade: '¡Suscripción actualizada exitosamente!',
+        downgrade: '¡Suscripción rebajada exitosamente!',
+        refresh: '¡Estado de suscripción actualizado!'
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -72,38 +160,61 @@ export const SubscriptionManager: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
-  const {
-    subscribed,
-    subscription_tier,
-    subscription_end,
-    loading,
-    error,
-    checkSubscription,
-    createCheckout,
-    openCustomerPortal
-  } = useSubscription();
+  const { 
+    subscriptionInfo, 
+    loading, 
+    error, 
+    refresh,
+    canUseVoiceDemo,
+    canUseChat,
+    getRemainingChatInteractions,
+    getRemainingVoiceMinutes 
+  } = useSubscriptionInfo();
 
   const [actionLoading, setActionLoading] = React.useState(false);
-  const plans = paymentsService.getPlans();
 
-  const handleUpgrade = async (planId: string) => {
+  const currentPlan = subscriptionInfo?.plan || 'free';
+  const entitlements = subscriptionInfo?.entitlements;
+  const usage = subscriptionInfo?.usage;
+
+  const handleSubscriptionAction = async (action: 'upgrade-essential' | 'upgrade-complete' | 'manage' | 'downgrade-essential' | 'cancel') => {
     try {
       setActionLoading(true);
-      const checkoutUrl = await createCheckout(planId);
-      if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
-      } else {
+      
+      if (action === 'manage') {
+        const { url } = await SubscriptionService.getCustomerPortalUrl();
+        window.open(url, '_blank');
+        return;
+      }
+
+      if (action === 'upgrade-essential') {
+        const { url } = await SubscriptionService.createCheckoutSession('essential');
+        window.open(url, '_blank');
+        return;
+      }
+
+      if (action === 'upgrade-complete') {
+        const { url } = await SubscriptionService.createCheckoutSession('complete');
+        window.open(url, '_blank');
+        return;
+      }
+
+      // For downgrades, we redirect to customer portal
+      if (action === 'downgrade-essential' || action === 'cancel') {
+        const { url } = await SubscriptionService.getCustomerPortalUrl();
+        window.open(url, '_blank');
         toast({
-          title: "Erro",
-          description: "Não foi possível criar a sessão de checkout",
-          variant: "destructive",
+          title: content.actions.manageSubscription,
+          description: "Use the customer portal to modify or cancel your subscription.",
         });
+        return;
       }
+
     } catch (error) {
-      console.error('Error creating checkout:', error);
+      console.error('Subscription action error:', error);
       toast({
-        title: "Erro",
-        description: "Erro ao criar sessão de checkout",
+        title: "Error",
+        description: "Failed to process subscription action. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -111,28 +222,24 @@ export const SubscriptionManager: React.FC = () => {
     }
   };
 
-  const handleManageSubscription = async () => {
+  const handleRefresh = async () => {
     try {
       setActionLoading(true);
-      const portalUrl = await openCustomerPortal();
-      if (portalUrl) {
-        window.open(portalUrl, '_blank');
-      }
-    } catch (error) {
-      console.error('Error opening customer portal:', error);
+      await refresh();
       toast({
-        title: "Erro",
-        description: "Erro ao abrir portal do cliente",
+        title: content.success.refresh,
+      });
+    } catch (error) {
+      console.error('Refresh error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to refresh subscription status.",
         variant: "destructive",
       });
     } finally {
       setActionLoading(false);
     }
   };
-
-  const currentPlan = subscription_tier ? 
-    plans.find(p => p.id === subscription_tier.toLowerCase()) : 
-    plans.find(p => p.id === 'free');
 
   if (loading) {
     return (
@@ -140,7 +247,7 @@ export const SubscriptionManager: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Loader2 className="h-5 w-5 animate-spin" />
-            {content.loading}
+            Loading subscription...
           </CardTitle>
         </CardHeader>
       </Card>
@@ -151,111 +258,242 @@ export const SubscriptionManager: React.FC = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-destructive">{content.error}</CardTitle>
+          <CardTitle className="text-destructive">Error loading subscription</CardTitle>
           <CardDescription>{error}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onClick={checkSubscription} variant="outline">
-            {content.refresh}
+          <Button onClick={handleRefresh} variant="outline" disabled={actionLoading}>
+            {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {content.actions.refresh}
           </Button>
         </CardContent>
       </Card>
     );
   }
 
+  const planTitle = content.planTitles[currentPlan as keyof typeof content.planTitles] || currentPlan;
+  const planSlogan = content.planSlogans[currentPlan as keyof typeof content.planSlogans] || '';
+  const isSubscribed = currentPlan !== 'free';
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>{content.currentPlan}</span>
-          <Badge variant={subscribed ? "default" : "secondary"}>
-            {subscribed ? content.subscribed : content.notSubscribed}
-          </Badge>
-        </CardTitle>
-        <CardDescription>
-          {currentPlan?.name} - {paymentsService.formatPrice(currentPlan?.monthlyPriceUSD || 0, 'USD')}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Current Plan Features */}
-        <div>
-          <h4 className="font-medium mb-2">Recursos inclusos:</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
-              <span>
-                {currentPlan?.limits.messagesPerMonth === -1 
-                  ? content.unlimited 
-                  : `${currentPlan?.limits.messagesPerMonth} mensagens`
-                }
-              </span>
+    <div className="space-y-6">
+      {/* Current Plan Card */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  currentPlan === 'free' ? 'bg-muted' :
+                  currentPlan === 'essential' ? 'bg-primary/10' :
+                  'bg-gradient-to-br from-primary/20 to-accent/20'
+                }`}>
+                  {currentPlan === 'free' && <Zap className="w-5 h-5 text-muted-foreground" />}
+                  {currentPlan === 'essential' && <Crown className="w-5 h-5 text-primary" />}
+                  {currentPlan === 'complete' && <Users className="w-5 h-5 text-primary" />}
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold">{planTitle}</h3>
+                  <p className="text-sm text-muted-foreground italic">{planSlogan}</p>
+                </div>
+              </CardTitle>
             </div>
-            <div className="flex items-center gap-2">
-              <Crown className="h-4 w-4 text-primary" />
-              <span>{currentPlan?.limits.ttsMinutesPerMonth} min TTS</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-primary" />
-              <span>
-                {currentPlan?.limits.peopleLimit === -1 
-                  ? content.unlimited 
-                  : `${currentPlan?.limits.peopleLimit} pessoas`
-                }
-              </span>
-            </div>
+            <Badge variant={isSubscribed ? "default" : "secondary"}>
+              {isSubscribed ? content.active : content.notSubscribed}
+            </Badge>
           </div>
-        </div>
+        </CardHeader>
+        
+        <CardContent className="space-y-6">
+          {/* Usage Information */}
+          {entitlements && usage && (
+            <div className="space-y-4">
+              <h4 className="font-medium">{content.features}</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Chat Interactions */}
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">{content.usage.chatInteractions}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {entitlements.chat_limit_monthly === -1 ? (
+                      content.usage.unlimited
+                    ) : (
+                      <>
+                        {usage.chat_interactions_used || 0} {content.usage.used} / {entitlements.chat_limit_monthly}
+                        <br />
+                        <span className="text-primary font-medium">
+                          {getRemainingChatInteractions()} {content.usage.remaining}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
 
-        {/* Subscription End Date */}
-        {subscribed && subscription_end && (
-          <div className="text-sm text-muted-foreground">
-            {content.renewsOn}: {new Date(subscription_end).toLocaleDateString()}
-          </div>
-        )}
+                {/* Voice Minutes */}
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">{content.usage.voiceMinutes}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {entitlements.voice_minutes_monthly === 0 ? (
+                      'Not available'
+                    ) : entitlements.voice_minutes_monthly === -1 ? (
+                      content.usage.unlimited
+                    ) : (
+                      <>
+                        {usage.voice_seconds_used ? Math.round(usage.voice_seconds_used / 60) : 0} {content.usage.used} / {entitlements.voice_minutes_monthly}
+                        <br />
+                        <span className="text-primary font-medium">
+                          {getRemainingVoiceMinutes()} {content.usage.remaining}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
 
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          {subscribed ? (
-            <Button 
-              onClick={handleManageSubscription}
-              disabled={actionLoading}
-              className="w-full"
-            >
-              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {content.manageSubscription}
-            </Button>
-          ) : (
-            <div className="grid grid-cols-2 gap-2">
-              <Button 
-                onClick={() => handleUpgrade('premium')}
-                disabled={actionLoading}
-                variant="outline"
-              >
-                {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {content.upgradeToPremium}
-              </Button>
-              <Button 
-                onClick={() => handleUpgrade('family')}
-                disabled={actionLoading}
-              >
-                {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {content.upgradeToFamily}
-              </Button>
+                {/* People Limit */}
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">{content.usage.people}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {currentPlan === 'free' ? '1 person' :
+                     currentPlan === 'essential' ? '1 person' :
+                     'Up to 3 people'}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
-          <Button 
-            onClick={checkSubscription}
-            variant="ghost"
-            size="sm"
-            className="w-full"
-            disabled={loading}
-          >
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {content.refresh}
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          {/* Subscription Actions */}
+          <div className="space-y-4">
+            {/* Upgrade Options */}
+            {currentPlan === 'free' && (
+              <Alert>
+                <ArrowUp className="h-4 w-4" />
+                <AlertDescription>
+                  {content.upgradePrompts.fromFree}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                    <Button 
+                      onClick={() => handleSubscriptionAction('upgrade-essential')}
+                      disabled={actionLoading}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ArrowUp className="mr-2 h-4 w-4" />
+                      {content.actions.upgradeToEssential}
+                    </Button>
+                    <Button 
+                      onClick={() => handleSubscriptionAction('upgrade-complete')}
+                      disabled={actionLoading}
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ArrowUp className="mr-2 h-4 w-4" />
+                      {content.actions.upgradeToComplete}
+                    </Button>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {currentPlan === 'essential' && (
+              <Alert>
+                <ArrowUp className="h-4 w-4" />
+                <AlertDescription>
+                  {content.upgradePrompts.fromEssential}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                    <Button 
+                      onClick={() => handleSubscriptionAction('upgrade-complete')}
+                      disabled={actionLoading}
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ArrowUp className="mr-2 h-4 w-4" />
+                      {content.actions.upgradeToComplete}
+                    </Button>
+                    <Button 
+                      onClick={() => handleSubscriptionAction('downgrade-essential')}
+                      disabled={actionLoading}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ArrowDown className="mr-2 h-4 w-4" />
+                      {content.actions.downgradeToFree}
+                    </Button>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {currentPlan === 'complete' && (
+              <Alert>
+                <Settings className="h-4 w-4" />
+                <AlertDescription>
+                  Manage your subscription or change your plan.
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                    <Button 
+                      onClick={() => handleSubscriptionAction('downgrade-essential')}
+                      disabled={actionLoading}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ArrowDown className="mr-2 h-4 w-4" />
+                      {content.actions.downgradeToEssential}
+                    </Button>
+                    <Button 
+                      onClick={() => handleSubscriptionAction('manage')}
+                      disabled={actionLoading}
+                      className="w-full"
+                    >
+                      {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      {content.actions.manageSubscription}
+                    </Button>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {/* Management Button for Subscribed Users */}
+            {isSubscribed && (
+              <div className="pt-4 border-t">
+                <Button 
+                  onClick={() => handleSubscriptionAction('manage')}
+                  disabled={actionLoading}
+                  variant="outline"
+                  className="w-full"
+                >
+                  {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  {content.actions.manageSubscription}
+                </Button>
+              </div>
+            )}
+
+            {/* Refresh Button */}
+            <Button 
+              onClick={handleRefresh}
+              variant="ghost"
+              size="sm"
+              className="w-full"
+              disabled={actionLoading}
+            >
+              {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {content.actions.refresh}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

@@ -13,7 +13,7 @@ const getContent = (language: string) => {
   const content = {
     en: {
       title: "Why I Created Eterna",
-      personalStory: "I built this tool with love using Lovable, motivated by the need to keep my mother present, even with Alzheimer's. I want to help other families preserve the memories and personalities of their loved ones.",
+      personalStory: "I built this tool with love, motivated by the need to keep my mother present, even with Alzheimer's. I want to help other families preserve the memories and personalities of their loved ones.",
       mission: {
         title: "Our Mission",
         description: "Every family facing memory challenges deserves to keep their loved one's voice and personality alive. Eterna bridges the gap between technology and human connection."
@@ -39,7 +39,7 @@ const getContent = (language: string) => {
     },
     'pt-BR': {
       title: "Por que Criei o Eterna",
-      personalStory: "Criei esta ferramenta com amor usando o Lovable, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.",
+      personalStory: "Criei esta ferramenta com amor, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos.",
       mission: {
         title: "Nossa Missão",
         description: "Toda família enfrentando desafios de memória merece manter viva a voz e personalidade de seus entes queridos. O Eterna conecta tecnologia com conexão humana."
@@ -65,7 +65,7 @@ const getContent = (language: string) => {
     },
     es: {
       title: "Por qué Creé Eterna",
-      personalStory: "Creé esta herramienta con amor usando Lovable, motivado por la necesidad de mantener a mi madre presente, incluso con Alzheimer. Quiero ayudar a otras familias a preservar los recuerdos y personalidades de sus seres queridos.",
+      personalStory: "Creé esta herramienta con amor, motivado por la necesidad de mantener a mi madre presente, incluso con Alzheimer. Quiero ayudar a otras familias a preservar los recuerdos y personalidades de sus seres queridos.",
       mission: {
         title: "Nuestra Misión",
         description: "Cada familia enfrentando desafíos de memoria merece mantener viva la voz y personalidad de sus seres queridos. Eterna conecta tecnología con conexión humana."

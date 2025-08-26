@@ -22,7 +22,7 @@ const getContent = (language: string) => {
         "Have meaningful conversations at any time"
       ],
       whyCreated: "Why did I create Eterna?",
-      mission: "I created this tool with great love using Lovable, motivated by the need to keep my mother present, even with Alzheimer's. I want to help other families preserve the memories and personalities of their loved ones forever."
+      mission: "I created this tool with great love, motivated by the need to keep my mother present, even with Alzheimer's. I want to help other families preserve the memories and personalities of their loved ones forever."
     },
     'pt-BR': {
       madeWithLove: "❤️ Feito com amor para famílias com Alzheimer",
@@ -36,7 +36,7 @@ const getContent = (language: string) => {
         "Tenha conversas significativas a qualquer momento"
       ],
       whyCreated: "Por que criei o Eterna?",
-      mission: "Criei esta ferramenta com muito amor usando o Lovable, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos para sempre."
+      mission: "Criei esta ferramenta com muito amor, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos para sempre."
     },
     es: {
       madeWithLove: "❤️ Hecho con amor para familias con Alzheimer", 
@@ -50,7 +50,7 @@ const getContent = (language: string) => {
         "Ten conversaciones significativas en cualquier momento"  
       ],
       whyCreated: "¿Por qué creé Eterna?",
-      mission: "Creé esta herramienta con mucho amor usando Lovable, motivado por la necesidad de mantener presente a mi madre, incluso con Alzheimer. Quiero ayudar a otras familias a preservar los recuerdos y personalidades de sus seres queridos para siempre."
+      mission: "Creé esta herramienta con mucho amor, motivado por la necesidad de mantener presente a mi madre, incluso con Alzheimer. Quiero ayudar a otras familias a preservar los recuerdos y personalidades de sus seres queridos para siempre."
     }
   };
 

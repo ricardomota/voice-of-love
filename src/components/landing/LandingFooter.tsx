@@ -25,7 +25,7 @@ const getContent = (language: string) => {
       support: {
         title: "Need Help?",
         description: "We're here to help you preserve your family's most precious voices.",
-        email: "support@eterna.app"
+        email: "support@eterna.chat"
       },
       copyright: "Made with ❤️ for families facing memory challenges"
     },
@@ -42,7 +42,7 @@ const getContent = (language: string) => {
       support: {
         title: "Precisa de Ajuda?",
         description: "Estamos aqui para ajudar você a preservar as vozes mais preciosas da sua família.",
-        email: "suporte@eterna.app"
+        email: "suporte@eterna.chat"
       },
       copyright: "Feito com ❤️ para famílias enfrentando desafios de memória"
     },
@@ -59,7 +59,7 @@ const getContent = (language: string) => {
       support: {
         title: "¿Necesitas Ayuda?",
         description: "Estamos aquí para ayudarte a preservar las voces más preciosas de tu familia.",
-        email: "soporte@eterna.app"
+        email: "soporte@eterna.chat"
       },
       copyright: "Hecho con ❤️ para familias enfrentando desafíos de memoria"
     }
