@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useAuth } from '@/hooks/useAuth';
 import { useSubscriptionInfo } from '@/hooks/useSubscriptionInfo';
 import { SubscriptionService } from '@/services/subscriptionService';
+import { useNavigate } from 'react-router-dom';
 import { 
   Check, 
   X, 
@@ -248,6 +250,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   
   // Use real subscription data
   const { 
@@ -267,6 +271,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
   const handleEssentialSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_essential');
+    
+    // Check if user is authenticated
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    
     try {
       const checkoutUrl = await SubscriptionService.createCheckoutSession('essential');
       if (checkoutUrl?.url) {
@@ -286,6 +297,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
   const handleCompleteSubscribe = async () => {
     console.log('Analytics: pricing_subscribe_complete');
+    
+    // Check if user is authenticated
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    
     try {
       const checkoutUrl = await SubscriptionService.createCheckoutSession('complete');
       if (checkoutUrl?.url) {
