@@ -35,5 +35,49 @@ export const authService = {
 
   onAuthStateChange(callback: (event: string, session: any) => void) {
     return supabase.auth.onAuthStateChange(callback);
+  },
+
+  // OAuth providers
+  async signInWithOAuth(provider: 'google' | 'apple', redirectTo?: string) {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: redirectTo || `${window.location.origin}/`
+      }
+    });
+    return { data, error };
+  },
+
+  // Phone OTP - send code
+  async signInWithOtp(phone: string) {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      phone,
+      options: {
+        channel: 'sms'
+      }
+    });
+    return { data, error };
+  },
+
+  // Phone OTP - verify code
+  async verifyOtp(phone: string, token: string) {
+    const { data, error } = await supabase.auth.verifyOtp({
+      phone,
+      token,
+      type: 'sms'
+    });
+    return { data, error };
+  },
+
+  // Resend email confirmation
+  async resendConfirmation(email: string) {
+    const { data, error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`
+      }
+    });
+    return { data, error };
   }
 };

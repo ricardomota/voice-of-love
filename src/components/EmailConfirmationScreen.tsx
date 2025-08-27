@@ -4,7 +4,7 @@ import { Mail, CheckCircle, Clock, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useAuth } from '@/hooks/useAuth';
+import { authService } from '@/services/authService';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useToast } from '@/hooks/use-toast';
 
@@ -79,15 +79,13 @@ export const EmailConfirmationScreen: React.FC<EmailConfirmationScreenProps> = (
 }) => {
   const { currentLanguage } = useLanguage();
   const content = getContent(currentLanguage);
-  const { signUp } = useAuth();
   const { toast } = useToast();
   const [isResending, setIsResending] = useState(false);
 
   const handleResendEmail = async () => {
     setIsResending(true);
     try {
-      // We need to trigger a new signup to resend confirmation email
-      const result = await signUp(email, 'temp_password', currentLanguage);
+      const result = await authService.resendConfirmation(email);
       if (!result.error) {
         toast({
           title: content.emailResent,

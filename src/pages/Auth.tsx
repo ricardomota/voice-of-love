@@ -1,7 +1,7 @@
 // Enhanced Auth page with improved UX and mobile optimization
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle, Phone as PhoneIcon, Apple } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,7 @@ import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
 import { EmailConfirmationScreen } from '@/components/EmailConfirmationScreen';
 import { PlanSelectionModal } from '@/components/PlanSelectionModal';
+import { authService } from '@/services/authService';
 type AuthMode = 'signin' | 'signup' | 'email_confirmation';
 interface AuthProps {
   language?: string;
@@ -81,7 +82,21 @@ export const Auth: React.FC<AuthProps> = ({
       // Success messages
       accountCreated: 'Conta criada! Verifique seu email para confirmar sua conta.',
       welcomeBackToast: 'Bem-vindo de volta!',
-      signedInSuccessfully: 'Você entrou com sucesso.'
+      signedInSuccessfully: 'Você entrou com sucesso.',
+      // Quick signup
+      orContinueWith: 'Ou continuar com',
+      continueWithGoogle: 'Continuar com Google',
+      continueWithApple: 'Continuar com Apple',
+      continueWithPhone: 'Continuar com Telefone',
+      phoneNumber: 'Número de telefone',
+      enterPhone: 'Digite seu número de telefone',
+      sendCode: 'Enviar código',
+      code: 'Código',
+      enterCode: 'Digite o código',
+      verifyCode: 'Verificar código',
+      codeSent: 'Código de verificação enviado!',
+      invalidCode: 'Código inválido. Tente novamente.',
+      resendConfirmationEmail: 'Reenviar email de confirmação'
     },
     'en': {
       welcomeBack: 'Welcome back',
@@ -126,7 +141,21 @@ export const Auth: React.FC<AuthProps> = ({
       // Success messages
       accountCreated: 'Account created! Please check your email to verify your account.',
       welcomeBackToast: 'Welcome back!',
-      signedInSuccessfully: 'You have been signed in successfully.'
+      signedInSuccessfully: 'You have been signed in successfully.',
+      // Quick signup
+      orContinueWith: 'Or continue with',
+      continueWithGoogle: 'Continue with Google',
+      continueWithApple: 'Continue with Apple',
+      continueWithPhone: 'Continue with Phone',
+      phoneNumber: 'Phone number',
+      enterPhone: 'Enter your phone number',
+      sendCode: 'Send code',
+      code: 'Code',
+      enterCode: 'Enter the code',
+      verifyCode: 'Verify code',
+      codeSent: 'Verification code sent!',
+      invalidCode: 'Invalid code. Please try again.',
+      resendConfirmationEmail: 'Resend confirmation email'
     },
     'es': {
       welcomeBack: 'Bienvenido de nuevo',
@@ -171,7 +200,21 @@ export const Auth: React.FC<AuthProps> = ({
       // Success messages
       accountCreated: '¡Cuenta creada! Revisa tu correo para verificar tu cuenta.',
       welcomeBackToast: '¡Bienvenido de nuevo!',
-      signedInSuccessfully: 'Has iniciado sesión correctamente.'
+      signedInSuccessfully: 'Has iniciado sesión correctamente.',
+      // Quick signup
+      orContinueWith: 'O continúa con',
+      continueWithGoogle: 'Continuar con Google',
+      continueWithApple: 'Continuar con Apple',
+      continueWithPhone: 'Continuar con Teléfono',
+      phoneNumber: 'Número de teléfono',
+      enterPhone: 'Ingresa tu número de teléfono',
+      sendCode: 'Enviar código',
+      code: 'Código',
+      enterCode: 'Ingresa el código',
+      verifyCode: 'Verificar código',
+      codeSent: '¡Código de verificación enviado!',
+      invalidCode: 'Código inválido. Inténtalo de nuevo.',
+      resendConfirmationEmail: 'Reenviar email de confirmación'
     }
   };
   const getText = (key: string) => {
@@ -190,6 +233,11 @@ export const Auth: React.FC<AuthProps> = ({
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan || 'free');
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [pendingSignupEmail, setPendingSignupEmail] = useState('');
+  // Phone auth state
+  const [phone, setPhone] = useState('');
+  const [smsCode, setSmsCode] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
 
   // Get redirect and plan from URL params
   const urlParams = new URLSearchParams(window.location.search);
@@ -446,6 +494,59 @@ export const Auth: React.FC<AuthProps> = ({
                 <Button type="button" variant="ghost" onClick={switchMode} disabled={loading} className="w-full">
                   {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
                 </Button>
+
+                {/* Quick signup options */}
+                <div className="my-6">
+                  <div className="text-center text-xs text-muted-foreground mb-3">{getText('orContinueWith')}</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <Button type="button" variant="outline" disabled={loading} onClick={() => authService.signInWithOAuth('google', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}>
+                      <svg width="18" height="18" viewBox="0 0 48 48" className="mr-2"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.8 16.3 19 14 24 14c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 15.5 4 8.2 8.7 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.3-5.1l-6.1-5c-2.1 1.5-4.8 2.3-7.2 2.3-5.2 0-9.6-3.4-11.3-8.1l-6.6 5.1C8.1 39.3 15.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1 3-3.4 5.4-6.4 6.7l6.1 5C37.5 41.2 44 36 44 24c0-1.2-.1-2.3-.4-3.5z"/></svg>
+                      Google
+                    </Button>
+                    <Button type="button" variant="outline" disabled={loading} onClick={() => authService.signInWithOAuth('apple', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}>
+                      <Apple className="w-4 h-4 mr-2" /> Apple
+                    </Button>
+                    <Button type="button" variant="outline" disabled={loading} onClick={() => setShowPhone(!showPhone)}>
+                      <PhoneIcon className="w-4 h-4 mr-2" /> {getText('continueWithPhone')}
+                    </Button>
+                  </div>
+
+                  {showPhone && (
+                    <div className="mt-4 space-y-2">
+                      {!otpSent ? (
+                        <>
+                          <Label htmlFor="phone" className="text-sm font-medium">{getText('phoneNumber')}</Label>
+                          <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={getText('enterPhone')} disabled={loading} />
+                          <Button type="button" className="w-full" disabled={loading || !phone} onClick={async () => {
+                            setError('');
+                            const { error } = await authService.signInWithOtp(phone);
+                            if (error) setError(error.message); else {
+                              setOtpSent(true);
+                              toast({ title: getText('codeSent') });
+                            }
+                          }}>{getText('sendCode')}</Button>
+                        </>
+                      ) : (
+                        <>
+                          <Label htmlFor="code" className="text-sm font-medium">{getText('code')}</Label>
+                          <Input id="code" value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder={getText('enterCode')} disabled={loading} />
+                          <Button type="button" className="w-full" disabled={loading || !smsCode} onClick={async () => {
+                            setError('');
+                            const { error } = await authService.verifyOtp(phone, smsCode);
+                            if (error) setError(getText('invalidCode')); else {
+                              // Phone sign-in successful
+                              if (selectedPlan && selectedPlan !== 'free') {
+                                window.location.href = `/payment?plan=${selectedPlan}`;
+                              } else {
+                                window.location.href = redirectTo;
+                              }
+                            }
+                          }}>{getText('verifyCode')}</Button>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 {/* Plan Selection for Signup */}
                 {mode === 'signup' && (
