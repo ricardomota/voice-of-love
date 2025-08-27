@@ -23,14 +23,15 @@ export const Payment: React.FC = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/auth?redirect=/payment');
+      const currentUrl = `/payment${window.location.search}`;
+      navigate(`/auth?redirect=${encodeURIComponent(currentUrl)}`);
       return;
     }
 
     if (!plan) {
       toast({
-        title: "Plano não encontrado",
-        description: "O plano selecionado não existe",
+        title: "Plan not found",
+        description: "The selected plan does not exist",
         variant: "destructive",
       });
       navigate('/');

@@ -26,7 +26,7 @@ const getContent = (language: string) => {
     },
     'pt-BR': {
       madeWithLove: "❤️ Feito com amor para famílias com Alzheimer",
-      welcome: "Bem-vindo ao Eterna", 
+      welcome: "Bem-vindo ao Eterna",
       description: "Preserve memórias preciosas e mantenha conversas eternas com pessoas queridas através de inteligência artificial.",
       createButton: "Criar Primeira Pessoa Eterna",
       howItWorks: "Como funciona:",

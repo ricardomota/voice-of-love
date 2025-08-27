@@ -274,7 +274,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     
     // Check if user is authenticated
     if (!user) {
-      navigate('/auth');
+      navigate('/auth?plan=essential');
       return;
     }
     
@@ -300,7 +300,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
     
     // Check if user is authenticated
     if (!user) {
-      navigate('/auth');
+      navigate('/auth?plan=complete');
       return;
     }
     

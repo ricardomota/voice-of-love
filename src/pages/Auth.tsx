@@ -13,12 +13,16 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
 import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
-type AuthMode = 'signin' | 'signup';
+import { EmailConfirmationScreen } from '@/components/EmailConfirmationScreen';
+import { PlanSelectionModal } from '@/components/PlanSelectionModal';
+type AuthMode = 'signin' | 'signup' | 'email_confirmation';
 interface AuthProps {
   language?: string;
+  initialPlan?: string;
 }
 export const Auth: React.FC<AuthProps> = ({
-  language = 'pt'
+  language = 'pt',
+  initialPlan
 }) => {
   const {
     signIn,
@@ -183,17 +187,33 @@ export const Auth: React.FC<AuthProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan || 'free');
+  const [showPlanModal, setShowPlanModal] = useState(false);
+  const [pendingSignupEmail, setPendingSignupEmail] = useState('');
 
-  // Get redirect from URL params
+  // Get redirect and plan from URL params
   const urlParams = new URLSearchParams(window.location.search);
   const redirectTo = urlParams.get('redirect') || '/dashboard';
+  const urlPlan = urlParams.get('plan');
+  
+  // Set initial plan from URL if provided
+  useEffect(() => {
+    if (urlPlan && !selectedPlan) {
+      setSelectedPlan(urlPlan);
+    }
+  }, [urlPlan]);
 
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      window.location.href = redirectTo;
+      // Check if user has a selected plan and redirect to checkout
+      if (selectedPlan && selectedPlan !== 'free') {
+        window.location.href = `/payment?plan=${selectedPlan}`;
+      } else {
+        window.location.href = redirectTo;
+      }
     }
-  }, [user, redirectTo]);
+  }, [user, redirectTo, selectedPlan]);
 
   // Form validation
   const validateForm = () => {
@@ -233,15 +253,11 @@ export const Auth: React.FC<AuthProps> = ({
         result = await signUp(email.trim(), password, currentLanguage);
         if (!result.error) {
           await analyticsIntegrations.trackEvent('auth_signup_success', {
-            email: email.trim()
+            email: email.trim(),
+            plan: selectedPlan
           });
-          setSuccess(getText('accountCreated'));
-
-          // Auto-switch to sign in after a delay
-          setTimeout(() => {
-            setMode('signin');
-            setSuccess('');
-          }, 3000);
+          setPendingSignupEmail(email.trim());
+          setMode('email_confirmation');
         }
       } else {
         result = await signIn(email.trim(), password);
@@ -255,7 +271,14 @@ export const Auth: React.FC<AuthProps> = ({
             variant: 'default'
           });
 
-          // Redirect will happen automatically via useEffect
+          // Check if user has a selected plan and redirect to checkout
+          if (selectedPlan && selectedPlan !== 'free') {
+            setTimeout(() => {
+              window.location.href = `/payment?plan=${selectedPlan}`;
+            }, 1000);
+          } else {
+            // Redirect will happen automatically via useEffect
+          }
         }
       }
       if (result.error) {
@@ -289,6 +312,30 @@ export const Auth: React.FC<AuthProps> = ({
     setPassword('');
     setConfirmPassword('');
   };
+
+  const handlePlanSelect = (planId: string) => {
+    setSelectedPlan(planId);
+    setShowPlanModal(false);
+    if (mode === 'signin') {
+      setMode('signup');
+    }
+  };
+
+  const handleEmailConfirmed = () => {
+    setMode('signin');
+    setPendingSignupEmail('');
+  };
+
+  // Show email confirmation screen
+  if (mode === 'email_confirmation') {
+    return (
+      <EmailConfirmationScreen
+        email={pendingSignupEmail}
+        selectedPlan={selectedPlan !== 'free' ? selectedPlan : undefined}
+        onConfirmed={handleEmailConfirmed}
+      />
+    );
+  }
   return <>
       {/* Show header if user is logged in */}
       {user && <EternaHeader />}
@@ -399,6 +446,20 @@ export const Auth: React.FC<AuthProps> = ({
                 <Button type="button" variant="ghost" onClick={switchMode} disabled={loading} className="w-full">
                   {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
                 </Button>
+
+                {/* Plan Selection for Signup */}
+                {mode === 'signup' && (
+                  <div className="mt-4 pt-4 border-t">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => setShowPlanModal(true)}
+                      className="w-full"
+                    >
+                      {selectedPlan === 'free' ? 'Select Plan (Currently: Free)' : `Selected: ${selectedPlan}`}
+                    </Button>
+                  </div>
+                )}
               </form>
 
               {/* Privacy Notice */}
@@ -420,6 +481,14 @@ export const Auth: React.FC<AuthProps> = ({
             </Button>
           </div>
         </motion.div>
+
+        {/* Plan Selection Modal */}
+        <PlanSelectionModal
+          isOpen={showPlanModal}
+          onClose={() => setShowPlanModal(false)}
+          onPlanSelect={handlePlanSelect}
+          selectedPlan={selectedPlan}
+        />
       </div>
       </div>
     </>;

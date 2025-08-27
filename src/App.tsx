@@ -7,12 +7,13 @@ import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
 import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Loader2 } from 'lucide-react';
 import { useState, useEffect, memo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cacheApiCall } from '@/utils/performanceUtils';
+import { Auth } from "@/pages/Auth";
 
 import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
@@ -30,6 +31,13 @@ import { Support } from "./pages/Support";
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
 const LazyChangelog = memo(() => <Changelog />);
+
+// Auth component with URL params
+const LazyAuth = memo(() => {
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get('plan');
+  return <Auth initialPlan={plan || undefined} />;
+});
 
 // Create QueryClient outside component to avoid re-creation
 const queryClient = new QueryClient({
@@ -130,8 +138,8 @@ const AppContent = () => {
         </UserLimitGate>
       } />
       
-      {/* Legacy auth route redirect */}
-      <Route path="/auth" element={<UserLimitGate><LazyIndex /></UserLimitGate>} />
+      {/* Auth route with plan parameter support */}
+      <Route path="/auth" element={<LazyAuth />} />
       
       {/* Changelog Route */}
       <Route path="/changelog" element={<LazyChangelog />} />
