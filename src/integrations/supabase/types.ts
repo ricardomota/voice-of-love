@@ -338,6 +338,93 @@ export type Database = {
         }
         Relationships: []
       }
+      credit_balance: {
+        Row: {
+          credits_available: number
+          credits_reserved: number
+          last_updated: string
+          lifetime_spent: number
+          user_id: string
+        }
+        Insert: {
+          credits_available?: number
+          credits_reserved?: number
+          last_updated?: string
+          lifetime_spent?: number
+          user_id: string
+        }
+        Update: {
+          credits_available?: number
+          credits_reserved?: number
+          last_updated?: string
+          lifetime_spent?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      credit_packs: {
+        Row: {
+          best_value: boolean
+          created_at: string
+          credits: number
+          name: Json
+          price_brl: number
+          price_usd: number
+          sku: string
+          updated_at: string
+        }
+        Insert: {
+          best_value?: boolean
+          created_at?: string
+          credits: number
+          name: Json
+          price_brl: number
+          price_usd: number
+          sku: string
+          updated_at?: string
+        }
+        Update: {
+          best_value?: boolean
+          created_at?: string
+          credits?: number
+          name?: Json
+          price_brl?: number
+          price_usd?: number
+          sku?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      credit_transactions: {
+        Row: {
+          created_at: string
+          delta: number
+          id: string
+          metadata: Json | null
+          reason: string
+          sku: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          delta: number
+          id?: string
+          metadata?: Json | null
+          reason: string
+          sku?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          delta?: number
+          id?: string
+          metadata?: Json | null
+          reason?: string
+          sku?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       dynamic_memories: {
         Row: {
           auto_generated: boolean | null
@@ -432,6 +519,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      eterna_plans: {
+        Row: {
+          code: string
+          created_at: string
+          limits: Json
+          monthly_credits: number
+          monthly_price_brl: number
+          monthly_price_usd: number
+          name: Json
+          perks: Json
+          rollover_pct: number
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          limits?: Json
+          monthly_credits: number
+          monthly_price_brl: number
+          monthly_price_usd: number
+          name: Json
+          perks?: Json
+          rollover_pct?: number
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          limits?: Json
+          monthly_credits?: number
+          monthly_price_brl?: number
+          monthly_price_usd?: number
+          name?: Json
+          perks?: Json
+          rollover_pct?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       eterna_user_settings: {
         Row: {
@@ -558,6 +684,27 @@ export type Database = {
           updated_at?: string
           user_targeting?: Json | null
           variant?: string
+        }
+        Relationships: []
+      }
+      feature_pricing: {
+        Row: {
+          credits_per_unit: number
+          feature: string
+          unit_description: string
+          updated_at: string
+        }
+        Insert: {
+          credits_per_unit: number
+          feature: string
+          unit_description: string
+          updated_at?: string
+        }
+        Update: {
+          credits_per_unit?: number
+          feature?: string
+          unit_description?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -916,6 +1063,39 @@ export type Database = {
         }
         Relationships: []
       }
+      usage_events: {
+        Row: {
+          created_at: string
+          credits_charged: number
+          feature: string
+          id: string
+          quantity: number
+          ref_id: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          credits_charged: number
+          feature: string
+          id?: string
+          quantity: number
+          ref_id?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          credits_charged?: number
+          feature?: string
+          id?: string
+          quantity?: number
+          ref_id?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_settings: {
         Row: {
           created_at: string
@@ -1124,6 +1304,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      charge_credits: {
+        Args: {
+          p_feature: string
+          p_quantity: number
+          p_ref_id?: string
+          p_user_id: string
+        }
+        Returns: Json
+      }
       check_beta_access: {
         Args: { p_access_code?: string; p_email: string }
         Returns: Json
