@@ -198,8 +198,8 @@ export function NewPricingSection({
                       {plan.name[currentLanguage] || plan.name.en}
                     </CardTitle>
                     <div className="text-3xl font-bold">
-                      {formatPrice(plan)}
-                      <span className="text-sm font-normal text-muted-foreground">/month</span>
+                      {plan.code === 'free' ? 'Grátis' : formatPrice(plan)}
+                      {plan.code !== 'free' && <span className="text-sm font-normal text-muted-foreground">/month</span>}
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -207,9 +207,12 @@ export function NewPricingSection({
                       <div className="flex items-center gap-2">
                         <Zap className="h-4 w-4 text-primary" />
                         <span className="text-sm">
-                          {t('pricing.includedCredits', {
-                        credits: plan.monthly_credits.toLocaleString()
-                      })}
+                          {plan.code === 'free' 
+                            ? `${plan.monthly_credits.toLocaleString()} créditos únicos`
+                            : t('pricing.includedCredits', {
+                              credits: plan.monthly_credits.toLocaleString()
+                            })
+                          }
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -240,46 +243,6 @@ export function NewPricingSection({
         })}
         </div>
 
-        {/* How Credits Work Section */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.6,
-        delay: 0.3
-      }} className="space-y-6 mb-12">
-          <h3 className="text-2xl font-semibold text-center">{t('pricing.howItWorks')}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[{
-            feature: 'Voice Clone',
-            cost: '800 credits',
-            desc: 'Initial training per clone'
-          }, {
-            feature: 'TTS Generation',
-            cost: '1 credit',
-            desc: 'Per 5 seconds of audio'
-          }, {
-            feature: 'Chat',
-            cost: '1 credit',
-            desc: 'Per 750 tokens (~500 words)'
-          }, {
-            feature: 'Transcription',
-            cost: '2 credits',
-            desc: 'Per minute of audio'
-          }].map((item, index) => <Card key={index} className="text-center">
-                <CardContent className="pt-6">
-                  <div className="font-medium">{item.feature}</div>
-                  <div className="text-2xl font-bold text-primary my-2">{item.cost}</div>
-                  <div className="text-sm text-muted-foreground">{item.desc}</div>
-                </CardContent>
-              </Card>)}
-          </div>
-        </motion.div>
 
         {/* CTA to full pricing */}
         <motion.div initial={{
