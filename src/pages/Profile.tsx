@@ -25,6 +25,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { UpgradeSection } from '@/components/profile/UpgradeSection';
 
 const getContent = (language: string) => {
   const content = {
@@ -308,11 +309,30 @@ export const Profile: React.FC = () => {
           </Card>
         </motion.div>
 
-        {/* Account Settings */}
+        {/* Upgrade Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="w-5 h-5 text-primary" />
+                Upgrade & Credits
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <UpgradeSection />
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Account Settings */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Card>
             <CardHeader>
@@ -347,7 +367,7 @@ export const Profile: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
           <Card className="border-destructive/20">
             <CardHeader>

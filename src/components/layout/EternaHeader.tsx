@@ -21,6 +21,7 @@ import { useLanguage, type Language as LanguageType } from '@/hooks/useLanguage'
 import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ProfileModal } from '@/components/ProfileModal';
+import { WalletBadge } from '@/components/wallet/WalletBadge';
 
 interface EternaHeaderProps {
   onSettingsClick?: () => void;
@@ -111,6 +112,9 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
         <div className="flex items-center gap-2">
           {/* Only show standalone language selector when user is not logged in */}
           {!user && <LanguageSelector />}
+          
+          {/* Wallet Badge for logged in users */}
+          {user && <WalletBadge />}
           
           {user && (
             <DropdownMenu>

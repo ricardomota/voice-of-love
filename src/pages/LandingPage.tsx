@@ -5,7 +5,7 @@ import { FeaturesSection } from '@/components/landing/FeaturesSection';
 
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { StoryCard } from '@/components/landing/StoryCard';
-import { PricingSection } from '@/components/landing/PricingSection';
+import { NewPricingSection } from '@/components/landing/NewPricingSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useToast } from '@/hooks/use-toast';
@@ -61,9 +61,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       {/* Pricing - Enhanced spacing */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
-        <PricingSection 
+        <NewPricingSection 
           onTryFree={onTryFree}
-          onSeePricing={scrollToPricing}
           onUpgrade={handleUpgrade}
         />
       </div>

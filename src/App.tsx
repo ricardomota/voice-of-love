@@ -27,6 +27,8 @@ import { About } from "./pages/About";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { Support } from "./pages/Support";
+import { EternaPricingPage } from "./components/pricing/EternaPricingPage";
+import { Wallet } from "./pages/Wallet";
 
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
@@ -155,6 +157,22 @@ const AppContent = () => {
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/support" element={<Support />} />
+      <Route path="/pricing" element={
+        <div className="min-h-screen bg-background">
+          <EternaHeader />
+          <main className="pt-16">
+            <EternaPricingPage />
+          </main>
+        </div>
+      } />
+      <Route path="/wallet" element={
+        <div className="min-h-screen bg-background">
+          <EternaHeader />
+          <main className="pt-16">
+            <Wallet />
+          </main>
+        </div>
+      } />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
