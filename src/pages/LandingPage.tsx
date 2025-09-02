@@ -5,10 +5,8 @@ import { FeaturesSection } from '@/components/landing/FeaturesSection';
 
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { StoryCard } from '@/components/landing/StoryCard';
-import { NewPricingSection } from '@/components/landing/NewPricingSection';
+
 import { LandingFooter } from '@/components/landing/LandingFooter';
-import { useSubscription } from '@/hooks/useSubscription';
-import { useToast } from '@/hooks/use-toast';
 
 
 interface LandingPageProps {
@@ -17,19 +15,10 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
-  const { createCheckout } = useSubscription();
-  const { toast } = useToast();
-  
-
   const scrollToPricing = () => {
-    const element = document.getElementById('pricing');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    window.location.href = '/pricing';
   };
 
-  const handleUpgrade = async (planId: string) => {
-    const params = new URLSearchParams({ plan: planId });
-    window.location.href = `/payment?${params.toString()}`;
-  };
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -58,14 +47,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
         <HowItWorksSection />
       </div>
 
-      {/* Pricing - Enhanced spacing */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-transparent to-transparent pointer-events-none" />
-        <NewPricingSection 
-          onTryFree={onTryFree}
-          onUpgrade={handleUpgrade}
-        />
-      </div>
+      {/* Pricing section moved to /pricing */}
       {/* Story Card - Personal touch */}
       <StoryCard />
 
