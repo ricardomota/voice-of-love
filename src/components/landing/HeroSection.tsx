@@ -79,128 +79,144 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <>
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 pt-32 sm:pt-36 lg:pt-40 xl:pt-44 overflow-hidden">
-        {/* Enhanced Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
-          
-          {/* Enhanced Background Elements */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-secondary/15 rounded-full blur-3xl opacity-40 animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/15 rounded-full blur-3xl opacity-30 animate-pulse" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-50" />
-          
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:50px_50px]" />
-          </div>
-        </div>
+      {/* Modern Hero Section - Maurice & Nora Style */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-32 overflow-hidden">
         
-        {/* Centered Content Container */}
-        <div className="relative w-full max-w-5xl mx-auto text-center">
-          {/* Enhanced Content with centered design */}
-          <motion.div className="text-center space-y-8 md:space-y-12 lg:space-y-16" initial={{
-            opacity: 0,
-            y: 50
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            ease: "easeOut"
-          }}>
-            <div className="space-y-8 md:space-y-10 lg:space-y-12">
-              <motion.h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-primary-foreground leading-tight tracking-tight" initial={{
-                opacity: 0,
-                y: 30
-              }} animate={{
-                opacity: 1,
-                y: 0
-              }} transition={{
-                duration: 0.8,
-                delay: 0.2
-              }}>
-                {content.headline}
-              </motion.h1>
-              <motion.p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed font-light" initial={{
-                opacity: 0,
-                y: 30
-              }} animate={{
-                opacity: 1,
-                y: 0
-              }} transition={{
-                duration: 0.8,
-                delay: 0.4
-              }}>
-                {content.subhead}
-              </motion.p>
+        {/* Minimalist Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/98 to-muted/30" />
+        
+        {/* Subtle Floating Elements */}
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/3 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/2 rounded-full blur-3xl"
+          animate={{
+            scale: [1.1, 1, 1.1],
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+        />
+        
+        {/* Main Content Container */}
+        <div className="relative w-full max-w-6xl mx-auto text-center">
+          
+          {/* Elegant Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 sm:mb-12"
+          >
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
+              ✨ Betrouwbaar AI platform
             </div>
+          </motion.div>
 
-            {/* Enhanced CTA Buttons with centered layout */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center items-center" initial={{
-              opacity: 0,
-              y: 30
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.8,
-              delay: 0.6
-            }}>
-              {!isLoading && (
-                <>
-                  <Button 
-                    onClick={isWaitlistMode ? onTryFree : onLogin} 
-                    size="xl" 
-                    variant="secondary" 
-                    className="w-full sm:w-auto min-w-[280px] h-16 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 bg-secondary hover:bg-secondary/90 hover:scale-105"
-                  >
-                    {isWaitlistMode ? 'Join Waitlist' : content.tryFree}
-                  </Button>
-                  
-                  
-                  <Button 
-                    onClick={onSeePricing} 
-                    variant="ghost" 
-                    size="lg" 
-                    className="w-full sm:w-auto text-lg font-medium text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/5 transition-all duration-300"
-                  >
-                    {content.seePricing}
-                  </Button>
-                </>
-              )}
-            </motion.div>
+          {/* Large Modern Headline */}
+          <motion.h1 
+            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[1.1] tracking-tight mb-8 sm:mb-12 lg:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Lembranças se tornam{" "}
+            <span className="block text-primary">eternas ✨</span>
+          </motion.h1>
 
-            {/* Enhanced Trust indicators with centered layout */}
-            <motion.div className="pt-8 md:pt-12" initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.8,
-              delay: 0.8
-            }}>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16 text-base sm:text-lg text-primary-foreground/80">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-secondary/20 rounded-xl backdrop-blur-sm">
-                    <Security size={24} className="text-secondary flex-shrink-0" />
-                  </div>
-                  <span className="font-semibold">Private by default</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-secondary/20 rounded-xl backdrop-blur-sm">
-                    <Group size={24} className="text-secondary flex-shrink-0" />
-                  </div>
-                  <span className="font-semibold">Family-first design</span>
-                </div>
-              </div>
-            </motion.div>
+          {/* Elegant Subtitle */}
+          <motion.p 
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground max-w-5xl mx-auto leading-relaxed font-light mb-12 sm:mb-16 lg:mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Preserve a essência dos seus entes queridos através de IA que captura personalidade, histórias e sabedoria para sempre.
+          </motion.p>
+
+          {/* Modern CTA Buttons - Maurice & Nora Style */}
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-center mb-16 sm:mb-20 lg:mb-24"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            {!isLoading && (
+              <>
+                <Button 
+                  onClick={isWaitlistMode ? onTryFree : onLogin}
+                  size="lg"
+                  className="group px-10 py-6 text-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+                >
+                  {isWaitlistMode ? 'Começar grátis' : content.tryFree} ✨
+                  <motion.div
+                    className="ml-3"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.div>
+                </Button>
+                
+                <Button 
+                  onClick={onSeePricing}
+                  variant="outline"
+                  size="lg"
+                  className="group px-10 py-6 text-lg border-2 border-muted-foreground/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-full"
+                >
+                  {content.seePricing} ✨
+                  <motion.div
+                    className="ml-3"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
+                  >
+                    →
+                  </motion.div>
+                </Button>
+              </>
+            )}
+          </motion.div>
+
+          {/* Modern Trust Indicators */}
+          <motion.div 
+            className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <div className="text-center space-y-2">
+              <div className="text-3xl sm:text-4xl font-bold text-primary">500+</div>
+              <div className="text-sm sm:text-base text-muted-foreground">Famílias conectadas</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl sm:text-4xl font-bold text-primary">4.9/5</div>
+              <div className="text-sm sm:text-base text-muted-foreground">Avaliação média</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl sm:text-4xl font-bold text-primary">&lt; 12h</div>
+              <div className="text-sm sm:text-base text-muted-foreground">Tempo de resposta</div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl sm:text-4xl font-bold text-primary">100%</div>
+              <div className="text-sm sm:text-base text-muted-foreground">Totalmente seguro</div>
+            </div>
           </motion.div>
         </div>
       </section>
-
     </>
   );
 };

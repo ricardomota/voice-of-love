@@ -97,198 +97,108 @@ export const HowItWorksSection: React.FC = () => {
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
-    <section id="how-it-works" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 overflow-hidden">
+    <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-32 px-6 sm:px-8 lg:px-12 overflow-hidden">
       
-      {/* Hero-style Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
-        
-        {/* Animated Background Elements */}
-        <motion.div 
-          className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.2, 0.4]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-        
-        {/* Additional Gradient Blur Elements */}
-        <motion.div 
-          className="absolute top-1/3 left-1/3 w-64 h-32 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
-          animate={{
-            x: [-20, 20, -20],
-            y: [-10, 10, -10],
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 left-1/5 w-48 h-48 bg-gradient-to-br from-blue-400/15 to-cyan-400/15 rounded-full blur-2xl"
-          animate={{
-            scale: [0.8, 1.2, 0.8],
-            opacity: [0.1, 0.3, 0.1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-        />
-        <motion.div 
-          className="absolute top-1/4 right-1/4 w-56 h-28 bg-gradient-to-l from-orange-400/25 to-red-400/25 rounded-full blur-3xl"
-          animate={{
-            y: [10, -10, 10],
-            x: [5, -5, 5],
-            opacity: [0.15, 0.35, 0.15]
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 4
-          }}
-        />
-        
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }} />
-        </div>
-      </div>
-
-      {/* Container with consistent max-width */}
+      {/* Minimalist Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-muted/5 via-background to-muted/10" />
+      
+      {/* Subtle Elements */}
+      <motion.div 
+        className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/2 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.1, 0.3, 0.1]
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Container */}
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
-        {/* Header with better responsive typography */}
+        {/* Modern Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16 lg:mb-20"
+          className="text-center mb-16 sm:mb-20 lg:mb-24"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight px-4">
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 sm:mb-8 leading-tight">
             {content.title}
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-light">
             {content.subtitle}
           </p>
         </motion.div>
 
-        {/* Steps Flow */}
-        <div className="relative">
-          
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 lg:gap-4">
-            {content.steps.map((step, index) => {
-              const IconComponent = icons[index];
-              
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: index * 0.15,
-                    type: "spring",
-                    stiffness: 100
-                  }}
-                  className="relative group"
-                  onMouseEnter={() => setHoveredStep(index)}
-                  onMouseLeave={() => setHoveredStep(null)}
-                >
+        {/* Modern Steps Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 lg:gap-8">
+          {content.steps.map((step, index) => {
+            const IconComponent = icons[index];
+            
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                className="relative group"
+                onMouseEnter={() => setHoveredStep(index)}
+                onMouseLeave={() => setHoveredStep(null)}
+              >
+                
+                {/* Modern Step Card */}
+                <div className="relative bg-card/60 backdrop-blur-sm rounded-3xl p-8 lg:p-10 text-center border border-border/30 transition-all duration-500 hover:bg-card/80 hover:scale-105 hover:border-primary/20 hover:shadow-lg">
                   
-                  {/* Step Card */}
-                  <div className="relative bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-7 lg:p-8 text-center border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-105 hover:border-white/40">
-                    
-                    {/* Step Number */}
-                    <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-7 h-7 sm:w-8 sm:h-8 bg-white text-primary rounded-full flex items-center justify-center font-bold text-xs sm:text-sm">
-                      {index + 1}
-                    </div>
-                    
-                    {/* Icon with responsive sizing */}
-                    <div 
-                      className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 lg:mb-6 group-hover:bg-white/30 transition-colors duration-300"
-                    >
-                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" size={28} />
-                    </div>
-                    
-                    {/* Content with responsive text */}
-                    <div className="space-y-3 sm:space-y-4">
-                      <h3 className="font-serif text-xl sm:text-xl lg:text-2xl font-bold text-white">
-                        {step.title}
-                      </h3>
-                      
-                      <p className="text-white/80 text-sm sm:text-base lg:text-base leading-relaxed">
-                        {step.description}
-                      </p>
-                      
-                      <motion.p 
-                        className="text-xs sm:text-sm lg:text-sm text-white/60 leading-relaxed px-2 sm:px-0"
-                        initial={{ opacity: 0.7 }}
-                        animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
-                      >
-                        {step.detail}
-                      </motion.p>
-                    </div>
+                  {/* Step Number */}
+                  <div className="absolute -top-4 -right-4 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                    {index + 1}
                   </div>
-
-                  {/* Connection Arrow */}
-                  {index < content.steps.length - 1 && (
-                    <motion.div
-                      className="hidden lg:block absolute top-1/2 -right-2 w-4 h-4 -translate-y-1/2 z-10"
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: (index + 1) * 0.15 + 0.5 }}
+                  
+                  {/* Large Icon */}
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+                    <IconComponent className="w-10 h-10 lg:w-12 lg:h-12 text-primary" />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="space-y-4">
+                    <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
+                      {step.title}
+                    </h3>
+                    
+                    <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+                      {step.description}
+                    </p>
+                    
+                    <motion.p 
+                      className="text-sm text-muted-foreground/80 leading-relaxed"
+                      initial={{ opacity: 0.7 }}
+                      animate={hoveredStep === index ? { opacity: 1 } : { opacity: 0.7 }}
                     >
-                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                        <ArrowRight className="w-4 h-4 text-primary" size={16} />
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
+                      {step.detail}
+                    </motion.p>
+                  </div>
+                </div>
+
+                {/* Connection Line for large screens */}
+                {index < content.steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-border/30 -translate-y-1/2 z-0" />
+                )}
+              </motion.div>
+            );
+          })}
         </div>
-
-
       </div>
-
     </section>
   );
 };
