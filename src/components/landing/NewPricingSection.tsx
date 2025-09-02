@@ -170,97 +170,98 @@ export function NewPricingSection({
           </p>
         </motion.div>
 
-        {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+        {/* Main CTA Buttons - Maurice & Nora style */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.6 }}
+          className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto mb-16"
+        >
+          <Button 
+            onClick={onTryFree}
+            size="lg"
+            className="group px-8 py-6 text-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Começar Grátis ✨
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Button>
+          
+          <Button 
+            onClick={handleViewFullPricing}
+            size="lg"
+            variant="outline"
+            className="group px-8 py-6 text-lg border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
+          >
+            Ver Planos Completos ✨
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </motion.div>
+
+        {/* Compact Plans Preview - Single Line */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-3 gap-4 max-w-4xl mx-auto"
+        >
           {plans.map((plan, index) => {
-          const isRecommended = plan.code === 'family';
-          return <motion.div key={plan.code} initial={{
-            opacity: 0,
-            y: 40
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} transition={{
-            duration: 0.6,
-            delay: index * 0.1
-          }} className={`relative ${isRecommended ? 'scale-105' : ''}`}>
-                {isRecommended}
-                <Card className={`h-full transition-all duration-300 border border-border/50 hover:border-primary/30 hover:shadow-lg ${isRecommended ? 'border-primary shadow-lg' : ''}`}>
-                  <CardHeader className="text-center">
-                    <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 ${index === 0 ? 'bg-gradient-to-br from-accent/20 to-accent/10' : index === 1 ? 'bg-gradient-to-br from-primary/20 to-primary/10' : 'bg-gradient-to-br from-primary/30 to-primary/20'}`}>
-                      {index === 0 && <Zap className="w-8 h-8 text-accent" />}
-                      {index === 1 && <Shield className="w-8 h-8 text-primary" />}
-                      {index === 2 && <CreditCard className="w-8 h-8 text-primary" />}
+            const isRecommended = plan.code === 'family';
+            return (
+              <motion.div 
+                key={plan.code}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className={`relative ${isRecommended ? 'scale-105' : ''}`}
+              >
+                {isRecommended && (
+                  <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 z-10 bg-primary text-primary-foreground">
+                    {t('pricing.bestValue')}
+                  </Badge>
+                )}
+                <Card className={`h-full transition-all duration-300 border border-border/50 hover:border-primary/30 hover:shadow-md ${isRecommended ? 'border-primary shadow-md' : ''}`}>
+                  <CardHeader className="text-center pb-3">
+                    <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-2 ${
+                      index === 0 ? 'bg-gradient-to-br from-accent/20 to-accent/10' : 
+                      index === 1 ? 'bg-gradient-to-br from-primary/20 to-primary/10' : 
+                      'bg-gradient-to-br from-primary/30 to-primary/20'
+                    }`}>
+                      {index === 0 && <Zap className="w-6 h-6 text-accent" />}
+                      {index === 1 && <Shield className="w-6 h-6 text-primary" />}
+                      {index === 2 && <CreditCard className="w-6 h-6 text-primary" />}
                     </div>
-                    <CardTitle className="text-xl">
+                    <CardTitle className="text-lg">
                       {plan.name[currentLanguage] || plan.name.en}
                     </CardTitle>
-                    <div className="text-3xl font-bold">
+                    <div className="text-xl sm:text-2xl font-bold">
                       {plan.code === 'free' ? 'Grátis' : formatPrice(plan)}
-                      {plan.code !== 'free' && <span className="text-sm font-normal text-muted-foreground">/month</span>}
+                      {plan.code !== 'free' && <span className="text-xs font-normal text-muted-foreground block">/mês</span>}
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Zap className="h-4 w-4 text-primary" />
-                        <span className="text-sm">
+                  <CardContent className="space-y-2 pt-0">
+                    <div className="text-xs text-center space-y-1">
+                      <div className="flex items-center justify-center gap-1">
+                        <Zap className="h-3 w-3 text-primary" />
+                        <span>
                           {plan.code === 'free' 
-                            ? `${plan.monthly_credits.toLocaleString()} créditos únicos`
-                            : t('pricing.includedCredits', {
-                              credits: plan.monthly_credits.toLocaleString()
-                            })
+                            ? `${plan.monthly_credits.toLocaleString()} únicos`
+                            : `${plan.monthly_credits.toLocaleString()}/mês`
                           }
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Shield className="h-4 w-4 text-primary" />
-                        <span className="text-sm">
-                          {t('pricing.voiceSlots', {
-                        count: plan.limits.voice_slots
-                      })}
-                        </span>
+                      <div className="flex items-center justify-center gap-1">
+                        <Shield className="h-3 w-3 text-primary" />
+                        <span>{plan.limits.voice_slots} voz{plan.limits.voice_slots > 1 ? 'es' : ''}</span>
                       </div>
-                      {plan.rollover_pct > 0 && <div className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          <span className="text-sm">
-                            {t('pricing.rollover', {
-                        pct: plan.rollover_pct
-                      })}
-                          </span>
-                        </div>}
                     </div>
-                    <Button className="w-full" variant={isRecommended ? 'default' : 'outline'} onClick={() => handlePlanSelect(plan)} disabled={plan.code === 'free'}>
-                      {plan.code === 'free' ? t('pricing.tryFree') : t('pricing.selectPlan', {
-                    plan: plan.name[currentLanguage] || plan.name.en
-                  })}
-                    </Button>
                   </CardContent>
                 </Card>
-              </motion.div>;
-        })}
-        </div>
-
-
-        {/* CTA to full pricing */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} viewport={{
-        once: true
-      }} transition={{
-        duration: 0.6,
-        delay: 0.4
-      }} className="text-center">
-          <Button variant="outline" onClick={handleViewFullPricing} className="gap-2">
-            {t('pricing.viewDetails')}
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>;
