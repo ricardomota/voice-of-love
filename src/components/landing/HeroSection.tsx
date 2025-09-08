@@ -14,25 +14,31 @@ interface HeroSectionProps {
 const getContent = (language: string) => {
   const content = {
     en: {
+      badge: "AI-powered memory preservation",
       headline: "Where memories become eternal. ✨",
       subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
       tryFree: "Try Eterna Free",
       seePricing: "See Pricing",
+      trustBadge: "Secure & Private by Design",
       altText: "Family sharing warm moments together"
     },
     'pt-BR': {
+      badge: "Preservação de memórias com IA",
       headline: "Onde lembranças se tornam eternas✨",
       subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
       tryFree: "Testar Grátis",
       seePricing: "Ver Preços",
+      trustBadge: "Seguro e Privado por Design",
       altText: "Família compartilhando momentos especiais"
     },
     es: {
+      badge: "Preservación de memorias con IA",
       headline: "Donde los recuerdos se vuelven eternos. ✨",
       subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
       tryFree: "Probar Gratis",
       seePricing: "Ver Precios",
-      altText: "Familia compartiendo momentos especiales"
+      trustBadge: "Seguro y Privado por Diseño",
+      altText: "Familia compartilhando momentos especiales"
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -123,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="mb-8 sm:mb-12"
           >
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
-              ✨ AI-powered memory preservation
+              ✨ {content.badge}
             </div>
           </motion.div>
 
@@ -134,8 +140,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Lembranças se tornam{" "}
-            <span className="block text-primary">eternas ✨</span>
+            {content.headline}
           </motion.h1>
 
           {/* Elegant Subtitle */}
@@ -145,7 +150,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Preserve a essência dos seus entes queridos através de IA que captura personalidade, histórias e sabedoria para sempre.
+            {content.subhead}
           </motion.p>
 
           {/* Modern CTA Buttons - Maurice & Nora Style */}
@@ -162,7 +167,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   size="lg"
                   className="group px-10 py-6 text-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
                 >
-                  {isWaitlistMode ? 'Começar grátis' : content.tryFree} ✨
+                  {content.tryFree} ✨
                   <motion.div
                     className="ml-3"
                     animate={{ x: [0, 4, 0] }}
@@ -200,7 +205,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-lg">
               <Security className="w-5 h-5" />
-              Secure & Private by Design
+              {content.trustBadge}
             </div>
           </motion.div>
         </div>

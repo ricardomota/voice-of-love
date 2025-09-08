@@ -10,9 +10,9 @@ import {
 import { useLanguage } from '@/hooks/useLanguage';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'pt-BR', name: 'Português', flag: '🇧🇷' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English', shortName: 'EN', flag: '🇺🇸' },
+  { code: 'pt-BR', name: 'Português', shortName: 'PT', flag: '🇧🇷' },
+  { code: 'es', name: 'Español', shortName: 'ES', flag: '🇪🇸' },
 ];
 
 export const LanguageSelector: React.FC = () => {
@@ -23,8 +23,8 @@ export const LanguageSelector: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-9 w-9 p-0" disabled={isLoading}>
-          <Globe className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className="h-9 px-3 py-2" disabled={isLoading}>
+          <span className="text-sm font-medium">{currentLang.shortName}</span>
           <span className="sr-only">Select language</span>
         </Button>
       </DropdownMenuTrigger>
