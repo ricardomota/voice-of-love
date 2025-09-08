@@ -133,9 +133,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </motion.div>
 
-          {/* Large Modern Headline */}
+          {/* Modern Headline - Improved Typography */}
           <motion.h1 
-            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[1.1] tracking-tight mb-8 sm:mb-12 lg:mb-16"
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.1] tracking-tight mb-6 sm:mb-8 lg:mb-10 max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -143,9 +143,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {content.headline}
           </motion.h1>
 
-          {/* Elegant Subtitle */}
+          {/* Subtitle - Better Proportioned */}
           <motion.p 
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground max-w-5xl mx-auto leading-relaxed font-light mb-12 sm:mb-16 lg:mb-20"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light mb-10 sm:mb-12 lg:mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -153,9 +153,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {content.subhead}
           </motion.p>
 
-          {/* Modern CTA Buttons - Maurice & Nora Style */}
+          {/* CTA Buttons - Appropriately Sized */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-center mb-16 sm:mb-20 lg:mb-24"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 lg:mb-20"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -165,7 +165,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <Button 
                   onClick={isWaitlistMode ? onTryFree : onLogin}
                   size="lg"
-                  className="group px-10 py-6 text-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+                  className="group px-8 py-4 text-base bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
                 >
                   {content.tryFree} ✨
                   <motion.div
@@ -181,7 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   onClick={onSeePricing}
                   variant="outline"
                   size="lg"
-                  className="group px-10 py-6 text-lg border-2 border-muted-foreground/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-full"
+                  className="group px-8 py-4 text-base border-2 border-muted-foreground/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-full"
                 >
                   {content.seePricing} ✨
                   <motion.div
@@ -203,8 +203,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-lg">
-              <Security className="w-5 h-5" />
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
+              <Security className="w-4 h-4" />
               {content.trustBadge}
             </div>
           </motion.div>

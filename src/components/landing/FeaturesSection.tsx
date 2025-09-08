@@ -133,7 +133,7 @@ export const FeaturesSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center max-w-4xl mx-auto mb-16 sm:mb-20 lg:mb-24"
         >
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground mb-6 sm:mb-8 leading-tight tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-foreground mb-4 sm:mb-6 leading-tight tracking-tight">
             {content.title}
           </h2>
         </motion.div>
@@ -178,11 +178,11 @@ export const FeaturesSection: React.FC = () => {
 
                     {/* Modern Content */}
                     <div className="p-8 sm:p-10 lg:p-12 space-y-6">
-                      <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                      <h3 className="font-serif text-xl sm:text-2xl text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                         {feature.title}
                       </h3>
                       
-                      <p className="text-muted-foreground leading-relaxed text-base sm:text-lg lg:text-xl line-clamp-3">
+                      <p className="text-muted-foreground leading-relaxed text-base sm:text-lg line-clamp-3">
                         {feature.description}
                       </p>
                       
