@@ -123,7 +123,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="mb-8 sm:mb-12"
           >
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
-              ✨ Betrouwbaar AI platform
+              ✨ AI-powered memory preservation
             </div>
           </motion.div>
 
@@ -191,28 +191,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             )}
           </motion.div>
 
-          {/* Modern Trust Indicators */}
+          {/* Simple Trust Badge */}
           <motion.div 
-            className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12 max-w-4xl mx-auto"
+            className="text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="text-center space-y-2">
-              <div className="text-3xl sm:text-4xl font-bold text-primary">500+</div>
-              <div className="text-sm sm:text-base text-muted-foreground">Famílias conectadas</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl sm:text-4xl font-bold text-primary">4.9/5</div>
-              <div className="text-sm sm:text-base text-muted-foreground">Avaliação média</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl sm:text-4xl font-bold text-primary">&lt; 12h</div>
-              <div className="text-sm sm:text-base text-muted-foreground">Tempo de resposta</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl sm:text-4xl font-bold text-primary">100%</div>
-              <div className="text-sm sm:text-base text-muted-foreground">Totalmente seguro</div>
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-lg">
+              <Security className="w-5 h-5" />
+              Secure & Private by Design
             </div>
           </motion.div>
         </div>

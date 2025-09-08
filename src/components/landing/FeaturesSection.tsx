@@ -182,11 +182,11 @@ export const FeaturesSection: React.FC = () => {
                         {feature.title}
                       </h3>
                       
-                      <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">
+                      <p className="text-muted-foreground leading-relaxed text-base sm:text-lg lg:text-xl line-clamp-3">
                         {feature.description}
                       </p>
                       
-                      <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-medium bg-primary/5 border border-primary/10 text-primary transition-all duration-300 hover:bg-primary/10">
+                      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-primary/5 border border-primary/10 text-primary transition-all duration-300 hover:bg-primary/10 max-w-fit">
                         {feature.highlight}
                       </div>
                     </div>
