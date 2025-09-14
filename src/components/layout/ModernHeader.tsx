@@ -129,6 +129,48 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
 
           {/* Desktop Navigation */}
           <div className="flex items-center gap-4">
+            {/* Navigation Links for non-logged users */}
+            {!user && (
+              <>
+                <nav className="hidden md:flex items-center gap-6">
+                  <button 
+                    onClick={() => {
+                      const element = document.getElementById('how-it-works');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-foreground/80 hover:text-foreground transition-colors font-medium"
+                  >
+                    Como Funciona
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const element = document.getElementById('pricing');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-foreground/80 hover:text-foreground transition-colors font-medium"
+                  >
+                    Preços
+                  </button>
+                  <Link 
+                    to="/auth"
+                    className="text-foreground/80 hover:text-foreground transition-colors font-medium"
+                  >
+                    Entrar
+                  </Link>
+                </nav>
+                
+                <Button 
+                  onClick={() => {
+                    const element = document.getElementById('pricing');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hidden md:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground px-6"
+                >
+                  Começar Grátis
+                </Button>
+              </>
+            )}
+            
             {/* Credit Counter for logged in users */}
             {user && (
               <motion.div
