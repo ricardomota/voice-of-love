@@ -52,6 +52,42 @@ export type Database = {
           },
         ]
       }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          metadata: Json | null
+          resource_id: string | null
+          resource_type: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          resource_id?: string | null
+          resource_type?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          resource_id?: string | null
+          resource_type?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       beta_access: {
         Row: {
           access_code: string
@@ -102,6 +138,136 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          role: string
+          safety_flags: Json | null
+          session_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          role: string
+          safety_flags?: Json | null
+          session_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          role?: string
+          safety_flags?: Json | null
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string | null
+          id: string
+          language: string | null
+          loved_one_id: string | null
+          rag_enabled: boolean | null
+          title: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          loved_one_id?: string | null
+          rag_enabled?: boolean | null
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          loved_one_id?: string | null
+          rag_enabled?: boolean | null
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_sessions_loved_one_id_fkey"
+            columns: ["loved_one_id"]
+            isOneToOne: false
+            referencedRelation: "loved_ones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chunks: {
+        Row: {
+          chunk_text: string
+          created_at: string | null
+          embedding: string | null
+          end_ms: number | null
+          id: string
+          loved_one_id: string | null
+          source_id: string | null
+          start_ms: number | null
+          tags: string[] | null
+        }
+        Insert: {
+          chunk_text: string
+          created_at?: string | null
+          embedding?: string | null
+          end_ms?: number | null
+          id?: string
+          loved_one_id?: string | null
+          source_id?: string | null
+          start_ms?: number | null
+          tags?: string[] | null
+        }
+        Update: {
+          chunk_text?: string
+          created_at?: string | null
+          embedding?: string | null
+          end_ms?: number | null
+          id?: string
+          loved_one_id?: string | null
+          source_id?: string | null
+          start_ms?: number | null
+          tags?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chunks_loved_one_id_fkey"
+            columns: ["loved_one_id"]
+            isOneToOne: false
+            referencedRelation: "loved_ones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chunks_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "uploads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       circle_memberships: {
         Row: {
@@ -595,6 +761,36 @@ export type Database = {
         }
         Relationships: []
       }
+      eterna_users: {
+        Row: {
+          consent_flags: Json | null
+          created_at: string | null
+          email: string
+          id: string
+          locale: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          consent_flags?: Json | null
+          created_at?: string | null
+          email: string
+          id?: string
+          locale?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          consent_flags?: Json | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          locale?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       eterna_voices: {
         Row: {
           created_at: string
@@ -632,6 +828,44 @@ export type Database = {
             columns: ["person_id"]
             isOneToOne: false
             referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      eval_runs: {
+        Row: {
+          created_at: string | null
+          id: string
+          loved_one_id: string | null
+          overall_score: number | null
+          recommendations: string | null
+          scores_json: Json
+          suite: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          loved_one_id?: string | null
+          overall_score?: number | null
+          recommendations?: string | null
+          scores_json: Json
+          suite: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          loved_one_id?: string | null
+          overall_score?: number | null
+          recommendations?: string | null
+          scores_json?: Json
+          suite?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "eval_runs_loved_one_id_fkey"
+            columns: ["loved_one_id"]
+            isOneToOne: false
+            referencedRelation: "loved_ones"
             referencedColumns: ["id"]
           },
         ]
@@ -711,6 +945,36 @@ export type Database = {
           feature?: string
           unit_description?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      loved_ones: {
+        Row: {
+          created_at: string | null
+          display_name: string
+          id: string
+          metadata: Json | null
+          status: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_name: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_name?: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -997,6 +1261,41 @@ export type Database = {
         }
         Relationships: []
       }
+      redactions: {
+        Row: {
+          created_at: string | null
+          id: string
+          pii_map_json: Json
+          redacted_text: string
+          redaction_count: number | null
+          transcript_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          pii_map_json?: Json
+          redacted_text: string
+          redaction_count?: number | null
+          transcript_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          pii_map_json?: Json
+          redacted_text?: string
+          redaction_count?: number | null
+          transcript_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "redactions_transcript_id_fkey"
+            columns: ["transcript_id"]
+            isOneToOne: false
+            referencedRelation: "transcripts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       subscribers: {
         Row: {
           created_at: string
@@ -1032,6 +1331,94 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      transcripts: {
+        Row: {
+          confidence_score: number | null
+          created_at: string | null
+          diarization_json: Json | null
+          id: string
+          language: string
+          raw_text: string
+          upload_id: string | null
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string | null
+          diarization_json?: Json | null
+          id?: string
+          language?: string
+          raw_text: string
+          upload_id?: string | null
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string | null
+          diarization_json?: Json | null
+          id?: string
+          language?: string
+          raw_text?: string
+          upload_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transcripts_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "uploads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      uploads: {
+        Row: {
+          created_at: string | null
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          loved_one_id: string | null
+          metadata: Json | null
+          status: string
+          type: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          loved_one_id?: string | null
+          metadata?: Json | null
+          status?: string
+          type: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          loved_one_id?: string | null
+          metadata?: Json | null
+          status?: string
+          type?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "uploads_loved_one_id_fkey"
+            columns: ["loved_one_id"]
+            isOneToOne: false
+            referencedRelation: "loved_ones"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       usage_counters: {
         Row: {
@@ -1310,6 +1697,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      binary_quantize: {
+        Args: { "": string } | { "": unknown }
+        Returns: unknown
+      }
       charge_credits: {
         Args: {
           p_feature: string
@@ -1339,9 +1730,97 @@ export type Database = {
         Args: { user_id: string }
         Returns: Json
       }
+      halfvec_avg: {
+        Args: { "": number[] }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
+      hnsw_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      l2_norm: {
+        Args: { "": unknown } | { "": unknown }
+        Returns: number
+      }
+      l2_normalize: {
+        Args: { "": string } | { "": unknown } | { "": unknown }
+        Returns: unknown
+      }
       schedule_memory_cleanup: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      sparsevec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
+      vector_avg: {
+        Args: { "": number[] }
+        Returns: string
+      }
+      vector_dims: {
+        Args: { "": string } | { "": unknown }
+        Returns: number
+      }
+      vector_norm: {
+        Args: { "": string }
+        Returns: number
+      }
+      vector_out: {
+        Args: { "": string }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: { "": string }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
       }
     }
     Enums: {
