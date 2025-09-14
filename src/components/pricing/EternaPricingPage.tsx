@@ -225,10 +225,9 @@ export function EternaPricingPage() {
         </motion.div>
 
         {/* Main Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {plans.filter(plan => plan.code !== 'free').map((plan, index) => {
             const isPopular = plan.code === 'family';
-            const isRecommended = plan.code === 'essential';
             
             return (
               <motion.div
@@ -236,10 +235,10 @@ export function EternaPricingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`relative ${isPopular ? 'md:scale-105' : ''}`}
+                className={`relative ${isPopular ? 'md:scale-105 z-10' : ''}`}
               >
                 {isPopular && (
-                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10 bg-primary text-primary-foreground shadow-lg">
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20 bg-primary text-primary-foreground shadow-lg">
                     {t('pricing.popular')}
                   </Badge>
                 )}
@@ -248,72 +247,66 @@ export function EternaPricingPage() {
                   isPopular ? 'border-primary shadow-lg ring-1 ring-primary/20' : 
                   'border-border hover:border-primary/30'
                 }`}>
-                  <CardHeader className="text-center space-y-6 pb-8">
-                    <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center ${
-                      index === 0 ? 'bg-gradient-to-br from-green-100 to-green-50' :
-                      index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-50' :
-                      'bg-gradient-to-br from-purple-100 to-purple-50'
+                  <CardHeader className="text-center space-y-4 p-6">
+                    <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center ${
+                      index === 0 ? 'bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/30 dark:to-emerald-800/20' :
+                      index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20' :
+                      'bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20'
                     }`}>
-                      {index === 0 && <Heart className="w-8 h-8 text-green-600" />}
-                      {index === 1 && <Zap className="w-8 h-8 text-blue-600" />}
-                      {index === 2 && <Users className="w-8 h-8 text-purple-600" />}
+                      {index === 0 && <Heart className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />}
+                      {index === 1 && <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+                      {index === 2 && <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
                     </div>
                     
                     <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-2">
+                      <h3 className="text-xl font-bold text-foreground mb-2">
                         {plan.name[currentLanguage] || plan.name.en}
                       </h3>
-                      <div className="flex items-baseline justify-center gap-1 mb-4">
-                        <span className="text-4xl font-bold text-foreground">
+                      <div className="flex items-baseline justify-center gap-1">
+                        <span className="text-3xl font-bold text-foreground">
                           {formatPlanPrice(plan)}
                         </span>
-                        <span className="text-lg text-muted-foreground">
+                        <span className="text-sm text-muted-foreground">
                           {t('pricing.perMonth')}
                         </span>
                       </div>
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="px-8 pb-8 space-y-6">
-                    <div className="space-y-4">
-                      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                        {t('pricing.features')}
-                      </p>
-                      <ul className="space-y-3">
-                        <li className="flex items-center gap-3">
-                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">
-                            {plan.monthly_credits.toLocaleString()} créditos/mês
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">
-                            {plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">
-                            Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-3">
-                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">
-                            {plan.limits.monthly_rollover}% rollover de créditos
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
+                  <CardContent className="px-6 pb-6 space-y-6">
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-3">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="text-sm text-foreground">
+                          {plan.monthly_credits.toLocaleString()} créditos/mês
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="text-sm text-foreground">
+                          {plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="text-sm text-foreground">
+                          Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="text-sm text-foreground">
+                          {plan.limits.monthly_rollover}% rollover de créditos
+                        </span>
+                      </li>
+                    </ul>
                     
                     <Button 
-                      className="w-full h-12"
+                      className="w-full"
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => handlePlanSelect(plan)}
                     >
                       {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
-                      <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </CardContent>
                 </Card>
