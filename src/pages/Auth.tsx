@@ -464,7 +464,7 @@ export const Auth: React.FC<AuthProps> = ({
               {/* Continue Button - exactly like OpenAI */}
               <Button 
                 type="submit" 
-                className="w-full h-12 bg-foreground text-background hover:bg-foreground/95 hover:shadow-md rounded-xl font-medium text-base mt-6 transition-all duration-200" 
+                className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground rounded-xl font-medium text-base mt-6 shadow-lg hover:shadow-xl transition-all duration-300" 
                 disabled={loading || !email.trim()}
               >
                 Continue
