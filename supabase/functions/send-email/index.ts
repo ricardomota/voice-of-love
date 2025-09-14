@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
     )
 
     const { error } = await resend.emails.send({
-      from: 'Eterna <no-reply@eterna.chat>',
+      from: 'Eterna <onboarding@resend.dev>',
       to: [user.email],
       subject: language === 'en' ? 'Confirm Your Signup - Eterna' : 'Confirme Seu Cadastro - Eterna',
       html,
