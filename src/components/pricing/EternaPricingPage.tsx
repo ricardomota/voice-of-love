@@ -51,8 +51,8 @@ export function EternaPricingPage() {
     const translations: Record<string, Record<string, string>> = {
       'en': {
         'pricing.title': 'Simple, transparent pricing',
-        'pricing.subtitle': 'Choose the plan that fits your needs. Start free, upgrade anytime.',
-        'pricing.freeTrial': 'Start free trial',
+        'pricing.subtitle': 'Choose the plan that fits your needs perfectly.',
+        'pricing.freeTrial': 'Get started',
         'pricing.choosePlan': 'Choose {plan}',
         'pricing.popular': 'Most popular',
         'pricing.forever': 'Forever',
@@ -70,8 +70,8 @@ export function EternaPricingPage() {
       },
       'pt-BR': {
         'pricing.title': 'Preços simples e transparentes',
-        'pricing.subtitle': 'Escolha o plano que atende suas necessidades. Comece grátis, faça upgrade quando quiser.',
-        'pricing.freeTrial': 'Começar teste grátis',
+        'pricing.subtitle': 'Escolha o plano que atende perfeitamente suas necessidades.',
+        'pricing.freeTrial': 'Começar agora',
         'pricing.choosePlan': 'Escolher {plan}',
         'pricing.popular': 'Mais popular',
         'pricing.forever': 'Para sempre',
@@ -89,8 +89,8 @@ export function EternaPricingPage() {
       },
       'es': {
         'pricing.title': 'Precios simples y transparentes',
-        'pricing.subtitle': 'Elige el plan que se adapte a tus necesidades. Comienza gratis, actualiza cuando quieras.',
-        'pricing.freeTrial': 'Comenzar prueba gratis',
+        'pricing.subtitle': 'Elige el plan que se adapte perfectamente a tus necesidades.',
+        'pricing.freeTrial': 'Empezar ahora',
         'pricing.choosePlan': 'Elegir {plan}',
         'pricing.popular': 'Más popular',
         'pricing.forever': 'Para siempre',
