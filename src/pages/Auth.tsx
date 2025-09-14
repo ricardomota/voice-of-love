@@ -396,9 +396,11 @@ export const Auth: React.FC<AuthProps> = ({
       {user && <EternaHeader />}
       
       {/* OpenAI Style Auth Page */}
-      <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
+      <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4 relative">
+        {/* Gradient blur effect at top */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background/95 via-background/70 to-transparent backdrop-blur-md pointer-events-none z-10"></div>
         {/* Back to Home Button */}
-        <div className="w-full max-w-sm mb-8">
+        <div className="w-full max-w-sm mb-8 relative z-20">
           <Button
             variant="ghost"
             onClick={() => window.location.href = '/'}
@@ -408,11 +410,12 @@ export const Auth: React.FC<AuthProps> = ({
           </Button>
         </div>
 
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-sm relative z-20">
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5 }}
+            className="relative z-20"
           >
             {/* Title - exactly like OpenAI */}
             <div className="text-center mb-8">
