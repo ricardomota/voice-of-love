@@ -436,94 +436,83 @@ export const Auth: React.FC<AuthProps> = ({
                 </Alert>
               )}
               
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Email Field */}
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      value={email} 
-                      onChange={e => setEmail(e.target.value)} 
-                      className="h-12 pt-6 pb-2 px-3 peer" 
-                      placeholder=" " 
-                      disabled={loading} 
-                      autoComplete="email" 
-                    />
-                    <label 
-                      htmlFor="email" 
-                      className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
-                    >
-                      {getText('emailAddress')}
-                    </label>
-                  </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email Field - Always shown */}
+                <div className="space-y-3">
+                  <Label htmlFor="email" className="text-sm text-muted-foreground">
+                    {getText('emailAddress')}
+                  </Label>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)} 
+                    className="h-12 rounded-lg border-border" 
+                    placeholder={getText('emailAddress')} 
+                    disabled={loading} 
+                    autoComplete="email" 
+                  />
                 </div>
 
-                {/* Password Field */}
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Input 
-                      id="password" 
-                      type={showPassword ? 'text' : 'password'} 
-                      value={password} 
-                      onChange={e => setPassword(e.target.value)} 
-                      className="h-12 pt-6 pb-2 px-3 pr-10 peer" 
-                      placeholder=" " 
-                      disabled={loading} 
-                      autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} 
-                    />
-                    <label 
-                      htmlFor="password" 
-                      className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
-                    >
+                {/* Password Field - Only show for signin or after email step */}
+                {mode === 'signin' && (
+                  <div className="space-y-3">
+                    <Label htmlFor="password" className="text-sm text-muted-foreground">
                       {getText('password')}
-                    </label>
-                    <Button 
-                      type="button" 
-                      variant="ghost" 
-                      size="sm" 
-                      className="absolute right-0 top-0 h-12 px-3 hover:bg-transparent" 
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Confirm Password Field (only for signup) */}
-                {mode === 'signup' && (
-                  <div className="space-y-2">
+                    </Label>
                     <div className="relative">
                       <Input 
-                        id="confirmPassword" 
-                        type="password" 
-                        value={confirmPassword} 
-                        onChange={e => setConfirmPassword(e.target.value)} 
-                        className="h-12 pt-6 pb-2 px-3 peer" 
-                        placeholder=" " 
+                        id="password" 
+                        type={showPassword ? 'text' : 'password'} 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        className="h-12 rounded-lg border-border pr-10" 
+                        placeholder={getText('password')} 
                         disabled={loading} 
-                        autoComplete="new-password" 
+                        autoComplete="current-password" 
                       />
-                      <label 
-                        htmlFor="confirmPassword" 
-                        className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
+                      <Button 
+                        type="button" 
+                        variant="ghost" 
+                        size="sm" 
+                        className="absolute right-0 top-0 h-12 px-3 hover:bg-transparent" 
+                        onClick={() => setShowPassword(!showPassword)}
                       >
-                        {getText('confirmPassword')}
-                      </label>
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </Button>
                     </div>
+                  </div>
+                )}
+
+                {/* Confirm Password Field - Only for signup */}
+                {mode === 'signup' && password && (
+                  <div className="space-y-3">
+                    <Label htmlFor="confirmPassword" className="text-sm text-muted-foreground">
+                      {getText('confirmPassword')}
+                    </Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type="password" 
+                      value={confirmPassword} 
+                      onChange={e => setConfirmPassword(e.target.value)} 
+                      className="h-12 rounded-lg border-border" 
+                      placeholder={getText('confirmPassword')} 
+                      disabled={loading} 
+                      autoComplete="new-password" 
+                    />
                   </div>
                 )}
 
                 {/* Continue Button */}
                 <Button 
                   type="submit" 
-                  className="w-full h-12" 
-                  disabled={loading}
+                  className="w-full h-12 bg-foreground text-background hover:bg-foreground/90 rounded-lg font-medium" 
+                  disabled={loading || !email.trim()}
                 >
                   {loading ? (
                     mode === 'signin' ? getText('signingIn') : getText('creatingAccount')
                   ) : (
-                    mode === 'signin' ? getText('signIn') : getText('createAccountBtn')
+                    'Continue'
                   )}
                 </Button>
 
@@ -534,9 +523,9 @@ export const Auth: React.FC<AuthProps> = ({
                     <button 
                       type="button" 
                       onClick={switchMode} 
-                      className="text-primary hover:underline"
+                      className="text-primary hover:underline font-medium"
                     >
-                      {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
+                      {mode === 'signin' ? 'Sign up' : 'Log in'}
                     </button>
                   </span>
                 </div>
@@ -544,7 +533,7 @@ export const Auth: React.FC<AuthProps> = ({
                 {/* Divider */}
                 <div className="flex items-center my-6">
                   <div className="flex-1 border-t border-border"></div>
-                  <div className="px-4 text-sm text-muted-foreground">OR</div>
+                  <div className="px-4 text-sm text-muted-foreground font-medium">OR</div>
                   <div className="flex-1 border-t border-border"></div>
                 </div>
 
@@ -553,7 +542,7 @@ export const Auth: React.FC<AuthProps> = ({
                   <Button 
                     type="button" 
                     variant="outline" 
-                    className="w-full h-12 justify-start" 
+                    className="w-full h-12 justify-start rounded-lg border-border" 
                     onClick={() => window.location.href = '/auth/google'}
                   >
                     <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
@@ -568,23 +557,25 @@ export const Auth: React.FC<AuthProps> = ({
                   <Button 
                     type="button" 
                     variant="outline" 
-                    className="w-full h-12 justify-start" 
+                    className="w-full h-12 justify-start rounded-lg border-border" 
+                    onClick={() => window.location.href = '/auth/microsoft'}
+                  >
+                    <svg className="w-4 h-4 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/>
+                    </svg>
+                    Continue with Microsoft Account
+                  </Button>
+
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    className="w-full h-12 justify-start rounded-lg border-border" 
                     onClick={() => window.location.href = '/auth/apple'}
                   >
                     <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                     </svg>
                     {getText('continueWithApple')}
-                  </Button>
-
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    className="w-full h-12 justify-start" 
-                    onClick={() => setShowPhone(!showPhone)}
-                  >
-                    <PhoneIcon className="w-5 h-5 mr-3" />
-                    {getText('continueWithPhone')}
                   </Button>
                 </div>
 
