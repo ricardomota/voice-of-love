@@ -13,6 +13,7 @@ import { EternaHeader } from '@/components/layout/EternaHeader';
 import { EmailConfirmationScreen } from '@/components/EmailConfirmationScreen';
 import { PlanSelectionModal } from '@/components/PlanSelectionModal';
 import { authService } from '@/services/authService';
+import { supabase } from '@/integrations/supabase/client';
 
 type AuthMode = 'signin' | 'signup' | 'email_confirmation';
 
@@ -86,6 +87,7 @@ export const Auth: React.FC<AuthProps> = ({
       // Quick signup
       orContinueWith: 'Ou continuar com',
       continueWithGoogle: 'Continuar com Google',
+      continueWithMicrosoft: 'Continuar com Microsoft',
       continueWithApple: 'Continuar com Apple',
       continueWithPhone: 'Continuar com Telefone',
       phoneNumber: 'Número de telefone',
@@ -145,6 +147,7 @@ export const Auth: React.FC<AuthProps> = ({
       // Quick signup
       orContinueWith: 'Or continue with',
       continueWithGoogle: 'Continue with Google',
+      continueWithMicrosoft: 'Continue with Microsoft',
       continueWithApple: 'Continue with Apple',
       continueWithPhone: 'Continue with Phone',
       phoneNumber: 'Phone number',
@@ -204,6 +207,7 @@ export const Auth: React.FC<AuthProps> = ({
       // Quick signup
       orContinueWith: 'O continúa con',
       continueWithGoogle: 'Continuar con Google',
+      continueWithMicrosoft: 'Continuar con Microsoft',
       continueWithApple: 'Continuar con Apple',
       continueWithPhone: 'Continuar con Teléfono',
       phoneNumber: 'Número de teléfono',
@@ -247,8 +251,15 @@ export const Auth: React.FC<AuthProps> = ({
     }
   }, [urlPlan]);
 
-  // Redirect if already authenticated
+  // Handle OAuth callback and redirect if already authenticated
   useEffect(() => {
+    // Check for plan parameter from OAuth callback
+    const urlParams = new URLSearchParams(window.location.search);
+    const planFromCallback = urlParams.get('plan');
+    if (planFromCallback && planFromCallback !== selectedPlan) {
+      setSelectedPlan(planFromCallback);
+    }
+
     if (user) {
       // Check if user has a selected plan and redirect to checkout
       if (selectedPlan && selectedPlan !== 'free') {
@@ -341,6 +352,42 @@ export const Auth: React.FC<AuthProps> = ({
     } catch (error) {
       console.error('Auth error:', error);
       setError(getText('unexpectedError'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // OAuth handlers
+  const handleOAuthSignIn = async (provider: 'google' | 'azure' | 'apple') => {
+    try {
+      setLoading(true);
+      setError('');
+      
+      const redirectUrl = `${window.location.origin}/auth`;
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: selectedPlan && selectedPlan !== 'free' ? {
+            plan: selectedPlan
+          } : undefined
+        }
+      });
+
+      if (error) {
+        console.error(`${provider} OAuth error:`, error);
+        setError(error.message || `Erro ao fazer login com ${provider}`);
+      } else {
+        // OAuth redirect is handled automatically
+        await analyticsIntegrations.trackEvent('auth_oauth_initiated', {
+          provider: provider,
+          plan: selectedPlan
+        });
+      }
+    } catch (error) {
+      console.error(`${provider} OAuth error:`, error);
+      setError(`Erro inesperado ao fazer login com ${provider}`);
     } finally {
       setLoading(false);
     }
@@ -498,7 +545,8 @@ export const Auth: React.FC<AuthProps> = ({
                 type="button" 
                 variant="outline" 
                 className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
-                onClick={() => window.location.href = '/auth/google'}
+                onClick={() => handleOAuthSignIn('google')}
+                disabled={loading}
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -506,14 +554,15 @@ export const Auth: React.FC<AuthProps> = ({
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                Continue with Google
+                {getText('continueWithGoogle')}
               </Button>
 
               <Button 
                 type="button" 
                 variant="outline" 
                 className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
-                onClick={() => window.location.href = '/auth/microsoft'}
+                onClick={() => handleOAuthSignIn('azure')}
+                disabled={loading}
               >
                 <svg className="w-4 h-4 mr-3" viewBox="0 0 24 24">
                   <path fill="#F25022" d="M11.4 24H0V12.6h11.4V24z"/>
@@ -528,12 +577,13 @@ export const Auth: React.FC<AuthProps> = ({
                 type="button" 
                 variant="outline" 
                 className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
-                onClick={() => window.location.href = '/auth/apple'}
+                onClick={() => handleOAuthSignIn('apple')}
+                disabled={loading}
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                 </svg>
-                Continue with Apple
+                {getText('continueWithApple')}
               </Button>
             </div>
 
