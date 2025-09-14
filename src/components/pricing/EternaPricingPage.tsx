@@ -302,11 +302,13 @@ export function EternaPricingPage() {
                     </ul>
                     
                     <Button 
-                      className="w-full"
+                      className="w-full h-12 px-6 py-3 text-sm font-medium whitespace-nowrap overflow-hidden"
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => handlePlanSelect(plan)}
                     >
-                      {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
+                      <span className="truncate">
+                        {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
+                      </span>
                     </Button>
                   </CardContent>
                 </Card>
@@ -343,10 +345,12 @@ export function EternaPricingPage() {
                       </div>
                       <Button 
                         variant="outline" 
-                        className="w-full"
+                        className="w-full h-10 px-4 py-2 text-sm font-medium whitespace-nowrap overflow-hidden"
                         onClick={() => handlePackSelect(pack)}
                       >
-                        {t('pricing.buyCreditPack', { pack: pack.name[currentLanguage] || pack.name.en })}
+                        <span className="truncate">
+                          {t('pricing.buyCreditPack', { pack: pack.name[currentLanguage] || pack.name.en })}
+                        </span>
                       </Button>
                     </CardContent>
                   </Card>
