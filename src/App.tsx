@@ -5,7 +5,7 @@ import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { ModernHeader } from "@/components/layout/ModernHeader";
 import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
-import { useAuth } from "@/hooks/useOptimizedAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -30,8 +30,6 @@ import { Support } from "./pages/Support";
 import { EternaPricingPage } from "./components/pricing/EternaPricingPage";
 import { Wallet } from "./pages/Wallet";
 import Eterna from "./pages/Eterna";
-import FastLanding from "./pages/FastLanding";
-import SimplePricing from "./pages/SimplePricing";
 
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
@@ -115,7 +113,10 @@ const AppContent = () => {
     <Routes>
       <Route path="/" element={
         !user && !showBetaGate ? (
-          <FastLanding />
+          <LandingPage 
+            onTryFree={handleTryFree}
+            onLogin={handleLogin}
+          />
         ) : (
           <UserLimitGate>
             <div className="min-h-screen bg-background">
@@ -165,7 +166,6 @@ const AppContent = () => {
           </main>
         </div>
       } />
-      <Route path="/simple-pricing" element={<SimplePricing />} />
       <Route path="/wallet" element={
         <div className="min-h-screen bg-background">
           <ModernHeader />

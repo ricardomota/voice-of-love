@@ -127,7 +127,7 @@ export function NewPricingSection({
     onUpgrade?.(plan.code);
   };
   const handleViewFullPricing = () => {
-    navigate('/simple-pricing');
+    navigate('/pricing');
   };
   const formatPrice = (plan: EternaPlan) => {
     const price = currency === 'BRL' ? plan.monthly_price_brl : plan.monthly_price_usd;
