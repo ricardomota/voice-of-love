@@ -439,37 +439,45 @@ export const Auth: React.FC<AuthProps> = ({
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email Field */}
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium">
-                    {getText('emailAddress')}
-                  </Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    value={email} 
-                    onChange={e => setEmail(e.target.value)} 
-                    className="h-12" 
-                    placeholder={getText('enterEmail')} 
-                    disabled={loading} 
-                    autoComplete="email" 
-                  />
+                  <div className="relative">
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      value={email} 
+                      onChange={e => setEmail(e.target.value)} 
+                      className="h-12 pt-6 pb-2 px-3 peer" 
+                      placeholder=" " 
+                      disabled={loading} 
+                      autoComplete="email" 
+                    />
+                    <label 
+                      htmlFor="email" 
+                      className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
+                    >
+                      {getText('emailAddress')}
+                    </label>
+                  </div>
                 </div>
 
                 {/* Password Field */}
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium">
-                    {getText('password')}
-                  </Label>
                   <div className="relative">
                     <Input 
                       id="password" 
                       type={showPassword ? 'text' : 'password'} 
                       value={password} 
                       onChange={e => setPassword(e.target.value)} 
-                      className="h-12 pr-10" 
-                      placeholder={getText('enterPassword')} 
+                      className="h-12 pt-6 pb-2 px-3 pr-10 peer" 
+                      placeholder=" " 
                       disabled={loading} 
                       autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} 
                     />
+                    <label 
+                      htmlFor="password" 
+                      className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
+                    >
+                      {getText('password')}
+                    </label>
                     <Button 
                       type="button" 
                       variant="ghost" 
@@ -485,19 +493,24 @@ export const Auth: React.FC<AuthProps> = ({
                 {/* Confirm Password Field (only for signup) */}
                 {mode === 'signup' && (
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                      {getText('confirmPassword')}
-                    </Label>
-                    <Input 
-                      id="confirmPassword" 
-                      type="password" 
-                      value={confirmPassword} 
-                      onChange={e => setConfirmPassword(e.target.value)} 
-                      className="h-12" 
-                      placeholder={getText('confirmPasswordPlaceholder')} 
-                      disabled={loading} 
-                      autoComplete="new-password" 
-                    />
+                    <div className="relative">
+                      <Input 
+                        id="confirmPassword" 
+                        type="password" 
+                        value={confirmPassword} 
+                        onChange={e => setConfirmPassword(e.target.value)} 
+                        className="h-12 pt-6 pb-2 px-3 peer" 
+                        placeholder=" " 
+                        disabled={loading} 
+                        autoComplete="new-password" 
+                      />
+                      <label 
+                        htmlFor="confirmPassword" 
+                        className="absolute left-3 top-3 text-sm text-muted-foreground transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-primary"
+                      >
+                        {getText('confirmPassword')}
+                      </label>
+                    </div>
                   </div>
                 )}
 
