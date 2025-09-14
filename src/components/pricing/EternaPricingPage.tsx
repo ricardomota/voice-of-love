@@ -225,99 +225,101 @@ export function EternaPricingPage() {
         </motion.div>
 
         {/* Main Plans */}
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {plans.filter(plan => plan.code !== 'free').map((plan, index) => {
-              const isPopular = plan.code === 'family';
-              
-              return (
-                <motion.div
-                  key={plan.code}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="relative"
-                >
-                  {isPopular && (
-                    <Badge className="absolute -top-3 left-6 z-10 bg-primary text-primary-foreground shadow-lg">
-                      {t('pricing.popular')}
-                    </Badge>
-                  )}
-                  
-                  <Card className={`transition-all duration-300 hover:shadow-xl ${
-                    isPopular ? 'border-primary shadow-lg ring-1 ring-primary/20' : 
-                    'border-border hover:border-primary/30'
-                  }`}>
-                    <CardContent className="p-8">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                        
-                        {/* Plan Info */}
-                        <div className="space-y-4">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                            index === 0 ? 'bg-gradient-to-br from-blue-100 to-blue-50' :
-                            'bg-gradient-to-br from-purple-100 to-purple-50'
-                          }`}>
-                            {index === 0 && <Zap className="w-6 h-6 text-blue-600" />}
-                            {index === 1 && <Users className="w-6 h-6 text-purple-600" />}
-                          </div>
-                          
-                          <div>
-                            <h3 className="text-xl font-bold text-foreground mb-2">
-                              {plan.name[currentLanguage] || plan.name.en}
-                            </h3>
-                            <div className="flex items-baseline gap-1">
-                              <span className="text-3xl font-bold text-foreground">
-                                {formatPlanPrice(plan)}
-                              </span>
-                              <span className="text-sm text-muted-foreground">
-                                {t('pricing.perMonth')}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Features */}
-                        <div className="space-y-3">
-                          <ul className="space-y-2">
-                            <li className="flex items-center gap-2 text-sm">
-                              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                              <span>{plan.monthly_credits.toLocaleString()} créditos/mês</span>
-                            </li>
-                            <li className="flex items-center gap-2 text-sm">
-                              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                              <span>{plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz</span>
-                            </li>
-                            <li className="flex items-center gap-2 text-sm">
-                              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                              <span>Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}</span>
-                            </li>
-                            <li className="flex items-center gap-2 text-sm">
-                              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                              <span>{plan.limits.monthly_rollover}% rollover</span>
-                            </li>
-                          </ul>
-                        </div>
-
-                        {/* CTA */}
-                        <div className="flex justify-end">
-                          <Button 
-                            size="lg"
-                            variant={isPopular ? 'default' : 'outline'}
-                            onClick={() => handlePlanSelect(plan)}
-                            className="w-full md:w-auto px-8"
-                          >
-                            {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </div>
-                        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {plans.filter(plan => plan.code !== 'free').map((plan, index) => {
+            const isPopular = plan.code === 'family';
+            const isRecommended = plan.code === 'essential';
+            
+            return (
+              <motion.div
+                key={plan.code}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`relative ${isPopular ? 'md:scale-105' : ''}`}
+              >
+                {isPopular && (
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10 bg-primary text-primary-foreground shadow-lg">
+                    {t('pricing.popular')}
+                  </Badge>
+                )}
+                
+                <Card className={`h-full transition-all duration-300 hover:shadow-xl ${
+                  isPopular ? 'border-primary shadow-lg ring-1 ring-primary/20' : 
+                  'border-border hover:border-primary/30'
+                }`}>
+                  <CardHeader className="text-center space-y-6 pb-8">
+                    <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center ${
+                      index === 0 ? 'bg-gradient-to-br from-green-100 to-green-50' :
+                      index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-50' :
+                      'bg-gradient-to-br from-purple-100 to-purple-50'
+                    }`}>
+                      {index === 0 && <Heart className="w-8 h-8 text-green-600" />}
+                      {index === 1 && <Zap className="w-8 h-8 text-blue-600" />}
+                      {index === 2 && <Users className="w-8 h-8 text-purple-600" />}
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">
+                        {plan.name[currentLanguage] || plan.name.en}
+                      </h3>
+                      <div className="flex items-baseline justify-center gap-1 mb-4">
+                        <span className="text-4xl font-bold text-foreground">
+                          {formatPlanPrice(plan)}
+                        </span>
+                        <span className="text-lg text-muted-foreground">
+                          {t('pricing.perMonth')}
+                        </span>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="px-8 pb-8 space-y-6">
+                    <div className="space-y-4">
+                      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                        {t('pricing.features')}
+                      </p>
+                      <ul className="space-y-3">
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.monthly_credits.toLocaleString()} créditos/mês
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.limits.monthly_rollover}% rollover de créditos
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <Button 
+                      className="w-full h-12"
+                      variant={isPopular ? 'default' : 'outline'}
+                      onClick={() => handlePlanSelect(plan)}
+                    >
+                      {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Credit Packs Section */}
