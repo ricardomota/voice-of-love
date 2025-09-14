@@ -497,7 +497,7 @@ export const Auth: React.FC<AuthProps> = ({
               <Button 
                 type="button" 
                 variant="outline" 
-                className="w-full h-12 justify-start rounded-xl border-border hover:bg-secondary hover:border-primary transition-colors text-base" 
+                className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
                 onClick={() => window.location.href = '/auth/google'}
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
@@ -512,7 +512,7 @@ export const Auth: React.FC<AuthProps> = ({
               <Button 
                 type="button" 
                 variant="outline" 
-                className="w-full h-12 justify-start rounded-xl border-border hover:bg-secondary hover:border-primary transition-colors text-base" 
+                className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
                 onClick={() => window.location.href = '/auth/microsoft'}
               >
                 <svg className="w-4 h-4 mr-3" viewBox="0 0 24 24">
@@ -527,7 +527,7 @@ export const Auth: React.FC<AuthProps> = ({
               <Button 
                 type="button" 
                 variant="outline" 
-                className="w-full h-12 justify-start rounded-xl border-border hover:bg-secondary hover:border-primary transition-colors text-base" 
+                className="w-full h-12 justify-start rounded-xl border-border hover:bg-card hover:border-primary transition-colors text-base text-foreground hover:text-foreground" 
                 onClick={() => window.location.href = '/auth/apple'}
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
