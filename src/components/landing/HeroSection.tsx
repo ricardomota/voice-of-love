@@ -86,10 +86,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <>
       {/* Modern Hero Section - Maurice & Nora Style */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-32 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-40 overflow-hidden">
         
         {/* Minimalist Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/98 to-muted/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/98 to-muted/20" />
         
         {/* Subtle Floating Elements */}
         <motion.div 
@@ -128,14 +128,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.6 }}
             className="mb-8 sm:mb-12"
           >
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/8 border border-primary/15 text-primary font-medium text-sm backdrop-blur-sm">
               ✨ {content.badge}
             </div>
           </motion.div>
 
-          {/* Modern Headline - Improved Typography */}
+          {/* Modern Headline - Better Typography */}
           <motion.h1 
-            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.1] tracking-tight mb-6 sm:mb-8 lg:mb-10 max-w-4xl mx-auto"
+            className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.1] tracking-tight mb-6 sm:mb-8 lg:mb-10 max-w-5xl mx-auto text-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -143,9 +143,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {content.headline}
           </motion.h1>
 
-          {/* Subtitle - Better Proportioned */}
+          {/* Subtitle - Modern Typography */}
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light mb-10 sm:mb-12 lg:mb-16"
+            className="font-inter text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light mb-10 sm:mb-12 lg:mb-16 text-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -153,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {content.subhead}
           </motion.p>
 
-          {/* CTA Buttons - Appropriately Sized */}
+          {/* Modern CTA Buttons */}
           <motion.div 
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 lg:mb-20"
             initial={{ opacity: 0, y: 30 }}
@@ -165,7 +165,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <Button 
                   onClick={isWaitlistMode ? onTryFree : onLogin}
                   size="lg"
-                  className="group px-8 py-4 text-base bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+                  className="group px-8 py-4 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                 >
                   {content.tryFree}
                   <motion.div
@@ -181,7 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   onClick={onSeePricing}
                   variant="outline"
                   size="lg"
-                  className="group px-8 py-4 text-base border-2 border-muted-foreground/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-full"
+                  className="group px-8 py-4 text-base font-medium border-2 border-border/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-xl backdrop-blur-sm"
                 >
                   {content.seePricing}
                   <motion.div
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary font-medium text-sm">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/8 border border-primary/15 text-primary font-medium text-sm backdrop-blur-sm">
               <Security className="w-4 h-4" />
               {content.trustBadge}
             </div>

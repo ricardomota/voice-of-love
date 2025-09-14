@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
-import { EternaHeader } from "@/components/layout/EternaHeader";
+import { ModernHeader } from "@/components/layout/ModernHeader";
 import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
 import { useAuth } from "@/hooks/useAuth";
@@ -119,8 +119,8 @@ const AppContent = () => {
         ) : (
           <UserLimitGate>
             <div className="min-h-screen bg-background">
-              <EternaHeader />
-              <main className="pt-16">
+              <ModernHeader />
+              <main className="pt-24">
                 <LazyIndex />
               </main>
             </div>
@@ -132,8 +132,8 @@ const AppContent = () => {
       <Route path="/app/*" element={
         <UserLimitGate>
           <div className="min-h-screen bg-background">
-            <EternaHeader />
-            <main className="pt-16">
+            <ModernHeader />
+            <main className="pt-24">
               <LazyIndex />
             </main>
           </div>
@@ -159,16 +159,16 @@ const AppContent = () => {
       <Route path="/support" element={<Support />} />
       <Route path="/pricing" element={
         <div className="min-h-screen bg-background">
-          <EternaHeader />
-          <main className="pt-16">
+          <ModernHeader />
+          <main className="pt-24">
             <EternaPricingPage />
           </main>
         </div>
       } />
       <Route path="/wallet" element={
         <div className="min-h-screen bg-background">
-          <EternaHeader />
-          <main className="pt-16">
+          <ModernHeader />
+          <main className="pt-24">
             <Wallet />
           </main>
         </div>

@@ -127,10 +127,10 @@ export const HowItWorksSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 sm:mb-20 lg:mb-24"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
+          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight text-center">
             {content.title}
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="font-inter text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light text-center">
             {content.subtitle}
           </p>
         </motion.div>
@@ -172,11 +172,11 @@ export const HowItWorksSection: React.FC = () => {
                   
                   {/* Content */}
                   <div className="space-y-4">
-                    <h3 className="font-serif text-lg sm:text-xl font-bold text-foreground">
+                    <h3 className="font-playfair text-lg sm:text-xl font-bold text-foreground">
                       {step.title}
                     </h3>
                     
-                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                    <p className="font-inter text-muted-foreground text-sm sm:text-base leading-relaxed">
                       {step.description}
                     </p>
                     

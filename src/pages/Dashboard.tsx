@@ -74,10 +74,10 @@ const Dashboard = memo(({
         <div className="bg-card border border-border rounded-xl p-6 lg:p-8 pt-10 lg:pt-12 mb-8 sm:mb-12 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h1 className="font-serif text-[clamp(1.5rem,3.5vw,2.75rem)] flex items-center gap-4 mb-2 text-foreground leading-tight">
+              <h1 className="font-playfair text-[clamp(1.5rem,3.5vw,2.75rem)] flex items-center gap-4 mb-2 text-foreground leading-tight">
                 {content.title}
               </h1>
-              <p className="text-base lg:text-lg text-muted-foreground">
+              <p className="font-inter text-base lg:text-lg text-muted-foreground">
                 {content.subtitle}
               </p>
             </div>

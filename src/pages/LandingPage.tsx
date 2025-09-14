@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LandingHeader } from '@/components/landing/LandingHeader';
+import { ModernHeader } from '@/components/layout/ModernHeader';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
 
@@ -22,13 +22,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
-      {/* Header */}
-      <LandingHeader
-        onTryFree={onTryFree}
-        onSignIn={onLogin}
-      />
+      {/* Modern Floating Header */}
+      <ModernHeader />
 
-      {/* Hero Section - Enhanced spacing */}
+      {/* Hero Section with modern spacing */}
       <HeroSection 
         onTryFree={onTryFree}
         onSeePricing={scrollToPricing}

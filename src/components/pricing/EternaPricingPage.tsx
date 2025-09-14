@@ -169,14 +169,14 @@ export function EternaPricingPage() {
       {/* Header */}
       <div className="text-center space-y-4">
         <motion.h1 
-          className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          className="font-playfair text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           {t('pricing.title')}
         </motion.h1>
         <motion.p 
-          className="text-lg text-muted-foreground max-w-2xl mx-auto"
+          className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -283,7 +283,7 @@ export function EternaPricingPage() {
 
       {/* One-time Credit Packs */}
       <section className="space-y-8">
-        <h2 className="text-2xl font-semibold text-center">{t('pricing.onetime')}</h2>
+        <h2 className="font-playfair text-2xl font-semibold text-center">{t('pricing.onetime')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {getOnetimePacks().map((pack, index) => (
             <motion.div
@@ -327,7 +327,7 @@ export function EternaPricingPage() {
 
       {/* How Credits Work Section */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-center">Como os Créditos Funcionam</h2>
+        <h2 className="font-playfair text-2xl font-semibold text-center">Como os Créditos Funcionam</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { feature: 'Clone de Voz', cost: '500 créditos', desc: 'Treinamento inicial por clone' },
