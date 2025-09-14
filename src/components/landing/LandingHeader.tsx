@@ -17,19 +17,19 @@ const getContent = (language: string) => {
     en: {
       howItWorks: "How it Works",
       pricing: "Pricing",
-      tryFree: "Try Eterna Free",
+      tryFree: "Get Started",
       signIn: "Sign In"
     },
     'pt-BR': {
       howItWorks: "Como Funciona",
       pricing: "Preços",
-      tryFree: "Testar Grátis", 
+      tryFree: "Começar", 
       signIn: "Entrar"
     },
     es: {
       howItWorks: "Cómo Funciona",
       pricing: "Precios",
-      tryFree: "Probar Gratis",
+      tryFree: "Empezar",
       signIn: "Iniciar Sesión"
     }
   };

@@ -17,7 +17,7 @@ const getContent = (language: string) => {
       badge: "AI-powered memory preservation",
       headline: "Where memories become eternal. ✨",
       subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
-      tryFree: "Try Eterna Free",
+      tryFree: "Get Started",
       seePricing: "See Pricing",
       trustBadge: "Secure & Private by Design",
       altText: "Family sharing warm moments together"
@@ -26,7 +26,7 @@ const getContent = (language: string) => {
       badge: "Preservação de memórias com IA",
       headline: "Onde lembranças se tornam eternas✨",
       subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
-      tryFree: "Testar Grátis",
+      tryFree: "Começar",
       seePricing: "Ver Preços",
       trustBadge: "Seguro e Privado por Design",
       altText: "Família compartilhando momentos especiais"
@@ -35,7 +35,7 @@ const getContent = (language: string) => {
       badge: "Preservación de memorias con IA",
       headline: "Donde los recuerdos se vuelven eternos. ✨",
       subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
-      tryFree: "Probar Gratis",
+      tryFree: "Empezar",
       seePricing: "Ver Precios",
       trustBadge: "Seguro y Privado por Diseño",
       altText: "Familia compartilhando momentos especiales"

@@ -12,19 +12,19 @@ const getContent = (language: string) => {
     en: {
       title: "Ready to hear a memory come alive?",
       subtitle: "Join families worldwide who are preserving the voices they love most.",
-      cta: "Try Eterna Free",
+      cta: "Get Started",
       features: ["No credit card required", "5 messages to start", "1 minute of voice generation"]
     },
     'pt-BR': {
       title: "Pronto para ouvir uma memória ganhar vida?",
       subtitle: "Junte-se a famílias no mundo todo que estão preservando as vozes que mais amam.",
-      cta: "Testar Grátis",
+      cta: "Começar",
       features: ["Não precisa cartão de crédito", "5 mensagens para começar", "1 minuto de geração de voz"]
     },
     es: {
       title: "¿Listo para escuchar un recuerdo cobrar vida?",
       subtitle: "Únete a familias de todo el mundo que están preservando las voces que más aman.",
-      cta: "Probar Gratis",
+      cta: "Empezar",
       features: ["No requiere tarjeta de crédito", "5 mensajes para empezar", "1 minuto de generación de voz"]
     }
   };

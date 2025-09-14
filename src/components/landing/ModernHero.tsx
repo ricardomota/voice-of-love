@@ -15,7 +15,7 @@ const getContent = (language: string) => {
       headline: "Keep Their Voice Forever",
       subheadline: "AI-Powered Memory Preservation",
       description: "Eterna turns cherished memories into living conversations. Preserve your loved one's voice and personality with AI that understands what matters most to families facing memory loss.",
-      tryFree: "Try Eterna Free",
+      tryFree: "Get Started",
       learnMore: "See How It Works",
       features: [
         { text: "Private by Design", icon: Shield },
@@ -27,7 +27,7 @@ const getContent = (language: string) => {
       headline: "Mantenha Sua Voz Para Sempre",
       subheadline: "Preservação de Memória com IA",
       description: "Eterna transforma memórias queridas em conversas vivas. Preserve a voz e personalidade do seu ente querido com IA que entende o que é mais importante para famílias enfrentando perda de memória.",
-      tryFree: "Testar Grátis",
+      tryFree: "Começar",
       learnMore: "Veja Como Funciona",
       features: [
         { text: "Privado por Design", icon: Shield },
@@ -39,7 +39,7 @@ const getContent = (language: string) => {
       headline: "Mantén Su Voz Para Siempre",
       subheadline: "Preservación de Memoria con IA",
       description: "Eterna convierte recuerdos queridos en conversaciones vivas. Preserva la voz y personalidad de tu ser querido con IA que entiende lo que más importa a las familias enfrentando pérdida de memoria.",
-      tryFree: "Probar Gratis",
+      tryFree: "Empezar",
       learnMore: "Ve Cómo Funciona",
       features: [
         { text: "Privado por Diseño", icon: Shield },

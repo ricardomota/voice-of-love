@@ -16,7 +16,7 @@ const getContent = (language: string) => {
       tagline: "Preserving voices, keeping stories alive",
       links: {
         pricing: "Pricing",
-        tryFree: "Try Free",
+        tryFree: "Get Started",
         docs: "Help & FAQ",
         terms: "Terms of Service",
         privacy: "Privacy Policy",
@@ -33,7 +33,7 @@ const getContent = (language: string) => {
       tagline: "Preservando vozes, mantendo histórias vivas",
       links: {
         pricing: "Preços",
-        tryFree: "Testar Grátis",
+        tryFree: "Começar",
         docs: "Ajuda e FAQ",
         terms: "Termos de Serviço",
         privacy: "Política de Privacidade",
@@ -50,7 +50,7 @@ const getContent = (language: string) => {
       tagline: "Preservando voces, manteniendo historias vivas",
       links: {
         pricing: "Precios",
-        tryFree: "Probar Gratis",
+        tryFree: "Empezar",
         docs: "Ayuda y FAQ",
         terms: "Términos de Servicio",
         privacy: "Política de Privacidad",
