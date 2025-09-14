@@ -105,11 +105,6 @@ export function EternaPricingPage() {
   };
 
   const handlePlanSelect = async (plan: EternaPlan) => {
-    if (plan.code === 'free') {
-      navigate('/auth');
-      return;
-    }
-
     if (!user) {
       navigate('/auth?plan=' + plan.code);
       return;
@@ -176,13 +171,11 @@ export function EternaPricingPage() {
   };
 
   const formatPlanPrice = (plan: EternaPlan) => {
-    const price = currency === 'BRL' ? plan.monthly_price_brl : plan.monthly_price_usd;
-    return creditService.formatCurrency(price, currency, locale);
+    return creditService.formatCurrency(plan.monthly_price_usd, 'USD', 'en-US');
   };
 
   const formatPackPrice = (pack: CreditPack) => {
-    const price = currency === 'BRL' ? pack.price_brl : pack.price_usd;
-    return creditService.formatCurrency(price, currency, locale);
+    return creditService.formatCurrency(pack.price_usd, 'USD', 'en-US');
   };
 
   const getOnetimePacks = () => packs.filter(pack => pack.billing_frequency === 'one-time');
@@ -232,8 +225,8 @@ export function EternaPricingPage() {
         </motion.div>
 
         {/* Main Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {plans.filter(plan => plan.code !== 'free').map((plan, index) => {
             const isPopular = plan.code === 'family';
             const isRecommended = plan.code === 'essential';
             
@@ -272,16 +265,11 @@ export function EternaPricingPage() {
                       </h3>
                       <div className="flex items-baseline justify-center gap-1 mb-4">
                         <span className="text-4xl font-bold text-foreground">
-                          {plan.code === 'free' ? 
-                            t('pricing.forever') : 
-                            formatPlanPrice(plan)
-                          }
+                          {formatPlanPrice(plan)}
                         </span>
-                        {plan.code !== 'free' && (
-                          <span className="text-lg text-muted-foreground">
-                            {t('pricing.perMonth')}
-                          </span>
-                        )}
+                        <span className="text-lg text-muted-foreground">
+                          {t('pricing.perMonth')}
+                        </span>
                       </div>
                     </div>
                   </CardHeader>
@@ -295,8 +283,7 @@ export function EternaPricingPage() {
                         <li className="flex items-center gap-3">
                           <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
                           <span className="text-sm">
-                            {plan.monthly_credits.toLocaleString()} créditos
-                            {plan.code !== 'free' ? '/mês' : ' únicos'}
+                            {plan.monthly_credits.toLocaleString()} créditos/mês
                           </span>
                         </li>
                         <li className="flex items-center gap-3">
@@ -325,10 +312,7 @@ export function EternaPricingPage() {
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => handlePlanSelect(plan)}
                     >
-                      {plan.code === 'free' 
-                        ? t('pricing.freeTrial')
-                        : t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })
-                      }
+                      {t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </CardContent>
