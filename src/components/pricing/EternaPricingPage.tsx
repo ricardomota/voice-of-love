@@ -264,13 +264,13 @@ export function EternaPricingPage() {
                 }`}>
                   <CardHeader className="text-center space-y-4 p-6">
                     <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center ${
-                      index === 0 ? 'bg-accent/20' :
-                      index === 1 ? 'bg-primary/20' :
-                      'bg-secondary/20'
+                      index === 0 ? 'bg-accent/30 dark:bg-accent/40' :
+                      index === 1 ? 'bg-primary/30 dark:bg-primary/40' :
+                      'bg-secondary/30 dark:bg-secondary/40'
                     }`}>
-                      {index === 0 && <Heart className="w-6 h-6 text-accent-foreground" />}
-                      {index === 1 && <Zap className="w-6 h-6 text-primary" />}
-                      {index === 2 && <Users className="w-6 h-6 text-secondary-foreground" />}
+                      {index === 0 && <Heart className="w-6 h-6 text-accent-foreground dark:text-accent" />}
+                      {index === 1 && <Zap className="w-6 h-6 text-primary-foreground dark:text-primary" />}
+                      {index === 2 && <Users className="w-6 h-6 text-secondary-foreground dark:text-secondary" />}
                     </div>
                     
                     <div>
