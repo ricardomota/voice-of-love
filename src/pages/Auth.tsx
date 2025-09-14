@@ -418,7 +418,7 @@ export const Auth: React.FC<AuthProps> = ({
             </h1>
           </div>
 
-          <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm">
+          <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-none">
             <CardHeader className="pb-4">
               <CardTitle className="text-center text-lg">
                 {mode === 'signin' ? getText('signIn') : getText('signUp')}
