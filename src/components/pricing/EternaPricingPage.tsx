@@ -264,13 +264,13 @@ export function EternaPricingPage() {
                 }`}>
                   <CardHeader className="text-center space-y-4 p-6">
                     <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center ${
-                      index === 0 ? 'bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/30 dark:to-emerald-800/20' :
-                      index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20' :
-                      'bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20'
+                      index === 0 ? 'bg-accent/20' :
+                      index === 1 ? 'bg-primary/20' :
+                      'bg-secondary/20'
                     }`}>
-                      {index === 0 && <Heart className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />}
-                      {index === 1 && <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
-                      {index === 2 && <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
+                      {index === 0 && <Heart className="w-6 h-6 text-accent-foreground" />}
+                      {index === 1 && <Zap className="w-6 h-6 text-primary" />}
+                      {index === 2 && <Users className="w-6 h-6 text-secondary-foreground" />}
                     </div>
                     
                     <div>
@@ -291,7 +291,7 @@ export function EternaPricingPage() {
                   <CardContent className="px-6 pb-6 space-y-6">
                     <ul className="space-y-3">
                       <li className="flex items-center gap-3">
-                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <Check className="w-4 h-4 text-primary flex-shrink-0" />
                         <span className="text-sm text-foreground">
                           {t('pricing.creditsPerMonth', { 
                             credits: plan.monthly_credits.toLocaleString() 
