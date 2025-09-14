@@ -183,7 +183,7 @@ export function NewPricingSection({
             size="lg"
             className="group px-8 py-6 text-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            Começar Grátis ✨
+            Começar Grátis
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
           
@@ -193,7 +193,7 @@ export function NewPricingSection({
             variant="outline"
             className="group px-8 py-6 text-lg border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
           >
-            Ver Planos Completos ✨
+            Ver Planos Completos
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>

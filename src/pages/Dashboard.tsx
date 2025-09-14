@@ -29,7 +29,7 @@ const getContent = (language: string) => {
     en: {
       title: "✨ Eterna",
       subtitle: "Your eternal people await you 🌟",
-      createButton: "✨ New person",
+      createButton: "New person",
       emptyTitle: "🌟 No eternal person yet",
       emptyDescription: "Start by creating your first eternal person. Preserve precious memories and keep alive the magical connection with those you love! 💫❤️",
       createFirst: "🚀 Create first person"
@@ -37,7 +37,7 @@ const getContent = (language: string) => {
     'pt-BR': {
       title: "✨ Eterna", 
       subtitle: "Suas pessoas eternas aguardam por você 🌟",
-      createButton: "✨ Nova pessoa",
+      createButton: "Nova pessoa",
       emptyTitle: "🌟 Nenhuma pessoa eterna ainda",
       emptyDescription: "Comece criando sua primeira pessoa eterna. Preserve memórias preciosas e mantenha viva a conexão mágica com quem você ama! 💫❤️",
       createFirst: "🚀 Criar primeira pessoa"
@@ -45,7 +45,7 @@ const getContent = (language: string) => {
     es: {
       title: "✨ Eterna",
       subtitle: "Tus personas eternas te esperan 🌟", 
-      createButton: "✨ Nueva persona",
+      createButton: "Nueva persona",
       emptyTitle: "🌟 Aún no hay personas eternas",
       emptyDescription: "Comienza creando tu primera persona eterna. ¡Preserva recuerdos preciosos y mantén viva la conexión mágica con quienes amas! 💫❤️",
       createFirst: "🚀 Crear primera persona"

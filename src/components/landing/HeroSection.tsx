@@ -167,7 +167,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   size="lg"
                   className="group px-8 py-4 text-base bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
                 >
-                  {content.tryFree} ✨
+                  {content.tryFree}
                   <motion.div
                     className="ml-3"
                     animate={{ x: [0, 4, 0] }}
@@ -183,7 +183,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   size="lg"
                   className="group px-8 py-4 text-base border-2 border-muted-foreground/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-full"
                 >
-                  {content.seePricing} ✨
+                  {content.seePricing}
                   <motion.div
                     className="ml-3"
                     animate={{ x: [0, 4, 0] }}

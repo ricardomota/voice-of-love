@@ -275,7 +275,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
           <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
             <div className="text-center mb-8">
               <h2 className="font-serif text-[clamp(1.25rem,3vw,2rem)] text-foreground mb-4 leading-tight">
-                {currentLanguage === 'en' ? "Let's start! ✨" : "Vamos começar! ✨"}
+                {currentLanguage === 'en' ? "Let's start!" : "Vamos começar!"}
               </h2>
               <p className="text-lg text-muted-foreground">
                 {currentLanguage === 'en' ? "What is the name of this special person?" : "Qual o nome desta pessoa especial?"}
@@ -817,7 +817,7 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             onBack={handleBack}
             canNext={canProceed(currentStep)}
             isLast={true}
-            nextText={person ? "✨ Atualizar pessoa" : "🎉 Criar pessoa"}
+            nextText={person ? "Atualizar pessoa" : "Criar pessoa"}
           >
             <ArrayField
               values={formData.commonPhrases}
