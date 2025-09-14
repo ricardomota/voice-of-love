@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import { CreditCounter } from '@/components/ui/credit-counter';
-import { creditService, type CreditPack } from '@/services/creditService';
+import { creditService, type EternaPlan, type CreditPack } from '@/services/creditService';
+import { Check, Zap, Users, Heart, ArrowRight } from 'lucide-react';
 
 export function EternaPricingPage() {
   const { currentLanguage } = useLanguage();
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [plans, setPlans] = useState<EternaPlan[]>([]);
   const [packs, setPacks] = useState<CreditPack[]>([]);
   const [loading, setLoading] = useState(true);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
   const currency = creditService.getCurrencyForLocale(currentLanguage);
   const locale = currentLanguage === 'pt-BR' ? 'pt-BR' : currentLanguage === 'es' ? 'es-ES' : 'en-US';
@@ -25,7 +27,11 @@ export function EternaPricingPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const packsData = await creditService.getCreditPacks();
+        const [plansData, packsData] = await Promise.all([
+          creditService.getPlans(),
+          creditService.getCreditPacks()
+        ]);
+        setPlans(plansData);
         setPacks(packsData);
       } catch (error) {
         console.error('Error fetching pricing data:', error);
@@ -44,54 +50,45 @@ export function EternaPricingPage() {
   const t = (key: string, params?: Record<string, any>) => {
     const translations: Record<string, Record<string, string>> = {
       'en': {
-        'pricing.title': 'Credit Pricing',
-        'pricing.subtitle': 'Pay only for what you use. Simple, transparent credits with monthly and yearly options.',
-        'pricing.onetime': 'One-time Purchase',
-        'pricing.monthly': 'Monthly Subscription',
-        'pricing.yearly': 'Yearly Subscription',
-        'pricing.yearlyDiscount': 'Save 20% annually',
-        'pricing.selectPack': 'Buy {pack}',
-        'pricing.bestValue': 'Best value',
-        'pricing.mostPopular': 'Most popular',
-        'pricing.creditUnit': 'credits',
+        'pricing.title': 'Simple, transparent pricing',
+        'pricing.subtitle': 'Choose the plan that fits your needs. Start free, upgrade anytime.',
+        'pricing.freeTrial': 'Start free trial',
+        'pricing.choosePlan': 'Choose {plan}',
+        'pricing.popular': 'Most popular',
+        'pricing.forever': 'Forever',
         'pricing.perMonth': '/month',
-        'pricing.perYear': '/year',
-        'pricing.billedMonthly': 'Billed monthly',
-        'pricing.billedYearly': 'Billed yearly (save 20%)',
+        'pricing.features': 'What\'s included:',
+        'pricing.creditPacks': 'Need more credits?',
+        'pricing.creditPacksDesc': 'Purchase additional credits when you need them',
+        'pricing.buyCreditPack': 'Buy {pack}',
         'errors.generic': 'Something went wrong. Please try again.'
       },
       'pt-BR': {
-        'pricing.title': 'Preços de Créditos',
-        'pricing.subtitle': 'Pague apenas pelo uso. Créditos simples e transparentes com opções mensais e anuais.',
-        'pricing.onetime': 'Compra Única',
-        'pricing.monthly': 'Assinatura Mensal',
-        'pricing.yearly': 'Assinatura Anual',
-        'pricing.yearlyDiscount': 'Economize 20% anualmente',
-        'pricing.selectPack': 'Comprar {pack}',
-        'pricing.bestValue': 'Melhor oferta',
-        'pricing.mostPopular': 'Mais popular',
-        'pricing.creditUnit': 'créditos',
+        'pricing.title': 'Preços simples e transparentes',
+        'pricing.subtitle': 'Escolha o plano que atende suas necessidades. Comece grátis, faça upgrade quando quiser.',
+        'pricing.freeTrial': 'Começar teste grátis',
+        'pricing.choosePlan': 'Escolher {plan}',
+        'pricing.popular': 'Mais popular',
+        'pricing.forever': 'Para sempre',
         'pricing.perMonth': '/mês',
-        'pricing.perYear': '/ano',
-        'pricing.billedMonthly': 'Cobrança mensal',
-        'pricing.billedYearly': 'Cobrança anual (economize 20%)',
+        'pricing.features': 'O que está incluído:',
+        'pricing.creditPacks': 'Precisa de mais créditos?',
+        'pricing.creditPacksDesc': 'Compre créditos adicionais quando precisar',
+        'pricing.buyCreditPack': 'Comprar {pack}',
         'errors.generic': 'Algo deu errado. Tente novamente.'
       },
       'es': {
-        'pricing.title': 'Precios de Créditos',
-        'pricing.subtitle': 'Paga solo por lo que usas. Créditos simples y transparentes con opciones mensuales y anuales.',
-        'pricing.onetime': 'Compra Única',
-        'pricing.monthly': 'Suscripción Mensual',
-        'pricing.yearly': 'Suscripción Anual',
-        'pricing.yearlyDiscount': 'Ahorra 20% anualmente',
-        'pricing.selectPack': 'Comprar {pack}',
-        'pricing.bestValue': 'Mejor valor',
-        'pricing.mostPopular': 'Más popular',
-        'pricing.creditUnit': 'créditos',
+        'pricing.title': 'Precios simples y transparentes',
+        'pricing.subtitle': 'Elige el plan que se adapte a tus necesidades. Comienza gratis, actualiza cuando quieras.',
+        'pricing.freeTrial': 'Comenzar prueba gratis',
+        'pricing.choosePlan': 'Elegir {plan}',
+        'pricing.popular': 'Más popular',
+        'pricing.forever': 'Para siempre',
         'pricing.perMonth': '/mes',
-        'pricing.perYear': '/año',
-        'pricing.billedMonthly': 'Facturación mensual',
-        'pricing.billedYearly': 'Facturación anual (ahorra 20%)',
+        'pricing.features': 'Qué incluye:',
+        'pricing.creditPacks': '¿Necesitas más créditos?',
+        'pricing.creditPacksDesc': 'Compra créditos adicionales cuando los necesites',
+        'pricing.buyCreditPack': 'Comprar {pack}',
         'errors.generic': 'Algo salió mal. Inténtalo de nuevo.'
       }
     };
@@ -107,33 +104,80 @@ export function EternaPricingPage() {
     return text;
   };
 
+  const handlePlanSelect = async (plan: EternaPlan) => {
+    if (plan.code === 'free') {
+      navigate('/auth');
+      return;
+    }
+
+    if (!user) {
+      navigate('/auth?plan=' + plan.code);
+      return;
+    }
+
+    try {
+      const result = await creditService.createCheckoutSession(
+        'plan',
+        plan.code,
+        `${window.location.origin}/payment/success`,
+        `${window.location.origin}/pricing`
+      );
+
+      if (result.error) {
+        toast({
+          title: result.error,
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      if (result.url) {
+        window.location.href = result.url;
+      }
+    } catch (error) {
+      toast({
+        title: t('errors.generic'),
+        variant: 'destructive'
+      });
+    }
+  };
+
   const handlePackSelect = async (pack: CreditPack) => {
     if (!user) {
-      toast({
-        title: 'Please sign in to continue',
-        variant: 'destructive'
-      });
+      navigate('/auth');
       return;
     }
 
-    const result = await creditService.createCheckoutSession(
-      'pack',
-      pack.sku,
-      `${window.location.origin}/checkout/success`,
-      `${window.location.origin}/pricing`
-    );
+    try {
+      const result = await creditService.createCheckoutSession(
+        'pack',
+        pack.sku,
+        `${window.location.origin}/payment/success`,
+        `${window.location.origin}/pricing`
+      );
 
-    if (result.error) {
+      if (result.error) {
+        toast({
+          title: result.error,
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      if (result.url) {
+        window.location.href = result.url;
+      }
+    } catch (error) {
       toast({
-        title: result.error,
+        title: t('errors.generic'),
         variant: 'destructive'
       });
-      return;
     }
+  };
 
-    if (result.url) {
-      window.open(result.url, '_blank');
-    }
+  const formatPlanPrice = (plan: EternaPlan) => {
+    const price = currency === 'BRL' ? plan.monthly_price_brl : plan.monthly_price_usd;
+    return creditService.formatCurrency(price, currency, locale);
   };
 
   const formatPackPrice = (pack: CreditPack) => {
@@ -141,23 +185,22 @@ export function EternaPricingPage() {
     return creditService.formatCurrency(price, currency, locale);
   };
 
-  const getFilteredPacks = (frequency: string) => {
-    return packs.filter(pack => pack.billing_frequency === frequency);
-  };
-
-  const getMonthlyPacks = () => getFilteredPacks('monthly');
-  const getYearlyPacks = () => getFilteredPacks('yearly');
-  const getOnetimePacks = () => getFilteredPacks('one-time');
+  const getOnetimePacks = () => packs.filter(pack => pack.billing_frequency === 'one-time');
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="animate-pulse space-y-8">
-          <div className="h-8 bg-muted rounded w-1/3 mx-auto"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-96 bg-muted rounded-lg"></div>
-            ))}
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90">
+        <div className="container mx-auto px-4 py-16">
+          <div className="animate-pulse space-y-12">
+            <div className="text-center space-y-4">
+              <div className="h-12 bg-muted rounded w-2/3 mx-auto"></div>
+              <div className="h-6 bg-muted rounded w-1/2 mx-auto"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-96 bg-muted rounded-xl"></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -165,113 +208,128 @@ export function EternaPricingPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 space-y-12">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <motion.h1 
-          className="font-playfair text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90">
+      <div className="container mx-auto px-4 py-16">
+        {/* Header */}
+        <motion.div 
+          className="text-center max-w-3xl mx-auto mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          {t('pricing.title')}
-        </motion.h1>
-        <motion.p 
-          className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          {t('pricing.subtitle')}
-        </motion.p>
-        
-        {/* Credit Counter for logged in users */}
-        {user && (
-          <motion.div 
-            className="flex justify-center mt-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <CreditCounter showDetails />
-          </motion.div>
-        )}
-      </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            {t('pricing.title')}
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            {t('pricing.subtitle')}
+          </p>
+          
+          {/* Credit Counter for logged in users */}
+          {user && (
+            <div className="flex justify-center mt-8">
+              <CreditCounter showDetails />
+            </div>
+          )}
+        </motion.div>
 
-      {/* Subscription Plans with Monthly/Yearly Toggle */}
-      <section className="space-y-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-6">Subscription Plans</h2>
-          <div className="inline-flex items-center p-1 bg-muted rounded-lg">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2 rounded-md transition-all ${
-                billingCycle === 'monthly'
-                  ? 'bg-background shadow-sm text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {t('pricing.billedMonthly')}
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={`px-6 py-2 rounded-md transition-all relative ${
-                billingCycle === 'yearly'
-                  ? 'bg-background shadow-sm text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {t('pricing.billedYearly')}
-              <Badge className="absolute -top-2 -right-2 bg-green-500 text-white text-xs">
-                -20%
-              </Badge>
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {(billingCycle === 'monthly' ? getMonthlyPacks() : getYearlyPacks()).map((pack, index) => {
-            const isRecommended = pack.best_value;
+        {/* Main Plans */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => {
+            const isPopular = plan.code === 'family';
+            const isRecommended = plan.code === 'essential';
+            
             return (
               <motion.div
-                key={pack.sku}
+                key={plan.code}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`relative ${isRecommended ? 'scale-105' : ''}`}
+                className={`relative ${isPopular ? 'md:scale-105' : ''}`}
               >
-                {isRecommended && (
-                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
-                    {t('pricing.mostPopular')}
+                {isPopular && (
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10 bg-primary text-primary-foreground shadow-lg">
+                    {t('pricing.popular')}
                   </Badge>
                 )}
-                <Card className={`h-full ${isRecommended ? 'border-primary shadow-lg' : ''}`}>
-                  <CardHeader className="text-center">
-                    <CardTitle className="text-xl">
-                      {pack.name[currentLanguage] || pack.name.en}
-                    </CardTitle>
-                    <div className="text-3xl font-bold">
-                      {formatPackPrice(pack)}
-                      <span className="text-sm font-normal text-muted-foreground">
-                        {billingCycle === 'monthly' ? t('pricing.perMonth') : t('pricing.perYear')}
-                      </span>
+                
+                <Card className={`h-full transition-all duration-300 hover:shadow-xl ${
+                  isPopular ? 'border-primary shadow-lg ring-1 ring-primary/20' : 
+                  'border-border hover:border-primary/30'
+                }`}>
+                  <CardHeader className="text-center space-y-6 pb-8">
+                    <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center ${
+                      index === 0 ? 'bg-gradient-to-br from-green-100 to-green-50' :
+                      index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-50' :
+                      'bg-gradient-to-br from-purple-100 to-purple-50'
+                    }`}>
+                      {index === 0 && <Heart className="w-8 h-8 text-green-600" />}
+                      {index === 1 && <Zap className="w-8 h-8 text-blue-600" />}
+                      {index === 2 && <Users className="w-8 h-8 text-purple-600" />}
                     </div>
-                    <div className="text-lg text-muted-foreground">
-                      {pack.credits.toLocaleString()} {t('pricing.creditUnit')}
-                      {billingCycle === 'monthly' ? t('pricing.perMonth') : t('pricing.perYear')}
-                    </div>
-                    {billingCycle === 'yearly' && (
-                      <div className="text-sm text-green-600 font-medium">
-                        {t('pricing.yearlyDiscount')}
+                    
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">
+                        {plan.name[currentLanguage] || plan.name.en}
+                      </h3>
+                      <div className="flex items-baseline justify-center gap-1 mb-4">
+                        <span className="text-4xl font-bold text-foreground">
+                          {plan.code === 'free' ? 
+                            t('pricing.forever') : 
+                            formatPlanPrice(plan)
+                          }
+                        </span>
+                        {plan.code !== 'free' && (
+                          <span className="text-lg text-muted-foreground">
+                            {t('pricing.perMonth')}
+                          </span>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  
+                  <CardContent className="px-8 pb-8 space-y-6">
+                    <div className="space-y-4">
+                      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                        {t('pricing.features')}
+                      </p>
+                      <ul className="space-y-3">
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.monthly_credits.toLocaleString()} créditos
+                            {plan.code !== 'free' ? '/mês' : ' únicos'}
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">
+                            {plan.limits.monthly_rollover}% rollover de créditos
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    
                     <Button 
-                      className="w-full" 
-                      variant={isRecommended ? 'default' : 'outline'}
-                      onClick={() => handlePackSelect(pack)}
+                      className="w-full h-12"
+                      variant={isPopular ? 'default' : 'outline'}
+                      onClick={() => handlePlanSelect(plan)}
                     >
-                      {t('pricing.selectPack', { pack: pack.name[currentLanguage] || pack.name.en })}
+                      {plan.code === 'free' 
+                        ? t('pricing.freeTrial')
+                        : t('pricing.choosePlan', { plan: plan.name[currentLanguage] || plan.name.en })
+                      }
+                      <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </CardContent>
                 </Card>
@@ -279,72 +337,49 @@ export function EternaPricingPage() {
             );
           })}
         </div>
-      </section>
 
-      {/* One-time Credit Packs */}
-      <section className="space-y-8">
-        <h2 className="font-playfair text-2xl font-semibold text-center">{t('pricing.onetime')}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {getOnetimePacks().map((pack, index) => (
-            <motion.div
-              key={pack.sku}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="relative"
-            >
-              {pack.best_value && (
-                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent text-accent-foreground">
-                  {t('pricing.bestValue')}
-                </Badge>
-              )}
-              <Card className={`h-full ${pack.best_value ? 'border-accent' : ''}`}>
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg">
-                    {pack.name[currentLanguage] || pack.name.en}
-                  </CardTitle>
-                  <div className="text-2xl font-bold">
-                    {formatPackPrice(pack)}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {pack.credits.toLocaleString()} {t('pricing.creditUnit')}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    className="w-full" 
-                    variant={pack.best_value ? 'default' : 'outline'}
-                    onClick={() => handlePackSelect(pack)}
-                  >
-                    {t('pricing.selectPack', { pack: pack.name[currentLanguage] || pack.name.en })}
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+        {/* Credit Packs Section */}
+        {getOnetimePacks().length > 0 && (
+          <motion.div 
+            className="mt-20 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                {t('pricing.creditPacks')}
+              </h2>
+              <p className="text-lg text-muted-foreground mb-12">
+                {t('pricing.creditPacksDesc')}
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {getOnetimePacks().map((pack, index) => (
+                  <Card key={pack.sku} className="border-border hover:border-primary/30 transition-all">
+                    <CardContent className="p-6 text-center">
+                      <div className="text-2xl font-bold text-foreground mb-2">
+                        {formatPackPrice(pack)}
+                      </div>
+                      <div className="text-muted-foreground mb-4">
+                        {pack.credits.toLocaleString()} créditos
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        onClick={() => handlePackSelect(pack)}
+                      >
+                        {t('pricing.buyCreditPack', { pack: pack.name[currentLanguage] || pack.name.en })}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
 
-      {/* How Credits Work Section */}
-      <section className="space-y-6">
-        <h2 className="font-playfair text-2xl font-semibold text-center">Como os Créditos Funcionam</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { feature: 'Clone de Voz', cost: '500 créditos', desc: 'Treinamento inicial por clone' },
-            { feature: 'Geração TTS', cost: '1 crédito', desc: 'Por 5 segundos de áudio' },
-            { feature: 'Chat', cost: '1 crédito', desc: 'Por 750 tokens (~500 palavras)' },
-            { feature: 'Transcrição', cost: '2 créditos', desc: 'Por minuto de áudio' }
-          ].map((item, index) => (
-            <Card key={index} className="text-center">
-              <CardContent className="pt-6">
-                <div className="font-medium">{item.feature}</div>
-                <div className="text-2xl font-bold text-primary my-2">{item.cost}</div>
-                <div className="text-sm text-muted-foreground">{item.desc}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+      </div>
     </div>
   );
 }
