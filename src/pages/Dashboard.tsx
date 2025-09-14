@@ -2,6 +2,7 @@ import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/PersonCard";
 import { UsageBar } from "@/components/ui/usage-bar";
+import { CreditCounter } from "@/components/ui/credit-counter";
 import { Add, Favorite } from "@mui/icons-material";
 import { Person } from "@/types/person";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -87,7 +88,12 @@ const Dashboard = memo(({
             </Button>
           </div>
           
-          {/* Usage Tracking */}
+          {/* Credit Counter */}
+          <div className="mt-6">
+            <CreditCounter showDetails className="w-full max-w-sm" />
+          </div>
+          
+          {/* Usage Tracking (Legacy - keeping for now) */}
           {usage && onUpgrade && <UsageBar messagesUsed={usage.messagesUsed} messagesLimit={usage.messagesLimit} ttsUsed={usage.ttsUsed} ttsLimit={usage.ttsLimit} onUpgrade={onUpgrade} className="mt-6" />}
         </div>
 

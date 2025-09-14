@@ -47,6 +47,8 @@ export interface CreditPack {
   price_usd: number;
   price_brl: number;
   best_value: boolean;
+  billing_frequency: 'one-time' | 'monthly' | 'yearly';
+  yearly_discount_pct: number;
 }
 
 export interface FeaturePricing {

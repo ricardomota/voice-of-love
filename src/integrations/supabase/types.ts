@@ -365,6 +365,7 @@ export type Database = {
       credit_packs: {
         Row: {
           best_value: boolean
+          billing_frequency: string
           created_at: string
           credits: number
           name: Json
@@ -372,9 +373,11 @@ export type Database = {
           price_usd: number
           sku: string
           updated_at: string
+          yearly_discount_pct: number | null
         }
         Insert: {
           best_value?: boolean
+          billing_frequency?: string
           created_at?: string
           credits: number
           name: Json
@@ -382,9 +385,11 @@ export type Database = {
           price_usd: number
           sku: string
           updated_at?: string
+          yearly_discount_pct?: number | null
         }
         Update: {
           best_value?: boolean
+          billing_frequency?: string
           created_at?: string
           credits?: number
           name?: Json
@@ -392,6 +397,7 @@ export type Database = {
           price_usd?: number
           sku?: string
           updated_at?: string
+          yearly_discount_pct?: number | null
         }
         Relationships: []
       }
