@@ -118,23 +118,17 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="Voltar à página inicial">
+          <Link to="/" className="flex items-center group" aria-label="Voltar à página inicial">
             <motion.img 
               src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
               alt="Eterna Logo" 
-              className="h-8 w-auto transition-transform duration-200 group-hover:scale-105"
+              className="h-6 w-auto transition-transform duration-200 group-hover:scale-105"
               whileHover={{ scale: 1.05 }}
             />
-            <motion.span 
-              className="font-playfair text-xl font-semibold text-foreground hidden sm:block"
-              whileHover={{ scale: 1.02 }}
-            >
-              Eterna
-            </motion.span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-4">
             {/* Credit Counter for logged in users */}
             {user && (
               <motion.div
