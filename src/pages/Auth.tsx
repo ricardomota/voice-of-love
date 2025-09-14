@@ -388,26 +388,34 @@ export const Auth: React.FC<AuthProps> = ({
       {/* Show header if user is logged in */}
       {user && <EternaHeader />}
       
-      <div className={`min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4 ${user ? 'pt-20' : ''}`}>
-      <div className="w-full max-w-md">
-        <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5
-        }}>
-          {/* Logo and Title */}
-          <div className="text-center mb-8">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col justify-center items-center p-4">
+        {/* Back to Home Button - positioned at top */}
+        <div className="w-full max-w-md mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => window.location.href = '/'}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {getText('backToHome')}
+          </Button>
+        </div>
+
+        <div className="w-full max-w-md">
+          <motion.div initial={{
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.5
+          }}>
+            {/* Logo and Title */}
+            <div className="text-center mb-12">
             
-            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+            <h1 className="text-3xl font-bold mb-3">
               {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
             </h1>
-            <p className="text-muted-foreground">
-              {mode === 'signin' ? getText('signInToAccess') : getText('startPreserving')}
-            </p>
           </div>
 
           <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm">
@@ -417,17 +425,23 @@ export const Auth: React.FC<AuthProps> = ({
               </CardTitle>
             </CardHeader>
             
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
+            <CardContent className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email Field */}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-sm font-medium">
                     {getText('emailAddress')}
                   </Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="pl-10 h-11" placeholder={getText('enterEmail')} disabled={loading} autoComplete="email" />
-                  </div>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)} 
+                    className="h-12" 
+                    placeholder={getText('enterEmail')} 
+                    disabled={loading} 
+                    autoComplete="email" 
+                  />
                 </div>
 
                 {/* Password Field */}
