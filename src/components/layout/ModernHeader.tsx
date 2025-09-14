@@ -36,7 +36,7 @@ const getContent = (language: string) => {
       howItWorks: "How it Works",
       pricing: "Pricing",
       signIn: "Sign In",
-      startFree: "Start Free"
+      startFree: "Get Started"
     },
     'pt-BR': {
       account: "Conta",
@@ -49,7 +49,7 @@ const getContent = (language: string) => {
       howItWorks: "Como Funciona",
       pricing: "Preços",
       signIn: "Entrar", 
-      startFree: "Começar Grátis"
+      startFree: "Começar"
     },
     es: {
       account: "Cuenta",
@@ -62,7 +62,7 @@ const getContent = (language: string) => {
       howItWorks: "Cómo Funciona",
       pricing: "Precios",
       signIn: "Iniciar Sesión",
-      startFree: "Comenzar Gratis"
+      startFree: "Empezar"
     }
   };
 
