@@ -31,23 +31,27 @@ export const FloatingInput: React.FC<FloatingInputProps> = ({
 
   return (
     <div className="relative">
-      <Input
+      <input
         {...inputProps}
         id={id}
         type={type}
         value={value}
         onChange={onChange}
-        className={`h-14 w-full rounded-full border-2 border-gray-300 px-4 pt-6 pb-2 text-base bg-white focus:border-blue-500 focus:outline-none transition-all duration-200 ${className}`}
+        className={`h-14 w-full rounded-full border-2 px-4 text-base bg-background transition-all duration-200 focus:outline-none ${
+          isFloating 
+            ? 'border-primary pt-6 pb-2' 
+            : 'border-border pt-4 pb-4'
+        } ${className}`}
         placeholder=" "
         disabled={disabled}
         autoComplete={autoComplete}
       />
       <label
         htmlFor={id}
-        className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+        className={`absolute left-4 transition-all duration-200 pointer-events-none select-none ${
           isFloating
-            ? 'top-2 text-xs text-blue-500 font-medium'
-            : 'top-1/2 -translate-y-1/2 text-base text-gray-500'
+            ? 'top-2 text-xs text-primary font-medium'
+            : 'top-1/2 -translate-y-1/2 text-base text-muted-foreground'
         }`}
       >
         {label}

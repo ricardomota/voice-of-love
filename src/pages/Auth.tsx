@@ -453,7 +453,7 @@ export const Auth: React.FC<AuthProps> = ({
                     type="button" 
                     variant="ghost" 
                     size="sm" 
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-gray-100 rounded-full" 
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted rounded-full text-muted-foreground hover:text-foreground" 
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
