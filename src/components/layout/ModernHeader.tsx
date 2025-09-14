@@ -159,7 +159,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             {/* Navigation Links for non-logged users */}
             {!user && (
               <>
