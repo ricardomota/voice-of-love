@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { useLanguage, type Language as LanguageType } from '@/hooks/useLanguage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ProfileModal } from '@/components/ProfileModal';
 import { CreditCounter } from '@/components/ui/credit-counter';
@@ -77,6 +77,8 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   const { currentLanguage, setLanguage } = useLanguage();
   const content = getContent(currentLanguage);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -116,6 +118,23 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleHowItWorksClick = () => {
+    if (location.pathname === '/') {
+      const element = document.getElementById('how-it-works');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/#how-it-works');
+    }
+  };
+
+  const handlePricingClick = () => {
+    navigate('/pricing');
+  };
+
+  const handleStartFreeClick = () => {
+    navigate('/auth');
+  };
+
   return (
     <>
       <motion.header 
@@ -146,19 +165,13 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
               <>
                 <nav className="hidden md:flex items-center gap-6">
                   <button 
-                    onClick={() => {
-                      const element = document.getElementById('how-it-works');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={handleHowItWorksClick}
                     className="text-foreground/80 hover:text-foreground transition-colors font-medium"
                   >
                     {content.howItWorks}
                   </button>
                   <button 
-                    onClick={() => {
-                      const element = document.getElementById('pricing');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={handlePricingClick}
                     className="text-foreground/80 hover:text-foreground transition-colors font-medium"
                   >
                     {content.pricing}
@@ -172,10 +185,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                 </nav>
                 
                 <Button 
-                  onClick={() => {
-                    const element = document.getElementById('pricing');
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
+                  onClick={handleStartFreeClick}
                   className="hidden md:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground px-6"
                 >
                   {content.startFree}
