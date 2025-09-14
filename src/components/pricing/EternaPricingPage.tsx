@@ -345,37 +345,36 @@ export function EternaPricingPage() {
         {/* Credit Packs Section */}
         {getOnetimePacks().length > 0 && (
           <motion.div 
-            className="mt-20 text-center"
+            className="mt-16 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
                 {t('pricing.creditPacks')}
               </h2>
-              <p className="text-lg text-muted-foreground mb-12">
+              <p className="text-muted-foreground mb-8">
                 {t('pricing.creditPacksDesc')}
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                 {getOnetimePacks().map((pack, index) => (
                   <Card key={pack.sku} className="border-border hover:border-primary/30 transition-all">
-                    <CardContent className="p-6 text-center">
-                      <div className="text-2xl font-bold text-foreground mb-2">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-lg font-bold text-foreground mb-1">
                         {formatPackPrice(pack)}
                       </div>
-                      <div className="text-muted-foreground mb-4">
+                      <div className="text-sm text-muted-foreground mb-3">
                         {pack.credits.toLocaleString()} {t('pricing.credits')}
                       </div>
                       <Button 
                         variant="outline" 
-                        className="w-full h-10 px-4 py-2 text-sm font-medium whitespace-nowrap overflow-hidden"
+                        size="sm"
+                        className="w-full h-8 px-3 text-xs font-medium"
                         onClick={() => handlePackSelect(pack)}
                       >
-                        <span className="truncate">
-                          {t('pricing.buyCreditPack', { pack: pack.name[currentLanguage] || pack.name.en })}
-                        </span>
+                        {t('pricing.buyCreditPack', { pack: pack.name[currentLanguage] || pack.name.en })}
                       </Button>
                     </CardContent>
                   </Card>
