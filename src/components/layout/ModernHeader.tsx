@@ -32,7 +32,11 @@ const getContent = (language: string) => {
       help: "Help & Support",
       language: "Language",
       signOut: "Sign out",
-      menu: "Menu"
+      menu: "Menu",
+      howItWorks: "How it Works",
+      pricing: "Pricing",
+      signIn: "Sign In",
+      startFree: "Start Free"
     },
     'pt-BR': {
       account: "Conta",
@@ -41,7 +45,11 @@ const getContent = (language: string) => {
       help: "Ajuda e Suporte",
       language: "Idioma",
       signOut: "Sair",
-      menu: "Menu"
+      menu: "Menu",
+      howItWorks: "Como Funciona",
+      pricing: "Preços",
+      signIn: "Entrar", 
+      startFree: "Começar Grátis"
     },
     es: {
       account: "Cuenta",
@@ -50,7 +58,11 @@ const getContent = (language: string) => {
       help: "Ayuda y Soporte",
       language: "Idioma",
       signOut: "Cerrar sesión",
-      menu: "Menú"
+      menu: "Menú",
+      howItWorks: "Cómo Funciona",
+      pricing: "Precios",
+      signIn: "Iniciar Sesión",
+      startFree: "Comenzar Gratis"
     }
   };
 
@@ -140,7 +152,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                     }}
                     className="text-foreground/80 hover:text-foreground transition-colors font-medium"
                   >
-                    Como Funciona
+                    {content.howItWorks}
                   </button>
                   <button 
                     onClick={() => {
@@ -149,13 +161,13 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                     }}
                     className="text-foreground/80 hover:text-foreground transition-colors font-medium"
                   >
-                    Preços
+                    {content.pricing}
                   </button>
                   <Link 
                     to="/auth"
                     className="text-foreground/80 hover:text-foreground transition-colors font-medium"
                   >
-                    Entrar
+                    {content.signIn}
                   </Link>
                 </nav>
                 
@@ -166,7 +178,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                   }}
                   className="hidden md:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground px-6"
                 >
-                  Começar Grátis
+                  {content.startFree}
                 </Button>
               </>
             )}
