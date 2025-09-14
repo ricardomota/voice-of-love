@@ -1782,6 +1782,19 @@ export type Database = {
         Args: { "": string } | { "": unknown } | { "": unknown }
         Returns: unknown
       }
+      match_chunks: {
+        Args: {
+          loved_one_id: string
+          match_count: number
+          match_threshold: number
+          query_embedding: string
+        }
+        Returns: {
+          chunk_text: string
+          id: string
+          similarity: number
+        }[]
+      }
       schedule_memory_cleanup: {
         Args: Record<PropertyKey, never>
         Returns: undefined

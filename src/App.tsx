@@ -29,6 +29,7 @@ import { Terms } from "./pages/Terms";
 import { Support } from "./pages/Support";
 import { EternaPricingPage } from "./components/pricing/EternaPricingPage";
 import { Wallet } from "./pages/Wallet";
+import Eterna from "./pages/Eterna";
 
 // Lazy load heavy components for better performance
 const LazyIndex = memo(() => <Index />);
@@ -173,6 +174,7 @@ const AppContent = () => {
           </main>
         </div>
       } />
+      <Route path="/eterna" element={<Eterna />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
