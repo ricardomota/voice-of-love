@@ -61,6 +61,11 @@ export function EternaPricingPage() {
         'pricing.creditPacks': 'Need more credits?',
         'pricing.creditPacksDesc': 'Purchase additional credits when you need them',
         'pricing.buyCreditPack': 'Buy {pack}',
+        'pricing.creditsPerMonth': '{credits} credits/month',
+        'pricing.voiceSlots': '{slots} voice slot{plural}',
+        'pricing.peopleLimit': 'Up to {count} person{plural}',
+        'pricing.creditRollover': '{percentage}% credit rollover',
+        'pricing.credits': 'credits',
         'errors.generic': 'Something went wrong. Please try again.'
       },
       'pt-BR': {
@@ -75,6 +80,11 @@ export function EternaPricingPage() {
         'pricing.creditPacks': 'Precisa de mais créditos?',
         'pricing.creditPacksDesc': 'Compre créditos adicionais quando precisar',
         'pricing.buyCreditPack': 'Comprar {pack}',
+        'pricing.creditsPerMonth': '{credits} créditos/mês',
+        'pricing.voiceSlots': '{slots} slot{plural} de voz',
+        'pricing.peopleLimit': 'Até {count} pessoa{plural}',
+        'pricing.creditRollover': '{percentage}% rollover de créditos',
+        'pricing.credits': 'créditos',
         'errors.generic': 'Algo deu errado. Tente novamente.'
       },
       'es': {
@@ -89,6 +99,11 @@ export function EternaPricingPage() {
         'pricing.creditPacks': '¿Necesitas más créditos?',
         'pricing.creditPacksDesc': 'Compra créditos adicionales cuando los necesites',
         'pricing.buyCreditPack': 'Comprar {pack}',
+        'pricing.creditsPerMonth': '{credits} créditos/mes',
+        'pricing.voiceSlots': '{slots} slot{plural} de voz',
+        'pricing.peopleLimit': 'Hasta {count} persona{plural}',
+        'pricing.creditRollover': '{percentage}% rollover de créditos',
+        'pricing.credits': 'créditos',
         'errors.generic': 'Algo salió mal. Inténtalo de nuevo.'
       }
     };
@@ -278,25 +293,35 @@ export function EternaPricingPage() {
                       <li className="flex items-center gap-3">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
                         <span className="text-sm text-foreground">
-                          {plan.monthly_credits.toLocaleString()} créditos/mês
+                          {t('pricing.creditsPerMonth', { 
+                            credits: plan.monthly_credits.toLocaleString() 
+                          })}
                         </span>
                       </li>
                       <li className="flex items-center gap-3">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
                         <span className="text-sm text-foreground">
-                          {plan.limits.voice_slots} slot{plan.limits.voice_slots > 1 ? 's' : ''} de voz
+                          {t('pricing.voiceSlots', { 
+                            slots: plan.limits.voice_slots,
+                            plural: plan.limits.voice_slots > 1 ? 's' : ''
+                          })}
                         </span>
                       </li>
                       <li className="flex items-center gap-3">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
                         <span className="text-sm text-foreground">
-                          Até {plan.limits.people_count} pessoa{plan.limits.people_count > 1 ? 's' : ''}
+                          {t('pricing.peopleLimit', { 
+                            count: plan.limits.people_count,
+                            plural: plan.limits.people_count > 1 ? 's' : ''
+                          })}
                         </span>
                       </li>
                       <li className="flex items-center gap-3">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
                         <span className="text-sm text-foreground">
-                          {plan.limits.monthly_rollover}% rollover de créditos
+                          {t('pricing.creditRollover', { 
+                            percentage: plan.limits.monthly_rollover 
+                          })}
                         </span>
                       </li>
                     </ul>
@@ -341,7 +366,7 @@ export function EternaPricingPage() {
                         {formatPackPrice(pack)}
                       </div>
                       <div className="text-muted-foreground mb-4">
-                        {pack.credits.toLocaleString()} créditos
+                        {pack.credits.toLocaleString()} {t('pricing.credits')}
                       </div>
                       <Button 
                         variant="outline" 
