@@ -77,7 +77,16 @@ export const MobileCTABar: React.FC<MobileCTABarProps> = ({
               variant="outline" 
               size="sm" 
               className="px-4 h-10"
-              onClick={() => window.location.href = '/dashboard'}
+              onClick={() => {
+                // Use React Router navigation
+                window.location.hash = 'dashboard';
+                setTimeout(() => {
+                  const element = document.querySelector('[href="/dashboard"]') || document.querySelector('[href="/"]');
+                  if (element) {
+                    (element as HTMLElement).click();
+                  }
+                }, 100);
+              }}
             >
               Dashboard
             </Button>

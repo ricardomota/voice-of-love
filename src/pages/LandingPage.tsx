@@ -16,7 +16,12 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
   const scrollToPricing = () => {
-    window.location.href = '/pricing';
+    // Use hash navigation to scroll to pricing section
+    window.location.hash = 'pricing';
+    const element = document.getElementById('pricing');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
 

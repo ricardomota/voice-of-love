@@ -44,7 +44,7 @@ export function WalletBadge() {
 
   const handleAddCreditsClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate('/pricing');
+    navigate('/simple-pricing');
   };
 
   if (loading) {

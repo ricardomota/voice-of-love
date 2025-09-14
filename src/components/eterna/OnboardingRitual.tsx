@@ -213,7 +213,14 @@ export const OnboardingRitual: React.FC<OnboardingRitualProps> = ({ onComplete, 
           variant: 'default'
         });
         // Here you would typically open auth modal
-        window.location.href = '/auth?redirect=/ritual';
+        // Use navigation instead of window.location
+        window.location.hash = 'auth';
+        setTimeout(() => {
+          const element = document.querySelector('[href="/auth"]');
+          if (element) {
+            (element as HTMLElement).click();
+          }
+        }, 100);
         return;
       }
       return;
