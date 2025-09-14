@@ -147,7 +147,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <Link to="/" className="flex items-center group" aria-label="Voltar à página inicial">
             <motion.img 
