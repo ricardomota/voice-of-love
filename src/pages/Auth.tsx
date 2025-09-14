@@ -385,242 +385,281 @@ export const Auth: React.FC<AuthProps> = ({
     );
   }
   return <>
-      {/* Show header if user is logged in */}
-      {user && <EternaHeader />}
-      
-      <div className={`min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4 ${user ? 'pt-20' : ''}`}>
-      <div className="w-full max-w-md">
-        <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5
-        }}>
-          {/* Logo and Title */}
-          <div className="text-center mb-8">
-            
-            <h1 className="text-2xl md:text-3xl font-bold mb-2">
-              {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
-            </h1>
-            <p className="text-muted-foreground">
-              {mode === 'signin' ? getText('signInToAccess') : getText('startPreserving')}
-            </p>
-          </div>
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="w-full max-w-sm">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+            className="space-y-8"
+          >
+            {/* Title */}
+            <div className="text-center">
+              <h1 className="text-2xl font-semibold text-foreground">
+                {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
+              </h1>
+            </div>
 
-          <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-center text-lg">
-                {mode === 'signin' ? getText('signIn') : getText('signUp')}
-              </CardTitle>
-            </CardHeader>
-            
-            <CardContent>
+            {/* Main Form */}
+            <div className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Email Field */}
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium">
+                  <Label htmlFor="email" className="text-sm font-medium text-foreground/80">
                     {getText('emailAddress')}
                   </Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="pl-10 h-11" placeholder={getText('enterEmail')} disabled={loading} autoComplete="email" />
-                  </div>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)} 
+                    className="h-12 text-base" 
+                    placeholder={getText('emailAddress')} 
+                    disabled={loading} 
+                    autoComplete="email" 
+                  />
                 </div>
 
-                {/* Password Field */}
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium">
-                    {getText('password')}
-                  </Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="password" type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} className="pl-10 pr-10 h-11" placeholder={getText('enterPassword')} disabled={loading} autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                  {mode === 'signup' && password && <div className="text-xs text-muted-foreground">
-                      {getText('passwordStrength')}: {password.length < 6 ? getText('tooShort') : password.length < 8 ? getText('fair') : getText('good')}
-                    </div>}
-                </div>
-
-                {/* Confirm Password Field (Signup only) */}
-                {mode === 'signup' && <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                      {getText('confirmPassword')}
+                {/* Password Field (only for signin mode initially) */}
+                {(mode === 'signin' || (mode === 'signup' && email)) && (
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-sm font-medium text-foreground/80">
+                      {getText('password')}
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="confirmPassword" type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="pl-10 h-11" placeholder={getText('confirmPasswordPlaceholder')} disabled={loading} autoComplete="new-password" />
+                      <Input 
+                        id="password" 
+                        type={showPassword ? 'text' : 'password'} 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        className="h-12 text-base pr-10" 
+                        placeholder={getText('password')} 
+                        disabled={loading} 
+                        autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} 
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-12 px-3 hover:bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={loading}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </Button>
                     </div>
-                  </div>}
+                  </div>
+                )}
+
+                {/* Confirm Password (only for signup) */}
+                {mode === 'signup' && password && (
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium text-foreground/80">
+                      {getText('confirmPassword')}
+                    </Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type={showPassword ? 'text' : 'password'} 
+                      value={confirmPassword} 
+                      onChange={e => setConfirmPassword(e.target.value)} 
+                      className="h-12 text-base" 
+                      placeholder={getText('confirmPassword')} 
+                      disabled={loading} 
+                      autoComplete="new-password" 
+                    />
+                  </div>
+                )}
 
                 {/* Error Alert */}
-                {error && <Alert variant="destructive">
+                {error && (
+                  <Alert variant="destructive" className="text-sm">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>{error}</AlertDescription>
-                  </Alert>}
+                  </Alert>
+                )}
 
                 {/* Success Alert */}
-                {success && <Alert className="border-green-200 bg-green-50">
+                {success && (
+                  <Alert className="border-green-200 bg-green-50 text-green-800">
                     <CheckCircle className="h-4 w-4 text-green-600" />
                     <AlertDescription className="text-green-800">{success}</AlertDescription>
-                  </Alert>}
+                  </Alert>
+                )}
 
                 {/* Submit Button */}
-                <Button type="submit" disabled={loading} className="w-full h-11 text-base font-medium" size="lg">
-                  {loading ? <div className="flex items-center gap-2">
+                <Button 
+                  type="submit" 
+                  disabled={loading || !email || (mode === 'signin' && !password) || (mode === 'signup' && (!password || !confirmPassword))} 
+                  className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90"
+                  size="lg"
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                       {mode === 'signin' ? getText('signingIn') : getText('creatingAccount')}
-                    </div> : <>
-                      {mode === 'signin' ? getText('signIn') : getText('createAccountBtn')}
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </>}
-                </Button>
-
-                {/* Mode Switch */}
-                <div className="relative">
-                  <Separator className="my-6" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-card px-3 text-xs text-muted-foreground">
-                      {mode === 'signin' ? getText('dontHaveAccount') : getText('alreadyHaveAccount')}
                     </div>
-                  </div>
+                  ) : (
+                    mode === 'signin' ? getText('signIn') : getText('createAccountBtn')
+                  )}
+                </Button>
+              </form>
+
+              {/* Mode Switch */}
+              <div className="text-center">
+                <span className="text-sm text-muted-foreground">
+                  {mode === 'signin' ? getText('dontHaveAccount') : getText('alreadyHaveAccount')}{' '}
+                  <button 
+                    type="button"
+                    onClick={switchMode}
+                    disabled={loading}
+                    className="text-primary hover:underline font-medium"
+                  >
+                    {mode === 'signin' ? getText('signUp') : getText('signIn')}
+                  </button>
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border"></div>
                 </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-background px-4 text-muted-foreground font-medium">OR</span>
+                </div>
+              </div>
 
-                <Button type="button" variant="ghost" onClick={switchMode} disabled={loading} className="w-full">
-                  {mode === 'signin' ? getText('createNewAccount') : getText('signInExisting')}
+              {/* Social Login Options */}
+              <div className="space-y-3">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  disabled={loading} 
+                  onClick={() => authService.signInWithOAuth('google', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}
+                  className="w-full h-12 justify-start gap-3 font-medium text-base hover:bg-muted/50 border-border"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  {getText('continueWithGoogle')}
                 </Button>
+                
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  disabled={loading} 
+                  onClick={() => authService.signInWithOAuth('apple', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}
+                  className="w-full h-12 justify-start gap-3 font-medium text-base hover:bg-muted/50 border-border"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  {getText('continueWithApple')}
+                </Button>
+                
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  disabled={loading} 
+                  onClick={() => setShowPhone(!showPhone)}
+                  className="w-full h-12 justify-start gap-3 font-medium text-base hover:bg-muted/50 border-border"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M2 5.57143C2 3.59898 3.59898 2 5.57143 2H8.625C9.0287 2 9.39281 2.24274 9.54808 2.61538L11.4231 7.11538C11.5744 7.47863 11.4987 7.89686 11.2295 8.18394L9.82741 9.67954C10.9044 11.7563 12.2732 13.2047 14.3016 14.2842L15.7929 12.7929C16.0794 12.5064 16.5106 12.4211 16.8846 12.5769L21.3846 14.4519C21.7573 14.6072 22 14.9713 22 15.375V18.4286C22 20.401 20.401 22 18.4286 22C9.35532 22 2 14.6447 2 5.57143ZM5.57143 4C4.70355 4 4 4.70355 4 5.57143C4 13.5401 10.4599 20 18.4286 20C19.2964 20 20 19.2964 20 18.4286V16.0417L16.7336 14.6807L15.2071 16.2071C14.9098 16.5044 14.4582 16.584 14.0771 16.4062C11.0315 14.9849 9.12076 12.9271 7.71882 9.92289C7.54598 9.55251 7.61592 9.11423 7.89546 8.81606L9.32824 7.28777L7.95833 4H5.57143Z"/>
+                  </svg>
+                  {getText('continueWithPhone')}
+                </Button>
+              </div>
 
-                {/* Social Login Options */}
-                <div className="my-6">
-                  <div className="relative">
-                    <Separator className="my-4" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-card px-3 text-sm text-muted-foreground font-medium">
-                        {getText('orContinueWith')}
+              {/* Phone Auth Section */}
+              {showPhone && (
+                <div className="space-y-4 pt-4 border-t border-border">
+                  {!otpSent ? (
+                    <div className="space-y-3">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="text-sm font-medium text-foreground/80">
+                          {getText('phoneNumber')}
+                        </Label>
+                        <Input 
+                          id="phone" 
+                          type="tel" 
+                          value={phone} 
+                          onChange={(e) => setPhone(e.target.value)} 
+                          placeholder={getText('enterPhone')} 
+                          disabled={loading} 
+                          className="h-12 text-base"
+                        />
                       </div>
+                      <Button 
+                        type="button" 
+                        className="w-full h-12" 
+                        disabled={loading || !phone} 
+                        onClick={async () => {
+                          setError('');
+                          const { error } = await authService.signInWithOtp(phone);
+                          if (error) setError(error.message); 
+                          else {
+                            setOtpSent(true);
+                            toast({ title: getText('codeSent') });
+                          }
+                        }}
+                      >
+                        {getText('sendCode')}
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <div className="space-y-3 mt-6">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      disabled={loading} 
-                      onClick={() => authService.signInWithOAuth('google', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}
-                      className="w-full h-12 justify-start gap-3 font-medium hover:bg-muted/50"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                      </svg>
-                      {getText('continueWithGoogle')}
-                    </Button>
-                    
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      disabled={loading} 
-                      onClick={() => authService.signInWithOAuth('apple', selectedPlan && selectedPlan !== 'free' ? `${window.location.origin}/payment?plan=${selectedPlan}` : `${window.location.origin}/`)}
-                      className="w-full h-12 justify-start gap-3 font-medium hover:bg-muted/50"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                      </svg>
-                      {getText('continueWithApple')}
-                    </Button>
-                    
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      disabled={loading} 
-                      onClick={() => setShowPhone(!showPhone)}
-                      className="w-full h-12 justify-start gap-3 font-medium hover:bg-muted/50"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                      </svg>
-                      {getText('continueWithPhone')}
-                    </Button>
-                  </div>
-
-                  {showPhone && (
-                    <div className="mt-4 space-y-2">
-                      {!otpSent ? (
-                        <>
-                          <Label htmlFor="phone" className="text-sm font-medium">{getText('phoneNumber')}</Label>
-                          <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={getText('enterPhone')} disabled={loading} />
-                          <Button type="button" className="w-full" disabled={loading || !phone} onClick={async () => {
-                            setError('');
-                            const { error } = await authService.signInWithOtp(phone);
-                            if (error) setError(error.message); else {
-                              setOtpSent(true);
-                              toast({ title: getText('codeSent') });
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="space-y-2">
+                        <Label htmlFor="code" className="text-sm font-medium text-foreground/80">
+                          {getText('code')}
+                        </Label>
+                        <Input 
+                          id="code" 
+                          value={smsCode} 
+                          onChange={(e) => setSmsCode(e.target.value)} 
+                          placeholder={getText('enterCode')} 
+                          disabled={loading} 
+                          className="h-12 text-base"
+                        />
+                      </div>
+                      <Button 
+                        type="button" 
+                        className="w-full h-12" 
+                        disabled={loading || !smsCode} 
+                        onClick={async () => {
+                          setError('');
+                          const { error } = await authService.verifyOtp(phone, smsCode);
+                          if (error) setError(getText('invalidCode')); 
+                          else {
+                            if (selectedPlan && selectedPlan !== 'free') {
+                              window.location.href = `/payment?plan=${selectedPlan}`;
+                            } else {
+                              window.location.href = redirectTo;
                             }
-                          }}>{getText('sendCode')}</Button>
-                        </>
-                      ) : (
-                        <>
-                          <Label htmlFor="code" className="text-sm font-medium">{getText('code')}</Label>
-                          <Input id="code" value={smsCode} onChange={(e) => setSmsCode(e.target.value)} placeholder={getText('enterCode')} disabled={loading} />
-                          <Button type="button" className="w-full" disabled={loading || !smsCode} onClick={async () => {
-                            setError('');
-                            const { error } = await authService.verifyOtp(phone, smsCode);
-                            if (error) setError(getText('invalidCode')); else {
-                              // Phone sign-in successful
-                              if (selectedPlan && selectedPlan !== 'free') {
-                                window.location.href = `/payment?plan=${selectedPlan}`;
-                              } else {
-                                window.location.href = redirectTo;
-                              }
-                            }
-                          }}>{getText('verifyCode')}</Button>
-                        </>
-                      )}
+                          }
+                        }}
+                      >
+                        {getText('verifyCode')}
+                      </Button>
                     </div>
                   )}
                 </div>
+              )}
+            </div>
 
-                {/* Plan Selection for Signup */}
-                {mode === 'signup' && (
-                  <div className="mt-4 pt-4 border-t">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      onClick={() => setShowPlanModal(true)}
-                      className="w-full"
-                    >
-                      {selectedPlan === 'free' ? 'Select Plan (Currently: Free)' : `Selected: ${selectedPlan}`}
-                    </Button>
-                  </div>
-                )}
-              </form>
-
-              {/* Privacy Notice */}
-              <div className="mt-6 pt-4 border-t text-center">
-                <p className="text-xs text-muted-foreground">
-                  {getText('byContinuing')}{' '}
-                  <a href="/terms" className="underline hover:text-foreground">{getText('termsOfService')}</a>
-                  {' '}{getText('and')}{' '}
-                  <a href="/privacy" className="underline hover:text-foreground">{getText('privacyPolicy')}</a>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Back to Home */}
-          <div className="text-center mt-6">
-            <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-muted-foreground">
-              {getText('backToHome')}
-            </Button>
-          </div>
-        </motion.div>
+            {/* Footer */}
+            <div className="text-center pt-8 border-t border-border">
+              <p className="text-xs text-muted-foreground">
+                <a href="/terms" className="hover:underline">{getText('termsOfService')}</a>
+                <span className="mx-2">•</span>
+                <a href="/privacy" className="hover:underline">{getText('privacyPolicy')}</a>
+              </p>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Plan Selection Modal */}
         <PlanSelectionModal
@@ -630,7 +669,6 @@ export const Auth: React.FC<AuthProps> = ({
           selectedPlan={selectedPlan}
         />
       </div>
-      </div>
     </>;
-};
+  };
 export default Auth;
