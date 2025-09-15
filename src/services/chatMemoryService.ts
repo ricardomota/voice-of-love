@@ -81,34 +81,58 @@ class ChatMemoryService {
 
   private async identifyTargetPerson(parsedData: any, targetPersonName?: string): Promise<string | null> {
     const participants = parsedData.participants;
+    console.log(`Identifying target person from participants: ${participants.join(', ')}`);
     
-    if (!targetPersonName || participants.length <= 1) {
-      return null; // Não há como identificar ou só há uma pessoa
+    // Filter out invalid participants that might be parsing errors
+    const validParticipants = participants.filter((p: string) => {
+      const isValid = p.length >= 2 && 
+                     !p.includes('[') && 
+                     !p.includes(']') &&
+                     !p.includes('imagem') &&
+                     !p.includes('vídeo') &&
+                     !p.includes('áudio') &&
+                     !/^\d/.test(p) && // Doesn't start with number
+                     !p.includes('omitido');
+      if (!isValid) {
+        console.log(`Filtering out invalid participant: "${p}"`);
+      }
+      return isValid;
+    });
+    
+    console.log(`Valid participants after filtering: ${validParticipants.join(', ')}`);
+    
+    if (!targetPersonName || validParticipants.length <= 1) {
+      // If only one valid participant or no target specified, return null for general analysis
+      return validParticipants.length === 1 ? validParticipants[0] : null;
     }
 
     // Find best match for target person name
     const normalizedTarget = this.normalizePersonName(targetPersonName);
+    console.log(`Looking for target person: "${normalizedTarget}"`);
     
     // Try exact matches first
-    for (const participant of participants) {
+    for (const participant of validParticipants) {
       const normalizedParticipant = this.normalizePersonName(participant);
       if (normalizedParticipant === normalizedTarget) {
+        console.log(`Found exact match: ${participant}`);
         return participant;
       }
     }
 
     // Try partial matches (first name, last name, nicknames)
     const targetWords = normalizedTarget.split(' ');
-    for (const participant of participants) {
+    for (const participant of validParticipants) {
       const participantWords = this.normalizePersonName(participant).split(' ');
       
       // Check if any word from target matches any word from participant
       for (const targetWord of targetWords) {
         for (const participantWord of participantWords) {
           if (targetWord.length > 2 && participantWord.includes(targetWord)) {
+            console.log(`Found partial match: ${participant} (${targetWord} -> ${participantWord})`);
             return participant;
           }
           if (participantWord.length > 2 && targetWord.includes(participantWord)) {
+            console.log(`Found partial match: ${participant} (${participantWord} -> ${targetWord})`);
             return participant;
           }
         }
@@ -117,22 +141,28 @@ class ChatMemoryService {
 
     // If still no match, use the participant who is NOT the phone owner
     // Phone owner typically appears as "You", "Você", or has many system messages
-    const likelyPhoneOwner = participants.find(p => 
+    const likelyPhoneOwner = validParticipants.find((p: string) => 
       ['you', 'você', 'eu'].includes(this.normalizePersonName(p))
     );
     
     if (likelyPhoneOwner) {
-      return participants.find(p => p !== likelyPhoneOwner) || null;
+      const targetPerson = validParticipants.find((p: string) => p !== likelyPhoneOwner) || null;
+      console.log(`Using non-phone-owner as target: ${targetPerson}`);
+      return targetPerson;
     }
 
     // As last resort, return the participant with fewer messages (likely the contact)
-    const messageCount = participants.map(p => ({
+    const messageCount = validParticipants.map((p: string) => ({
       name: p,
       count: parsedData.messages.filter((m: any) => m.sender === p).length
     }));
 
     messageCount.sort((a, b) => a.count - b.count);
-    return messageCount[0]?.name || null;
+    const selectedTarget = messageCount[0]?.name || null;
+    console.log(`Using participant with fewer messages as target: ${selectedTarget}`);
+    console.log(`Message counts: ${messageCount.map(mc => `${mc.name}: ${mc.count}`).join(', ')}`);
+    
+    return selectedTarget;
   }
 
   private normalizePersonName(name: string): string {

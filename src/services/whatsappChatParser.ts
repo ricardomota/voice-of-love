@@ -16,50 +16,52 @@ interface ParsedChatData {
 
 class WhatsAppChatParser {
   private parseWhatsAppLine(line: string): ChatMessage | null {
+    // Clean the line from invisible characters that might mess up parsing
+    const cleanLine = line.replace(/[\u200E\u200F\u202A-\u202E]/g, '').trim();
+    
     // WhatsApp format: [DD/MM/YYYY, HH:MM:SS] Sender: Message
     // or [DD/MM/YYYY HH:MM:SS] Sender: Message
     // or DD/MM/YYYY, HH:MM - Sender: Message
-    // Also supports Telegram and other chat formats
     const patterns = [
-      // [DD/MM/YYYY, HH:MM:SS] format (WhatsApp) - Updated to match the exact format
-      /^\[(\d{1,2}\/\d{1,2}\/\d{4}),\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s+([^:]+):\s*(.*)/,
+      // [DD/MM/YYYY, HH:MM:SS] format (WhatsApp) - More specific pattern
+      /^\[(\d{1,2}\/\d{1,2}\/\d{4}),\s*(\d{1,2}:\d{2}(?::\d{2})?)\]\s*([^:]+?):\s*(.*)/,
+      // [DD/MM/YYYY HH:MM:SS] format (WhatsApp alternative)
+      /^\[(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s*([^:]+?):\s*(.*)/,
       // DD/MM/YYYY, HH:MM format (WhatsApp alternative)
-      /^(\d{1,2}\/\d{1,2}\/\d{4}),?\s+(\d{1,2}:\d{2}(?::\d{2})?)\s*-\s*([^:]+):\s*(.*)/,
+      /^(\d{1,2}\/\d{1,2}\/\d{4}),?\s*(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]\s*([^:]+?):\s*(.*)/,
       // Alternative format with different separators
-      /^(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d{1,2}:\d{2}(?::\d{2})?)\s*-\s*([^:]+):\s*(.*)/,
+      /^(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]\s*([^:]+?):\s*(.*)/,
       // Telegram format: [DD.MM.YY HH:MM:SS] Sender:
-      /^\[(\d{1,2}\.\d{1,2}\.\d{2,4})\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s+([^:]+):\s*(.*)/,
-      // Simple format: Sender: Message (for generic chat exports)
-      /^([^:]+):\s*(.+)/,
-      // Discord format: [Today at HH:MM] or [DD/MM/YYYY HH:MM] Sender
-      /^\[(?:Today at |(\d{1,2}\/\d{1,2}\/\d{4})\s+)?(\d{1,2}:\d{2}(?::\d{2})?)\]\s+([^:]+):\s*(.*)/
+      /^\[(\d{1,2}\.\d{1,2}\.\d{2,4})\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s*([^:]+?):\s*(.*)/,
     ];
 
     for (const pattern of patterns) {
-      const match = line.match(pattern);
+      const match = cleanLine.match(pattern);
       if (match) {
         let date, time, sender, message;
         
-        if (pattern.source.includes('Today at')) {
-          // Discord "Today at" format
-          [, date, time, sender, message] = match;
-          date = new Date().toLocaleDateString('pt-BR'); // Use today's date
-        } else if (pattern.source.includes('\\.')) {
+        if (pattern.source.includes('\\.')) {
           // Telegram format with dots
           [, date, time, sender, message] = match;
           // Convert DD.MM.YY to DD/MM/YYYY
           const [day, month, year] = date.split('.');
           const fullYear = year.length === 2 ? `20${year}` : year;
           date = `${day}/${month}/${fullYear}`;
-        } else if (match.length === 3) {
-          // Simple format without date/time
-          [, sender, message] = match;
-          return {
-            sender: sender.trim(),
-            message: message.trim()
-          };
         } else {
           [, date, time, sender, message] = match;
+        }
+        
+        // Validate that sender looks like a real name (not a fragment)
+        const cleanSender = sender.trim();
+        if (cleanSender.length < 2 || 
+            cleanSender.includes('[') || 
+            cleanSender.includes(']') ||
+            /^\d/.test(cleanSender) || // Starts with number
+            cleanSender.includes('imagem ocultada') ||
+            cleanSender.includes('vídeo omitido') ||
+            cleanSender.includes('áudio ocultado')) {
+          console.log(`Skipping invalid sender: "${cleanSender}"`);
+          return null;
         }
         
         try {
@@ -76,19 +78,19 @@ class WhatsAppChatParser {
             
             return {
               timestamp,
-              sender: sender.trim(),
+              sender: cleanSender,
               message: message.trim()
             };
           } else {
             return {
-              sender: sender.trim(),
+              sender: cleanSender,
               message: message.trim()
             };
           }
         } catch (error) {
           console.warn('Failed to parse date/time:', date, time);
           return {
-            sender: sender.trim(),
+            sender: cleanSender,
             message: message.trim()
           };
         }
@@ -104,6 +106,10 @@ class WhatsAppChatParser {
     const participants = new Set<string>();
     let currentMessage: ChatMessage | null = null;
 
+    console.log(`Starting to parse ${lines.length} lines`);
+    let parsedCount = 0;
+    let skippedCount = 0;
+
     for (const line of lines) {
       const parsedMessage = this.parseWhatsAppLine(line);
       
@@ -115,9 +121,12 @@ class WhatsAppChatParser {
         }
         
         currentMessage = parsedMessage;
+        parsedCount++;
       } else if (currentMessage && line.trim()) {
         // This is a continuation of the previous message (multiline)
         currentMessage.message += '\n' + line.trim();
+      } else {
+        skippedCount++;
       }
     }
 
@@ -126,6 +135,9 @@ class WhatsAppChatParser {
       messages.push(currentMessage);
       participants.add(currentMessage.sender);
     }
+
+    console.log(`Parsing complete: ${parsedCount} messages parsed, ${skippedCount} lines skipped`);
+    console.log(`Valid participants found: ${Array.from(participants).join(', ')}`);
 
     const timestamps = messages
       .map(m => m.timestamp)
