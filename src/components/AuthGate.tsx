@@ -87,6 +87,78 @@ const getContent = (language: string) => {
         title: "Éxito",
         accountCreated: "¡Cuenta creada! Verifica tu email para confirmar."
       }
+    },
+    'zh-CN': {
+      welcome: "欢迎来到 Eterna",
+      subtitle: "加入我们，安全简单地保存记忆",
+      features: ["• 创建独特的声音和故事", "• 实时聊天并保存珍贵记忆", "• 从任何设备随时访问"],
+      signin: "登录",
+      signup: "注册",
+      email: "邮箱",
+      password: "密码",
+      createAccount: "创建账户",
+      backToHome: "返回首页",
+      story: {
+        title: "为什么我创建了 Eterna",
+        text: "在目睹我母亲的阿尔茨海默病历程后，我创建了 Eterna。我意识到我们的记忆是多么脆弱，我们所爱之人的声音、故事和本质是多么容易消失。Eterna 诞生于保存这些痕迹的愿望，让后代不仅能够记住，还能感受到与塑造他们生活的人的联系。",
+        heart: "❤️"
+      },
+      errors: {
+        fillFields: "请填写邮箱和密码",
+        error: "错误"
+      },
+      success: {
+        title: "成功！",
+        accountCreated: "账户已创建！请查看您的邮箱进行确认。"
+      }
+    },
+    fr: {
+      welcome: "Bienvenue sur Eterna",
+      subtitle: "Rejoignez-nous pour préserver vos souvenirs en toute sécurité et simplicité",
+      features: ["• Créez des voix et histoires uniques", "• Discutez en temps réel et sauvegardez des souvenirs précieux", "• Accédez depuis n'importe quel appareil"],
+      signin: "Se connecter",
+      signup: "S'inscrire",
+      email: "Email",
+      password: "Mot de passe",
+      createAccount: "Créer un compte",
+      backToHome: "Retour à l'accueil",
+      story: {
+        title: "Pourquoi j'ai créé Eterna",
+        text: "J'ai créé Eterna après avoir été témoin du parcours de ma mère avec la maladie d'Alzheimer. J'ai réalisé à quel point nos souvenirs peuvent être fragiles, et avec quelle facilité les voix, les histoires et l'essence de ceux que nous aimons peuvent s'estomper. Eterna est né du désir de préserver ces traces, pour que les générations futures puissent non seulement se souvenir, mais aussi se sentir connectées aux personnes qui ont façonné leur vie.",
+        heart: "❤️"
+      },
+      errors: {
+        fillFields: "Veuillez remplir l'email et le mot de passe",
+        error: "Erreur"
+      },
+      success: {
+        title: "Succès !",
+        accountCreated: "Compte créé ! Vérifiez votre email pour confirmer."
+      }
+    },
+    de: {
+      welcome: "Willkommen bei Eterna",
+      subtitle: "Treten Sie uns bei, um Erinnerungen sicher und einfach zu bewahren",
+      features: ["• Erstellen Sie einzigartige Stimmen und Geschichten", "• Chatten Sie in Echtzeit und speichern Sie wertvolle Erinnerungen", "• Zugriff von jedem Gerät aus"],
+      signin: "Anmelden",
+      signup: "Registrieren",
+      email: "E-Mail",
+      password: "Passwort",
+      createAccount: "Konto erstellen",
+      backToHome: "Zurück zur Startseite",
+      story: {
+        title: "Warum ich Eterna geschaffen habe",
+        text: "Ich habe Eterna geschaffen, nachdem ich die Reise meiner Mutter mit Alzheimer miterlebt habe. Ich erkannte, wie zerbrechlich unsere Erinnerungen sein können und wie leicht die Stimmen, Geschichten und das Wesen derer, die wir lieben, verblassen können. Eterna entstand aus dem Wunsch, diese Spuren zu bewahren, damit zukünftige Generationen sich nicht nur erinnern, sondern sich auch mit den Menschen verbunden fühlen können, die ihr Leben geprägt haben.",
+        heart: "❤️"
+      },
+      errors: {
+        fillFields: "Bitte füllen Sie E-Mail und Passwort aus",
+        error: "Fehler"
+      },
+      success: {
+        title: "Erfolg!",
+        accountCreated: "Konto erstellt! Überprüfen Sie Ihre E-Mail zur Bestätigung."
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;
