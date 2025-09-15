@@ -11,10 +11,11 @@ export default {
 	prefix: "",
 	theme: {
 		fontFamily: {
-			'inter': ['Inter', 'sans-serif'],
-			'playfair': ['Playfair Display', 'serif'],
-			'sans': ['Inter', 'system-ui', 'sans-serif'],
-			'serif': ['Playfair Display', 'Georgia', 'serif'],
+			'inter': ['Inter', 'system-ui', 'sans-serif'],
+			'sohne': ['Sohne', 'Inter', 'system-ui', 'sans-serif'],
+			'mono': ['Source Code Pro', 'Monaco', 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'monospace'],
+			'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'sans-serif'],
+			'serif': ['ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
 		},
 		container: {
 			center: true,

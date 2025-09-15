@@ -127,10 +127,10 @@ export const HowItWorksSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 sm:mb-20 lg:mb-24"
         >
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight text-center">
+          <h2 className="font-inter text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight text-center tracking-[-0.02em]">
             {content.title}
           </h2>
-          <p className="font-inter text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light text-center">
+          <p className="font-inter text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-[1.4] font-normal text-center tracking-[-0.01em]">
             {content.subtitle}
           </p>
         </motion.div>

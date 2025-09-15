@@ -29,34 +29,34 @@ body {
 /* Base CSS Variables - Eterna Riley Adapted */
 @layer base {
   :root {
-    /* Refined Professional Color System */
-    --background: 51 20% 97%; /* F9F8F5 - softer cream background */
-    --foreground: 315 35% 20%; /* 523A47 - softer dark purple */
-    --card: 51 40% 98%; /* FEFEFE - very light cream cards */
-    --card-foreground: 315 35% 20%; /* 523A47 - softer dark purple text */
-    --popover: 51 40% 98%; /* FEFEFE - very light cream */
-    --popover-foreground: 315 35% 20%; /* 523A47 - softer dark purple */
-    --primary: 315 30% 25%; /* 5E4152 - refined dark purple primary */
-    --primary-foreground: 51 30% 95%; /* F8F7F4 - soft cream text on primary */
-    --secondary: 210 25% 88%; /* E0E7EA - soft blue-gray */
-    --secondary-foreground: 315 25% 20%; /* 4D3F49 - dark purple text */
-    --muted: 51 15% 92%; /* F1F0ED - subtle cream muted */
-    --muted-foreground: 315 20% 35%; /* 6B5A63 - muted purple text */
-    --accent: 200 35% 65%; /* 7FB3C7 - soft teal accent */
-    --accent-foreground: 51 30% 95%; /* F8F7F4 - soft cream text on accent */
-    --destructive: 0 70% 55%;
+    /* Modern Professional Color System - OpenAI inspired */
+    --background: 0 0% 100%; /* Pure white background */
+    --foreground: 215 25% 27%; /* Rich dark blue-gray text */
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 215 25% 27%; /* Rich dark blue-gray text */
+    --popover: 0 0% 100%; /* Pure white popover */
+    --popover-foreground: 215 25% 27%; /* Rich dark blue-gray text */
+    --primary: 217 91% 60%; /* Modern blue primary */
+    --primary-foreground: 0 0% 98%; /* Nearly white text on primary */
+    --secondary: 215 20% 96%; /* Light gray secondary */
+    --secondary-foreground: 215 25% 20%; /* Dark text */
+    --muted: 215 20% 96%; /* Light gray muted */
+    --muted-foreground: 215 16% 47%; /* Medium gray text */
+    --accent: 217 91% 60%; /* Modern blue accent */
+    --accent-foreground: 0 0% 98%; /* Nearly white text on accent */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 51 20% 85%; /* E5E2DC - subtle cream border */
-    --input: 51 20% 95%; /* F4F2EE - light cream input */
-    --ring: 315 30% 25%; /* 5E4152 - refined dark purple ring */
-    --radius: 0.5rem;
+    --border: 215 20% 92%; /* Light border */
+    --input: 215 20% 96%; /* Light input background */
+    --ring: 217 91% 60%; /* Modern blue ring */
+    --radius: 0.75rem;
     
-    /* Chart colors - professional theme */
-    --chart-1: 315 30% 25%; /* refined dark purple */
-    --chart-2: 200 35% 65%; /* soft teal */
-    --chart-3: 260 25% 60%; /* soft lavender */
-    --chart-4: 315 20% 30%; /* medium purple */
-    --chart-5: 51 25% 80%; /* light cream */
+    /* Chart colors - modern theme */
+    --chart-1: 217 91% 60%; /* modern blue */
+    --chart-2: 142 76% 36%; /* emerald */
+    --chart-3: 262 83% 58%; /* purple */
+    --chart-4: 346 77% 49%; /* pink */
+    --chart-5: 46 97% 55%; /* yellow */
 
     /* Professional Color Palette */
     --white: 51 40% 98%; /* FEFEFE - soft white */
@@ -131,41 +131,41 @@ body {
   }
 
   .dark {
-    /* Dark Mode - Professional Colors */
-    --background: 315 25% 8%; /* 1F1419 - deep purple-black */
-    --foreground: 51 20% 92%; /* F0EFEC - soft cream */
-    --card: 315 20% 12%; /* 2B1F26 - dark purple cards */
-    --card-foreground: 51 20% 92%; /* F0EFEC - soft cream text */
-    --popover: 315 20% 12%; /* 2B1F26 - dark purple */
-    --popover-foreground: 51 20% 92%; /* F0EFEC - soft cream */
-    --primary: 200 40% 70%; /* 85C1D9 - soft blue primary in dark */
-    --primary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black text */
-    --secondary: 260 30% 75%; /* B5A3D1 - soft lavender */
-    --secondary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
-    --muted: 315 20% 18%; /* 3D2C36 - muted dark purple */
-    --muted-foreground: 51 15% 70%; /* C4C0BA - light muted text */
-    --accent: 200 40% 70%; /* 85C1D9 - soft blue accent */
-    --accent-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
-    --destructive: 0 70% 55%;
+    /* Dark Mode - Modern Professional Colors */
+    --background: 215 28% 7%; /* Very dark blue-gray */
+    --foreground: 215 20% 95%; /* Nearly white text */
+    --card: 215 28% 10%; /* Dark card background */
+    --card-foreground: 215 20% 95%; /* Nearly white text */
+    --popover: 215 28% 10%; /* Dark popover */
+    --popover-foreground: 215 20% 95%; /* Nearly white text */
+    --primary: 217 91% 60%; /* Same modern blue */
+    --primary-foreground: 215 28% 7%; /* Dark text on primary */
+    --secondary: 215 28% 15%; /* Dark secondary */
+    --secondary-foreground: 215 20% 95%; /* Light text */
+    --muted: 215 28% 15%; /* Dark muted */
+    --muted-foreground: 215 20% 65%; /* Medium light text */
+    --accent: 217 91% 60%; /* Same modern blue accent */
+    --accent-foreground: 215 28% 7%; /* Dark text on accent */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 315 20% 25%; /* 4A3540 - dark purple border */
-    --input: 315 20% 15%; /* 332429 - dark input */
-    --ring: 200 40% 70%; /* 85C1D9 - soft blue ring */
+    --border: 215 28% 18%; /* Dark border */
+    --input: 215 28% 15%; /* Dark input */
+    --ring: 217 91% 60%; /* Same modern blue ring */
 
-    /* Dark Professional Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(315 20% 12%) 0%, hsl(315 25% 8%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(260 30% 75%) 0%, hsl(200 40% 70%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(315 25% 8%) 0%, hsl(315 20% 12%) 100%);
+    /* Dark Modern Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(215 28% 10%) 0%, hsl(215 28% 7%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(142 76% 36%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(215 28% 7%) 0%, hsl(215 28% 10%) 100%);
 
-    /* Dark Professional Sidebar */
-    --sidebar-background: 315 20% 10%; /* 261B21 - dark purple */
-    --sidebar-foreground: 51 20% 92%; /* F0EFEC - soft cream */
-    --sidebar-primary: 200 40% 70%; /* 85C1D9 - soft blue */
-    --sidebar-primary-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
-    --sidebar-accent: 260 30% 75%; /* B5A3D1 - soft lavender */
-    --sidebar-accent-foreground: 315 25% 8%; /* 1F1419 - deep purple-black */
-    --sidebar-border: 315 20% 20%; /* 3E2C35 - dark purple border */
-    --sidebar-ring: 200 40% 70%; /* 85C1D9 - soft blue */
+    /* Dark Modern Sidebar */
+    --sidebar-background: 215 28% 8%;
+    --sidebar-foreground: 215 20% 95%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 215 28% 7%;
+    --sidebar-accent: 142 76% 36%;
+    --sidebar-accent-foreground: 215 28% 7%;
+    --sidebar-border: 215 28% 18%;
+    --sidebar-ring: 217 91% 60%;
   }
 
   * {
@@ -173,11 +173,16 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
     background: hsl(var(--background));
     min-height: 100vh;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'rlig' 1, 'calt' 1;
+    line-height: 1.5;
+    letter-spacing: -0.014em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     line-height: 1.7;
     letter-spacing: -0.011em;
   }

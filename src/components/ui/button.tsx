@@ -5,29 +5,29 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 hover:scale-[1.02] active:scale-95 px-6 py-3 font-semibold shadow-lg hover:shadow-xl",
-        destructive: "rounded-2xl bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:scale-[1.02] active:scale-95 px-6 py-3 shadow-lg hover:shadow-xl",
-        outline: "rounded-xl border-2 border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground hover:scale-[1.01] px-6 py-3 transition-all duration-300",
-        secondary: "rounded-xl bg-secondary text-secondary-foreground hover:bg-secondary/90 hover:scale-[1.01] active:scale-95 px-6 py-3 shadow-md hover:shadow-lg",
-        ghost: "rounded-xl hover:bg-primary/10 hover:text-primary hover:scale-[1.01] px-4 py-2 transition-all duration-300",
-        link: "text-accent underline-offset-4 hover:underline rounded-lg px-2 py-1 hover:scale-[1.01]",
-        glass: "floating-button parallax-slow px-6 py-3 rounded-2xl hover:scale-[1.02]",
-        cta: "bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 hover:scale-[1.02] active:scale-95 px-6 py-3 font-bold shadow-lg hover:shadow-xl text-lg",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm hover:shadow-md", 
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        glass: "bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background/90 shadow-sm hover:shadow-md",
+        cta: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg text-base font-semibold",
       },
       size: {
-        default: "text-sm h-10",
-        sm: "text-xs px-4 py-2 rounded-xl h-8",
-        lg: "text-base px-8 py-4 rounded-2xl h-12",
-        xl: "text-lg px-8 py-4 rounded-2xl h-14 md:h-16",
-        icon: "w-10 h-10 rounded-2xl",
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        xl: "h-12 rounded-lg px-8 text-base",
+        icon: "h-9 w-9",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "default", 
       size: "default",
     },
   }
