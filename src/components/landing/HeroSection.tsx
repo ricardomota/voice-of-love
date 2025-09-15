@@ -55,6 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     currentLanguage
   } = useLanguage();
   const content = getContent(currentLanguage);
+  
   useEffect(() => {
     const checkUserCount = async () => {
       try {
@@ -80,136 +81,127 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     };
     checkUserCount();
   }, []);
-  const isWaitlistMode = userCount >= 10;
   
+  const isWaitlistMode = userCount >= 10;
 
   return (
-    <>
-      {/* Modern Hero Section - Maurice & Nora Style */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 sm:px-8 lg:px-12 py-24 sm:py-32 lg:py-40 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Ultra-clean background with subtle depth */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(120,119,198,0.05),transparent_70%)]" />
+      </div>
+      
+      {/* Minimal floating orbs */}
+      <motion.div 
+        className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-[100px]"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/2 rounded-full blur-[80px]"
+        animate={{
+          scale: [1.1, 0.9, 1.1],
+          opacity: [0.2, 0.4, 0.2]
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2
+        }}
+      />
+      
+      {/* Main content */}
+      <div className="relative w-full max-w-5xl mx-auto px-6 py-32 text-center">
         
-        {/* Minimalist Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/98 to-muted/20" />
-        
-        {/* Subtle Floating Elements */}
+        {/* Status badge */}
         <motion.div 
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/3 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium">
+            <div className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+            {content.badge}
+          </div>
+        </motion.div>
+
+        {/* Hero headline */}
+        <motion.h1 
+          className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-[1.05] tracking-[-0.025em] bg-gradient-to-br from-foreground to-foreground/80 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
+          {content.headline.replace(' ✨', '')}
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p 
+          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12 font-light"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {content.subhead}
+        </motion.p>
+
+        {/* CTA buttons */}
         <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/2 rounded-full blur-3xl"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.1, 0.3, 0.1]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-        />
-        
-        {/* Main Content Container */}
-        <div className="relative w-full max-w-6xl mx-auto text-center">
-          
-          {/* Elegant Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 sm:mb-12"
-          >
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/8 border border-primary/15 text-primary font-medium text-sm backdrop-blur-sm">
-              ✨ {content.badge}
-            </div>
-          </motion.div>
-
-          {/* Modern Headline - Better Typography */}
-          <motion.h1 
-            className="font-inter text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-[1.08] tracking-[-0.02em] mb-6 sm:mb-8 lg:mb-10 max-w-5xl mx-auto text-center font-bold"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {content.headline}
-          </motion.h1>
-
-          {/* Subtitle - Modern Typography */}
-          <motion.p 
-            className="font-inter text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-[1.4] font-normal mb-10 sm:mb-12 lg:mb-16 text-center tracking-[-0.01em]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            {content.subhead}
-          </motion.p>
-
-          {/* Modern CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 lg:mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            {!isLoading && (
-              <>
-                <Button 
-                  onClick={isWaitlistMode ? onTryFree : onLogin}
-                  size="lg"
-                  className="group px-8 py-4 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 rounded-xl hover:scale-[1.02]"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          {!isLoading && (
+            <>
+              <Button 
+                onClick={isWaitlistMode ? onTryFree : onLogin}
+                size="lg"
+                className="group relative px-8 py-4 text-base font-medium bg-foreground hover:bg-foreground/90 text-background rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+              >
+                <span className="relative z-10">{content.tryFree}</span>
+                <motion.div
+                  className="ml-2 relative z-10"
+                  animate={{ x: [0, 3, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  {content.tryFree}
-                  <motion.div
-                    className="ml-3"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    →
-                  </motion.div>
-                </Button>
-                
-                <Button 
-                  onClick={onSeePricing}
-                  variant="outline"
-                  size="lg"
-                  className="group px-8 py-4 text-base font-medium border border-border/40 hover:border-border/60 hover:bg-accent/50 transition-all duration-300 rounded-xl backdrop-blur-sm"
-                >
-                  {content.seePricing}
-                  <motion.div
-                    className="ml-3"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-                  >
-                    →
-                  </motion.div>
-                </Button>
-              </>
-            )}
-          </motion.div>
+                  →
+                </motion.div>
+              </Button>
+              
+              <Button 
+                onClick={onSeePricing}
+                variant="outline"
+                size="lg"
+                className="px-8 py-4 text-base font-medium border border-border hover:border-foreground/20 hover:bg-muted/50 rounded-xl transition-all duration-300"
+              >
+                {content.seePricing}
+              </Button>
+            </>
+          )}
+        </motion.div>
 
-          {/* Simple Trust Badge */}
-          <motion.div 
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-accent/8 border border-accent/15 text-accent font-medium text-sm backdrop-blur-sm">
-              <Security className="w-4 h-4" />
-              {content.trustBadge}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    </>
+        {/* Trust indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+        >
+          <Security className="w-4 h-4" />
+          <span className="font-medium">{content.trustBadge}</span>
+        </motion.div>
+      </div>
+    </section>
   );
 };

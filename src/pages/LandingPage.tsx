@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ModernHeader } from '@/components/layout/ModernHeader';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
-import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
+import { InteractiveHowItWorks } from '@/components/landing/InteractiveHowItWorks';
 import { ModernStats } from '@/components/landing/ModernStats';
 import { StoryCard } from '@/components/landing/StoryCard';
 import { LandingFooter } from '@/components/landing/LandingFooter';
@@ -23,8 +23,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-x-hidden">
-      {/* Modern Floating Header */}
+    <div className="min-h-screen bg-background relative">
+      {/* Header */}
       <ModernHeader />
 
       {/* Hero Section */}
@@ -35,32 +35,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       />
 
       {/* Features Section */}
-      <div className="relative">
-        <FeaturesSection />
-      </div>
+      <FeaturesSection />
 
       {/* How It Works Section */}
-      <div className="relative">
-        <HowItWorksSection />
-      </div>
+      <InteractiveHowItWorks />
 
-      {/* Modern Stats */}
-      <div className="relative">
-        <ModernStats />
-      </div>
+      {/* Stats */}
+      <ModernStats />
 
       {/* Story Card */}
-      <div className="relative">
-        <StoryCard />
-      </div>
+      <StoryCard />
 
       {/* Footer */}
-      <div className="relative">
-        <LandingFooter 
-          onTryFree={onTryFree}
-          onSignIn={onLogin}
-        />
-      </div>
+      <LandingFooter 
+        onTryFree={onTryFree}
+        onSignIn={onLogin}
+      />
     </div>
   );
 };

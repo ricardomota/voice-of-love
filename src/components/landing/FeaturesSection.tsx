@@ -119,121 +119,98 @@ export const FeaturesSection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section id="features" className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="features" className="py-32 relative">
+      {/* Clean background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
       
-      {/* Modern Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/20 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.03),transparent_70%)]" />
-      
-      {/* Floating Elements */}
-      <motion.div 
-        className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-primary/5 to-accent/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          rotate: [0, 90, 0]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
+      <div className="max-w-6xl mx-auto px-6 relative">
         
-        {/* Header */}
+        {/* Section header */}
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto mb-20"
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-24"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm mb-6">
-            <Sparkles className="w-4 h-4" />
+          <div className="inline-block px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-4">
             {content.badge}
           </div>
           
-          <h2 className="font-inter text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight tracking-[-0.02em]">
+          <h2 className="text-3xl sm:text-5xl font-bold text-foreground mb-6 leading-tight tracking-[-0.02em]">
             {content.title}
           </h2>
           
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             {content.subtitle}
           </p>
         </motion.div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Features grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {content.features.map((feature, index) => {
             const IconComponent = feature.icon;
             
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative p-8 lg:p-10 rounded-3xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-border transition-all duration-500 hover:bg-card/80 h-full">
+                <div className="relative p-8 rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm hover:border-border/50 hover:bg-card/50 transition-all duration-500 h-full">
                   
-                  {/* Icon with gradient */}
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6`}>
-                    <div className="w-full h-full bg-background rounded-2xl flex items-center justify-center">
-                      <IconComponent className="w-8 h-8 text-foreground" />
+                  {/* Icon */}
+                  <div className="mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-muted/50 flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
+                      <IconComponent className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                     </div>
                   </div>
                   
                   {/* Content */}
                   <div className="space-y-4">
-                    <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-foreground">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-muted-foreground leading-relaxed text-lg">
+                    <p className="text-muted-foreground leading-relaxed">
                       {feature.description}
                     </p>
                     
-                    {/* Benefits */}
-                    <div className="space-y-3 pt-4">
+                    {/* Benefits list */}
+                    <div className="space-y-2 pt-2">
                       {feature.benefits.map((benefit, benefitIndex) => (
                         <motion.div
                           key={benefitIndex}
-                          initial={{ opacity: 0, x: -20 }}
+                          initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ duration: 0.4, delay: (index * 0.1) + (benefitIndex * 0.1) }}
-                          className="flex items-center gap-3"
+                          transition={{ duration: 0.4, delay: (index * 0.1) + (benefitIndex * 0.05) }}
+                          className="flex items-center gap-2"
                         >
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-muted-foreground font-medium">{benefit}</span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary/60" />
+                          <span className="text-sm text-muted-foreground">{benefit}</span>
                         </motion.div>
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Hover gradient overlay */}
-                  <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom message */}
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-20"
         >
-          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
-            <span className="text-lg font-medium text-foreground">Built with families in mind</span>
-            <span className="text-2xl">❤️</span>
-          </div>
+          <p className="text-muted-foreground">Designed for families who care about privacy, authenticity, and meaningful connections.</p>
         </motion.div>
 
       </div>
