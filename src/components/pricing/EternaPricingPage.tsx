@@ -360,149 +360,64 @@ export function EternaPricingPage() {
         {/* Credit Packs Section */}
         {getOnetimePacks().length > 0 && (
           <motion.div 
-            className="mt-20"
+            className="mt-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-5xl mx-auto">
               {/* Section Header */}
               <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
-                  <Plus className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Flexible Credits</span>
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                <h2 className="text-2xl font-bold text-foreground mb-3">
                   {t('pricing.creditPacks')}
                 </h2>
-                <p className="text-xl text-muted-foreground mb-2 max-w-2xl mx-auto">
+                <p className="text-muted-foreground max-w-lg mx-auto">
                   {t('pricing.creditPacksDesc')}
                 </p>
-                <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                  {t('pricing.creditPacksSubDesc')}
-                </p>
-              </div>
-
-              {/* Benefits Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-4xl mx-auto">
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-background to-muted/30 border border-border/50">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm text-foreground">{t('pricing.instantTopup')}</div>
-                    <div className="text-xs text-muted-foreground">Available immediately</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-background to-muted/30 border border-border/50">
-                  <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-green-500" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm text-foreground">{t('pricing.noExpiry')}</div>
-                    <div className="text-xs text-muted-foreground">Use anytime</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-background to-muted/30 border border-border/50">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-blue-500" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-sm text-foreground">{t('pricing.flexibleUse')}</div>
-                    <div className="text-xs text-muted-foreground">All features</div>
-                  </div>
-                </div>
               </div>
               
               {/* Credit Packs Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {getOnetimePacks().map((pack, index) => {
                   const creditValue = (pack.price_usd / pack.credits).toFixed(3);
-                  const isPopular = pack.best_value;
                   
                   return (
-                    <motion.div
-                      key={pack.sku}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      className="relative"
-                    >
-                      {isPopular && (
-                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 z-10">
-                          <Badge className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg text-xs px-2 py-1">
-                            Best Value
-                          </Badge>
-                        </div>
-                      )}
-                      
-                      <Card className={`h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${
-                        isPopular ? 
-                          'border-primary/50 shadow-md bg-gradient-to-br from-background to-primary/5 ring-1 ring-primary/20' : 
-                          'border-border hover:border-primary/30 bg-gradient-to-br from-background to-muted/30'
-                      }`}>
-                        <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                          <div>
-                            {/* Icon */}
-                            <div className={`w-12 h-12 mx-auto rounded-2xl flex items-center justify-center mb-4 ${
-                              isPopular ? 'bg-primary/20' : 'bg-muted/50'
-                            }`}>
-                              <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                                isPopular ? 'bg-primary/30' : 'bg-muted'
-                              }`}>
-                                <span className={`text-lg font-bold ${
-                                  isPopular ? 'text-primary' : 'text-foreground/70'
-                                }`}>
-                                  {pack.credits.toString().charAt(0)}
-                                </span>
-                              </div>
-                            </div>
-                            
-                            {/* Credits */}
-                            <div className="mb-4">
-                              <div className="text-2xl font-bold text-foreground mb-1">
-                                {pack.credits.toLocaleString()}
-                              </div>
-                              <div className="text-sm text-muted-foreground">
-                                {t('pricing.credits')}
-                              </div>
-                            </div>
-                            
-                            {/* Price */}
-                            <div className="mb-4">
-                              <div className="text-3xl font-bold text-foreground mb-1">
-                                {formatPackPrice(pack)}
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                ${creditValue} per credit
-                              </div>
-                            </div>
+                    <Card key={pack.sku} className="border-border hover:border-primary/30 transition-all duration-200 hover:shadow-sm">
+                      <CardContent className="p-6 text-center">
+                        <div className="mb-4">
+                          <div className="text-2xl font-bold text-foreground mb-1">
+                            {pack.credits.toLocaleString()}
                           </div>
-                          
-                          {/* Button */}
-                          <Button 
-                            className={`w-full h-11 text-sm font-medium group ${
-                              isPopular ? 'bg-primary hover:bg-primary/90' : ''
-                            }`}
-                            variant={isPopular ? 'default' : 'outline'}
-                            onClick={() => handlePackSelect(pack)}
-                          >
-                            <span className="flex items-center gap-2">
-                              {t('pricing.buyCreditPack', { credits: pack.credits.toLocaleString() })}
-                              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </span>
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+                          <div className="text-sm text-muted-foreground">
+                            {t('pricing.credits')}
+                          </div>
+                        </div>
+                        
+                        <div className="mb-6">
+                          <div className="text-xl font-bold text-foreground mb-1">
+                            {formatPackPrice(pack)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            ${creditValue} per credit
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => handlePackSelect(pack)}
+                        >
+                          {t('pricing.buyCreditPack', { credits: pack.credits.toLocaleString() })}
+                        </Button>
+                      </CardContent>
+                    </Card>
                   );
                 })}
               </div>
               
-              {/* Bottom CTA */}
-              <div className="mt-12 text-center">
-                <p className="text-sm text-muted-foreground">
-                  All credit purchases are one-time payments with no recurring charges. Credits never expire.
+              <div className="mt-8 text-center">
+                <p className="text-xs text-muted-foreground">
+                  Credits never expire and can be used for any feature
                 </p>
               </div>
             </div>
