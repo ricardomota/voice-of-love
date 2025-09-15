@@ -35,6 +35,18 @@ const getContent = (language: string) => {
         { text: "Feito com Amor para Famílias", icon: Heart }
       ]
     },
+    'zh-CN': {
+      headline: "永远保存他们的声音",
+      subheadline: "AI驱动的记忆保存",
+      description: "Eterna将珍贵记忆转化为生动对话。用理解面临记忆丧失家庭最重要需求的AI保存您所爱之人的声音和个性。",
+      tryFree: "开始使用",
+      learnMore: "了解工作原理",
+      features: [
+        { text: "隐私设计", icon: Shield },
+        { text: "声音克隆技术", icon: Brain },
+        { text: "为家庭用爱打造", icon: Heart }
+      ]
+    },
     es: {
       headline: "Mantén Su Voz Para Siempre",
       subheadline: "Preservación de Memoria con IA",

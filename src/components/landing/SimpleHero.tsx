@@ -22,6 +22,13 @@ const getContent = (language: string) => {
       learnMore: "Saiba Como Funciona",
       features: ["Privado por design", "Abordagem familiar", "Tecnologia de clonagem de voz"]
     },
+    'zh-CN': {
+      headline: "永远保存他们的声音",
+      subhead: "Eterna将珍贵记忆转化为生动对话。用理解最重要事情的AI保存您所爱之人的声音和个性。",
+      tryFree: "免费试用Eterna",
+      learnMore: "了解工作原理",
+      features: ["隐私设计", "家庭优先方法", "声音克隆技术"]
+    },
     es: {
       headline: "Mantén Su Voz Para Siempre",
       subhead: "Eterna convierte recuerdos queridos en conversaciones vivas. Preserva la voz y personalidad de tu ser querido con IA que entiende lo que más importa.",

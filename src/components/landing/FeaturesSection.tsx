@@ -75,6 +75,41 @@ const getContent = (language: string) => {
         }
       ]
     },
+    'zh-CN': {
+      badge: "为什么家庭选择我们",
+      title: "为最重要的事情而建",
+      subtitle: "每个功能都以爱心、安全和您家庭独特故事为设计理念。",
+      features: [
+        {
+          title: "隐私优先",
+          description: "您家庭的记忆属于您自己。端到端加密确保您最珍贵的时刻保持私密和安全。",
+          icon: Shield,
+          gradient: "from-blue-500 to-cyan-500",
+          benefits: ["军用级加密", "零数据共享", "符合GDPR"]
+        },
+        {
+          title: "真实声音",
+          description: "先进的AI捕捉您所爱之人说话的独特本质，创造真正个人的语音体验。",
+          icon: Mic,
+          gradient: "from-purple-500 to-pink-500",
+          benefits: ["自然语音模式", "情感细节", "多种语言"]
+        },
+        {
+          title: "智能记忆",
+          description: "我们的AI理解语境、关系和个人历史，创造有意义的真实对话。",
+          icon: Brain,
+          gradient: "from-orange-500 to-red-500",
+          benefits: ["语境感知", "情感智能", "自适应响应"]
+        },
+        {
+          title: "全球覆盖",
+          description: "通过内置的多语言功能和文化理解支持全世界的家庭。",
+          icon: Globe,
+          gradient: "from-green-500 to-teal-500",
+          benefits: ["15+种语言", "文化语境", "本地支持"]
+        }
+      ]
+    },
     es: {
       badge: "Por qué las familias nos eligen",
       title: "Construido para lo que más importa", 
@@ -210,7 +245,12 @@ export const FeaturesSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-20"
         >
-          <p className="text-muted-foreground">Designed for families who care about privacy, authenticity, and meaningful connections.</p>
+          <p className="text-muted-foreground">
+            {currentLanguage === 'zh-CN' ? '为关心隐私、真实性和有意义连接的家庭而设计。' :
+             currentLanguage === 'pt-BR' ? 'Projetado para famílias que se preocupam com privacidade, autenticidade e conexões significativas.' :
+             currentLanguage === 'es' ? 'Diseñado para familias que se preocupan por la privacidad, autenticidad y conexiones significativas.' :
+             'Designed for families who care about privacy, authenticity, and meaningful connections.'}
+          </p>
         </motion.div>
 
       </div>
