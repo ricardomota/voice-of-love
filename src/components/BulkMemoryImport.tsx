@@ -59,7 +59,7 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
           </DialogTitle>
           <DialogDescription>
             Importe arquivos de chat (WhatsApp, Telegram, Discord) para extrair automaticamente 
-            centenas de memórias e melhorar o contexto do clone digital de {person.name}.
+            centenas de memórias e melhorar o contexto da memória interativa de {person.name}.
           </DialogDescription>
         </DialogHeader>
 
@@ -69,10 +69,10 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
               <Zap className="w-5 h-5 text-blue-600 mt-0.5" />
               <div>
                 <h4 className="font-medium text-foreground mb-1">
-                  🚀 Melhore seu Clone Digital
+                  🚀 Melhore a Memória Interativa
                 </h4>
                 <p className="text-sm text-muted-foreground">
-                  Importar conversas torna o clone mais autêntico, capturando seu estilo único de comunicação.
+                  Importar conversas torna a memória mais autêntica, capturando seu estilo único de comunicação.
                 </p>
               </div>
             </div>

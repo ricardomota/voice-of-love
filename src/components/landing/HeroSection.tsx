@@ -15,8 +15,8 @@ const getContent = (language: string) => {
   const content = {
     en: {
       badge: "AI-powered memory preservation",
-      headline: "Where memories become eternal. ✨",
-      subhead: "Preserve the essence of your loved ones through AI that captures their personality, stories, and wisdom forever.",
+      headline: "Keep precious memories alive forever ✨",
+      subhead: "Create interactive memories that capture your loved one's voice, personality, and wisdom. Experience meaningful conversations powered by their authentic stories and cherished moments.",
       tryFree: "Get Started",
       seePricing: "See Pricing",
       trustBadge: "Secure & Private by Design",
@@ -24,8 +24,8 @@ const getContent = (language: string) => {
     },
     'pt-BR': {
       badge: "Preservação de memórias com IA",
-      headline: "Onde lembranças se tornam eternas✨",
-      subhead: "Preserve a essência dos seus entes queridos através de IA que captura sua personalidade, histórias e sabedoria para sempre.",
+      headline: "Mantenha memórias preciosas vivas para sempre ✨",
+      subhead: "Crie memórias interativas que capturam a voz, personalidade e sabedoria dos seus entes queridos. Tenha conversas significativas alimentadas por suas histórias autênticas e momentos especiais.",
       tryFree: "Começar",
       seePricing: "Ver Preços",
       trustBadge: "Seguro e Privado por Design",
@@ -33,8 +33,8 @@ const getContent = (language: string) => {
     },
     es: {
       badge: "Preservación de memorias con IA",
-      headline: "Donde los recuerdos se vuelven eternos. ✨",
-      subhead: "Preserva la esencia de tus seres queridos a través de IA que captura su personalidad, historias y sabiduría para siempre.",
+      headline: "Mantén memorias preciosas vivas para siempre ✨",
+      subhead: "Crea memorias interactivas que capturan la voz, personalidad y sabiduría de tus seres queridos. Ten conversaciones significativas alimentadas por sus historias auténticas y momentos especiales.",
       tryFree: "Empezar",
       seePricing: "Ver Precios",
       trustBadge: "Seguro y Privado por Diseño",

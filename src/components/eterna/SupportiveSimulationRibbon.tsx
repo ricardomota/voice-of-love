@@ -18,8 +18,8 @@ export const SupportiveSimulationRibbon: React.FC<SupportiveSimulationRibbonProp
     )}>
       <div className="flex items-center gap-2 text-sm">
         <Heart className="w-4 h-4 text-primary flex-shrink-0" />
-        <span className="text-muted-foreground">
-          <span className="font-medium text-foreground">Supportive Simulation:</span> This is an AI representation of{' '}
+        <span className="text-foreground">
+          <span className="font-medium text-foreground">Interactive Memory:</span> This is an AI representation of{' '}
           {personName ? personName : 'your loved one'} designed for therapeutic comfort and remembrance.
         </span>
         <Info className="w-4 h-4 text-muted-foreground flex-shrink-0" />

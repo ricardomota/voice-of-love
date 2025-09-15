@@ -30,7 +30,7 @@ const getContent = (language: string) => {
         detail: "Create lasting audio keepsakes for future generations 💝"
       }],
       notePrefix: "Note:",
-      note: "Personal voice cloning available on paid plans and only when capacity allows."
+      note: "Personalized voice models available on paid plans and only when capacity allows."
     },
     'pt-BR': {
       title: "Como funciona",
@@ -57,7 +57,7 @@ const getContent = (language: string) => {
         detail: "Crie recordações em áudio duradouras para as próximas gerações 💝"
       }],
       notePrefix: "Nota:",
-      note: "Clone de voz pessoal disponível em planos pagos e apenas quando a capacidade permite."
+      note: "Modelos de voz personalizados disponíveis em planos pagos e apenas quando a capacidade permite."
     },
     es: {
       title: "Cómo funciona",
@@ -84,7 +84,7 @@ const getContent = (language: string) => {
         detail: "Crea recuerdos de audio duraderos para futuras generaciones."
       }],
       notePrefix: "Nota:",
-      note: "Clonación de voz personal disponible en planes pagos y solo cuando la capacidad lo permite."
+      note: "Modelos de voz personalizados disponibles en planes pagos y solo cuando la capacidad lo permite."
     }
   };
   return content[language as keyof typeof content] || content.en;

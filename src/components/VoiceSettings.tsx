@@ -31,7 +31,7 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
     useSpeakerBoost: (person.voiceSettings as any)?.useSpeakerBoost || true
   });
 
-  const hasVoiceClone = person.voiceSettings?.hasRecording && person.voiceSettings?.voiceId;
+  const hasPersonalizedVoice = person.voiceSettings?.hasRecording && person.voiceSettings?.voiceId;
   const audioCount = person.voiceSettings?.audioFiles?.length || 0;
 
   const updateVoiceSettings = async () => {
@@ -73,7 +73,7 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
   };
 
   const generateTestMessage = async () => {
-    if (!hasVoiceClone) return;
+    if (!hasPersonalizedVoice) return;
 
     setIsGenerating(true);
     try {
@@ -164,7 +164,7 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
           variant="outline"
           size="sm"
           className="flex items-center gap-2"
-          disabled={!hasVoiceClone}
+          disabled={!hasPersonalizedVoice}
         >
           <Tune className="w-4 h-4" />
           Ajustar Voz
@@ -190,9 +190,9 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Clone de voz:</span>
-                <Badge variant={hasVoiceClone ? "default" : "secondary"}>
-                  {hasVoiceClone ? "Ativo" : "Não configurado"}
+                <span className="text-sm font-medium">Modelo de voz:</span>
+                <Badge variant={hasPersonalizedVoice ? "default" : "secondary"}>
+                  {hasPersonalizedVoice ? "Ativo" : "Não configurado"}
                 </Badge>
               </div>
               
@@ -203,7 +203,7 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
                 </Badge>
               </div>
 
-              {hasVoiceClone && (
+              {hasPersonalizedVoice && (
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Voice ID:</span>
                   <code className="text-xs bg-muted px-2 py-1 rounded">
@@ -246,7 +246,7 @@ export const VoiceSettings: React.FC<VoiceSettingsProps> = ({ person, onUpdate }
           </Card>
 
           {/* Configurações avançadas */}
-          {hasVoiceClone && (
+          {hasPersonalizedVoice && (
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Configurações Avançadas</CardTitle>

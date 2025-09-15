@@ -26,9 +26,9 @@ const getContent = (language: string, type: string) => {
       ctaSecondary: "Maybe Later",
       features: {
         messages: "300 messages/month",
-        voice: "15 minutes voice/month", 
+        tts: "15 minutes voice/month", 
         memories: "Unlimited memories",
-        clone: "Personal voice clone"
+        voiceModel: "Personal voice model"
       }
     },
     'pt-BR': {
@@ -38,9 +38,9 @@ const getContent = (language: string, type: string) => {
       ctaSecondary: "Talvez Depois",
       features: {
         messages: "300 mensagens/mês",
-        voice: "15 minutos de voz/mês",
+        tts: "15 minutos de voz/mês",
         memories: "Memórias ilimitadas", 
-        clone: "Clone de voz personalizado"
+        voiceModel: "Modelo de voz personalizado"
       }
     },
     es: {
@@ -50,9 +50,9 @@ const getContent = (language: string, type: string) => {
       ctaSecondary: "Tal Vez Después",
       features: {
         messages: "300 mensajes/mes",
-        voice: "15 minutos de voz/mes",
+        tts: "15 minutos de voz/mes",
         memories: "Memorias ilimitadas",
-        clone: "Clon de voz personal"
+        voiceModel: "Modelo de voz personal"
       }
     }
   };
@@ -107,7 +107,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             </div>
             <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Mic className="w-4 h-4 text-primary" />
-              {content.features.voice}
+              {content.features.tts}
             </div>
             <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Clock className="w-4 h-4 text-primary" />
@@ -115,7 +115,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             </div>
             <div className="flex items-center gap-2 text-sm glass-card p-3 hover-lift">
               <Sparkles className="w-4 h-4 text-primary" />
-              {content.features.clone}
+              {content.features.voiceModel}
             </div>
           </div>
         </div>

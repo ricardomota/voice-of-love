@@ -58,7 +58,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({ open, onConsent, onC
               What is Eterna?
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              Eterna is a privacy-first conversational clone designed to provide therapeutic comfort and support for families affected by Alzheimer's. 
+              Eterna is a privacy-first interactive memory designed to provide therapeutic comfort and support for families affected by Alzheimer's. 
               By creating an AI that can mirror your loved one's conversational style, we aim to help preserve memories and provide emotional comfort during difficult times.
             </p>
           </div>
@@ -147,7 +147,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({ open, onConsent, onC
                 />
                 <label htmlFor="dataUsage" className="text-sm leading-relaxed cursor-pointer">
                   <strong>Data Processing:</strong> I consent to the processing of uploaded data (messages, audio, video) for the purpose of 
-                  creating the conversational clone. I understand that sensitive information will be automatically detected and protected.
+                  creating the interactive memory. I understand that sensitive information will be automatically detected and protected.
                 </label>
               </div>
 
@@ -174,7 +174,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({ open, onConsent, onC
               Time Investment
             </div>
             <p className="text-sm text-muted-foreground">
-              Creating a quality conversational clone requires patience. Processing your data (transcription, safety filtering, and indexing) 
+              Creating a quality interactive memory requires patience. Processing your data (transcription, safety filtering, and indexing) 
               typically takes 15-30 minutes depending on the amount of content. The more authentic data you provide, the better the results.
             </p>
           </div>

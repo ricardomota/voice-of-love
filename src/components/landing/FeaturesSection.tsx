@@ -16,7 +16,7 @@ const getContent = (language: string) => {
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Personalized voices",
-        description: "Base voices for all users, personal voice cloning for paid users when capacity allows - magic at work! ✨",
+        description: "Base voices for all users, personalized voice models for paid users when capacity allows - magic at work! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
@@ -44,7 +44,7 @@ const getContent = (language: string) => {
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Vozes personalizadas",
-        description: "Vozes base para todos os usuários, clone de voz pessoal para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
+        description: "Vozes base para todos os usuários, modelos de voz personalizados para usuários pagos quando a capacidade permite - magia em funcionamento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"
@@ -72,7 +72,7 @@ const getContent = (language: string) => {
         image: "/lovable-uploads/3ab04a59-1bef-4ff6-9946-c15f52a79a26.png?v=2"
       }, {
         title: "Voces personalizadas",
-        description: "Voces base para todos los usuarios, clonación personal para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
+        description: "Voces base para todos los usuarios, modelos de voz personalizados para usuarios de pago cuando la capacidad lo permita - ¡magia en funcionamiento! ✨",
         icon: Microphone,
         highlight: "🚀 Powered by ElevenLabs",
         image: "/lovable-uploads/2973a344-d482-4b1e-b436-caa0d08347c5.png?v=3"

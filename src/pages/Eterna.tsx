@@ -167,7 +167,7 @@ export default function Eterna() {
       
       toast({
         title: "Welcome to Eterna",
-        description: "Your consent has been recorded. You can now create your first conversational clone.",
+        description: "Your consent has been recorded. You can now create your first interactive memory.",
       });
     } catch (error) {
       console.error('Error handling consent:', error);
@@ -243,7 +243,7 @@ export default function Eterna() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold">Welcome to Eterna</h2>
                 <p className="text-lg text-muted-foreground">
-                  Create your first conversational clone to begin preserving precious memories.
+                  Create your first interactive memory to begin preserving precious memories.
                 </p>
               </div>
 
@@ -254,7 +254,7 @@ export default function Eterna() {
                     Getting Started
                   </CardTitle>
                   <CardDescription>
-                    Follow these steps to create your first therapeutic conversational clone
+                    Follow these steps to create your first therapeutic interactive memory
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -343,7 +343,7 @@ export default function Eterna() {
                               {selectedLovedOne.display_name}
                             </CardTitle>
                             <CardDescription>
-                              Conversational clone profile and data management
+                              Interactive memory profile and data management
                             </CardDescription>
                           </div>
                           <div className="flex gap-2">
@@ -397,7 +397,7 @@ export default function Eterna() {
                       <Alert>
                         <Upload className="w-4 h-4" />
                         <AlertDescription>
-                          No data uploaded yet. Upload WhatsApp conversations, voice notes, or family videos to begin creating the conversational clone.
+                          No data uploaded yet. Upload WhatsApp conversations, voice notes, or family videos to begin creating the interactive memory.
                         </AlertDescription>
                       </Alert>
                     )}

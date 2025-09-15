@@ -396,9 +396,9 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
         }
       }
 
-      // Step 2: Create voice clone with the first file
+      // Step 2: Create voice model with the first file
       if (files.length > 0 && audioFiles.length > 0) {
-        setProcessingStep('Criando clone de voz...');
+        setProcessingStep('Criando modelo de voz...');
         
         try {
           const primaryFile = files[0];
@@ -417,26 +417,26 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
             body: {
               audioBlob: base64Audio,
               name: personName,
-              description: `Voice clone of ${personName} - Created from uploaded audio`
+              description: `Voice model of ${personName} - Created from uploaded audio`
             }
           });
 
-          console.log('Voice clone result:', voiceCloneResult);
+          console.log('Voice model result:', voiceCloneResult);
 
           if (voiceCloneResult.error) {
-            console.error('Voice clone error:', voiceCloneResult.error);
-            setProcessingStep('⚠️ Clone de voz falhou, mas áudios salvos');
+            console.error('Voice model error:', voiceCloneResult.error);
+            setProcessingStep('⚠️ Modelo de voz falhou, mas áudios salvos');
           } else if (voiceCloneResult.data?.voiceId) {
             voiceId = voiceCloneResult.data.voiceId;
-            console.log('Voice clone created successfully with ID:', voiceId);
-            setProcessingStep('✅ Clone de voz criado com sucesso!');
+            console.log('Voice model created successfully with ID:', voiceId);
+            setProcessingStep('✅ Modelo de voz criado com sucesso!');
           } else {
-            console.warn('Voice clone result unexpected:', voiceCloneResult);
-            setProcessingStep('⚠️ Clone de voz não retornou ID esperado');
+            console.warn('Voice model result unexpected:', voiceCloneResult);
+            setProcessingStep('⚠️ Modelo de voz não retornou ID esperado');
           }
         } catch (voiceError) {
           console.error('Error in voice cloning:', voiceError);
-          setProcessingStep('⚠️ Erro no clone de voz, mas áudios salvos');
+          setProcessingStep('⚠️ Erro no modelo de voz, mas áudios salvos');
         }
       }
 
@@ -451,9 +451,9 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
 
       // Final status message
       if (voiceId && transcriptions.length > 0) {
-        setProcessingStep('✅ Clone de voz criado e áudios processados!');
+        setProcessingStep('✅ Modelo de voz criado e áudios processados!');
       } else if (voiceId) {
-        setProcessingStep('✅ Clone de voz criado com sucesso!');
+        setProcessingStep('✅ Modelo de voz criado com sucesso!');
       } else if (audioFiles.length > 0) {
         setProcessingStep('✅ Áudios processados e salvos!');
       } else {
@@ -562,7 +562,7 @@ export const VoiceRecordingStep = ({ personName, existingVoiceSettings, onVoiceR
           {existingVoiceSettings?.hasRecording && existingVoiceSettings?.voiceId && (
             <div className="p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
               <p className="text-sm text-green-700 dark:text-green-300">
-                ✅ Clone de voz já criado com sucesso! (ID: {existingVoiceSettings.voiceId})
+                ✅ Modelo de voz já criado com sucesso! (ID: {existingVoiceSettings.voiceId})
               </p>
             </div>
           )}

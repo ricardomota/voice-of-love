@@ -52,7 +52,7 @@
   "usage.filter.range": "Date range",
   "usage.exportCsv": "Export CSV",
 
-  "features.voiceClone": "Voice Clone (initial training)",
+  "features.voiceModel": "Voice Model (initial training)",
   "features.tts": "TTS Generation",
   "features.transcription": "Audio Transcription",
   "features.chat": "Chat with Persona",

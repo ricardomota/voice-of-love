@@ -365,7 +365,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                   return audioCount > 0 ? `${audioCount} áudio${audioCount > 1 ? 's' : ''}` : '0 áudios';
                 })()}
                 </span>
-                {voiceSettings?.hasRecording && voiceSettings?.voiceId && <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Clone de voz criado"></span>}
+                {voiceSettings?.hasRecording && voiceSettings?.voiceId && <span className="ml-2 w-2 h-2 bg-green-500 rounded-full" title="Modelo de voz criado"></span>}
               </div>
             </div>
           </div>
