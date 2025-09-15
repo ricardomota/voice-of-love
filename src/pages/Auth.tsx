@@ -72,7 +72,6 @@ export const Auth: React.FC<AuthProps> = ({
       and: 'e',
       privacyPolicy: 'Política de Privacidade',
       backToHome: '← Voltar para Home',
-      // Error messages
       enterEmailAddress: 'Por favor, digite seu endereço de email',
       enterValidEmail: 'Por favor, digite um endereço de email válido',
       enterPasswordField: 'Por favor, digite sua senha',
@@ -83,11 +82,9 @@ export const Auth: React.FC<AuthProps> = ({
       emailNotConfirmed: 'Verifique seu email e clique no link de confirmação antes de entrar.',
       errorOccurred: 'Ocorreu um erro. Tente novamente.',
       unexpectedError: 'Ocorreu um erro inesperado. Tente novamente.',
-      // Success messages
       accountCreated: 'Conta criada! Verifique seu email para confirmar sua conta.',
       welcomeBackToast: 'Bem-vindo de volta!',
       signedInSuccessfully: 'Você entrou com sucesso.',
-      // Quick signup
       orContinueWith: 'Ou continuar com',
       continueWithGoogle: 'Continuar com Google',
       continueWithMicrosoft: 'Continuar com Microsoft',
@@ -101,7 +98,19 @@ export const Auth: React.FC<AuthProps> = ({
       verifyCode: 'Verificar código',
       codeSent: 'Código de verificação enviado!',
       invalidCode: 'Código inválido. Tente novamente.',
-      resendConfirmationEmail: 'Reenviar email de confirmação'
+      resendConfirmationEmail: 'Reenviar email de confirmação',
+      errorSendingCode: 'Erro ao enviar código de verificação.',
+      checkEmailForCode: 'Verifique seu email para o código de verificação.',
+      errorSendingEmailCode: 'Erro ao enviar código por email.',
+      errorSendingPhoneCode: 'Erro ao enviar código por SMS.',
+      checkPhoneForCode: 'Verifique seu telefone para o código de verificação.',
+      welcomeVerified: 'Bem-vindo!',
+      accountVerifiedSuccess: 'Sua conta foi verificada com sucesso.',
+      errorConnectingWith: 'Erro ao conectar com',
+      errorConnecting: 'Erro ao conectar. Tente novamente.',
+      enterPhoneNumber: 'Por favor, digite seu número de telefone',
+      codeSentTitle: 'Código enviado!',
+      welcomeTitle: 'Bem-vindo!'
     },
     'en': {
       welcomeBack: 'Welcome back',
@@ -132,7 +141,6 @@ export const Auth: React.FC<AuthProps> = ({
       and: 'and',
       privacyPolicy: 'Privacy Policy',
       backToHome: '← Back to Home',
-      // Error messages
       enterEmailAddress: 'Please enter your email address',
       enterValidEmail: 'Please enter a valid email address',
       enterPasswordField: 'Please enter your password',
@@ -143,11 +151,9 @@ export const Auth: React.FC<AuthProps> = ({
       emailNotConfirmed: 'Please check your email and click the confirmation link before signing in.',
       errorOccurred: 'An error occurred. Please try again.',
       unexpectedError: 'An unexpected error occurred. Please try again.',
-      // Success messages
       accountCreated: 'Account created! Please check your email to verify your account.',
       welcomeBackToast: 'Welcome back!',
       signedInSuccessfully: 'You have been signed in successfully.',
-      // Quick signup
       orContinueWith: 'Or continue with',
       continueWithGoogle: 'Continue with Google',
       continueWithMicrosoft: 'Continue with Microsoft',
@@ -161,7 +167,19 @@ export const Auth: React.FC<AuthProps> = ({
       verifyCode: 'Verify code',
       codeSent: 'Verification code sent!',
       invalidCode: 'Invalid code. Please try again.',
-      resendConfirmationEmail: 'Resend confirmation email'
+      resendConfirmationEmail: 'Resend confirmation email',
+      errorSendingCode: 'Error sending verification code.',
+      checkEmailForCode: 'Check your email for the verification code.',
+      errorSendingEmailCode: 'Error sending email code.',
+      errorSendingPhoneCode: 'Error sending SMS code.',
+      checkPhoneForCode: 'Check your phone for the verification code.',
+      welcomeVerified: 'Welcome!',
+      accountVerifiedSuccess: 'Your account has been verified successfully.',
+      errorConnectingWith: 'Error connecting with',
+      errorConnecting: 'Error connecting. Please try again.',
+      enterPhoneNumber: 'Please enter your phone number',
+      codeSentTitle: 'Code sent!',
+      welcomeTitle: 'Welcome!'
     },
     'es': {
       welcomeBack: 'Bienvenido de nuevo',
@@ -192,7 +210,6 @@ export const Auth: React.FC<AuthProps> = ({
       and: 'y',
       privacyPolicy: 'Política de Privacidad',
       backToHome: '← Volver al inicio',
-      // Error messages
       enterEmailAddress: 'Por favor, ingresa tu correo electrónico',
       enterValidEmail: 'Por favor, ingresa un correo electrónico válido',
       enterPasswordField: 'Por favor, ingresa tu contraseña',
@@ -203,11 +220,9 @@ export const Auth: React.FC<AuthProps> = ({
       emailNotConfirmed: 'Revisa tu correo y haz clic en el enlace de confirmación antes de iniciar sesión.',
       errorOccurred: 'Ocurrió un error. Inténtalo de nuevo.',
       unexpectedError: 'Ocurrió un error inesperado. Inténtalo de nuevo.',
-      // Success messages
       accountCreated: '¡Cuenta creada! Revisa tu correo para verificar tu cuenta.',
       welcomeBackToast: '¡Bienvenido de nuevo!',
       signedInSuccessfully: 'Has iniciado sesión correctamente.',
-      // Quick signup
       orContinueWith: 'O continúa con',
       continueWithGoogle: 'Continuar con Google',
       continueWithMicrosoft: 'Continuar con Microsoft',
@@ -221,7 +236,226 @@ export const Auth: React.FC<AuthProps> = ({
       verifyCode: 'Verificar código',
       codeSent: '¡Código de verificación enviado!',
       invalidCode: 'Código inválido. Inténtalo de nuevo.',
-      resendConfirmationEmail: 'Reenviar email de confirmación'
+      resendConfirmationEmail: 'Reenviar email de confirmación',
+      errorSendingCode: 'Error al enviar código de verificación.',
+      checkEmailForCode: 'Revisa tu correo para el código de verificación.',
+      errorSendingEmailCode: 'Error al enviar código por correo.',
+      errorSendingPhoneCode: 'Error al enviar código por SMS.',
+      checkPhoneForCode: 'Revisa tu teléfono para el código de verificación.',
+      welcomeVerified: '¡Bienvenido!',
+      accountVerifiedSuccess: 'Tu cuenta ha sido verificada exitosamente.',
+      errorConnectingWith: 'Error al conectar con',
+      errorConnecting: 'Error al conectar. Inténtalo de nuevo.',
+      enterPhoneNumber: 'Por favor, ingresa tu número de teléfono',
+      codeSentTitle: '¡Código enviado!',
+      welcomeTitle: '¡Bienvenido!'
+    },
+    'zh-CN': {
+      welcomeBack: '欢迎回来',
+      createAccount: '创建您的账户',
+      signInToAccess: '登录以访问您的记忆钱包',
+      startPreserving: '开始保存您的珍贵记忆',
+      signIn: '登录',
+      signUp: '注册',
+      emailAddress: '电子邮箱地址',
+      enterEmail: '输入您的邮箱',
+      password: '密码',
+      enterPassword: '输入您的密码',
+      confirmPassword: '确认密码',
+      confirmPasswordPlaceholder: '确认您的密码',
+      passwordStrength: '密码强度',
+      tooShort: '太短',
+      fair: '一般',
+      good: '良好',
+      signingIn: '登录中...',
+      creatingAccount: '创建账户中...',
+      createAccountBtn: '创建账户',
+      dontHaveAccount: '还没有账户？',
+      alreadyHaveAccount: '已有账户？',
+      createNewAccount: '创建新账户',
+      signInExisting: '登录现有账户',
+      byContinuing: '继续即表示您同意我们的',
+      termsOfService: '服务条款',
+      and: '和',
+      privacyPolicy: '隐私政策',
+      backToHome: '← 返回首页',
+      enterEmailAddress: '请输入您的邮箱地址',
+      enterValidEmail: '请输入有效的邮箱地址',
+      enterPasswordField: '请输入您的密码',
+      passwordMinLength: '密码必须至少6个字符',
+      passwordsNoMatch: '密码不匹配',
+      invalidCredentials: '邮箱或密码无效。请检查您的凭据并重试。',
+      userAlreadyRegistered: '此邮箱已存在账户。请尝试登录。',
+      emailNotConfirmed: '请检查您的邮箱并点击确认链接后再登录。',
+      errorOccurred: '发生错误。请重试。',
+      unexpectedError: '发生意外错误。请重试。',
+      accountCreated: '账户已创建！请检查您的邮箱以验证账户。',
+      welcomeBackToast: '欢迎回来！',
+      signedInSuccessfully: '您已成功登录。',
+      orContinueWith: '或继续使用',
+      continueWithGoogle: '使用 Google 继续',
+      continueWithMicrosoft: '使用 Microsoft 继续',
+      continueWithApple: '使用 Apple 继续',
+      continueWithPhone: '使用手机继续',
+      phoneNumber: '手机号码',
+      enterPhone: '输入您的手机号码',
+      sendCode: '发送验证码',
+      code: '验证码',
+      enterCode: '输入验证码',
+      verifyCode: '验证验证码',
+      codeSent: '验证码已发送！',
+      invalidCode: '验证码无效。请重试。',
+      resendConfirmationEmail: '重新发送确认邮件',
+      errorSendingCode: '发送验证码时出错。',
+      checkEmailForCode: '请检查您的邮箱获取验证码。',
+      errorSendingEmailCode: '发送邮箱验证码时出错。',
+      errorSendingPhoneCode: '发送短信验证码时出错。',
+      checkPhoneForCode: '请检查您的手机获取验证码。',
+      welcomeVerified: '欢迎！',
+      accountVerifiedSuccess: '您的账户已成功验证。',
+      errorConnectingWith: '连接出错',
+      errorConnecting: '连接出错。请重试。',
+      enterPhoneNumber: '请输入您的手机号码',
+      codeSentTitle: '验证码已发送！',
+      welcomeTitle: '欢迎！'
+    },
+    'fr': {
+      welcomeBack: 'Bon retour',
+      createAccount: 'Créez votre compte',
+      signInToAccess: 'Connectez-vous pour accéder à votre Portefeuille de Souvenirs',
+      startPreserving: 'Commencez à préserver vos souvenirs précieux',
+      signIn: 'Se connecter',
+      signUp: "S'inscrire",
+      emailAddress: 'Adresse e-mail',
+      enterEmail: 'Entrez votre e-mail',
+      password: 'Mot de passe',
+      enterPassword: 'Entrez votre mot de passe',
+      confirmPassword: 'Confirmer le mot de passe',
+      confirmPasswordPlaceholder: 'Confirmez votre mot de passe',
+      passwordStrength: 'Force du mot de passe',
+      tooShort: 'Trop court',
+      fair: 'Acceptable',
+      good: 'Bon',
+      signingIn: 'Connexion...',
+      creatingAccount: 'Création du compte...',
+      createAccountBtn: 'Créer un compte',
+      dontHaveAccount: "Vous n'avez pas de compte ?",
+      alreadyHaveAccount: 'Vous avez déjà un compte ?',
+      createNewAccount: 'Créer un nouveau compte',
+      signInExisting: 'Se connecter au compte existant',
+      byContinuing: 'En continuant, vous acceptez nos',
+      termsOfService: 'Conditions de service',
+      and: 'et',
+      privacyPolicy: 'Politique de confidentialité',
+      backToHome: "← Retour à l'accueil",
+      enterEmailAddress: 'Veuillez entrer votre adresse e-mail',
+      enterValidEmail: 'Veuillez entrer une adresse e-mail valide',
+      enterPasswordField: 'Veuillez entrer votre mot de passe',
+      passwordMinLength: 'Le mot de passe doit contenir au moins 6 caractères',
+      passwordsNoMatch: 'Les mots de passe ne correspondent pas',
+      invalidCredentials: 'E-mail ou mot de passe invalide. Vérifiez vos identifiants et réessayez.',
+      userAlreadyRegistered: 'Un compte avec cet e-mail existe déjà. Essayez de vous connecter.',
+      emailNotConfirmed: 'Vérifiez votre e-mail et cliquez sur le lien de confirmation avant de vous connecter.',
+      errorOccurred: 'Une erreur est survenue. Veuillez réessayer.',
+      unexpectedError: 'Une erreur inattendue est survenue. Veuillez réessayer.',
+      accountCreated: 'Compte créé ! Vérifiez votre e-mail pour vérifier votre compte.',
+      welcomeBackToast: 'Bon retour !',
+      signedInSuccessfully: 'Vous vous êtes connecté avec succès.',
+      orContinueWith: 'Ou continuer avec',
+      continueWithGoogle: 'Continuer avec Google',
+      continueWithMicrosoft: 'Continuer avec Microsoft',
+      continueWithApple: 'Continuer avec Apple',
+      continueWithPhone: 'Continuer avec le téléphone',
+      phoneNumber: 'Numéro de téléphone',
+      enterPhone: 'Entrez votre numéro de téléphone',
+      sendCode: 'Envoyer le code',
+      code: 'Code',
+      enterCode: 'Entrez le code',
+      verifyCode: 'Vérifier le code',
+      codeSent: 'Code de vérification envoyé !',
+      invalidCode: 'Code invalide. Veuillez réessayer.',
+      resendConfirmationEmail: 'Renvoyer l\'e-mail de confirmation',
+      errorSendingCode: 'Erreur lors de l\'envoi du code de vérification.',
+      checkEmailForCode: 'Vérifiez votre e-mail pour le code de vérification.',
+      errorSendingEmailCode: 'Erreur lors de l\'envoi du code par e-mail.',
+      errorSendingPhoneCode: 'Erreur lors de l\'envoi du code par SMS.',
+      checkPhoneForCode: 'Vérifiez votre téléphone pour le code de vérification.',
+      welcomeVerified: 'Bienvenue !',
+      accountVerifiedSuccess: 'Votre compte a été vérifié avec succès.',
+      errorConnectingWith: 'Erreur de connexion avec',
+      errorConnecting: 'Erreur de connexion. Veuillez réessayer.',
+      enterPhoneNumber: 'Veuillez entrer votre numéro de téléphone',
+      codeSentTitle: 'Code envoyé !',
+      welcomeTitle: 'Bienvenue !'
+    },
+    'de': {
+      welcomeBack: 'Willkommen zurück',
+      createAccount: 'Erstellen Sie Ihr Konto',
+      signInToAccess: 'Anmelden, um auf Ihre Erinnerungssammlung zuzugreifen',
+      startPreserving: 'Beginnen Sie, Ihre wertvollen Erinnerungen zu bewahren',
+      signIn: 'Anmelden',
+      signUp: 'Registrieren',
+      emailAddress: 'E-Mail-Adresse',
+      enterEmail: 'Geben Sie Ihre E-Mail ein',
+      password: 'Passwort',
+      enterPassword: 'Geben Sie Ihr Passwort ein',
+      confirmPassword: 'Passwort bestätigen',
+      confirmPasswordPlaceholder: 'Bestätigen Sie Ihr Passwort',
+      passwordStrength: 'Passwortstärke',
+      tooShort: 'Zu kurz',
+      fair: 'Akzeptabel',
+      good: 'Gut',
+      signingIn: 'Anmelden...',
+      creatingAccount: 'Konto wird erstellt...',
+      createAccountBtn: 'Konto erstellen',
+      dontHaveAccount: 'Haben Sie noch kein Konto?',
+      alreadyHaveAccount: 'Haben Sie bereits ein Konto?',
+      createNewAccount: 'Ein neues Konto erstellen',
+      signInExisting: 'Bei bestehendem Konto anmelden',
+      byContinuing: 'Durch Fortfahren stimmen Sie unseren',
+      termsOfService: 'Nutzungsbedingungen',
+      and: 'und',
+      privacyPolicy: 'Datenschutzrichtlinie',
+      backToHome: '← Zurück zur Startseite',
+      enterEmailAddress: 'Bitte geben Sie Ihre E-Mail-Adresse ein',
+      enterValidEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+      enterPasswordField: 'Bitte geben Sie Ihr Passwort ein',
+      passwordMinLength: 'Das Passwort muss mindestens 6 Zeichen lang sein',
+      passwordsNoMatch: 'Passwörter stimmen nicht überein',
+      invalidCredentials: 'Ungültige E-Mail oder Passwort. Überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut.',
+      userAlreadyRegistered: 'Ein Konto mit dieser E-Mail existiert bereits. Versuchen Sie sich anzumelden.',
+      emailNotConfirmed: 'Überprüfen Sie Ihre E-Mail und klicken Sie auf den Bestätigungslink, bevor Sie sich anmelden.',
+      errorOccurred: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+      unexpectedError: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+      accountCreated: 'Konto erstellt! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu verifizieren.',
+      welcomeBackToast: 'Willkommen zurück!',
+      signedInSuccessfully: 'Sie haben sich erfolgreich angemeldet.',
+      orContinueWith: 'Oder fortfahren mit',
+      continueWithGoogle: 'Mit Google fortfahren',
+      continueWithMicrosoft: 'Mit Microsoft fortfahren',
+      continueWithApple: 'Mit Apple fortfahren',
+      continueWithPhone: 'Mit Telefon fortfahren',
+      phoneNumber: 'Telefonnummer',
+      enterPhone: 'Geben Sie Ihre Telefonnummer ein',
+      sendCode: 'Code senden',
+      code: 'Code',
+      enterCode: 'Geben Sie den Code ein',
+      verifyCode: 'Code verifizieren',
+      codeSent: 'Bestätigungscode gesendet!',
+      invalidCode: 'Ungültiger Code. Bitte versuchen Sie es erneut.',
+      resendConfirmationEmail: 'Bestätigungs-E-Mail erneut senden',
+      errorSendingCode: 'Fehler beim Senden des Bestätigungscodes.',
+      checkEmailForCode: 'Überprüfen Sie Ihre E-Mail für den Bestätigungscode.',
+      errorSendingEmailCode: 'Fehler beim Senden des E-Mail-Codes.',
+      errorSendingPhoneCode: 'Fehler beim Senden des SMS-Codes.',
+      checkPhoneForCode: 'Überprüfen Sie Ihr Telefon für den Bestätigungscode.',
+      welcomeVerified: 'Willkommen!',
+      accountVerifiedSuccess: 'Ihr Konto wurde erfolgreich verifiziert.',
+      errorConnectingWith: 'Fehler beim Verbinden mit',
+      errorConnecting: 'Verbindungsfehler. Bitte versuchen Sie es erneut.',
+      enterPhoneNumber: 'Bitte geben Sie Ihre Telefonnummer ein',
+      codeSentTitle: 'Code gesendet!',
+      welcomeTitle: 'Willkommen!'
     }
   };
 
@@ -312,18 +546,18 @@ export const Auth: React.FC<AuthProps> = ({
     try {
       const result = await authService.sendEmailOtp(email.trim());
       if (result.error) {
-        setError('Erro ao enviar código de verificação.');
+        setError(getText('errorSendingCode'));
       } else {
         setPendingSignupEmail(email.trim());
         setMode('email_otp');
         toast({
           title: getText('codeSent'),
-          description: 'Verifique seu email para o código de verificação.',
+          description: getText('checkEmailForCode'),
         });
       }
     } catch (error) {
       console.error('Email OTP error:', error);
-      setError('Erro ao enviar código. Tente novamente.');
+      setError(getText('errorConnecting'));
     } finally {
       setLoading(false);
     }
@@ -404,11 +638,11 @@ export const Auth: React.FC<AuthProps> = ({
       
       const result = await authService.signInWithOAuth(provider, redirectUrl);
       if (result.error) {
-        setError('Erro ao conectar com ' + provider);
+        setError(getText('errorConnectingWith') + ' ' + provider);
       }
     } catch (error) {
       console.error('OAuth error:', error);
-      setError('Erro ao conectar. Tente novamente.');
+      setError(getText('errorConnecting'));
     }
   };
 
@@ -422,18 +656,18 @@ export const Auth: React.FC<AuthProps> = ({
     try {
       const result = await authService.sendEmailOtp(email.trim());
       if (result.error) {
-        setError('Erro ao enviar código por email.');
+        setError(getText('errorSendingEmailCode'));
       } else {
         setPendingSignupEmail(email.trim());
         setMode('email_otp');
         toast({
-          title: 'Código enviado!',
-          description: 'Verifique seu email para o código de verificação.',
+          title: getText('codeSentTitle'),
+          description: getText('checkEmailForCode'),
         });
       }
     } catch (error) {
       console.error('Email OTP error:', error);
-      setError('Erro ao enviar código. Tente novamente.');
+      setError(getText('errorConnecting'));
     } finally {
       setLoading(false);
     }
@@ -441,7 +675,7 @@ export const Auth: React.FC<AuthProps> = ({
 
   const handlePhoneOtp = async () => {
     if (!phoneNumber.trim()) {
-      setError('Por favor, digite seu número de telefone');
+      setError(getText('enterPhoneNumber'));
       return;
     }
     
@@ -449,18 +683,18 @@ export const Auth: React.FC<AuthProps> = ({
     try {
       const result = await authService.sendPhoneOtp(phoneNumber.trim());
       if (result.error) {
-        setError('Erro ao enviar código por SMS.');
+        setError(getText('errorSendingPhoneCode'));
       } else {
         setPendingPhone(phoneNumber.trim());
         setMode('phone_otp');
         toast({
-          title: 'Código enviado!',
-          description: 'Verifique seu telefone para o código de verificação.',
+          title: getText('codeSentTitle'),
+          description: getText('checkPhoneForCode'),
         });
       }
     } catch (error) {
       console.error('Phone OTP error:', error);
-      setError('Erro ao enviar código. Tente novamente.');
+      setError(getText('errorConnecting'));
     } finally {
       setLoading(false);
     }
@@ -468,8 +702,8 @@ export const Auth: React.FC<AuthProps> = ({
 
   const handleOtpVerified = () => {
     toast({
-      title: 'Bem-vindo!',
-      description: 'Sua conta foi verificada com sucesso.',
+      title: getText('welcomeTitle'),
+      description: getText('accountVerifiedSuccess'),
     });
     
     if (selectedPlan && selectedPlan !== 'free') {
