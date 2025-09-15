@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, AlertCircle, CheckCircle, Mail, Phone } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle, Mail, Phone, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FloatingInput } from '@/components/ui/floating-input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -16,7 +16,7 @@ import { OTPVerification } from '@/components/OTPVerification';
 import { authService } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
 
-type AuthMode = 'signin' | 'signup' | 'email_confirmation' | 'email_otp' | 'phone_otp' | 'phone_input';
+type AuthMode = 'signin' | 'signup' | 'email_confirmation' | 'email_otp' | 'phone_input' | 'phone_otp';
 
 interface AuthProps {
   language?: string;
@@ -294,56 +294,70 @@ export const Auth: React.FC<AuthProps> = ({
     return true;
   };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Handle email authentication with OTP
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      setError(getText('enterEmailAddress'));
+      return;
+    }
+    if (!email.includes('@')) {
+      setError(getText('enterValidEmail'));
+      return;
+    }
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      const result = await authService.sendEmailOtp(email.trim());
+      if (result.error) {
+        setError('Erro ao enviar código de verificação.');
+      } else {
+        setPendingSignupEmail(email.trim());
+        setMode('email_otp');
+        toast({
+          title: getText('codeSent'),
+          description: 'Verifique seu email para o código de verificação.',
+        });
+      }
+    } catch (error) {
+      console.error('Email OTP error:', error);
+      setError('Erro ao enviar código. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Legacy password-based auth for fallback
+  const handlePasswordAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess('');
     if (!validateForm()) return;
     setLoading(true);
+    
     try {
-      let result;
-      if (mode === 'signup') {
-        result = await signUp(email.trim(), password || 'temp-password', currentLanguage);
-        if (!result.error) {
-          await analyticsIntegrations.trackEvent('auth_signup_success', {
-            email: email.trim(),
-            plan: selectedPlan
-          });
-          setPendingSignupEmail(email.trim());
-          setMode('email_confirmation');
+      const result = await signIn(email.trim(), password);
+      if (!result.error) {
+        await analyticsIntegrations.trackEvent('auth_signin_success', {
+          email: email.trim()
+        });
+        toast({
+          title: getText('welcomeBackToast'),
+          description: getText('signedInSuccessfully'),
+          variant: 'default'
+        });
+
+        if (selectedPlan && selectedPlan !== 'free') {
+          setTimeout(() => {
+            navigate(`/payment?plan=${selectedPlan}`, { replace: true });
+          }, 1000);
         }
       } else {
-        result = await signIn(email.trim(), password);
-        if (!result.error) {
-          await analyticsIntegrations.trackEvent('auth_signin_success', {
-            email: email.trim()
-          });
-          toast({
-            title: getText('welcomeBackToast'),
-            description: getText('signedInSuccessfully'),
-            variant: 'default'
-          });
-
-          // Check if user has a selected plan and redirect to checkout
-          if (selectedPlan && selectedPlan !== 'free') {
-            setTimeout(() => {
-              navigate(`/payment?plan=${selectedPlan}`, { replace: true });
-            }, 1000);
-          } else {
-            // Redirect will happen automatically via useEffect
-          }
-        }
-      }
-      if (result.error) {
-        // Handle specific error types
         switch (result.error.message) {
           case 'Invalid login credentials':
             setError(getText('invalidCredentials'));
-            break;
-          case 'User already registered':
-            setError(getText('userAlreadyRegistered'));
-            setMode('signin');
             break;
           case 'Email not confirmed':
             setError(getText('emailNotConfirmed'));
@@ -478,13 +492,61 @@ export const Auth: React.FC<AuthProps> = ({
 
   if (mode === 'email_otp') {
     return (
-      <OTPVerification
-        type="email"
-        identifier={pendingSignupEmail}
-        onVerified={handleOtpVerified}
-        onBack={() => setMode('signin')}
-        onResend={() => handleEmailOtp()}
-      />
+      <>
+        {user && <EternaHeader />}
+        <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
+          <div className="w-full max-w-md">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              {/* Back button */}
+              <div className="flex justify-start mb-8">
+                <Button variant="ghost" onClick={() => setMode('signin')} className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  Voltar
+                </Button>
+              </div>
+
+              {/* Icon */}
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Mail className="h-8 w-8 text-primary" />
+                </div>
+              </div>
+
+              {/* Title and Description */}
+              <h1 className="text-2xl font-semibold text-foreground mb-2">
+                Email enviado
+              </h1>
+              
+              <p className="text-muted-foreground mb-2">
+                Verifique seu email para um código de 6 dígitos e digite abaixo.
+              </p>
+              
+              <p className="text-sm text-muted-foreground mb-8">
+                (Pode estar na pasta de spam)
+              </p>
+
+              {/* Error Message */}
+              {error && (
+                <Alert variant="destructive" className="mb-6">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              <OTPVerification
+                type="email"
+                identifier={pendingSignupEmail}
+                onVerified={handleOtpVerified}
+                onBack={() => setMode('signin')}
+              />
+            </motion.div>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -588,7 +650,7 @@ export const Auth: React.FC<AuthProps> = ({
             {/* Title - exactly like OpenAI */}
             <div className="text-center mb-8">
               <h1 className="text-2xl font-semibold text-foreground">
-                {mode === 'signin' ? getText('welcomeBack') : getText('createAccount')}
+                Bem-vindo
               </h1>
             </div>
 
@@ -608,7 +670,7 @@ export const Auth: React.FC<AuthProps> = ({
             )}
 
             {/* Main Form - OpenAI Floating Labels */}
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleEmailAuth} className="space-y-6">
               {/* Email Field - OpenAI Style Floating Label */}
               <FloatingInput
                 id="email"
@@ -620,37 +682,13 @@ export const Auth: React.FC<AuthProps> = ({
                 autoComplete="email"
               />
 
-              {/* Password Field - Only show for signin with OpenAI Style Floating Label */}
-              {mode === 'signin' && (
-                <FloatingInput
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  label="Password"
-                  disabled={loading}
-                  autoComplete="current-password"
-                  className="pr-12"
-                >
-                  <Button 
-                    type="button" 
-                    variant="ghost" 
-                    size="sm" 
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted rounded-full text-muted-foreground hover:text-foreground" 
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
-                </FloatingInput>
-              )}
-
               {/* Continue Button - Fixed primary colors */}
               <Button 
                 type="submit" 
                 className="w-full h-12 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-xl mt-6" 
                 disabled={loading || !email.trim()}
               >
-                Continue
+                {loading ? 'Enviando código...' : 'Continuar com Email'}
               </Button>
             </form>
 
