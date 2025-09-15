@@ -324,9 +324,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
   return (
     <>
-      <section id="pricing" className="pt-16 pb-1 sm:pt-20 sm:pb-1 md:pt-24 md:pb-1 lg:pt-32 lg:pb-1 bg-gradient-to-br from-background via-background/95 to-background/90 relative overflow-hidden">
-        {/* Subtle background elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-30" />
+      <section id="pricing" className="pt-24 pb-8 sm:pt-32 sm:pb-12 md:pt-40 md:pb-16 lg:pt-48 lg:pb-20 bg-gradient-to-br from-background via-background/98 to-background/95 relative overflow-hidden">
+        {/* Modern background pattern */}
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,hsl(var(--primary))_1px,transparent_0)] bg-[size:48px_48px]" />
+        </div>
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Header */}
@@ -337,10 +340,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto mb-16"
           >
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-8 tracking-tight leading-tight">
               {content.title}
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed font-light max-w-3xl mx-auto">
+            <p className="text-xl sm:text-2xl text-muted-foreground/80 leading-relaxed font-light max-w-4xl mx-auto">
               {content.subtitle}
             </p>
           </motion.div>
@@ -356,9 +359,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className=""
               >
-                <Card className="relative h-full transition-all duration-300 border border-border/50 hover:border-primary/30 hover:shadow-lg bg-card">
+                <Card className="relative h-full transition-all duration-300 border border-border/30 hover:border-primary/20 hover:shadow-xl bg-card/80 backdrop-blur-sm rounded-2xl overflow-hidden group hover:scale-[1.02]">
 
-                  <CardContent className="p-8 space-y-8">
+                  <CardContent className="p-10 space-y-10">
                     {/* Plan header */}
                     <div className="text-center space-y-4">
                       <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center ${
@@ -435,18 +438,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
                     {/* CTA Buttons */}
                     <div className="space-y-3">
-                      <Button 
-                        id={`pricing_${index === 0 ? 'free_start' : index === 1 ? 'subscribe_essential' : 'subscribe_complete'}`}
-                        onClick={
-                          index === 0 ? handleFreeTrial :
-                          index === 1 ? handleEssentialSubscribe :
-                          handleCompleteSubscribe
-                        }
-                        variant="outline"
-                        size="lg" 
-                        className="w-full h-12 font-semibold"
-                        disabled={subscriptionLoading}
-                      >
+                        <Button 
+                          id={`pricing_${index === 0 ? 'free_start' : index === 1 ? 'subscribe_essential' : 'subscribe_complete'}`}
+                          onClick={
+                            index === 0 ? handleFreeTrial :
+                            index === 1 ? handleEssentialSubscribe :
+                            handleCompleteSubscribe
+                          }
+                          variant="outline"
+                          size="lg" 
+                          className="w-full h-14 font-semibold rounded-xl border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover:shadow-lg"
+                          disabled={subscriptionLoading}
+                        >
                         {plan.cta}
                       </Button>
 

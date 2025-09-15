@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, AlertCircle, CheckCircle, Mail, Phone, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle, Mail, Phone, ArrowLeft, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FloatingInput } from '@/components/ui/floating-input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -647,11 +647,21 @@ export const Auth: React.FC<AuthProps> = ({
             transition={{ duration: 0.5 }}
             className="relative z-20"
           >
-            {/* Title - exactly like OpenAI */}
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-semibold text-foreground">
+            <div className="text-center mb-10">
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="w-20 h-20 mx-auto bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center mb-8"
+              >
+                <Heart className="w-10 h-10 text-primary" />
+              </motion.div>
+              <h1 className="text-3xl font-semibold text-foreground tracking-tight">
                 Bem-vindo
               </h1>
+              <p className="text-muted-foreground/70 mt-3 text-lg">
+                Entre para acessar suas memórias
+              </p>
             </div>
 
             {/* Error/Success Messages */}
