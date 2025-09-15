@@ -26,7 +26,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
   return (
     <footer className="bg-primary border-t border-border/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           

@@ -69,9 +69,9 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 gap-6 sm:gap-8">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 lg:gap-8 overflow-x-hidden">
         {/* Main Welcome Card */}
-        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-8 sm:p-12 text-center">
+        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-6 sm:p-8 lg:p-12 text-center mx-4">
           <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-xs sm:text-sm font-medium mb-6 sm:mb-8">
             {content.madeWithLove}
           </div>
@@ -126,7 +126,7 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
         </div>
 
         {/* Mission Card */}
-        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-6 sm:p-8 text-center">
+        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-4 sm:p-6 lg:p-8 text-center mx-4">
           <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">{content.whyCreated}</h3>
           <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
             {content.mission}

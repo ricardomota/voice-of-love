@@ -55,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
       
       {/* Main content */}
-      <div className="relative w-full max-w-4xl mx-auto px-6 py-24 text-center">
+      <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center">
         
         {/* Status badge */}
         <motion.div 

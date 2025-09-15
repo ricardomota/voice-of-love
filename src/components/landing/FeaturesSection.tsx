@@ -224,11 +224,11 @@ export const FeaturesSection: React.FC = () => {
   const content = getContent(currentLanguage);
 
   return (
-    <section id="features" className="py-32 relative">
+    <section id="features" className="py-16 sm:py-24 lg:py-32 relative">
       {/* Clean background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
       
-      <div className="max-w-6xl mx-auto px-6 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
         
         {/* Section header */}
         <motion.div 
@@ -236,7 +236,7 @@ export const FeaturesSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-24"
+          className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 lg:mb-24"
         >
           <div className="inline-block px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-4">
             {content.badge}
@@ -252,7 +252,7 @@ export const FeaturesSection: React.FC = () => {
         </motion.div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {content.features.map((feature, index) => {
             const IconComponent = feature.icon;
             
@@ -265,7 +265,7 @@ export const FeaturesSection: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative p-8 rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm hover:border-border/50 hover:bg-card/50 transition-all duration-500 h-full">
+                <div className="relative p-6 sm:p-8 rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm hover:border-border/50 hover:bg-card/50 transition-all duration-500 h-full">
                   
                   {/* Icon */}
                   <div className="mb-6">
