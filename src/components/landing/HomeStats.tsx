@@ -57,6 +57,54 @@ const getContent = (language: string) => {
         description: "Únete a familias que están creando conexiones duraderas a través de la tecnología de preservación de voz de Eterna.",
         button: "Comienza Tu Viaje"
       }
+    },
+    'zh-CN': {
+      features: {
+        title: "为家庭设计",
+        items: [
+          { title: "隐私设计", description: "您的语音模型和对话保留在家庭内部", icon: Shield },
+          { title: "随时可用", description: "在最需要时与您所爱的人聊天", icon: Clock },
+          { title: "全球家庭", description: "以多种语言支持世界各地的家庭", icon: Globe },
+          { title: "用爱打造", description: "深入了解记忆挑战而创建", icon: Heart }
+        ]
+      },
+      cta: {
+        title: "准备好保存您家庭的声音了吗？",
+        description: "加入通过Eterna语音保存技术创建持久连接的家庭。",
+        button: "开始您的旅程"
+      }
+    },
+    fr: {
+      features: {
+        title: "Conçu pour les familles",
+        items: [
+          { title: "Privé par conception", description: "Vos modèles vocaux et conversations restent dans votre famille", icon: Shield },
+          { title: "Toujours disponible", description: "Chattez avec vos proches quand vous en avez le plus besoin", icon: Clock },
+          { title: "Familles mondiales", description: "Soutenir les familles du monde entier en plusieurs langues", icon: Globe },
+          { title: "Fait avec amour", description: "Créé avec une compréhension profonde des défis de mémoire", icon: Heart }
+        ]
+      },
+      cta: {
+        title: "Prêt à préserver la voix de votre famille ?",
+        description: "Rejoignez les familles qui créent des connexions durables grâce à la technologie de préservation vocale d'Eterna.",
+        button: "Commencez Votre Voyage"
+      }
+    },
+    de: {
+      features: {
+        title: "Für Familien entworfen",
+        items: [
+          { title: "Privat by Design", description: "Ihre Stimmmodelle und Gespräche bleiben in Ihrer Familie", icon: Shield },
+          { title: "Immer verfügbar", description: "Chatten Sie mit Ihren Liebsten, wenn Sie sie am meisten brauchen", icon: Clock },
+          { title: "Globale Familien", description: "Unterstützung von Familien weltweit in mehreren Sprachen", icon: Globe },
+          { title: "Mit Liebe gemacht", description: "Mit tiefem Verständnis für Gedächtnisherausforderungen erstellt", icon: Heart }
+        ]
+      },
+      cta: {
+        title: "Bereit, die Stimme Ihrer Familie zu bewahren?",
+        description: "Schließen Sie sich Familien an, die dauerhafte Verbindungen durch Eternas Stimmbewahrungstechnologie schaffen.",
+        button: "Beginnen Sie Ihre Reise"
+      }
     }
   };
   return content[language as keyof typeof content] || content.en;

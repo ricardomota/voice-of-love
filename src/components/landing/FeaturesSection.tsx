@@ -144,6 +144,76 @@ const getContent = (language: string) => {
           benefits: ["15+ idiomas", "Contexto cultural", "Soporte local"]
         }
       ]
+    },
+    fr: {
+      badge: "Pourquoi les familles nous choisissent",
+      title: "Conçu pour ce qui compte le plus",
+      subtitle: "Chaque fonctionnalité est conçue avec amour, sécurité et l'histoire unique de votre famille à l'esprit.",
+      features: [
+        {
+          title: "Confidentialité d'abord",
+          description: "Les souvenirs de votre famille vous appartiennent. Le chiffrement de bout en bout garantit que vos moments les plus précieux restent privés et sécurisés.",
+          icon: Shield,
+          gradient: "from-blue-500 to-cyan-500",
+          benefits: ["Chiffrement militaire", "Aucun partage de données", "Conforme RGPD"]
+        },
+        {
+          title: "Voix authentiques",
+          description: "L'IA avancée capture l'essence unique de la façon dont vos proches parlent, créant des expériences vocales vraiment personnelles.",
+          icon: Mic,
+          gradient: "from-purple-500 to-pink-500",
+          benefits: ["Modèles vocaux naturels", "Nuances émotionnelles", "Multilingue"]
+        },
+        {
+          title: "Souvenirs intelligents",
+          description: "Notre IA comprend le contexte, les relations et l'histoire personnelle pour créer des conversations significatives et authentiques.",
+          icon: Brain,
+          gradient: "from-orange-500 to-red-500",
+          benefits: ["Sensible au contexte", "Intelligence émotionnelle", "Réponses adaptatives"]
+        },
+        {
+          title: "Portée mondiale",
+          description: "Soutenez les familles du monde entier avec des fonctionnalités multilingues intégrées et une compréhension culturelle.",
+          icon: Globe,
+          gradient: "from-green-500 to-teal-500",
+          benefits: ["15+ langues", "Contexte culturel", "Support local"]
+        }
+      ]
+    },
+    de: {
+      badge: "Warum Familien uns wählen",
+      title: "Gebaut für das, was am wichtigsten ist",
+      subtitle: "Jede Funktion ist mit Liebe, Sicherheit und der einzigartigen Geschichte Ihrer Familie im Sinn gestaltet.",
+      features: [
+        {
+          title: "Datenschutz zuerst",
+          description: "Die Erinnerungen Ihrer Familie gehören Ihnen. End-zu-End-Verschlüsselung stellt sicher, dass Ihre kostbarsten Momente privat und sicher bleiben.",
+          icon: Shield,
+          gradient: "from-blue-500 to-cyan-500",
+          benefits: ["Militärische Verschlüsselung", "Keine Datenteilung", "DSGVO-konform"]
+        },
+        {
+          title: "Authentische Stimmen",
+          description: "Fortschrittliche KI erfasst die einzigartige Essenz, wie Ihre Liebsten sprechen, und schafft wahrhaft persönliche Spracherfahrungen.",
+          icon: Mic,
+          gradient: "from-purple-500 to-pink-500",
+          benefits: ["Natürliche Sprachmuster", "Emotionale Nuancen", "Mehrsprachig"]
+        },
+        {
+          title: "Intelligente Erinnerungen",
+          description: "Unsere KI versteht Kontext, Beziehungen und persönliche Geschichte, um bedeutungsvolle, authentische Gespräche zu schaffen.",
+          icon: Brain,
+          gradient: "from-orange-500 to-red-500",
+          benefits: ["Kontextbewusst", "Emotionale Intelligenz", "Adaptive Antworten"]
+        },
+        {
+          title: "Globale Reichweite",
+          description: "Unterstützen Sie Familien weltweit mit integrierten mehrsprachigen Funktionen und kulturellem Verständnis.",
+          icon: Globe,
+          gradient: "from-green-500 to-teal-500",
+          benefits: ["15+ Sprachen", "Kultureller Kontext", "Lokaler Support"]
+        }
+      ]
     }
   };
   return content[language as keyof typeof content] || content.en;
@@ -249,6 +319,8 @@ export const FeaturesSection: React.FC = () => {
             {currentLanguage === 'zh-CN' ? '为关心隐私、真实性和有意义连接的家庭而设计。' :
              currentLanguage === 'pt-BR' ? 'Projetado para famílias que se preocupam com privacidade, autenticidade e conexões significativas.' :
              currentLanguage === 'es' ? 'Diseñado para familias que se preocupan por la privacidad, autenticidad y conexiones significativas.' :
+             currentLanguage === 'fr' ? 'Conçu pour les familles qui se soucient de la confidentialité, de l\'authenticité et de connexions significatives.' :
+             currentLanguage === 'de' ? 'Entworfen für Familien, die sich um Datenschutz, Authentizität und bedeutungsvolle Verbindungen kümmern.' :
              'Designed for families who care about privacy, authenticity, and meaningful connections.'}
           </p>
         </motion.div>

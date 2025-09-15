@@ -26,6 +26,24 @@ const getContent = (language: string) => {
       tryFree: "Começar", 
       signIn: "Entrar"
     },
+    'zh-CN': {
+      howItWorks: "工作原理",
+      pricing: "定价",
+      tryFree: "开始使用",
+      signIn: "登录"
+    },
+    fr: {
+      howItWorks: "Comment Ça Marche",
+      pricing: "Tarifs",
+      tryFree: "Commencer",
+      signIn: "Se Connecter"
+    },
+    de: {
+      howItWorks: "Wie Es Funktioniert",
+      pricing: "Preise",
+      tryFree: "Loslegen",
+      signIn: "Anmelden"
+    },
     es: {
       howItWorks: "Cómo Funciona",
       pricing: "Precios",

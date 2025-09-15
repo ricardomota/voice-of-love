@@ -47,6 +47,30 @@ const getContent = (language: string) => {
         { text: "为家庭用爱打造", icon: Heart }
       ]
     },
+    fr: {
+      headline: "Préservez Leur Voix Pour Toujours",
+      subheadline: "Préservation de Mémoire par IA",
+      description: "Eterna transforme les souvenirs chéris en conversations vivantes. Préservez la voix et la personnalité de votre proche avec une IA qui comprend ce qui compte le plus pour les familles confrontées à la perte de mémoire.",
+      tryFree: "Commencer",
+      learnMore: "Voir Comment Ça Marche",
+      features: [
+        { text: "Privé par Conception", icon: Shield },
+        { text: "Technologie de Clonage Vocal", icon: Brain },
+        { text: "Fait avec Amour pour les Familles", icon: Heart }
+      ]
+    },
+    de: {
+      headline: "Bewahren Sie Ihre Stimme Für Immer",
+      subheadline: "KI-Gestützte Erinnerungsbewahrung",
+      description: "Eterna verwandelt geschätzte Erinnerungen in lebendige Gespräche. Bewahren Sie die Stimme und Persönlichkeit Ihres Liebsten mit KI, die versteht, was Familien am wichtigsten ist, die mit Gedächtnisverlust konfrontiert sind.",
+      tryFree: "Beginnen",
+      learnMore: "Sehen Sie Wie Es Funktioniert",
+      features: [
+        { text: "Privat by Design", icon: Shield },
+        { text: "Stimmklonungs-Technologie", icon: Brain },
+        { text: "Mit Liebe für Familien Gemacht", icon: Heart }
+      ]
+    },
     es: {
       headline: "Mantén Su Voz Para Siempre",
       subheadline: "Preservación de Memoria con IA",

@@ -29,6 +29,20 @@ const getContent = (language: string) => {
       learnMore: "了解工作原理",
       features: ["隐私设计", "家庭优先方法", "声音克隆技术"]
     },
+    fr: {
+      headline: "Préservez Leur Voix Pour Toujours",
+      subhead: "Eterna transforme les souvenirs chéris en conversations vivantes. Préservez la voix et la personnalité de votre proche avec une IA qui comprend ce qui compte le plus.",
+      tryFree: "Essayer Gratuitement",
+      learnMore: "Apprenez Comment Ça Marche",
+      features: ["Privé par conception", "Approche familiale", "Technologie de clonage vocal"]
+    },
+    de: {
+      headline: "Bewahren Sie Ihre Stimme Für Immer",
+      subhead: "Eterna verwandelt geschätzte Erinnerungen in lebendige Gespräche. Bewahren Sie die Stimme und Persönlichkeit Ihres Liebsten mit KI, die versteht, was am wichtigsten ist.",
+      tryFree: "Kostenlos Testen",
+      learnMore: "Erfahren Sie Wie Es Funktioniert",
+      features: ["Privat by Design", "Familienorientierter Ansatz", "Stimmklonungs-Technologie"]
+    },
     es: {
       headline: "Mantén Su Voz Para Siempre",
       subhead: "Eterna convierte recuerdos queridos en conversaciones vivas. Preserva la voz y personalidad de tu ser querido con IA que entiende lo que más importa.",
