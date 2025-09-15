@@ -3,39 +3,17 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Heart, Users, MessageCircle, Globe } from 'lucide-react';
 
-const getContent = (language: string) => {
-  const content = {
-    en: {
-      title: "Built with love for families",
-      features: [
-        { label: "Multi-language support", icon: Globe },
-        { label: "Voice preservation", icon: MessageCircle },
-        { label: "Secure & private", icon: Heart }
-      ]
-    },
-    'pt-BR': {
-      title: "Feito com amor para famílias",
-      features: [
-        { label: "Suporte a múltiplos idiomas", icon: Globe },
-        { label: "Preservação de voz", icon: MessageCircle },
-        { label: "Seguro e privado", icon: Heart }
-      ]
-    },
-    es: {
-      title: "Hecho con amor para familias", 
-      features: [
-        { label: "Soporte multiidioma", icon: Globe },
-        { label: "Preservación de voz", icon: MessageCircle },
-        { label: "Seguro y privado", icon: Heart }
-      ]
-    }
-  };
-  return content[language as keyof typeof content] || content.en;
-};
+import { getLandingContent } from '@/utils/translations';
 
 export const ModernStats: React.FC = () => {
   const { currentLanguage } = useLanguage();
-  const content = getContent(currentLanguage);
+  const content = getLandingContent(currentLanguage).stats;
+  
+  const features = [
+    { label: content.multilang, icon: Globe },
+    { label: content.voice, icon: MessageCircle },
+    { label: content.secure, icon: Heart }
+  ];
 
   return (
     <section className="py-16 relative">
@@ -56,7 +34,7 @@ export const ModernStats: React.FC = () => {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {content.features.map((feature, index) => {
+          {features.map((feature, index) => {
             const IconComponent = feature.icon;
             
             return (

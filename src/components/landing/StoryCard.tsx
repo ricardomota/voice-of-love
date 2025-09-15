@@ -3,31 +3,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Heart } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { motion } from 'framer-motion';
-const getContent = (language: string) => {
-  const content = {
-    en: {
-      title: "Why I created Eterna",
-      text: "After watching my grandmother struggle with Alzheimer's, I realized how precious our voices and stories are. Eterna was born from a simple wish: to keep the essence of our loved ones alive, allowing families to continue conversations and preserve memories that matter most.",
-      heart: "💝"
-    },
-    'pt-BR': {
-      title: "Por que criei o Eterna",
-      text: "Depois de ver minha avó lutando contra o Alzheimer, percebi como nossas vozes e histórias são preciosas. O Eterna nasceu de um desejo simples: manter a essência dos nossos entes queridos viva, permitindo que as famílias continuem conversas e preservem memórias que mais importam.",
-      heart: "💝"
-    },
-    es: {
-      title: "Por qué creé Eterna",
-      text: "Después de ver a mi abuela luchar contra el Alzheimer, me di cuenta de lo preciosas que son nuestras voces e historias. Eterna nació de un deseo simple: mantener viva la esencia de nuestros seres queridos, permitiendo que las familias continúen conversaciones y preserven recuerdos que más importan.",
-      heart: "💝"
-    }
-  };
-  return content[language as keyof typeof content] || content.en;
-};
+import { getLandingContent } from '@/utils/translations';
 export const StoryCard: React.FC = () => {
-  const {
-    currentLanguage
-  } = useLanguage();
-  const content = getContent(currentLanguage);
+  const { currentLanguage } = useLanguage();
+  const content = getLandingContent(currentLanguage).story;
   return <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
@@ -84,8 +63,8 @@ export const StoryCard: React.FC = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full">
-                <span className="text-2xl">{content.heart}</span>
-                <span className="text-sm font-medium text-primary">Made with love</span>
+                <Heart className="w-4 h-4 text-red-500/70 fill-red-500/30" />
+                <span className="text-sm font-medium text-primary">{content.madeWith} {content.love}</span>
               </div>
             </motion.div>
           </div>

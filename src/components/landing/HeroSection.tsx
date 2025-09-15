@@ -11,38 +11,7 @@ interface HeroSectionProps {
   onLogin: () => void;
 }
 
-const getContent = (language: string) => {
-  const content = {
-    en: {
-      badge: "AI-powered memory preservation",
-      headline: "Keep precious memories alive forever ✨",
-      subhead: "Create interactive memories that capture your loved one's voice, personality, and wisdom. Experience meaningful conversations powered by their authentic stories and cherished moments.",
-      tryFree: "Get Started",
-      seePricing: "See Pricing",
-      trustBadge: "Secure & Private by Design",
-      altText: "Family sharing warm moments together"
-    },
-    'pt-BR': {
-      badge: "Preservação de memórias com IA",
-      headline: "Mantenha memórias preciosas vivas para sempre ✨",
-      subhead: "Crie memórias interativas que capturam a voz, personalidade e sabedoria dos seus entes queridos. Tenha conversas significativas alimentadas por suas histórias autênticas e momentos especiais.",
-      tryFree: "Começar",
-      seePricing: "Ver Preços",
-      trustBadge: "Seguro e Privado por Design",
-      altText: "Família compartilhando momentos especiais"
-    },
-    es: {
-      badge: "Preservación de memorias con IA",
-      headline: "Mantén memorias preciosas vivas para siempre ✨",
-      subhead: "Crea memorias interactivas que capturan la voz, personalidad y sabiduría de tus seres queridos. Ten conversaciones significativas alimentadas por sus historias auténticas y momentos especiales.",
-      tryFree: "Empezar",
-      seePricing: "Ver Precios",
-      trustBadge: "Seguro y Privado por Diseño",
-      altText: "Familia compartilhando momentos especiales"
-    }
-  };
-  return content[language as keyof typeof content] || content.en;
-};
+import { getLandingContent } from '@/utils/translations';
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onTryFree,
   onSeePricing,
@@ -51,10 +20,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const [userCount, setUserCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const {
-    currentLanguage
-  } = useLanguage();
-  const content = getContent(currentLanguage);
+  const { currentLanguage } = useLanguage();
+  const content = getLandingContent(currentLanguage).hero;
   
   useEffect(() => {
     const checkUserCount = async () => {

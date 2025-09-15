@@ -10,67 +10,12 @@ interface LandingFooterProps {
   onSignIn: () => void;
 }
 
-const getContent = (language: string) => {
-  const content = {
-    en: {
-      tagline: "Preserving voices, keeping stories alive",
-      links: {
-        pricing: "Pricing",
-        tryFree: "Get Started",
-        docs: "Help & FAQ",
-        terms: "Terms of Service",
-        privacy: "Privacy Policy",
-        contact: "Contact"
-      },
-      support: {
-        title: "Need Help?",
-        description: "We're here to help you preserve your family's most precious voices.",
-        email: "support@eterna.chat"
-      },
-      copyright: "Made with ❤️ for families facing memory challenges"
-    },
-    'pt-BR': {
-      tagline: "Preservando vozes, mantendo histórias vivas",
-      links: {
-        pricing: "Preços",
-        tryFree: "Começar",
-        docs: "Ajuda e FAQ",
-        terms: "Termos de Serviço",
-        privacy: "Política de Privacidade",
-        contact: "Contato"
-      },
-      support: {
-        title: "Precisa de Ajuda?",
-        description: "Estamos aqui para ajudar você a preservar as vozes mais preciosas da sua família.",
-        email: "suporte@eterna.chat"
-      },
-      copyright: "Feito com ❤️ para famílias enfrentando desafios de memória"
-    },
-    es: {
-      tagline: "Preservando voces, manteniendo historias vivas",
-      links: {
-        pricing: "Precios",
-        tryFree: "Empezar",
-        docs: "Ayuda y FAQ",
-        terms: "Términos de Servicio",
-        privacy: "Política de Privacidad",
-        contact: "Contacto"
-      },
-      support: {
-        title: "¿Necesitas Ayuda?",
-        description: "Estamos aquí para ayudarte a preservar las voces más preciosas de tu familia.",
-        email: "soporte@eterna.chat"
-      },
-      copyright: "Hecho con ❤️ para familias enfrentando desafíos de memoria"
-    }
-  };
-  return content[language as keyof typeof content] || content.en;
-};
+import { getLandingContent } from '@/utils/translations';
 
 export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignIn }) => {
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
-  const content = getContent(currentLanguage);
+  const content = getLandingContent(currentLanguage).footer;
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -101,18 +46,18 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
             <div className="space-y-4">
               <h4 className="font-semibold text-primary-foreground">
-                {content.support.title}
+                {content.support}
               </h4>
               <p className="text-sm text-primary-foreground/70 leading-relaxed">
-                {content.support.description}
+                We're here to help you preserve your family's most precious voices.
               </p>
               <div className="flex items-center gap-2 text-sm">
                 <Mail className="w-4 h-4 text-primary-foreground" />
                 <a 
-                  href={`mailto:${content.support.email}`}
+                  href="mailto:support@eterna.chat"
                   className="text-primary-foreground hover:text-primary-foreground/80 transition-colors"
                 >
-                  {content.support.email}
+                  support@eterna.chat
                 </a>
               </div>
             </div>
@@ -120,32 +65,32 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-primary-foreground">Quick Links</h4>
+            <h4 className="font-semibold text-primary-foreground">{content.quickLinks}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => scrollToSection('pricing')}
                 className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
               >
-                {content.links.pricing}
+                Pricing
               </button>
               <button 
                 onClick={onTryFree}
                 className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
               >
-                {content.links.tryFree}
+                {content.tryFree}
               </button>
               <button 
                 onClick={onSignIn}
                 className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
               >
-                Sign In
+                {content.signIn}
               </button>
             </nav>
           </div>
 
           {/* Support & Updates */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-primary-foreground">Support & Updates</h4>
+            <h4 className="font-semibold text-primary-foreground">{content.support}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => navigate('/changelog')}
@@ -156,7 +101,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
               </button>
               <button className="text-primary-foreground/70 hover:text-primary-foreground transition-colors flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary-foreground" />
-                {content.links.contact}
+                {content.contact}
               </button>
             </nav>
           </div>
@@ -168,7 +113,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
             
             {/* Copyright */}
             <p className="text-sm text-primary-foreground/70 text-center sm:text-left">
-              © 2024 Eterna. {content.copyright}
+              {content.copyright}
             </p>
 
             {/* Language Selector */}

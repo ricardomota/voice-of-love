@@ -4,103 +4,21 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { Upload, MessageCircle, Heart, Settings, ChevronRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const getContent = (language: string) => {
-  const content = {
-    en: {
-      badge: "Simple process",
-      title: "How it works",
-      subtitle: "Three simple steps to preserve your loved one's digital presence",
-      steps: [
-        {
-          title: "Share their story",
-          description: "Upload photos, voice recordings, messages, and memories that capture their essence and personality.",
-          details: "Our AI analyzes speech patterns, favorite phrases, and emotional expressions to understand their unique communication style.",
-          icon: Upload,
-          demo: "Upload memories, photos, voice notes..."
-        },
-        {
-          title: "AI learns their voice", 
-          description: "Advanced AI technology learns their speech patterns, personality traits, and way of expressing emotions.",
-          details: "Using cutting-edge machine learning, we create a digital representation that captures not just how they sound, but how they think and respond.",
-          icon: Settings,
-          demo: "Processing voice patterns and personality..."
-        },
-        {
-          title: "Start conversations",
-          description: "Have meaningful conversations that feel authentic, preserving their wisdom and love for future generations.",
-          details: "The AI responds in their voice and style, sharing memories, offering comfort, and maintaining that special connection.",
-          icon: MessageCircle,
-          demo: "Having a conversation with your loved one..."
-        }
-      ],
-      tryNow: "Try it now"
-    },
-    'pt-BR': {
-      badge: "Processo simples",
-      title: "Como funciona",
-      subtitle: "Três passos simples para preservar a presença digital do seu ente querido",
-      steps: [
-        {
-          title: "Compartilhe a história deles",
-          description: "Faça upload de fotos, gravações de voz, mensagens e memórias que capturam sua essência e personalidade.",
-          details: "Nossa IA analisa padrões de fala, frases favoritas e expressões emocionais para entender seu estilo único de comunicação.",
-          icon: Upload,
-          demo: "Enviando memórias, fotos, notas de voz..."
-        },
-        {
-          title: "IA aprende a voz deles",
-          description: "Tecnologia de IA avançada aprende seus padrões de fala, traços de personalidade e forma de expressar emoções.",
-          details: "Usando aprendizado de máquina de ponta, criamos uma representação digital que captura não apenas como eles soam, mas como pensam e respondem.",
-          icon: Settings,
-          demo: "Processando padrões de voz e personalidade..."
-        },
-        {
-          title: "Inicie conversas",
-          description: "Tenha conversas significativas que parecem autênticas, preservando sua sabedoria e amor para gerações futuras.",
-          details: "A IA responde com a voz e estilo deles, compartilhando memórias, oferecendo conforto e mantendo aquela conexão especial.",
-          icon: MessageCircle,
-          demo: "Conversando com seu ente querido..."
-        }
-      ],
-      tryNow: "Experimente agora"
-    },
-    es: {
-      badge: "Proceso simple",
-      title: "Cómo funciona", 
-      subtitle: "Tres pasos simples para preservar la presencia digital de tu ser querido",
-      steps: [
-        {
-          title: "Comparte su historia",
-          description: "Sube fotos, grabaciones de voz, mensajes y recuerdos que capturan su esencia y personalidad.",
-          details: "Nuestra IA analiza patrones de habla, frases favoritas y expresiones emocionales para entender su estilo único de comunicación.",
-          icon: Upload,
-          demo: "Subiendo recuerdos, fotos, notas de voz..."
-        },
-        {
-          title: "IA aprende su voz",
-          description: "Tecnología de IA avanzada aprende sus patrones de habla, rasgos de personalidad y forma de expresar emociones.",
-          details: "Usando aprendizaje automático de vanguardia, creamos una representación digital que captura no solo cómo suenan, sino cómo piensan y responden.",
-          icon: Settings,
-          demo: "Procesando patrones de voz y personalidad..."
-        },
-        {
-          title: "Inicia conversaciones",
-          description: "Ten conversaciones significativas que se sienten auténticas, preservando su sabiduría y amor para generaciones futuras.",
-          details: "La IA responde en su voz y estilo, compartiendo recuerdos, ofreciendo consuelo y manteniendo esa conexión especial.",
-          icon: MessageCircle,
-          demo: "Conversando con tu ser querido..."
-        }
-      ],
-      tryNow: "Pruébalo ahora"
-    }
-  };
-  return content[language as keyof typeof content] || content.en;
-};
+import { getLandingContent } from '@/utils/translations';
 
 export const InteractiveHowItWorks: React.FC = () => {
   const { currentLanguage } = useLanguage();
-  const content = getContent(currentLanguage);
+  const content = getLandingContent(currentLanguage).features;
   const [activeStep, setActiveStep] = useState(0);
+  
+  // Add icons to steps
+  const stepsWithIcons = content.steps.map((step, index) => ({
+    ...step,
+    icon: index === 0 ? Upload : index === 1 ? Settings : MessageCircle,
+    demo: index === 0 ? "Upload memories, photos, voice notes..." : 
+          index === 1 ? "Processing voice patterns and personality..." :
+          "Having a conversation with your loved one..."
+  }));
 
   return (
     <section className="py-20 relative">
@@ -128,7 +46,7 @@ export const InteractiveHowItWorks: React.FC = () => {
           
           {/* Steps Navigation */}
           <div className="space-y-6">
-            {content.steps.map((step, index) => {
+            {stepsWithIcons.map((step, index) => {
               const IconComponent = step.icon;
               const isActive = activeStep === index;
               
@@ -228,13 +146,13 @@ export const InteractiveHowItWorks: React.FC = () => {
                   </div>
                   
                   <h4 className="text-lg font-semibold text-foreground mb-4">
-                    {content.steps[activeStep].title}
+                    {stepsWithIcons[activeStep].title}
                   </h4>
                   
                   <div className="bg-muted/30 rounded-xl p-4 mb-6">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <div className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
-                      {content.steps[activeStep].demo}
+                      {stepsWithIcons[activeStep].demo}
                     </div>
                   </div>
                   
@@ -243,7 +161,7 @@ export const InteractiveHowItWorks: React.FC = () => {
                     size="sm" 
                     className="w-full"
                   >
-                    {content.tryNow}
+                    Try it now
                   </Button>
                 </motion.div>
               </AnimatePresence>
