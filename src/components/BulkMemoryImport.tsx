@@ -75,24 +75,17 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-600 mt-0.5" />
               <div>
-                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">
-                  Melhore a Qualidade do Clone
+                <h4 className="font-medium text-foreground mb-1">
+                  🚀 Melhore seu Clone Digital
                 </h4>
-                <p className="text-sm text-blue-700 dark:text-blue-300">
-                  Quanto mais conversas você importar, mais autêntico e personalizado 
-                  ficará o clone digital. O sistema analisa automaticamente:
+                <p className="text-sm text-muted-foreground">
+                  Importar conversas torna o clone mais autêntico, capturando seu estilo único de comunicação.
                 </p>
-                <ul className="text-xs text-blue-600 dark:text-blue-400 mt-2 space-y-1">
-                  <li>• Frases características e expressões únicas</li>
-                  <li>• Estilo de comunicação e personalidade</li>
-                  <li>• Tópicos favoritos e valores pessoais</li>
-                  <li>• Padrões de conversa e humor</li>
-                </ul>
               </div>
             </div>
           </div>
@@ -109,41 +102,11 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
               <div className="flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-600"></div>
                 <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
-                  Importando memórias...
+                  Salvando memórias no banco de dados...
                 </span>
               </div>
-              <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                Processando conversas e salvando no banco de dados
-              </p>
             </div>
           )}
-
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              Formatos Suportados
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-              <div className="bg-white dark:bg-gray-800 rounded p-2">
-                <div className="font-medium text-green-600">WhatsApp</div>
-                <div className="text-gray-600 dark:text-gray-400">
-                  Menu → Exportar conversa → Sem mídia
-                </div>
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded p-2">
-                <div className="font-medium text-blue-600">Telegram</div>
-                <div className="text-gray-600 dark:text-gray-400">
-                  Configurações → Exportar dados
-                </div>
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded p-2">
-                <div className="font-medium text-purple-600">Discord</div>
-                <div className="text-gray-600 dark:text-gray-400">
-                  Usar DiscordChatExporter
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
