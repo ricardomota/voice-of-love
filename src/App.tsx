@@ -7,7 +7,7 @@ import { UserLimitGate } from "@/components/UserLimitGate";
 import { LandingPage } from "@/pages/LandingPage";
 import { useAuth } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useSearchParams, Navigate, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Loader2 } from 'lucide-react';
 import { useState, useEffect, memo, useCallback } from 'react';
@@ -31,17 +31,6 @@ import { EternaPricingPage } from "./components/pricing/EternaPricingPage";
 import { Wallet } from "./pages/Wallet";
 import Eterna from "./pages/Eterna";
 
-// Lazy load heavy components for better performance
-const LazyIndex = memo(() => <Index />);
-const LazyChangelog = memo(() => <Changelog />);
-
-// Auth component with URL params
-const LazyAuth = memo(() => {
-  const [searchParams] = useSearchParams();
-  const plan = searchParams.get('plan');
-  return <Auth initialPlan={plan || undefined} />;
-});
-
 // Create QueryClient outside component to avoid re-creation
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,54 +42,12 @@ const queryClient = new QueryClient({
   },
 });
 
-const AppContent = () => {
+// Protected Route wrapper component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  const [showBetaGate, setShowBetaGate] = useState(false);
-  const [userCount, setUserCount] = useState(0);
-  const [userCountLoading, setUserCountLoading] = useState(true);
-  
-  // Performance monitoring enabled for debugging
-  // usePerformanceMonitoring();
+  const location = useLocation();
 
-  // Optimized user count check with caching to prevent duplicate API calls
-  useEffect(() => {
-    const checkUserCount = async () => {
-      try {
-        const result = await cacheApiCall(
-          'user_settings_count',
-          async () => {
-            const { count, error } = await supabase
-              .from('user_settings')
-              .select('*', { count: 'exact', head: true });
-            
-            if (error) throw error;
-            return count || 0;
-          },
-          2 * 60 * 1000 // 2 minutes cache
-        );
-        
-        setUserCount(result);
-      } catch (error) {
-        console.error('Error getting user count:', error);
-        setUserCount(0);
-      } finally {
-        setUserCountLoading(false);
-      }
-    };
-
-    checkUserCount();
-  }, []);
-
-  // Memoized handlers to prevent unnecessary re-renders
-  const handleTryFree = useCallback(() => {
-    setShowBetaGate(true);
-  }, []);
-
-  const handleLogin = useCallback(() => {
-    setShowBetaGate(true);
-  }, []);
-
-  if (loading || userCountLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -108,75 +55,208 @@ const AppContent = () => {
     );
   }
 
-  // Show the actual app routes
+  if (!user) {
+    return <Navigate to={`/auth?redirect=${encodeURIComponent(location.pathname)}`} replace />;
+  }
+
+  return (
+    <UserLimitGate>
+      <div className="min-h-screen bg-background">
+        <ModernHeader />
+        <main className="pt-24">
+          {children}
+        </main>
+      </div>
+    </UserLimitGate>
+  );
+};
+
+// Public Route with header wrapper
+const PublicRoute = ({ children, showHeader = true }: { children: React.ReactNode; showHeader?: boolean }) => {
+  return (
+    <div className="min-h-screen bg-background">
+      {showHeader && <ModernHeader />}
+      <main className={showHeader ? "pt-24" : ""}>
+        {children}
+      </main>
+    </div>
+  );
+};
+
+// Auth component with URL params
+const LazyAuth = memo(() => {
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get('plan');
+  return <Auth initialPlan={plan || undefined} />;
+});
+
+const AppContent = () => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <Routes>
-      <Route path="/" element={
-        !user && !showBetaGate ? (
-          <LandingPage 
-            onTryFree={handleTryFree}
-            onLogin={handleLogin}
-          />
-        ) : (
-          <UserLimitGate>
-            <div className="min-h-screen bg-background">
-              <ModernHeader />
-              <main className="pt-24">
-                <LazyIndex />
-              </main>
-            </div>
-          </UserLimitGate>
-        )
-      } />
+      {/* Public Landing Page */}
+      <Route 
+        path="/" 
+        element={
+          user ? (
+            <Navigate to="/dashboard" replace />
+          ) : (
+            <PublicRoute showHeader={true}>
+              <LandingPage 
+                onTryFree={() => window.location.href = '/auth'}
+                onLogin={() => window.location.href = '/auth'}
+              />
+            </PublicRoute>
+          )
+        } 
+      />
       
-      {/* Protected App Routes */}
-      <Route path="/app/*" element={
-        <UserLimitGate>
-          <div className="min-h-screen bg-background">
-            <ModernHeader />
-            <main className="pt-24">
-              <LazyIndex />
-            </main>
-          </div>
-        </UserLimitGate>
-      } />
+      {/* Authentication */}
+      <Route 
+        path="/auth" 
+        element={
+          user ? (
+            <Navigate to="/dashboard" replace />
+          ) : (
+            <PublicRoute showHeader={false}>
+              <LazyAuth />
+            </PublicRoute>
+          )
+        } 
+      />
       
-      {/* Auth route with plan parameter support */}
-      <Route path="/auth" element={<LazyAuth />} />
+      {/* Protected Dashboard */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <Index />
+          </ProtectedRoute>
+        } 
+      />
       
-      {/* Changelog Route */}
-      <Route path="/changelog" element={<LazyChangelog />} />
-      
-      {/* Payment Routes */}
-      <Route path="/payment" element={<Payment />} />
-      <Route path="/payment/success" element={<PaymentSuccess />} />
-      
-      {/* New Pages */}
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
-      <Route path="/support" element={<Support />} />
-      <Route path="/pricing" element={
-        <div className="min-h-screen bg-background">
-          <ModernHeader />
-          <main className="pt-24">
-            <EternaPricingPage />
-          </main>
-        </div>
-      } />
-      <Route path="/wallet" element={
-        <div className="min-h-screen bg-background">
-          <ModernHeader />
-          <main className="pt-24">
+      {/* Protected App Pages */}
+      <Route 
+        path="/profile" 
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/settings" 
+        element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/wallet" 
+        element={
+          <ProtectedRoute>
             <Wallet />
-          </main>
-        </div>
-      } />
-      <Route path="/eterna" element={<Eterna />} />
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-      <Route path="*" element={<NotFound />} />
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* Public Pages with Header */}
+      <Route 
+        path="/pricing" 
+        element={
+          <PublicRoute>
+            <EternaPricingPage />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/about" 
+        element={
+          <PublicRoute>
+            <About />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/privacy" 
+        element={
+          <PublicRoute>
+            <Privacy />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/terms" 
+        element={
+          <PublicRoute>
+            <Terms />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/support" 
+        element={
+          <PublicRoute>
+            <Support />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/changelog" 
+        element={
+          <PublicRoute>
+            <Changelog />
+          </PublicRoute>
+        } 
+      />
+      
+      {/* Payment Pages */}
+      <Route 
+        path="/payment" 
+        element={
+          <PublicRoute>
+            <Payment />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/payment/success" 
+        element={
+          <PublicRoute>
+            <PaymentSuccess />
+          </PublicRoute>
+        } 
+      />
+      
+      {/* Special Pages */}
+      <Route 
+        path="/eterna" 
+        element={
+          <PublicRoute showHeader={false}>
+            <Eterna />
+          </PublicRoute>
+        } 
+      />
+      
+      {/* Catch-all 404 */}
+      <Route 
+        path="*" 
+        element={
+          <PublicRoute>
+            <NotFound />
+          </PublicRoute>
+        } 
+      />
     </Routes>
   );
 };

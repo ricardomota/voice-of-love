@@ -128,7 +128,16 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   };
 
   const handlePricingClick = () => {
-    navigate('/pricing');
+    if (location.pathname === '/') {
+      const element = document.getElementById('pricing-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/pricing');
+      }
+    } else {
+      navigate('/pricing');
+    }
   };
 
   const handleStartFreeClick = () => {

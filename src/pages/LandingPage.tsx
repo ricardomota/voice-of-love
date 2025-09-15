@@ -16,7 +16,13 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
   const scrollToPricing = () => {
-    window.location.href = '/pricing';
+    const element = document.getElementById('pricing-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If not on landing page, navigate to pricing page
+      window.location.href = '/pricing';
+    }
   };
 
 

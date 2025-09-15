@@ -1,4 +1,3 @@
-// Enhanced Auth page matching OpenAI design
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
@@ -8,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
 import { EmailConfirmationScreen } from '@/components/EmailConfirmationScreen';
@@ -37,6 +37,8 @@ export const Auth: React.FC<AuthProps> = ({
   const {
     currentLanguage
   } = useLanguage();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Translations
   const translations = {
@@ -240,9 +242,8 @@ export const Auth: React.FC<AuthProps> = ({
   const [pendingSignupEmail, setPendingSignupEmail] = useState('');
 
   // Get redirect and plan from URL params
-  const urlParams = new URLSearchParams(window.location.search);
-  const redirectTo = urlParams.get('redirect') || '/dashboard';
-  const urlPlan = urlParams.get('plan');
+  const redirectTo = searchParams.get('redirect') || '/dashboard';
+  const urlPlan = searchParams.get('plan');
   
   // Set initial plan from URL if provided
   useEffect(() => {
@@ -254,8 +255,7 @@ export const Auth: React.FC<AuthProps> = ({
   // Handle OAuth callback and redirect if already authenticated
   useEffect(() => {
     // Check for plan parameter from OAuth callback
-    const urlParams = new URLSearchParams(window.location.search);
-    const planFromCallback = urlParams.get('plan');
+    const planFromCallback = searchParams.get('plan');
     if (planFromCallback && planFromCallback !== selectedPlan) {
       setSelectedPlan(planFromCallback);
     }
@@ -263,12 +263,12 @@ export const Auth: React.FC<AuthProps> = ({
     if (user) {
       // Check if user has a selected plan and redirect to checkout
       if (selectedPlan && selectedPlan !== 'free') {
-        window.location.href = `/payment?plan=${selectedPlan}`;
+        navigate(`/payment?plan=${selectedPlan}`, { replace: true });
       } else {
-        window.location.href = redirectTo;
+        navigate(redirectTo, { replace: true });
       }
     }
-  }, [user, redirectTo, selectedPlan]);
+  }, [user, redirectTo, selectedPlan, navigate, searchParams]);
 
   // Form validation
   const validateForm = () => {
@@ -325,7 +325,7 @@ export const Auth: React.FC<AuthProps> = ({
           // Check if user has a selected plan and redirect to checkout
           if (selectedPlan && selectedPlan !== 'free') {
             setTimeout(() => {
-              window.location.href = `/payment?plan=${selectedPlan}`;
+              navigate(`/payment?plan=${selectedPlan}`, { replace: true });
             }, 1000);
           } else {
             // Redirect will happen automatically via useEffect
@@ -403,7 +403,7 @@ export const Auth: React.FC<AuthProps> = ({
         <div className="w-full max-w-sm mb-8 relative z-20">
           <Button
             variant="ghost"
-            onClick={() => window.location.href = '/'}
+            onClick={() => navigate('/')}
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             {getText('backToHome')}
