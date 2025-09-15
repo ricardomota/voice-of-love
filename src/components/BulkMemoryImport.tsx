@@ -7,40 +7,33 @@ import { memoriesService } from '@/services/memoriesService';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, FileText, MessageSquare, Zap } from 'lucide-react';
 import { Person } from '@/types/person';
-
 interface BulkMemoryImportProps {
   person: Person;
   onMemoriesAdded: () => void;
 }
-
 export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
   person,
   onMemoriesAdded
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleMemoriesExtracted = async (memories: string[]) => {
     setIsImporting(true);
     try {
       // Save all memories in batch
-      await Promise.all(
-        memories.map(memory => 
-          memoriesService.createMemory(person.id, {
-            text: memory,
-            mediaUrl: undefined,
-            mediaType: undefined,
-            fileName: undefined
-          })
-        )
-      );
-
+      await Promise.all(memories.map(memory => memoriesService.createMemory(person.id, {
+        text: memory,
+        mediaUrl: undefined,
+        mediaType: undefined,
+        fileName: undefined
+      })));
       toast({
         title: "Importação concluída!",
-        description: `${memories.length} memórias importadas para ${person.name}.`,
+        description: `${memories.length} memórias importadas para ${person.name}.`
       });
-
       onMemoriesAdded();
       setIsOpen(false);
     } catch (error) {
@@ -54,14 +47,9 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
       setIsImporting(false);
     }
   };
-
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full">
-          <Upload className="w-4 h-4 mr-2" />
-          Importar Chat em Massa
-        </Button>
+        
       </DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
@@ -90,26 +78,19 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
             </div>
           </div>
 
-          <ChatImportField
-            targetPersonName={person.name}
-            onMemoriesExtracted={handleMemoriesExtracted}
-            onAnalysisGenerated={(analysis) => {
-              console.log('Bulk import analysis:', analysis);
-            }}
-          />
+          <ChatImportField targetPersonName={person.name} onMemoriesExtracted={handleMemoriesExtracted} onAnalysisGenerated={analysis => {
+          console.log('Bulk import analysis:', analysis);
+        }} />
 
-          {isImporting && (
-            <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+          {isImporting && <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
               <div className="flex items-center gap-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-600"></div>
                 <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
                   Salvando memórias no banco de dados...
                 </span>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
