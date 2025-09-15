@@ -14,11 +14,15 @@ import { usePeople } from "@/hooks/usePeople";
 import { useAppState } from "@/hooks/useAppState";
 import { useUsageTracking } from "@/hooks/useUsageTracking";
 import { useSubscription } from "@/hooks/useSubscription";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useTranslations } from "@/utils/translations";
 import { Loader2 } from "lucide-react";
 
 const Index = () => {
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
+  const { currentLanguage } = useLanguage();
+  const { t } = useTranslations(currentLanguage);
   const { 
     people, 
     loading: peopleLoading, 
@@ -65,14 +69,14 @@ const Index = () => {
       addPerson(newPerson);
       goToDashboard();
       
-      toast({
-        title: "Pessoa Eterna criada!",
-        description: `${newPerson.name} foi adicionado com sucesso.`,
-      });
+        toast({
+          title: t('dashboard.personCreated', 'Person created successfully'),
+          description: `${newPerson.name} foi adicionado com sucesso.`,
+        });
     } catch (error: any) {
       console.error('Error creating person:', error);
       toast({
-        title: "Erro",
+        title: t('errors.generic', 'Error'),
         description: "Não foi possível criar a pessoa",
         variant: "destructive"
       });
@@ -116,7 +120,7 @@ const Index = () => {
 
       // Show success toast
       toast({
-        title: "Sucesso",
+        title: t('common.success', 'Success'),
         description: `${savedMemories.length} memórias adicionadas`,
       });
 
@@ -149,7 +153,7 @@ const Index = () => {
         setShowUpgradeModal(false);
       } else {
         toast({
-          title: "Erro",
+          title: t('errors.generic', 'Error'),
           description: "Não foi possível criar a sessão de checkout",
           variant: "destructive",
         });
@@ -157,7 +161,7 @@ const Index = () => {
     } catch (error) {
       console.error('Error creating checkout:', error);
       toast({
-        title: "Erro", 
+        title: t('errors.generic', 'Error'), 
         description: "Erro ao criar sessão de checkout",
         variant: "destructive",
       });
@@ -244,13 +248,13 @@ const Index = () => {
                     updatePerson(selectedPerson.id, updatedPerson);
                     goToDashboard();
                     toast({
-                      title: "Pessoa atualizada!",
+                      title: t('dashboard.personUpdated', 'Person updated successfully'),
                       description: `${updatedPerson.name} foi atualizado com sucesso.`,
                     });
                   } catch (error: any) {
                     console.error('Error updating person:', error);
                     toast({
-                      title: "Erro",
+                      title: t('errors.generic', 'Error'),
                       description: "Não foi possível atualizar a pessoa",
                       variant: "destructive"
                     });

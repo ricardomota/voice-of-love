@@ -77,7 +77,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          {content.headline.replace(' ✨', '')}
+          {content.headline.replace(' ✨', '')}<span className="ml-2">✨</span>
         </motion.h1>
 
         {/* Subtitle */}

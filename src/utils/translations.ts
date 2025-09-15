@@ -325,3 +325,13 @@ const landingTranslations = {
 export const getLandingContent = (language: Language) => {
   return landingTranslations[language] || landingTranslations.en;
 };
+
+// Simple translation hook for app-wide translations
+export const useTranslations = (language: Language) => {
+  const t = (key: string, fallback?: string) => {
+    // For now, return fallback or key - can be expanded later
+    return fallback || key;
+  };
+  
+  return { t };
+};
