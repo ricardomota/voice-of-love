@@ -23,9 +23,10 @@ export const validateFile = (file: File, options: {
   return true;
 };
 
-export const getMediaType = (file: File): 'image' | 'video' | 'audio' | undefined => {
+export const getMediaType = (file: File): 'image' | 'video' | 'audio' | 'text' | undefined => {
   if (file.type.startsWith('image/')) return 'image';
   if (file.type.startsWith('video/')) return 'video';
   if (file.type.startsWith('audio/')) return 'audio';
+  if (file.type === 'text/plain') return 'text';
   return undefined;
 };

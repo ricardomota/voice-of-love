@@ -26,6 +26,7 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
       case 'image': return <Image className="w-4 h-4" />;
       case 'video': return <Video className="w-4 h-4" />;
       case 'audio': return <Music className="w-4 h-4" />;
+      case 'text': return <FileText className="w-4 h-4" />;
       default: return <FileText className="w-4 h-4" />;
     }
   };

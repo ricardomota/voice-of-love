@@ -5,6 +5,7 @@ import { useFormValidation } from '@/hooks/useFormValidation';
 import { FormStep } from './FormStep';
 import { ArrayField } from './ArrayField';
 import { FileUploadField } from './FileUploadField';
+import { ChatImportField } from './ChatImportField';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Slider } from '@/components/ui/slider';
@@ -475,56 +476,77 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             onBack={handleBack}
             canNext={canProceed(currentStep)}
           >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-foreground">Memórias</h3>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => addField('memories')}
-                  className="flex items-center gap-2"
-                >
-                  Adicionar memória
-                </Button>
-              </div>
+            <div className="space-y-6">
+              {/* Chat Import Section */}
+              <ChatImportField
+                onMemoriesExtracted={(memories) => {
+                  // Add extracted memories to the form
+                  const newMemories = memories.map((memory, idx) => ({
+                    id: `temp-${Date.now()}-${idx}`,
+                    text: memory,
+                    mediaUrl: '',
+                    mediaType: undefined,
+                    fileName: undefined
+                  }));
+                  
+                  updateFormData({
+                    memories: [...formData.memories, ...newMemories]
+                  });
+                }}
+                onAnalysisGenerated={handleTranscriptionAnalysis}
+              />
 
-              <div className="space-y-6">
-                {formData.memories.map((memory, index) => (
-                  <div key={index} className="space-y-4 p-4 border border-border rounded-lg">
-                    <div className="flex justify-between items-start">
-                      <h4 className="text-sm font-medium">Memória {index + 1}</h4>
-                      {formData.memories.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeField('memories', index)}
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      )}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium text-foreground">Memórias Manuais</h3>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => addField('memories')}
+                    className="flex items-center gap-2"
+                  >
+                    Adicionar memória
+                  </Button>
+                </div>
+
+                <div className="space-y-6">
+                  {formData.memories.map((memory, index) => (
+                    <div key={index} className="space-y-4 p-4 border border-border rounded-lg">
+                      <div className="flex justify-between items-start">
+                        <h4 className="text-sm font-medium">Memória {index + 1}</h4>
+                        {formData.memories.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeField('memories', index)}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                      <Textarea
+                        placeholder="Descreva uma memória especial..."
+                        value={memory.text}
+                        onChange={(e) => updateField('memories', index, e.target.value)}
+                        className="min-h-24"
+                      />
+                      <FileUploadField
+                        onUpload={(file) => {
+                          // Simulate file upload - in real app, you'd upload to storage
+                          const url = URL.createObjectURL(file);
+                          const type = file.type.startsWith('image/') ? 'image' : 
+                                     file.type.startsWith('video/') ? 'video' : 'audio';
+                          updateMemoryMedia(index, url, type, file.name);
+                        }}
+                        isUploading={false}
+                        mediaType={memory.mediaType}
+                        fileName={memory.fileName}
+                      />
                     </div>
-                    <Textarea
-                      placeholder="Descreva uma memória especial..."
-                      value={memory.text}
-                      onChange={(e) => updateField('memories', index, e.target.value)}
-                      className="min-h-24"
-                    />
-                    <FileUploadField
-                      onUpload={(file) => {
-                        // Simulate file upload - in real app, you'd upload to storage
-                        const url = URL.createObjectURL(file);
-                        const type = file.type.startsWith('image/') ? 'image' : 
-                                   file.type.startsWith('video/') ? 'video' : 'audio';
-                        updateMemoryMedia(index, url, type, file.name);
-                      }}
-                      isUploading={false}
-                      mediaType={memory.mediaType}
-                      fileName={memory.fileName}
-                    />
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </FormStep>
