@@ -137,10 +137,10 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
             </div>
 
             <div className="pt-2 border-t">
-              <strong className="text-foreground">💬 ETERNA Analysis:</strong>
+              <strong className="text-foreground">🔐 Privacidade e Segurança:</strong>
               <span className="block mt-1">
-                Sistema avançado que cria um perfil completo da personalidade,
-                incluindo padrões de fala, valores, limites e templates de resposta para conversas naturais.
+                Seus dados são processados localmente e com segurança. Informações pessoais sensíveis 
+                são automaticamente filtradas durante a análise.
               </span>
             </div>
           </div>
