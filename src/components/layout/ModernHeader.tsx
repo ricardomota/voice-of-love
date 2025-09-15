@@ -160,7 +160,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
           {/* Logo */}
           <Link to="/" className="flex items-center group" aria-label="Voltar à página inicial">
             <motion.img 
-              src="/lovable-uploads/2a9a0f83-672d-4d8e-9eda-ef4653426daf.png" 
+              src="/src/assets/eterna-logo.svg" 
               alt="Eterna Logo" 
               className="h-6 w-auto transition-transform duration-200 group-hover:scale-105"
               whileHover={{ scale: 1.05 }}
