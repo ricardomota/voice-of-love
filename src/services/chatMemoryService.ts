@@ -142,8 +142,7 @@ class ChatMemoryService {
 
     // Extract meaningful phrases from target person's messages
     const phrases = relevantMessages
-      .filter((m: any) => m.message.length > 20 && m.message.length < 100)
-      .slice(0, 10)
+      .filter((m: any) => m.message.trim().length > 0) // Remove limite de tamanho
       .map((m: any) => m.message);
 
     // Generate personality insights based on target person's communication patterns
@@ -176,10 +175,10 @@ class ChatMemoryService {
     }
 
     return {
-      phrases: phrases.slice(0, 8),
-      personality: personality.slice(0, 6),
-      values: topWords.slice(0, 8),
-      topics: topWords.slice(8, 16)
+      phrases: phrases, // Todas as frases
+      personality: personality, // Todos os traços
+      values: topWords, // Todas as palavras importantes  
+      topics: topWords.slice(8) // Tópicos adicionais
     };
   }
 

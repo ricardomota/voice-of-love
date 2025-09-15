@@ -196,8 +196,7 @@ class WhatsAppChatParser {
 
     // Also extract individual meaningful messages from target person
     const meaningfulMessages = targetMessages.filter(msg => 
-      msg.message.length > 15 && 
-      msg.message.length < 200 &&
+      msg.message.trim().length > 0 && // Apenas verifica se não está vazia
       !msg.message.includes('imagem ocultada') &&
       !msg.message.includes('vídeo omitido') &&
       !msg.message.includes('áudio ocultado') &&
@@ -206,7 +205,7 @@ class WhatsAppChatParser {
       !msg.message.toLowerCase().includes('mensagem apagada')
     );
 
-    for (const message of meaningfulMessages.slice(0, 15)) { // Limit to 15 individual messages
+    for (const message of meaningfulMessages) { // Sem limite
       const dateStr = message.timestamp 
         ? message.timestamp.toLocaleDateString('pt-BR')
         : 'Data desconhecida';
@@ -214,7 +213,7 @@ class WhatsAppChatParser {
       memories.push(`${dateStr} - ${message.sender}: ${message.message}`);
     }
 
-    return memories.slice(0, 25); // Limit total memories to 25
+    return memories; // Retorna todas as memórias sem limite
   }
 
   private buildContextualMemory(targetGroup: ChatMessage[], allMessages: ChatMessage[], targetPersonName?: string): string | null {
