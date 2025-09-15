@@ -85,59 +85,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const isWaitlistMode = userCount >= 10;
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Ultra-clean background with subtle depth */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(120,119,198,0.05),transparent_70%)]" />
-      </div>
-      
-      {/* Minimal floating orbs */}
-      <motion.div 
-        className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-[100px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div 
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/2 rounded-full blur-[80px]"
-        animate={{
-          scale: [1.1, 0.9, 1.1],
-          opacity: [0.2, 0.4, 0.2]
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
       
       {/* Main content */}
-      <div className="relative w-full max-w-5xl mx-auto px-6 py-32 text-center">
+      <div className="relative w-full max-w-4xl mx-auto px-6 py-24 text-center">
         
         {/* Status badge */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8"
+          className="mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium">
-            <div className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 text-muted-foreground text-sm font-medium">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
             {content.badge}
           </div>
         </motion.div>
 
         {/* Hero headline */}
         <motion.h1 
-          className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-[1.05] tracking-[-0.025em] bg-gradient-to-br from-foreground to-foreground/80 bg-clip-text text-transparent"
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-[1.1] tracking-[-0.02em]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
@@ -147,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Subtitle */}
         <motion.p 
-          className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12 font-light"
+          className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-16 font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -157,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* CTA buttons */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -167,23 +135,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Button 
                 onClick={isWaitlistMode ? onTryFree : onLogin}
                 size="lg"
-                className="group relative px-8 py-4 text-base font-medium bg-foreground hover:bg-foreground/90 text-background rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+                className="px-6 py-3 text-sm font-medium bg-foreground hover:bg-foreground/90 text-background rounded-lg transition-all duration-200"
               >
-                <span className="relative z-10">{content.tryFree}</span>
-                <motion.div
-                  className="ml-2 relative z-10"
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  →
-                </motion.div>
+                {content.tryFree}
               </Button>
               
               <Button 
                 onClick={onSeePricing}
-                variant="outline"
+                variant="ghost"
                 size="lg"
-                className="px-8 py-4 text-base font-medium border border-border hover:border-foreground/20 hover:bg-muted/50 rounded-xl transition-all duration-300"
+                className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
               >
                 {content.seePricing}
               </Button>
@@ -196,10 +157,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+          className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70"
         >
-          <Security className="w-4 h-4" />
-          <span className="font-medium">{content.trustBadge}</span>
+          <Security className="w-3 h-3" />
+          <span>{content.trustBadge}</span>
         </motion.div>
       </div>
     </section>

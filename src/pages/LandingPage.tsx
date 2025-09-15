@@ -35,22 +35,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       />
 
       {/* Features Section */}
-      <FeaturesSection />
+      <div className="-mt-16">
+        <FeaturesSection />
+      </div>
 
       {/* How It Works Section */}
-      <InteractiveHowItWorks />
+      <div className="-mt-8">
+        <InteractiveHowItWorks />
+      </div>
 
       {/* Stats */}
-      <ModernStats />
+      <div className="-mt-8">
+        <ModernStats />
+      </div>
 
       {/* Story Card */}
-      <StoryCard />
+      <div className="-mt-4">
+        <StoryCard />
+      </div>
 
       {/* Footer */}
-      <LandingFooter 
-        onTryFree={onTryFree}
-        onSignIn={onLogin}
-      />
+      <div className="-mt-8">
+        <LandingFooter 
+          onTryFree={onTryFree}
+          onSignIn={onLogin}
+        />
+      </div>
     </div>
   );
 };

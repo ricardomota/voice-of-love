@@ -103,11 +103,8 @@ export const InteractiveHowItWorks: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-background to-muted/20" />
-      
-      <div className="max-w-6xl mx-auto px-6 relative">
+    <section className="py-20 relative">
+      <div className="max-w-5xl mx-auto px-6 relative">
         
         {/* Header */}
         <motion.div 
@@ -115,17 +112,13 @@ export const InteractiveHowItWorks: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="inline-block px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-4">
-            {content.badge}
-          </div>
-          
-          <h2 className="text-3xl sm:text-5xl font-bold text-foreground mb-6 leading-tight tracking-[-0.02em]">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
             {content.title}
           </h2>
           
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-muted-foreground">
             {content.subtitle}
           </p>
         </motion.div>
@@ -151,10 +144,10 @@ export const InteractiveHowItWorks: React.FC = () => {
                   }`}
                   onClick={() => setActiveStep(index)}
                 >
-                  <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${
+                  <div className={`relative p-6 rounded-xl transition-all duration-300 ${
                     isActive 
-                      ? 'border-primary/30 bg-primary/5 shadow-lg' 
-                      : 'border-border/30 bg-card/30 hover:border-border/50 hover:bg-card/50'
+                      ? 'bg-muted/40' 
+                      : 'hover:bg-muted/20'
                   }`}>
                     
                     {/* Step number and icon */}
