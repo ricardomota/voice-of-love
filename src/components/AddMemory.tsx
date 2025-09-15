@@ -367,18 +367,6 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
           />
         </div>
 
-        {/* Quick Add Section */}
-        <QuickMemoryAdder
-          onSave={async (memory) => {
-            await memoriesService.createMemory(person.id, memory);
-            // Refresh the page to show the new memory
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          }}
-          className="mb-6"
-        />
-
         {/* Add Memory Form */}
         <div className="space-y-6">
           {memories.map((memory, index) => {
@@ -545,9 +533,9 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                 className="w-full h-auto py-6 flex flex-col items-center gap-2 hover:bg-accent/10"
               >
                 <Add className="w-8 h-8 text-accent" />
-                <span className="text-accent font-medium">Adicionar Outra Memória</span>
+                <span className="text-accent font-medium">Adicionar Nova Memória</span>
                 <span className="text-xs text-muted-foreground">
-                  Adicione quantas memórias quiser de uma vez
+                  Crie uma nova memória para esta pessoa
                 </span>
               </Button>
             </CardContent>

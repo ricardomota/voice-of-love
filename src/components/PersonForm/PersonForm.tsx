@@ -16,7 +16,7 @@ import { VoiceRecordingStep } from '@/components/VoiceRecordingStep';
 import { TranscriptionAnalysis } from './TranscriptionAnalysis';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { X, Upload, User } from 'lucide-react';
+import { X, Upload, User, Plus } from 'lucide-react';
 import { ProgressBar } from './ProgressBar';
 import { supabase } from '@/integrations/supabase/client';
 import { peopleService } from '@/services/peopleService';
@@ -538,7 +538,8 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                     onClick={() => addField('memories')}
                     className="flex items-center gap-2"
                   >
-                    Adicionar memória
+                    <Plus className="w-4 h-4" />
+                    Adicionar nova memória
                   </Button>
                 </div>
 

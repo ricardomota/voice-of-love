@@ -105,7 +105,7 @@ export const QuickMemoryAdder: React.FC<QuickMemoryAdderProps> = ({
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Plus className="w-5 h-5" />
-          Adicionar Nova Memória
+          Nova Memória
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
