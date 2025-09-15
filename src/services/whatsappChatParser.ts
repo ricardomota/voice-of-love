@@ -21,8 +21,8 @@ class WhatsAppChatParser {
     // or DD/MM/YYYY, HH:MM - Sender: Message
     // Also supports Telegram and other chat formats
     const patterns = [
-      // [DD/MM/YYYY, HH:MM:SS] format (WhatsApp)
-      /^\[(\d{1,2}\/\d{1,2}\/\d{4}),?\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s+([^:]+):\s*(.*)/,
+      // [DD/MM/YYYY, HH:MM:SS] format (WhatsApp) - Updated to match the exact format
+      /^\[(\d{1,2}\/\d{1,2}\/\d{4}),\s+(\d{1,2}:\d{2}(?::\d{2})?)\]\s+([^:]+):\s*(.*)/,
       // DD/MM/YYYY, HH:MM format (WhatsApp alternative)
       /^(\d{1,2}\/\d{1,2}\/\d{4}),?\s+(\d{1,2}:\d{2}(?::\d{2})?)\s*-\s*([^:]+):\s*(.*)/,
       // Alternative format with different separators
@@ -196,8 +196,11 @@ class WhatsAppChatParser {
 
     // Also extract individual meaningful messages from target person
     const meaningfulMessages = targetMessages.filter(msg => 
-      msg.message.length > 30 && 
+      msg.message.length > 15 && 
       msg.message.length < 200 &&
+      !msg.message.includes('imagem ocultada') &&
+      !msg.message.includes('vídeo omitido') &&
+      !msg.message.includes('áudio ocultado') &&
       !msg.message.includes('<Media omitted>') &&
       !msg.message.includes('arquivo de mídia omitido') &&
       !msg.message.toLowerCase().includes('mensagem apagada')
