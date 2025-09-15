@@ -2,7 +2,25 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-export type Language = 'en' | 'pt-BR' | 'es';
+export type Language = 
+  | 'en'    // English
+  | 'pt-BR' // Portuguese (Brazil)
+  | 'es'    // Spanish
+  | 'fr'    // French
+  | 'de'    // German
+  | 'it'    // Italian
+  | 'ru'    // Russian
+  | 'ja'    // Japanese
+  | 'zh-CN' // Chinese (Simplified)
+  | 'zh-TW' // Chinese (Traditional)
+  | 'ko'    // Korean
+  | 'ar'    // Arabic
+  | 'hi'    // Hindi
+  | 'nl'    // Dutch
+  | 'sv'    // Swedish
+  | 'no'    // Norwegian
+  | 'da'    // Danish
+  | 'fi';   // Finnish
 
 interface LanguageContextType {
   currentLanguage: Language;
@@ -31,7 +49,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       try {
         // First, check localStorage for saved preference
         const savedLanguage = localStorage.getItem('eterna_language') as Language;
-        if (savedLanguage && ['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+        const supportedLanguages: Language[] = [
+          'en', 'pt-BR', 'es', 'fr', 'de', 'it', 'ru', 'ja', 
+          'zh-CN', 'zh-TW', 'ko', 'ar', 'hi', 'nl', 'sv', 'no', 'da', 'fi'
+        ];
+        if (savedLanguage && supportedLanguages.includes(savedLanguage)) {
           setCurrentLanguage(savedLanguage);
         }
 
@@ -61,7 +83,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         console.error('Error loading language preference:', error);
         // Only fallback to browser detection if no localStorage preference exists
         const savedLanguage = localStorage.getItem('eterna_language') as Language;
-        if (!savedLanguage || !['en', 'pt-BR', 'es'].includes(savedLanguage)) {
+        const supportedLanguages: Language[] = [
+          'en', 'pt-BR', 'es', 'fr', 'de', 'it', 'ru', 'ja', 
+          'zh-CN', 'zh-TW', 'ko', 'ar', 'hi', 'nl', 'sv', 'no', 'da', 'fi'
+        ];
+        if (!savedLanguage || !supportedLanguages.includes(savedLanguage)) {
           detectBrowserLanguage();
         }
       }
@@ -71,22 +97,50 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const browserLang = navigator.language.toLowerCase();
       const browserLangs = navigator.languages?.map(lang => lang.toLowerCase()) || [browserLang];
       
+      // Language detection mapping
+      const languageMap: Record<string, Language> = {
+        'pt': 'pt-BR',
+        'pt-br': 'pt-BR',
+        'es': 'es',
+        'fr': 'fr',
+        'de': 'de',
+        'it': 'it',
+        'ru': 'ru',
+        'ja': 'ja',
+        'zh': 'zh-CN',
+        'zh-cn': 'zh-CN',
+        'zh-tw': 'zh-TW',
+        'ko': 'ko',
+        'ar': 'ar',
+        'hi': 'hi',
+        'nl': 'nl',
+        'sv': 'sv',
+        'no': 'no',
+        'da': 'da',
+        'fi': 'fi'
+      };
+      
       // Check if any of the browser languages match our supported languages
       for (const lang of browserLangs) {
-        if (lang.startsWith('pt')) {
-          const detectedLanguage = 'pt-BR';
+        // Direct match
+        if (languageMap[lang]) {
+          const detectedLanguage = languageMap[lang];
           setCurrentLanguage(detectedLanguage);
           localStorage.setItem('eterna_language', detectedLanguage);
           return;
-        } else if (lang.startsWith('es')) {
-          const detectedLanguage = 'es';
+        }
+        
+        // Check language prefix
+        const prefix = lang.split('-')[0];
+        if (languageMap[prefix]) {
+          const detectedLanguage = languageMap[prefix];
           setCurrentLanguage(detectedLanguage);
           localStorage.setItem('eterna_language', detectedLanguage);
           return;
         }
       }
       
-      // Default to English if no Portuguese or Spanish is detected
+      // Default to English if no supported language is detected
       const defaultLanguage = 'en';
       setCurrentLanguage(defaultLanguage);
       localStorage.setItem('eterna_language', defaultLanguage);
