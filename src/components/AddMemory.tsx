@@ -2,11 +2,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
+import { QuickMemoryAdder } from "@/components/QuickMemoryAdder";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Lock, Unlock } from "lucide-react";
 import { ArrowBack, CloudUpload, Close, Description, Add, Delete, Edit } from "@mui/icons-material";
 import { Person, Memory } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
+import { memoriesService } from "@/services/memoriesService";
+import { supabase } from "@/integrations/supabase/client";
+import { getMediaType } from "@/utils/fileValidation";
 
 interface MemoryItem {
   id: string;
@@ -147,8 +151,6 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
 
     setUploading(true);
     try {
-      const { memoriesService } = await import("@/services/memoriesService");
-      
       // Process deletions first
       for (const deletedId of deletedMemoryIds) {
         await memoriesService.deleteMemory(deletedId);
@@ -162,18 +164,34 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
         });
       }
 
-      // Process new memories
-      const memoriesToSave: Omit<Memory, 'id'>[] = newMemories.map(memory => ({
-        text: memory.text.trim(),
-        mediaUrl: memory.file ? URL.createObjectURL(memory.file) : undefined,
-        mediaType: memory.file ? getMediaType(memory.file) : undefined,
-        fileName: memory.file?.name
-      }));
+      // Process new memories with proper file handling
+      for (const memory of newMemories) {
+        let mediaUrl = '';
+        let mediaType: Memory['mediaType'] = undefined;
+        let fileName = '';
 
-      if (memoriesToSave.length > 0) {
-        await Promise.all(
-          memoriesToSave.map(memory => memoriesService.createMemory(person.id, memory))
-        );
+        if (memory.file) {
+          // Upload file to storage
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            try {
+              const { peopleService } = await import("@/services/peopleService");
+              mediaUrl = await peopleService.uploadMedia(memory.file, user.id);
+              mediaType = getMediaType(memory.file) as Memory['mediaType'];
+              fileName = memory.file.name;
+            } catch (uploadError) {
+              console.error('Error uploading file:', uploadError);
+              // Continue without file if upload fails
+            }
+          }
+        }
+
+        await memoriesService.createMemory(person.id, {
+          text: memory.text.trim(),
+          mediaUrl: mediaUrl || undefined,
+          mediaType,
+          fileName: fileName || undefined
+        });
       }
 
       const totalChanges = deletedMemoryIds.length + editedMemories.length + newMemories.length;
@@ -304,6 +322,18 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
             </div>
           </div>
         </div>
+
+        {/* Quick Add Section */}
+        <QuickMemoryAdder
+          onSave={async (memory) => {
+            await memoriesService.createMemory(person.id, memory);
+            // Refresh the page to show the new memory
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }}
+          className="mb-6"
+        />
 
         {/* Add Memory Form */}
         <div className="space-y-6">

@@ -6,6 +6,7 @@ import { FormStep } from './FormStep';
 import { ArrayField } from './ArrayField';
 import { FileUploadField } from './FileUploadField';
 import { ChatImportField } from './ChatImportField';
+import { WhatsAppAudioRecorder } from '@/components/ui/whatsapp-audio-recorder';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Slider } from '@/components/ui/slider';
@@ -477,6 +478,37 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             canNext={canProceed(currentStep)}
           >
             <div className="space-y-6">
+              {/* Quick Memory Adder */}
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 rounded-xl p-1">
+                <div className="bg-white dark:bg-gray-900 rounded-lg p-4">
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    ⚡ Adição Rápida de Memória
+                  </h4>
+                  <div className="space-y-3">
+                    <WhatsAppAudioRecorder
+                      onAudioSave={(audioBlob, duration) => {
+                        const newMemory = {
+                          id: `memory-${Date.now()}`,
+                          text: `Memória em áudio (${Math.round(duration)}s)`,
+                          mediaUrl: URL.createObjectURL(audioBlob),
+                          mediaType: 'audio' as const,
+                          fileName: `audio-${Date.now()}.webm`
+                        };
+                        
+                        updateFormData({
+                          memories: [...formData.memories, newMemory]
+                        });
+                        
+                        toast({
+                          title: "Áudio adicionado!",
+                          description: "Memória em áudio salva com sucesso.",
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Chat Import Section */}
               <ChatImportField
                 onMemoriesExtracted={(memories) => {
@@ -754,79 +786,77 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
             onBack={handleBack}
             canNext={canProceed(currentStep)}
           >
-            <VoiceRecordingStep
-              personName={formData.name || 'pessoa'}
-              existingVoiceSettings={person?.voiceSettings}
-              onVoiceRecorded={(blob, duration) => {
-                updateFormData({ voiceRecording: blob, voiceDuration: duration });
-              }}
-              onVoiceProcessed={async (voiceId, transcriptions, audioFiles) => {
-                console.log('VoiceRecordingStep: onVoiceProcessed called', { voiceId, transcriptions, audioFiles });
-                
-                try {
-                  // Atualizar configurações de voz com os arquivos de áudio
-                  if (voiceId || audioFiles?.length) {
-                    console.log('VoiceRecordingStep: Updating voice settings with voiceId:', voiceId, 'and audioFiles:', audioFiles?.length);
-                    const newVoiceSettings = { 
-                      hasRecording: true, 
-                      ...(voiceId && { voiceId }),
-                      ...(audioFiles && { audioFiles })
-                    };
-                    updateFormData({ voiceSettings: newVoiceSettings });
-                  }
-                  
-                  // Analisar transcrições para extrair características da fala e personalidade
-                  if (transcriptions.length > 0) {
-                    console.log('VoiceRecordingStep: Processing transcriptions for personality extraction:', transcriptions);
-                    const combinedText = transcriptions.join(' ');
+            <div className="space-y-6">
+              <div className="bg-blue-50 dark:bg-blue-950/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+                  💡 Dica para uma boa gravação
+                </h3>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Grave cerca de 30-60 segundos da pessoa falando naturalmente. 
+                  Pode ser uma história, uma lembrança ou apenas uma conversa casual.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="font-medium">Gravar Áudio</h4>
+                <WhatsAppAudioRecorder
+                  onAudioSave={async (audioBlob, duration) => {
+                    updateFormData({ voiceRecording: audioBlob, voiceDuration: duration });
                     
-                     // Usar o serviço de análise para extrair características
-                    const analysis = {
-                      phrases: transcriptionAnalysisService.extractCharacteristicPhrases(combinedText),
-                      personality: transcriptionAnalysisService.extractPersonalityTraits(combinedText),
-                      talkingStyle: transcriptionAnalysisService.analyzeSpeechStyle(combinedText),
-                      ...transcriptionAnalysisService.extractValuesAndTopics(combinedText)
-                    };
-                    
-                    // Aplicar análise automaticamente
-                    handleTranscriptionAnalysis(analysis);
-                    
-                    // Exibir toast informativo sobre o que foi detectado
-                    const detectedItems = [];
-                    if (analysis.phrases.length > 0) detectedItems.push(`${analysis.phrases.length} expressões características`);
-                    if (analysis.personality.length > 0) detectedItems.push(`${analysis.personality.length} traços de personalidade`);
-                    if (analysis.values.length > 0) detectedItems.push(`${analysis.values.length} valores`);
-                    if (analysis.topics.length > 0) detectedItems.push(`${analysis.topics.length} tópicos favoritos`);
-                    
-                    if (detectedItems.length > 0) {
+                    try {
+                      // Process the audio for voice analysis
+                      const audioFile = new File([audioBlob], `voice-${Date.now()}.webm`, {
+                        type: 'audio/webm'
+                      });
+                      
+                      // Upload to storage and get transcription (you could add this functionality)
+                      const { data: { user } } = await supabase.auth.getUser();
+                      if (user) {
+                        const { peopleService } = await import("@/services/peopleService");
+                        const audioUrl = await peopleService.uploadMedia(audioFile, user.id);
+                        
+                        const voiceSettings = {
+                          hasRecording: true,
+                          audioFiles: [{
+                            name: audioFile.name,
+                            url: audioUrl,
+                            duration
+                          }]
+                        };
+                        
+                        updateFormData({ voiceSettings });
+                        
+                        toast({
+                          title: "Áudio salvo!",
+                          description: `${Math.round(duration)}s de áudio capturado para análise de voz.`,
+                        });
+                      }
+                    } catch (error) {
+                      console.error('Error processing voice recording:', error);
                       toast({
-                        title: "🤖 IA analisou a voz!",
-                        description: `Detectei automaticamente: ${detectedItems.join(', ')}. Isso vai deixar o clone muito mais realista!`,
+                        title: "Erro no processamento",
+                        description: "Áudio salvo, mas houve erro no processamento avançado.",
+                        variant: "destructive"
                       });
                     }
-                  }
-                  
-                  console.log('VoiceRecordingStep: Voice processing completed successfully');
-                  
-                  // Avançar automaticamente para a próxima etapa após processamento bem-sucedido
-                  setTimeout(() => {
-                    if (currentStep === 15) { // Garantir que ainda estamos na etapa de gravação
-                      console.log('VoiceRecordingStep: Advancing to next step after voice processing');
-                      handleNext();
-                    }
-                  }, 3500);
-                  
-                } catch (error) {
-                  console.error('VoiceRecordingStep: Error in onVoiceProcessed:', error);
-                  toast({
-                    title: "Erro no processamento",
-                    description: "Houve um erro ao processar os áudios, mas você pode continuar.",
-                    variant: "destructive"
-                  });
-                }
-              }}
-              onSkip={handleNext}
-            />
+                  }}
+                />
+
+                {formData.voiceRecording && (
+                  <div className="bg-green-50 dark:bg-green-950/20 rounded-xl p-4 border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                        Áudio gravado ({Math.round(formData.voiceDuration)}s)
+                      </span>
+                    </div>
+                    <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                      Este áudio será usado para personalizar a voz nas conversas
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </FormStep>
         );
 
