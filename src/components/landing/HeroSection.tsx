@@ -181,7 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   onClick={onSeePricing}
                   variant="outline"
                   size="lg"
-                  className="group px-8 py-4 text-base font-medium border-2 border-border/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 rounded-xl backdrop-blur-sm"
+                  className="group px-8 py-4 text-base font-medium border-2 border-border/30 hover:border-primary/60 hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-xl backdrop-blur-sm"
                 >
                   {content.seePricing}
                   <motion.div
