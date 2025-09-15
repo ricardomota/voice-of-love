@@ -38,7 +38,7 @@ export const authService = {
   },
 
   // OAuth providers
-  async signInWithOAuth(provider: 'google' | 'apple', redirectTo?: string) {
+  async signInWithOAuth(provider: 'google' | 'apple' | 'azure', redirectTo?: string) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -48,8 +48,20 @@ export const authService = {
     return { data, error };
   },
 
+  // Email OTP - send code
+  async sendEmailOtp(email: string) {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo: `${window.location.origin}/`
+      }
+    });
+    return { data, error };
+  },
+
   // Phone OTP - send code
-  async signInWithOtp(phone: string) {
+  async sendPhoneOtp(phone: string) {
     const { data, error } = await supabase.auth.signInWithOtp({
       phone,
       options: {
@@ -59,13 +71,13 @@ export const authService = {
     return { data, error };
   },
 
-  // Phone OTP - verify code
-  async verifyOtp(phone: string, token: string) {
-    const { data, error } = await supabase.auth.verifyOtp({
-      phone,
-      token,
-      type: 'sms'
-    });
+  // Verify OTP - works for both email and phone
+  async verifyOtp(identifier: string, token: string, type: 'email' | 'sms') {
+    const verifyData = type === 'email' 
+      ? { email: identifier, token, type: 'email' as const }
+      : { phone: identifier, token, type: 'sms' as const };
+    
+    const { data, error } = await supabase.auth.verifyOtp(verifyData);
     return { data, error };
   },
 

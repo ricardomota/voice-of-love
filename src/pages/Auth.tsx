@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FloatingInput } from '@/components/ui/floating-input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -12,10 +12,11 @@ import { analyticsIntegrations } from '@/lib/integrations';
 import { EternaHeader } from '@/components/layout/EternaHeader';
 import { EmailConfirmationScreen } from '@/components/EmailConfirmationScreen';
 import { PlanSelectionModal } from '@/components/PlanSelectionModal';
+import { OTPVerification } from '@/components/OTPVerification';
 import { authService } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
 
-type AuthMode = 'signin' | 'signup' | 'email_confirmation';
+type AuthMode = 'signin' | 'signup' | 'email_confirmation' | 'email_otp' | 'phone_otp' | 'phone_input';
 
 interface AuthProps {
   language?: string;
@@ -240,6 +241,8 @@ export const Auth: React.FC<AuthProps> = ({
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan || 'free');
   const [showPlanModal, setShowPlanModal] = useState(false);
   const [pendingSignupEmail, setPendingSignupEmail] = useState('');
+  const [pendingPhone, setPendingPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   // Get redirect and plan from URL params
   const redirectTo = searchParams.get('redirect') || '/dashboard';
@@ -379,7 +382,90 @@ export const Auth: React.FC<AuthProps> = ({
     setPendingSignupEmail('');
   };
 
-  // Show email confirmation screen
+  const handleOAuthSignIn = async (provider: 'google' | 'apple' | 'azure') => {
+    try {
+      const redirectUrl = selectedPlan && selectedPlan !== 'free' 
+        ? `${window.location.origin}/auth?plan=${selectedPlan}`
+        : `${window.location.origin}/dashboard`;
+      
+      const result = await authService.signInWithOAuth(provider, redirectUrl);
+      if (result.error) {
+        setError('Erro ao conectar com ' + provider);
+      }
+    } catch (error) {
+      console.error('OAuth error:', error);
+      setError('Erro ao conectar. Tente novamente.');
+    }
+  };
+
+  const handleEmailOtp = async () => {
+    if (!email.trim()) {
+      setError(getText('enterEmailAddress'));
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const result = await authService.sendEmailOtp(email.trim());
+      if (result.error) {
+        setError('Erro ao enviar código por email.');
+      } else {
+        setPendingSignupEmail(email.trim());
+        setMode('email_otp');
+        toast({
+          title: 'Código enviado!',
+          description: 'Verifique seu email para o código de verificação.',
+        });
+      }
+    } catch (error) {
+      console.error('Email OTP error:', error);
+      setError('Erro ao enviar código. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePhoneOtp = async () => {
+    if (!phoneNumber.trim()) {
+      setError('Por favor, digite seu número de telefone');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const result = await authService.sendPhoneOtp(phoneNumber.trim());
+      if (result.error) {
+        setError('Erro ao enviar código por SMS.');
+      } else {
+        setPendingPhone(phoneNumber.trim());
+        setMode('phone_otp');
+        toast({
+          title: 'Código enviado!',
+          description: 'Verifique seu telefone para o código de verificação.',
+        });
+      }
+    } catch (error) {
+      console.error('Phone OTP error:', error);
+      setError('Erro ao enviar código. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpVerified = () => {
+    toast({
+      title: 'Bem-vindo!',
+      description: 'Sua conta foi verificada com sucesso.',
+    });
+    
+    if (selectedPlan && selectedPlan !== 'free') {
+      navigate(`/payment?plan=${selectedPlan}`, { replace: true });
+    } else {
+      navigate('/dashboard', { replace: true });
+    }
+  };
+
+  // Show verification screens
   if (mode === 'email_confirmation') {
     return (
       <EmailConfirmationScreen
@@ -387,6 +473,88 @@ export const Auth: React.FC<AuthProps> = ({
         selectedPlan={selectedPlan !== 'free' ? selectedPlan : undefined}
         onConfirmed={handleEmailConfirmed}
       />
+    );
+  }
+
+  if (mode === 'email_otp') {
+    return (
+      <OTPVerification
+        type="email"
+        identifier={pendingSignupEmail}
+        onVerified={handleOtpVerified}
+        onBack={() => setMode('signin')}
+        onResend={() => handleEmailOtp()}
+      />
+    );
+  }
+
+  if (mode === 'phone_otp') {
+    return (
+      <OTPVerification
+        type="phone"
+        identifier={pendingPhone}
+        onVerified={handleOtpVerified}
+        onBack={() => setMode('phone_input')}
+        onResend={() => handlePhoneOtp()}
+      />
+    );
+  }
+
+  if (mode === 'phone_input') {
+    return (
+      <>
+        {user && <EternaHeader />}
+        <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4 relative">
+          <div className="w-full max-w-sm relative z-20">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5 }}
+            >
+              <div className="text-center mb-8">
+                <h1 className="text-2xl font-semibold text-foreground">
+                  {getText('phoneNumber')}
+                </h1>
+              </div>
+
+              {error && (
+                <Alert variant="destructive" className="mb-6">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              <div className="space-y-6">
+                <FloatingInput
+                  id="phone"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={e => setPhoneNumber(e.target.value)}
+                  label={getText('phoneNumber')}
+                  placeholder={getText('enterPhone')}
+                  disabled={loading}
+                />
+
+                <Button
+                  onClick={handlePhoneOtp}
+                  disabled={loading || !phoneNumber.trim()}
+                  className="w-full"
+                >
+                  {loading ? 'Enviando...' : getText('sendCode')}
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  onClick={() => setMode('signin')}
+                  className="w-full"
+                >
+                  Voltar
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -485,6 +653,83 @@ export const Auth: React.FC<AuthProps> = ({
                 Continue
               </Button>
             </form>
+
+            {/* Divider */}
+            <div className="flex items-center justify-center my-6">
+              <div className="flex-1 border-t border-border"></div>
+              <span className="px-4 text-sm text-muted-foreground">{getText('orContinueWith')}</span>
+              <div className="flex-1 border-t border-border"></div>
+            </div>
+
+            {/* Social Login Buttons */}
+            <div className="space-y-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuthSignIn('google')}
+                disabled={loading}
+                className="w-full h-12 text-base font-medium border-border hover:bg-muted/50 transition-colors"
+              >
+                <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                {getText('continueWithGoogle')}
+              </Button>
+              
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuthSignIn('apple')}
+                disabled={loading}
+                className="w-full h-12 text-base font-medium border-border hover:bg-muted/50 transition-colors"
+              >
+                <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                {getText('continueWithApple')}
+              </Button>
+              
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => handleOAuthSignIn('azure')}
+                disabled={loading}
+                className="w-full h-12 text-base font-medium border-border hover:bg-muted/50 transition-colors"
+              >
+                <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M5.8 2L12.7 3.3L22 5.2V18.8L12.7 20.7L5.8 22L2 18.8V5.2L5.8 2M7.5 4.9V19.1L20 17.4V6.6L7.5 4.9M9.8 7.5L17.6 6.3V17.7L9.8 16.5V7.5Z"/>
+                </svg>
+                {getText('continueWithMicrosoft')}
+              </Button>
+            </div>
+
+            {/* Alternative Auth Methods */}
+            <div className="mt-6 space-y-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleEmailOtp}
+                disabled={loading || !email.trim()}
+                className="w-full h-12 text-base font-medium border-border hover:bg-muted/50 transition-colors"
+              >
+                <Mail className="w-5 h-5 mr-3" />
+                Continuar com código por email
+              </Button>
+              
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setMode('phone_input')}
+                disabled={loading}
+                className="w-full h-12 text-base font-medium border-border hover:bg-muted/50 transition-colors"
+              >
+                <Phone className="w-5 h-5 mr-3" />
+                {getText('continueWithPhone')}
+              </Button>
+            </div>
 
             {/* Mode Switch Link - exactly like OpenAI */}
             <div className="text-center mt-4">
