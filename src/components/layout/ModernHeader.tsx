@@ -63,6 +63,45 @@ const getContent = (language: string) => {
       pricing: "Precios",
       signIn: "Iniciar Sesión",
       startFree: "Empezar"
+    },
+    fr: {
+      account: "Compte",
+      profile: "Profil", 
+      settings: "Paramètres",
+      help: "Aide et Support",
+      language: "Langue",
+      signOut: "Se déconnecter",
+      menu: "Menu",
+      howItWorks: "Comment ça marche",
+      pricing: "Tarifs",
+      signIn: "Se connecter",
+      startFree: "Commencer"
+    },
+    de: {
+      account: "Konto",
+      profile: "Profil", 
+      settings: "Einstellungen",
+      help: "Hilfe & Support",
+      language: "Sprache",
+      signOut: "Abmelden",
+      menu: "Menü",
+      howItWorks: "Wie es funktioniert",
+      pricing: "Preise",
+      signIn: "Anmelden",
+      startFree: "Loslegen"
+    },
+    'zh-CN': {
+      account: "账户",
+      profile: "个人资料", 
+      settings: "设置",
+      help: "帮助与支持",
+      language: "语言",
+      signOut: "退出",
+      menu: "菜单",
+      howItWorks: "工作原理",
+      pricing: "价格",
+      signIn: "登录",
+      startFree: "开始使用"
     }
   };
 
@@ -86,7 +125,10 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   const languageOptions: { code: LanguageType; label: string; flag: string }[] = [
     { code: 'en', label: 'English', flag: '🇺🇸' },
     { code: 'pt-BR', label: 'Português', flag: '🇧🇷' },
-    { code: 'es', label: 'Español', flag: '🇪🇸' }
+    { code: 'es', label: 'Español', flag: '🇪🇸' },
+    { code: 'fr', label: 'Français', flag: '🇫🇷' },
+    { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+    { code: 'zh-CN', label: '简体中文', flag: '🇨🇳' }
   ];
 
   useEffect(() => {
@@ -219,7 +261,9 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                   <Button variant="ghost" size="sm" className="h-10 px-3 rounded-xl flex items-center gap-2">
                     <Globe className="h-4 w-4" />
                     <span className="text-sm font-medium">
-                      {currentLanguage === 'pt-BR' ? 'PT' : currentLanguage.toUpperCase()}
+                      {currentLanguage === 'pt-BR' ? 'PT' : 
+                       currentLanguage === 'zh-CN' ? 'CN' : 
+                       currentLanguage.toUpperCase()}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
@@ -438,51 +482,89 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                     </Button>
                   </div>
 
-                  {/* Language Selection */}
-                  <div className="pt-4 border-t border-border/50">
-                    <p className="text-sm font-medium mb-2">{content.language}</p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {languageOptions.map((lang) => (
-                        <Button
-                          key={lang.code}
-                          variant={currentLanguage === lang.code ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => {
-                            setLanguage(lang.code);
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="text-xs"
-                        >
-                          {lang.flag} {lang.code.toUpperCase()}
-                        </Button>
-                      ))}
+                    {/* Language Selection */}
+                    <div className="pt-4 border-t border-border/50">
+                      <p className="text-sm font-medium mb-2">{content.language}</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {languageOptions.map((lang) => (
+                          <Button
+                            key={lang.code}
+                            variant={currentLanguage === lang.code ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => {
+                              setLanguage(lang.code);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="justify-start gap-2 text-xs"
+                          >
+                            <span>{lang.flag}</span>
+                            <span className="truncate">{lang.label}</span>
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Language Selection for non-logged users */}
-                  <div>
-                    <p className="text-sm font-medium mb-2">{content.language}</p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {languageOptions.map((lang) => (
-                        <Button
-                          key={lang.code}
-                          variant={currentLanguage === lang.code ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => {
-                            setLanguage(lang.code);
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="text-xs"
-                        >
-                          {lang.flag} {lang.code.toUpperCase()}
-                        </Button>
-                      ))}
+                ) : (
+                  <div className="space-y-4">
+                    {/* Navigation for non-logged users */}
+                    <nav className="space-y-2">
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          handleHowItWorksClick();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full justify-start"
+                      >
+                        {content.howItWorks}
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          handlePricingClick();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full justify-start"
+                      >
+                        {content.pricing}
+                      </Button>
+                      
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          handleStartFreeClick();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full justify-start"
+                      >
+                        {content.signIn}
+                      </Button>
+                    </nav>
+
+                    {/* Language Selection for non-logged users */}
+                    <div className="pt-4 border-t border-border/50">
+                      <p className="text-sm font-medium mb-2">{content.language}</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {languageOptions.map((lang) => (
+                          <Button
+                            key={lang.code}
+                            variant={currentLanguage === lang.code ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => {
+                              setLanguage(lang.code);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="justify-start gap-2 text-xs"
+                          >
+                            <span>{lang.flag}</span>
+                            <span className="truncate">{lang.label}</span>
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           </motion.div>
         )}
