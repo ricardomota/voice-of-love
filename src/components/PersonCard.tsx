@@ -3,10 +3,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BulkMemoryImport } from "@/components/BulkMemoryImport";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image, Mic } from "@mui/icons-material";
+import { Chat, Settings, Favorite, CalendarToday, Add, MoreVert, Delete, Edit, Image, Mic, Upload } from "@mui/icons-material";
 import { VolumeUpFilled, Phone } from "@carbon/icons-react";
 import { cn } from "@/lib/utils";
 import { peopleService } from "@/services/peopleService";
@@ -58,7 +59,8 @@ const getContent = (language: string) => {
       never: "Never",
       chat: "Chat",
       call: "Call",
-      addMemory: "Add memory", 
+      addMemory: "Add memory",
+      bulkImport: "Import Chat",
       settings: "Settings",
       deleteConfirm: "Are you sure you want to delete",
       deleteWarning: "This action cannot be undone. All memories, conversations and data related to",
@@ -80,7 +82,8 @@ const getContent = (language: string) => {
       chat: "Conversar",
       call: "Ligar",
       addMemory: "Adicionar memória",
-      settings: "Configurações", 
+      bulkImport: "Importar Chat",
+      settings: "Configurações",
       deleteConfirm: "Tem certeza que deseja excluir",
       deleteWarning: "Esta ação não pode ser desfeita. Todas as memórias, conversas e dados relacionados a",
       deleteButton: "Excluir",
@@ -101,6 +104,7 @@ const getContent = (language: string) => {
       chat: "Conversar",
       call: "Llamar",
       addMemory: "Agregar recuerdo",
+      bulkImport: "Importar Chat",
       settings: "Configuración",
       deleteConfirm: "¿Estás seguro de que quieres eliminar a",
       deleteWarning: "Esta acción no se puede deshacer. Todos los recuerdos, conversaciones y datos relacionados con",
@@ -367,14 +371,30 @@ export const PersonCard: React.FC<PersonCardProps> = ({
           </div>
         </div>
 
-        {/* Botão de adicionar memória */}
-        {onAddMemory && <Button variant="outline" size="sm" onClick={e => {
-        e.stopPropagation();
-        onAddMemory(id);
-      }} className="w-full mb-4 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all">
-            <Add className="w-4 h-4 mr-2" />
-            <span className="text-xs sm:text-sm">{content.addMemory}</span>
-          </Button>}
+        {/* Botões de gerenciamento de memórias */}
+        <div className="space-y-2">
+          {onAddMemory && (
+            <Button variant="outline" size="sm" onClick={e => {
+              e.stopPropagation();
+              onAddMemory(id);
+            }} className="w-full hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all">
+              <Add className="w-4 h-4 mr-2" />
+              <span className="text-xs sm:text-sm">{content.addMemory}</span>
+            </Button>
+          )}
+          
+          {person && (
+            <div onClick={e => e.stopPropagation()}>
+              <BulkMemoryImport
+                person={person}
+                onMemoriesAdded={() => {
+                  // Refresh the person data
+                  window.location.reload();
+                }}
+              />
+            </div>
+          )}
+        </div>
 
         {/* CTAs principais com hierarquia e espaçamento otimizado */}
         <div className="space-y-4">

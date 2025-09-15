@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextareaWithVoice } from "@/components/ui/textarea-with-voice";
 import { QuickMemoryAdder } from "@/components/QuickMemoryAdder";
+import { ChatImportField } from "@/components/PersonForm/ChatImportField";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Lock, Unlock } from "lucide-react";
 import { ArrowBack, CloudUpload, Close, Description, Add, Delete, Edit } from "@mui/icons-material";
 import { Person, Memory } from "@/types/person";
 import { useToast } from "@/hooks/use-toast";
 import { memoriesService } from "@/services/memoriesService";
+import { BulkMemoryImport } from "@/components/BulkMemoryImport";
 import { supabase } from "@/integrations/supabase/client";
 import { getMediaType } from "@/utils/fileValidation";
 
@@ -321,6 +323,48 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
                </p>
             </div>
           </div>
+        </div>
+
+        {/* Bulk Import Section */}
+        <div className="mb-6">
+          <BulkMemoryImport
+            person={person}
+            onMemoriesAdded={() => {
+              // Refresh the page to show new memories
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            }}
+          />
+        </div>
+
+        {/* Chat Import Section */}
+        <div className="mb-8">
+          <ChatImportField
+            onMemoriesExtracted={(memories) => {
+              // Add extracted memories to the form
+              const newMemories = memories.map((memory, idx) => ({
+                id: `chat-memory-${Date.now()}-${idx}`,
+                text: memory,
+                file: null
+              }));
+              
+              setMemories(prev => [...prev, ...newMemories]);
+              
+              toast({
+                title: "Chat importado com sucesso!",
+                description: `${memories.length} memórias extraídas do chat e adicionadas à lista.`,
+              });
+            }}
+            onAnalysisGenerated={(analysis) => {
+              // You could use this to suggest personality traits, etc.
+              console.log('Chat analysis generated:', analysis);
+              toast({
+                title: "Análise do chat concluída!",
+                description: `Detectadas ${analysis.phrases?.length || 0} frases características e ${analysis.personality?.length || 0} traços de personalidade.`,
+              });
+            }}
+          />
         </div>
 
         {/* Quick Add Section */}
