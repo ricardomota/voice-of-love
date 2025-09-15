@@ -1,62 +1,82 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { FileUploadField } from './FileUploadField';
 import { chatMemoryService } from '@/services/chatMemoryService';
-import { validateFile } from '@/utils/fileValidation';
 import { useToast } from '@/hooks/use-toast';
-import { MessageSquare, Upload, CheckCircle, AlertCircle } from 'lucide-react';
+import { Loader2, CheckCircle2 } from 'lucide-react';
 
 interface ChatImportFieldProps {
   targetPersonName?: string;
+  userName?: string;
+  relationship?: string;
   onMemoriesExtracted: (memories: string[]) => void;
   onAnalysisGenerated?: (analysis: { phrases: string[], personality: string[], values: string[], topics: string[] }) => void;
+  onEternaAnalysisGenerated?: (analysis: any) => void;
 }
 
-export const ChatImportField: React.FC<ChatImportFieldProps> = ({
+export const ChatImportField: React.FC<ChatImportFieldProps> = ({ 
   targetPersonName,
+  userName,
+  relationship,
   onMemoriesExtracted,
-  onAnalysisGenerated
+  onAnalysisGenerated,
+  onEternaAnalysisGenerated
 }) => {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [processedCount, setProcessedCount] = useState<number>(0);
+  const [processedCount, setProcessedCount] = useState<number | null>(null);
   const { toast } = useToast();
 
   const handleFileUpload = async (file: File) => {
-    try {
-      validateFile(file, {
-        maxSize: 10 * 1024 * 1024, // 10MB
-        allowedTypes: ['text/plain'],
-        isImage: false
+    if (file.size > 20 * 1024 * 1024) { // 20MB limit
+      toast({
+        title: "Arquivo muito grande",
+        description: "O arquivo deve ter menos de 20MB",
+        variant: "destructive",
       });
+      return;
+    }
 
-      setIsProcessing(true);
+    if (!file.name.endsWith('.txt')) {
+      toast({
+        title: "Formato não suportado",
+        description: "Por favor, envie um arquivo de texto (.txt)",
+        variant: "destructive",
+      });
+      return;
+    }
 
-      const chatData = await chatMemoryService.processChatFile(file, targetPersonName);
-      
+    setIsProcessing(true);
+    try {
+      // Process the chat file
+      const result = await chatMemoryService.processChatFile(file, targetPersonName, userName, relationship);
+
+      // Call analysis callback if provided
       if (onAnalysisGenerated) {
-        onAnalysisGenerated(chatData.insights);
+        onAnalysisGenerated(result.insights);
       }
 
-      onMemoriesExtracted(chatData.memories);
-      setProcessedCount(chatData.memories.length);
+      // Call ETERNA analysis callback if provided
+      if (onEternaAnalysisGenerated && result.eternaAnalysis) {
+        onEternaAnalysisGenerated(result.eternaAnalysis);
+      }
 
-      const targetInfo = chatData.targetPerson 
-        ? ` • Foco: ${chatData.targetPerson}`
-        : '';
+      // Call memories callback
+      onMemoriesExtracted(result.memories);
+      setProcessedCount(result.memories.length);
 
+      const eternaInfo = result.eternaAnalysis ? 
+        ` | Perfil ETERNA criado (${result.eternaAnalysis.confidence_overall} confiança)` : '';
+      
       toast({
-        title: "✅ Chat analisado inteligentemente!",
-        description: `${chatData.memories.length} memórias extraídas${targetInfo}`,
-        duration: 5000,
+        title: "✅ Chat analisado com sucesso!",
+        description: `${result.memories.length} memórias extraídas${eternaInfo}`,
       });
-
     } catch (error) {
-      console.error('Erro ao processar chat:', error);
+      console.error('Error processing chat file:', error);
       toast({
         title: "Erro ao processar chat",
-        description: error instanceof Error ? error.message : 'Formato inválido ou erro no arquivo',
-        variant: "destructive"
+        description: error instanceof Error ? error.message : "Erro desconhecido",
+        variant: "destructive",
       });
     } finally {
       setIsProcessing(false);
@@ -64,86 +84,68 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
   };
 
   return (
-    <div className="space-y-4">
-      <div className="border-2 border-dashed border-border/50 rounded-lg p-6 text-center hover:border-border transition-colors">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Upload className="w-6 h-6 text-primary" />
-          </div>
-          
-          <div>
-            <h3 className="font-medium text-lg mb-1">📱 Importar Chat Inteligente</h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              {targetPersonName 
-                ? `Analisando mensagens de ${targetPersonName} automaticamente`
-                : "Arraste seu arquivo .txt ou clique para selecionar"
-              }
-            </p>
-          </div>
-
-          <FileUploadField
-            onUpload={handleFileUpload}
-            isUploading={isProcessing}
-            accept=".txt"
-            mediaType="text"
-          />
-
-          {isProcessing && (
-            <div className="flex items-center gap-2 text-blue-600">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-              <span className="text-sm">Processando chat...</span>
+    <Card className="border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors">
+      <div className="p-6">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-full">
+              📱
             </div>
+            <div>
+              <h3 className="font-semibold">Importar Histórico do WhatsApp</h3>
+              <p className="text-sm text-muted-foreground">
+                Extraia memórias automaticamente do chat
+              </p>
+            </div>
+          </div>
+
+          {isProcessing ? (
+            <div className="flex items-center gap-2 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span className="text-sm">Analisando chat com IA...</span>
+            </div>
+          ) : processedCount !== null ? (
+            <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg">
+              <CheckCircle2 className="w-4 h-4 text-green-600" />
+              <span className="text-sm text-green-700 dark:text-green-300">
+                {processedCount} memórias extraídas com sucesso!
+              </span>
+            </div>
+          ) : (
+            <FileUploadField
+              onUpload={handleFileUpload}
+              isUploading={isProcessing}
+              accept=".txt"
+            />
           )}
 
-          {processedCount > 0 && !isProcessing && (
-            <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-950/20 px-4 py-3 rounded-lg">
-              <CheckCircle className="w-5 h-5" />
-              <div>
-                <span className="text-sm font-medium block">
-                  ✅ {processedCount} memórias extraídas com IA!
-                </span>
-                {targetPersonName && (
-                  <span className="text-xs text-green-600/80">
-                    Focado automaticamente em {targetPersonName}
-                  </span>
-                )}
+          <div className="space-y-3 text-sm text-muted-foreground">
+            <div>
+              <strong className="text-foreground">Como exportar:</strong>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <span className="text-green-600 font-semibold">WhatsApp:</span>
+                <span>Chat → Opções → Mais → Exportar conversa → Sem mídia</span>
+              </div>
+              
+              <div className="flex items-start gap-2">
+                <span className="text-blue-600 font-semibold">Telegram:</span>
+                <span>Chat → Menu → Exportar histórico → Como arquivo de texto</span>
               </div>
             </div>
-          )}
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-        <div className="bg-muted/30 rounded-lg p-3">
-          <div className="font-medium text-green-600 mb-1">💬 WhatsApp</div>
-          <div className="text-muted-foreground">
-            Configurações → Conversas → Exportar conversa → Sem mídia
-          </div>
-        </div>
-        <div className="bg-muted/30 rounded-lg p-3">
-          <div className="font-medium text-blue-600 mb-1">📱 Telegram</div>
-          <div className="text-muted-foreground">
-            Configurações → Exportar dados → Selecionar chat
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-lg p-3 text-xs">
-        <div className="flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-blue-600" />
-          <div>
-            <div className="font-medium text-blue-900 dark:text-blue-100 mb-1">
-              🧠 Análise Inteligente com IA
-            </div>
-            <div className="text-blue-700 dark:text-blue-300">
-              {targetPersonName 
-                ? `Identifica automaticamente mensagens de "${targetPersonName}" e extrai traços únicos de personalidade.`
-                : "Identifica automaticamente a pessoa principal e extrai traços únicos de personalidade."
-              }
+            <div className="pt-2 border-t">
+              <strong className="text-foreground">💬 ETERNA Analysis:</strong>
+              <span className="block mt-1">
+                Sistema avançado que cria um perfil completo da personalidade,
+                incluindo padrões de fala, valores, limites e templates de resposta para conversas naturais.
+              </span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };

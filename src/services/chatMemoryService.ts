@@ -1,5 +1,6 @@
 import { whatsappChatParser } from './whatsappChatParser';
 import { memoriesService } from './memoriesService';
+import { eternaPersonaService } from './eternaPersonaService';
 
 interface ChatMemoryData {
   memories: string[];
@@ -11,10 +12,11 @@ interface ChatMemoryData {
     values: string[];
     topics: string[];
   };
+  eternaAnalysis?: any; // ETERNA persona analysis
 }
 
 class ChatMemoryService {
-  async processChatFile(file: File, targetPersonName?: string): Promise<ChatMemoryData> {
+  async processChatFile(file: File, targetPersonName?: string, userName?: string, relationship?: string): Promise<ChatMemoryData> {
     try {
       // Read file content
       const content = await file.text();
@@ -38,11 +40,30 @@ class ChatMemoryService {
       // Extract insights focused on the target person
       const insights = await this.extractPersonalizedInsights(parsedData, targetPerson);
 
+      // Run ETERNA analysis if we have enough information
+      let eternaAnalysis = null;
+      if (targetPerson && userName && relationship) {
+        try {
+          eternaAnalysis = await eternaPersonaService.analyzeChat({
+            userName,
+            targetPersonName: targetPerson,
+            relationshipToUser: relationship,
+            chatHistory: content,
+            optionalContext: {
+              locale: "pt-BR"
+            }
+          });
+        } catch (error) {
+          console.warn('ETERNA analysis failed:', error);
+        }
+      }
+
       return {
         memories,
         summary,
         targetPerson,
-        insights
+        insights,
+        eternaAnalysis
       };
     } catch (error) {
       console.error('Error processing chat file:', error);

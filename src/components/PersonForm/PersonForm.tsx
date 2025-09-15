@@ -511,6 +511,9 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
 
               {/* Chat Import Section */}
               <ChatImportField
+                targetPersonName={formData.name}
+                userName="Ricardo" // You could make this dynamic from auth context
+                relationship={formData.relationship}
                 onMemoriesExtracted={(memories) => {
                   // Add extracted memories to the form
                   const newMemories = memories.map((memory, idx) => ({
@@ -526,6 +529,19 @@ export const PersonForm = ({ person, onSave, onBack }: PersonFormProps) => {
                   });
                 }}
                 onAnalysisGenerated={handleTranscriptionAnalysis}
+                onEternaAnalysisGenerated={(eternaAnalysis) => {
+                  // Store ETERNA analysis for future use
+                  console.log('ETERNA Analysis received:', eternaAnalysis);
+                  // You can store this in the form data or use it to pre-fill other fields
+                  
+                  // Example: Pre-fill personality traits from ETERNA analysis
+                  if (eternaAnalysis.persona_profile?.speech_dna) {
+                    const traits = eternaAnalysis.persona_profile.values_and_themes || [];
+                    updateFormData({
+                      personality: [...formData.personality, ...traits.slice(0, 5)]
+                    });
+                  }
+                }}
               />
 
               <div className="space-y-4">
