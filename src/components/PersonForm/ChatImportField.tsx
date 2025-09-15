@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { FileUploadField } from './FileUploadField';
 import { chatMemoryService } from '@/services/chatMemoryService';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, CheckCircle2, Brain, MessageSquare, User, Clock } from 'lucide-react';
 
 interface ChatImportFieldProps {
   targetPersonName?: string;
@@ -24,6 +24,8 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
 }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [processedCount, setProcessedCount] = useState<number | null>(null);
+  const [processingStage, setProcessingStage] = useState<string>('');
+  const [analysisDetails, setAnalysisDetails] = useState<any>(null);
   const { toast } = useToast();
 
   const handleFileUpload = async (file: File) => {
@@ -46,9 +48,20 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
     }
 
     setIsProcessing(true);
+    setProcessingStage('Lendo arquivo...');
+    
     try {
-      // Process the chat file
+      // Process the chat file with stage updates
+      setProcessingStage('Analisando conversa...');
+      await new Promise(resolve => setTimeout(resolve, 800)); // Give user time to see stage
+      
       const result = await chatMemoryService.processChatFile(file, targetPersonName, userName, relationship);
+
+      setProcessingStage('Extraindo memórias...');
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      setProcessingStage('Criando perfil de personalidade...');
+      await new Promise(resolve => setTimeout(resolve, 700));
 
       // Call analysis callback if provided
       if (onAnalysisGenerated) {
@@ -58,6 +71,7 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
       // Call ETERNA analysis callback if provided
       if (onEternaAnalysisGenerated && result.eternaAnalysis) {
         onEternaAnalysisGenerated(result.eternaAnalysis);
+        setAnalysisDetails(result.eternaAnalysis);
       }
 
       // Call memories callback
@@ -65,7 +79,7 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
       setProcessedCount(result.memories.length);
 
       const eternaInfo = result.eternaAnalysis ? 
-        ` | Perfil ETERNA criado (${result.eternaAnalysis.confidence_overall} confiança)` : '';
+        ` | Análise ETERNA concluída com ${result.eternaAnalysis.confidence_overall} confiança` : '';
       
       toast({
         title: "✅ Chat analisado com sucesso!",
@@ -80,6 +94,7 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
       });
     } finally {
       setIsProcessing(false);
+      setProcessingStage('');
     }
   };
 
@@ -100,16 +115,65 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
           </div>
 
           {isProcessing ? (
-            <div className="flex items-center gap-2 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span className="text-sm">Analisando chat com IA...</span>
+            <div className="space-y-4 animate-fade-in">
+              <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+                <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-blue-700 dark:text-blue-300">
+                    {processingStage}
+                  </div>
+                  <div className="w-full bg-blue-200 dark:bg-blue-800 rounded-full h-2 mt-2">
+                    <div className="bg-blue-600 h-2 rounded-full animate-pulse w-1/2"></div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Processing stages visualization */}
+              <div className="grid grid-cols-1 gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-3 h-3" />
+                  <span>Identificando participantes da conversa</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Brain className="w-3 h-3" />
+                  <span>Analisando padrões de comunicação</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <User className="w-3 h-3" />
+                  <span>Criando perfil de personalidade</span>
+                </div>
+              </div>
             </div>
           ) : processedCount !== null ? (
-            <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg">
-              <CheckCircle2 className="w-4 h-4 text-green-600" />
-              <span className="text-sm text-green-700 dark:text-green-300">
-                {processedCount} memórias extraídas com sucesso!
-              </span>
+            <div className="space-y-3 animate-scale-in">
+              <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-green-700 dark:text-green-300">
+                    Análise concluída com sucesso!
+                  </div>
+                  <div className="text-xs text-green-600 dark:text-green-400 mt-1">
+                    {processedCount} memórias extraídas e organizadas
+                  </div>
+                </div>
+              </div>
+              
+              {analysisDetails && (
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="bg-muted/50 p-3 rounded-lg">
+                    <div className="font-medium">Confiança da Análise</div>
+                    <div className="text-muted-foreground capitalize">
+                      {analysisDetails.confidence_overall}
+                    </div>
+                  </div>
+                  <div className="bg-muted/50 p-3 rounded-lg">
+                    <div className="font-medium">Traços Identificados</div>
+                    <div className="text-muted-foreground">
+                      {analysisDetails.persona_profile?.values_and_themes?.length || 0} temas
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <FileUploadField

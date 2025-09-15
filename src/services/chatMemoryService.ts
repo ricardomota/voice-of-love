@@ -20,9 +20,15 @@ class ChatMemoryService {
     try {
       // Read file content
       const content = await file.text();
+      console.log(`Processing chat file: ${file.name}, size: ${file.size} bytes`);
       
       // Parse chat
       const parsedData = whatsappChatParser.parseWhatsAppChat(content);
+      console.log(`Parsed chat data:`, {
+        totalMessages: parsedData.totalMessages,
+        participants: parsedData.participants,
+        dateRange: parsedData.dateRange
+      });
       
       if (parsedData.totalMessages === 0) {
         throw new Error('Não foi possível identificar mensagens no formato WhatsApp no arquivo.');
@@ -30,9 +36,11 @@ class ChatMemoryService {
 
       // Identify target person intelligently
       const targetPerson = await this.identifyTargetPerson(parsedData, targetPersonName);
+      console.log(`Target person identified: ${targetPerson}`);
 
       // Extract memories focused on the target person
       const memories = whatsappChatParser.extractMemoriesFromChat(parsedData, targetPerson);
+      console.log(`Extracted ${memories.length} memories`);
       
       // Generate summary
       const summary = whatsappChatParser.generateChatSummary(parsedData, targetPerson);

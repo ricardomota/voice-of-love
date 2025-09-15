@@ -202,10 +202,16 @@ class WhatsAppChatParser {
       !msg.message.includes('áudio ocultado') &&
       !msg.message.includes('<Media omitted>') &&
       !msg.message.includes('arquivo de mídia omitido') &&
+      !msg.message.includes('figurinha omitida') &&
+      !msg.message.includes('documento omitido') &&
+      !msg.message.includes('Cartão do contato omitido') &&
       !msg.message.toLowerCase().includes('mensagem apagada')
     );
 
-    for (const message of meaningfulMessages) { // Sem limite
+    console.log(`Found ${meaningfulMessages.length} meaningful messages from ${targetPersonName || 'all participants'}`);
+
+    // Create individual memory entries for each meaningful message
+    for (const message of meaningfulMessages) {
       const dateStr = message.timestamp 
         ? message.timestamp.toLocaleDateString('pt-BR')
         : 'Data desconhecida';
@@ -213,6 +219,7 @@ class WhatsAppChatParser {
       memories.push(`${dateStr} - ${message.sender}: ${message.message}`);
     }
 
+    console.log(`Total memories created: ${memories.length}`);
     return memories; // Retorna todas as memórias sem limite
   }
 
