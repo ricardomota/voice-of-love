@@ -148,12 +148,17 @@ class WhatsAppChatParser {
     const memories: string[] = [];
     const { messages } = parsedData;
 
+    // Filter messages from target person if specified
+    const targetMessages = targetPersonName 
+      ? messages.filter(msg => msg.sender === targetPersonName)
+      : messages;
+
     // Group messages by date or conversation threads
     const conversationGroups: ChatMessage[][] = [];
     let currentGroup: ChatMessage[] = [];
     let lastTimestamp: Date | undefined;
 
-    for (const message of messages) {
+    for (const message of targetMessages) {
       // Start a new group if there's a significant time gap (more than 2 hours)
       if (lastTimestamp && message.timestamp) {
         const timeDiff = message.timestamp.getTime() - lastTimestamp.getTime();
@@ -173,29 +178,32 @@ class WhatsAppChatParser {
       conversationGroups.push(currentGroup);
     }
 
-    // Extract meaningful conversations as memories
+    // Extract meaningful conversations as memories (focusing on target person)
     for (const group of conversationGroups) {
-      if (group.length >= 3) { // At least 3 messages to form a conversation
+      if (group.length >= 2) { // At least 2 messages from target person
         const dateStr = group[0].timestamp 
           ? group[0].timestamp.toLocaleDateString('pt-BR')
           : 'Data desconhecida';
 
-        const conversation = group
-          .map(msg => `${msg.sender}: ${msg.message}`)
-          .join('\n');
-
-        memories.push(`Conversa de ${dateStr}:\n${conversation}`);
+        // For target person memories, show their messages in context
+        const contextualConversation = this.buildContextualMemory(group, messages, targetPersonName);
+        
+        if (contextualConversation) {
+          memories.push(`Conversa de ${dateStr}:\n${contextualConversation}`);
+        }
       }
     }
 
-    // Also extract individual meaningful messages (longer than 50 characters)
-    const meaningfulMessages = messages.filter(msg => 
-      msg.message.length > 50 && 
+    // Also extract individual meaningful messages from target person
+    const meaningfulMessages = targetMessages.filter(msg => 
+      msg.message.length > 30 && 
+      msg.message.length < 200 &&
       !msg.message.includes('<Media omitted>') &&
-      !msg.message.includes('arquivo de mídia omitido')
+      !msg.message.includes('arquivo de mídia omitido') &&
+      !msg.message.toLowerCase().includes('mensagem apagada')
     );
 
-    for (const message of meaningfulMessages.slice(0, 20)) { // Limit to 20 individual messages
+    for (const message of meaningfulMessages.slice(0, 15)) { // Limit to 15 individual messages
       const dateStr = message.timestamp 
         ? message.timestamp.toLocaleDateString('pt-BR')
         : 'Data desconhecida';
@@ -203,16 +211,47 @@ class WhatsAppChatParser {
       memories.push(`${dateStr} - ${message.sender}: ${message.message}`);
     }
 
-    return memories.slice(0, 30); // Limit total memories to 30
+    return memories.slice(0, 25); // Limit total memories to 25
   }
 
-  generateChatSummary(parsedData: ParsedChatData): string {
+  private buildContextualMemory(targetGroup: ChatMessage[], allMessages: ChatMessage[], targetPersonName?: string): string | null {
+    if (!targetPersonName) {
+      return targetGroup.map(msg => `${msg.sender}: ${msg.message}`).join('\n');
+    }
+
+    // Find the broader context around these messages
+    const firstMessage = targetGroup[0];
+    const lastMessage = targetGroup[targetGroup.length - 1];
+    
+    const contextMessages = allMessages.filter(msg => {
+      if (!msg.timestamp || !firstMessage.timestamp || !lastMessage.timestamp) return false;
+      return msg.timestamp >= firstMessage.timestamp && msg.timestamp <= lastMessage.timestamp;
+    });
+
+    // Build conversation showing both sides but highlighting target person
+    const conversation = contextMessages
+      .map(msg => {
+        const isTarget = msg.sender === targetPersonName;
+        const prefix = isTarget ? '✓' : ' ';
+        return `${prefix} ${msg.sender}: ${msg.message}`;
+      })
+      .join('\n');
+
+    return conversation;
+  }
+
+  generateChatSummary(parsedData: ParsedChatData, targetPersonName?: string): string {
     const { messages, participants, totalMessages, dateRange } = parsedData;
     
     const summary = [];
-    summary.push(`Conversa do WhatsApp analisada:`);
+    summary.push(`📱 Análise do Chat:`);
     summary.push(`• Total de mensagens: ${totalMessages}`);
     summary.push(`• Participantes: ${participants.join(', ')}`);
+    
+    if (targetPersonName) {
+      const targetMessages = messages.filter(m => m.sender === targetPersonName);
+      summary.push(`• Mensagens de ${targetPersonName}: ${targetMessages.length} (${Math.round(targetMessages.length/totalMessages*100)}%)`);
+    }
     
     if (dateRange) {
       summary.push(`• Período: ${dateRange.start.toLocaleDateString('pt-BR')} a ${dateRange.end.toLocaleDateString('pt-BR')}`);
@@ -221,10 +260,11 @@ class WhatsAppChatParser {
     // Analyze message frequency by participant
     const messagesByParticipant = participants.map(participant => {
       const count = messages.filter(m => m.sender === participant).length;
-      return `${participant}: ${count} mensagens`;
+      const percentage = Math.round(count/totalMessages*100);
+      return `${participant}: ${count} (${percentage}%)`;
     });
 
-    summary.push(`• Distribuição de mensagens: ${messagesByParticipant.join(', ')}`);
+    summary.push(`• Distribuição: ${messagesByParticipant.join(', ')}`);
 
     return summary.join('\n');
   }

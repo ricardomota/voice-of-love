@@ -8,11 +8,13 @@ import { useToast } from '@/hooks/use-toast';
 import { MessageSquare, Upload, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface ChatImportFieldProps {
+  targetPersonName?: string;
   onMemoriesExtracted: (memories: string[]) => void;
   onAnalysisGenerated?: (analysis: { phrases: string[], personality: string[], values: string[], topics: string[] }) => void;
 }
 
 export const ChatImportField: React.FC<ChatImportFieldProps> = ({
+  targetPersonName,
   onMemoriesExtracted,
   onAnalysisGenerated
 }) => {
@@ -30,7 +32,7 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
 
       setIsProcessing(true);
 
-      const chatData = await chatMemoryService.processChatFile(file);
+      const chatData = await chatMemoryService.processChatFile(file, targetPersonName);
       
       if (onAnalysisGenerated) {
         onAnalysisGenerated(chatData.insights);
@@ -39,9 +41,14 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
       onMemoriesExtracted(chatData.memories);
       setProcessedCount(chatData.memories.length);
 
+      const targetInfo = chatData.targetPerson 
+        ? ` • Foco: ${chatData.targetPerson}`
+        : '';
+
       toast({
-        title: "✅ Chat importado!",
-        description: `${chatData.memories.length} memórias extraídas com sucesso.`,
+        title: "✅ Chat analisado inteligentemente!",
+        description: `${chatData.memories.length} memórias extraídas${targetInfo}`,
+        duration: 5000,
       });
 
     } catch (error) {
@@ -65,9 +72,12 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
           </div>
           
           <div>
-            <h3 className="font-medium text-lg mb-1">Importar Chat</h3>
+            <h3 className="font-medium text-lg mb-1">📱 Importar Chat Inteligente</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Arraste seu arquivo .txt ou clique para selecionar
+              {targetPersonName 
+                ? `Analisando mensagens de ${targetPersonName} automaticamente`
+                : "Arraste seu arquivo .txt ou clique para selecionar"
+              }
             </p>
           </div>
 
@@ -86,11 +96,18 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
           )}
 
           {processedCount > 0 && !isProcessing && (
-            <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-950/20 px-3 py-2 rounded-lg">
-              <CheckCircle className="w-4 h-4" />
-              <span className="text-sm font-medium">
-                {processedCount} memórias extraídas!
-              </span>
+            <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-950/20 px-4 py-3 rounded-lg">
+              <CheckCircle className="w-5 h-5" />
+              <div>
+                <span className="text-sm font-medium block">
+                  ✅ {processedCount} memórias extraídas com IA!
+                </span>
+                {targetPersonName && (
+                  <span className="text-xs text-green-600/80">
+                    Focado automaticamente em {targetPersonName}
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -100,26 +117,29 @@ export const ChatImportField: React.FC<ChatImportFieldProps> = ({
         <div className="bg-muted/30 rounded-lg p-3">
           <div className="font-medium text-green-600 mb-1">💬 WhatsApp</div>
           <div className="text-muted-foreground">
-            Menu → Mais → Exportar conversa → Sem mídia
+            Configurações → Conversas → Exportar conversa → Sem mídia
           </div>
         </div>
         <div className="bg-muted/30 rounded-lg p-3">
           <div className="font-medium text-blue-600 mb-1">📱 Telegram</div>
           <div className="text-muted-foreground">
-            Configurações → Exportar dados
+            Configurações → Exportar dados → Selecionar chat
           </div>
         </div>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-3 text-xs">
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-lg p-3 text-xs">
         <div className="flex items-start gap-2">
           <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-blue-600" />
           <div>
-            <div className="font-medium text-blue-900 dark:text-blue-100">
-              Processamento Local & Privado
+            <div className="font-medium text-blue-900 dark:text-blue-100 mb-1">
+              🧠 Análise Inteligente com IA
             </div>
             <div className="text-blue-700 dark:text-blue-300">
-              Seu chat é analisado no navegador, apenas as memórias são salvas.
+              {targetPersonName 
+                ? `Identifica automaticamente mensagens de "${targetPersonName}" e extrai traços únicos de personalidade.`
+                : "Identifica automaticamente a pessoa principal e extrai traços únicos de personalidade."
+              }
             </div>
           </div>
         </div>

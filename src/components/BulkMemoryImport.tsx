@@ -91,6 +91,7 @@ export const BulkMemoryImport: React.FC<BulkMemoryImportProps> = ({
           </div>
 
           <ChatImportField
+            targetPersonName={person.name}
             onMemoriesExtracted={handleMemoriesExtracted}
             onAnalysisGenerated={(analysis) => {
               console.log('Bulk import analysis:', analysis);

@@ -341,6 +341,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
         {/* Chat Import Section */}
         <div className="mb-8">
           <ChatImportField
+            targetPersonName={person.name}
             onMemoriesExtracted={(memories) => {
               // Add extracted memories to the form
               const newMemories = memories.map((memory, idx) => ({
@@ -357,8 +358,7 @@ export const AddMemory = ({ person, onSave, onBack }: AddMemoryProps) => {
               });
             }}
             onAnalysisGenerated={(analysis) => {
-              // You could use this to suggest personality traits, etc.
-              console.log('Chat analysis generated:', analysis);
+              console.log('Chat analysis for', person.name, ':', analysis);
               toast({
                 title: "Análise do chat concluída!",
                 description: `Detectadas ${analysis.phrases?.length || 0} frases características e ${analysis.personality?.length || 0} traços de personalidade.`,

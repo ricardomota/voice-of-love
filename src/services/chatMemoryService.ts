@@ -4,6 +4,7 @@ import { memoriesService } from './memoriesService';
 interface ChatMemoryData {
   memories: string[];
   summary: string;
+  targetPerson: string | null;
   insights: {
     phrases: string[];
     personality: string[];
@@ -13,7 +14,7 @@ interface ChatMemoryData {
 }
 
 class ChatMemoryService {
-  async processChatFile(file: File): Promise<ChatMemoryData> {
+  async processChatFile(file: File, targetPersonName?: string): Promise<ChatMemoryData> {
     try {
       // Read file content
       const content = await file.text();
@@ -25,18 +26,22 @@ class ChatMemoryService {
         throw new Error('Não foi possível identificar mensagens no formato WhatsApp no arquivo.');
       }
 
-      // Extract memories
-      const memories = whatsappChatParser.extractMemoriesFromChat(parsedData);
+      // Identify target person intelligently
+      const targetPerson = await this.identifyTargetPerson(parsedData, targetPersonName);
+
+      // Extract memories focused on the target person
+      const memories = whatsappChatParser.extractMemoriesFromChat(parsedData, targetPerson);
       
       // Generate summary
-      const summary = whatsappChatParser.generateChatSummary(parsedData);
+      const summary = whatsappChatParser.generateChatSummary(parsedData, targetPerson);
 
-      // Extract insights
-      const insights = this.extractInsights(parsedData);
+      // Extract insights focused on the target person
+      const insights = await this.extractPersonalizedInsights(parsedData, targetPerson);
 
       return {
         memories,
         summary,
+        targetPerson,
         insights
       };
     } catch (error) {
@@ -45,8 +50,78 @@ class ChatMemoryService {
     }
   }
 
-  private extractInsights(parsedData: any) {
-    const allMessages = parsedData.messages.map((m: any) => m.message).join(' ');
+  private async identifyTargetPerson(parsedData: any, targetPersonName?: string): Promise<string | null> {
+    const participants = parsedData.participants;
+    
+    if (!targetPersonName || participants.length <= 1) {
+      return null; // Não há como identificar ou só há uma pessoa
+    }
+
+    // Find best match for target person name
+    const normalizedTarget = this.normalizePersonName(targetPersonName);
+    
+    // Try exact matches first
+    for (const participant of participants) {
+      const normalizedParticipant = this.normalizePersonName(participant);
+      if (normalizedParticipant === normalizedTarget) {
+        return participant;
+      }
+    }
+
+    // Try partial matches (first name, last name, nicknames)
+    const targetWords = normalizedTarget.split(' ');
+    for (const participant of participants) {
+      const participantWords = this.normalizePersonName(participant).split(' ');
+      
+      // Check if any word from target matches any word from participant
+      for (const targetWord of targetWords) {
+        for (const participantWord of participantWords) {
+          if (targetWord.length > 2 && participantWord.includes(targetWord)) {
+            return participant;
+          }
+          if (participantWord.length > 2 && targetWord.includes(participantWord)) {
+            return participant;
+          }
+        }
+      }
+    }
+
+    // If still no match, use the participant who is NOT the phone owner
+    // Phone owner typically appears as "You", "Você", or has many system messages
+    const likelyPhoneOwner = participants.find(p => 
+      ['you', 'você', 'eu'].includes(this.normalizePersonName(p))
+    );
+    
+    if (likelyPhoneOwner) {
+      return participants.find(p => p !== likelyPhoneOwner) || null;
+    }
+
+    // As last resort, return the participant with fewer messages (likely the contact)
+    const messageCount = participants.map(p => ({
+      name: p,
+      count: parsedData.messages.filter((m: any) => m.sender === p).length
+    }));
+
+    messageCount.sort((a, b) => a.count - b.count);
+    return messageCount[0]?.name || null;
+  }
+
+  private normalizePersonName(name: string): string {
+    return name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^\w\s]/g, '') // Remove special characters
+      .trim();
+  }
+
+  private async extractPersonalizedInsights(parsedData: any, targetPerson: string | null) {
+    // Filter messages from the target person if identified
+    const relevantMessages = targetPerson 
+      ? parsedData.messages.filter((m: any) => m.sender === targetPerson)
+      : parsedData.messages;
+
+    const allMessages = relevantMessages.map((m: any) => m.message).join(' ');
     
     // Simple text analysis - could be enhanced with AI
     const words = allMessages
@@ -65,24 +140,46 @@ class ChatMemoryService {
       .slice(0, 20)
       .map(([word]) => word);
 
-    // Extract meaningful phrases from messages
-    const phrases = parsedData.messages
+    // Extract meaningful phrases from target person's messages
+    const phrases = relevantMessages
       .filter((m: any) => m.message.length > 20 && m.message.length < 100)
-      .slice(0, 8)
+      .slice(0, 10)
       .map((m: any) => m.message);
 
-    // Generate personality insights based on communication patterns
+    // Generate personality insights based on target person's communication patterns
     const personality = [];
-    if (parsedData.totalMessages > 100) personality.push('Comunicativo(a)');
-    if (allMessages.includes('haha') || allMessages.includes('kkkk')) personality.push('Bem-humorado(a)');
-    if (allMessages.includes('amor') || allMessages.includes('querido')) personality.push('Carinhoso(a)');
-    if (phrases.some((p: string) => p.includes('?'))) personality.push('Curioso(a)');
+    const messageCount = relevantMessages.length;
+    
+    if (messageCount > 50) personality.push('Comunicativo(a)');
+    if (messageCount < 20) personality.push('Reservado(a)');
+    
+    // Analyze emotional indicators
+    if (allMessages.includes('haha') || allMessages.includes('kkkk') || allMessages.includes('😂')) {
+      personality.push('Bem-humorado(a)');
+    }
+    if (allMessages.includes('amor') || allMessages.includes('querido') || allMessages.includes('❤️')) {
+      personality.push('Carinhoso(a)');
+    }
+    if (phrases.filter((p: string) => p.includes('?')).length > 3) {
+      personality.push('Curioso(a)');
+    }
+    if (allMessages.includes('obrigad') || allMessages.includes('por favor')) {
+      personality.push('Educado(a)');
+    }
+    
+    // Analyze message patterns
+    const avgMessageLength = allMessages.length / messageCount;
+    if (avgMessageLength > 100) {
+      personality.push('Detalhista');
+    } else if (avgMessageLength < 30) {
+      personality.push('Direto(a)');
+    }
 
     return {
-      phrases: phrases.slice(0, 5),
-      personality: personality.slice(0, 5),
-      values: topWords.slice(0, 5),
-      topics: topWords.slice(5, 10)
+      phrases: phrases.slice(0, 8),
+      personality: personality.slice(0, 6),
+      values: topWords.slice(0, 8),
+      topics: topWords.slice(8, 16)
     };
   }
 
