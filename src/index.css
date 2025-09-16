@@ -26,46 +26,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Liquid Glass Effect */
-.liquid-glass {
-  position: relative;
-  backdrop-filter: blur(40px) saturate(200%) contrast(125%);
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0.02) 100%);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.liquid-glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.15) 0%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(20px);
-  z-index: -1;
-}
-
-.liquid-glass::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(45deg, 
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%);
-  backdrop-filter: blur(10px);
-  z-index: -1;
-}
-
 /* Base CSS Variables - Eterna Riley Adapted */
 @layer base {
   :root {

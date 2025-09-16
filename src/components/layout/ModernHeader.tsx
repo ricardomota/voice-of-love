@@ -189,16 +189,16 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   return (
     <>
       <motion.header 
-        className={`liquid-glass fixed top-4 left-4 right-4 z-50 transition-all duration-700 ease-out ${
+        className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 ease-out ${
           isScrolled 
-            ? 'bg-background/15 backdrop-blur-3xl border border-white/25 shadow-2xl scale-[1.02]' 
-            : 'bg-background/10 backdrop-blur-2xl border border-white/15 shadow-xl'
-        } rounded-2xl backdrop-saturate-200 backdrop-contrast-125`}
+            ? 'bg-background/70 backdrop-blur-2xl border border-border/40 shadow-2xl' 
+            : 'bg-background/50 backdrop-blur-xl border border-border/20 shadow-lg'
+        } rounded-2xl backdrop-saturate-150`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-6 relative z-10">
+        <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <Link to="/" className="flex items-center" aria-label="Voltar à página inicial">
             {/* Mobile Logo */}
@@ -421,12 +421,11 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-24 left-4 right-4 z-40 md:hidden"
           >
-            <div className="liquid-glass bg-background/15 border border-white/20 rounded-2xl p-6 shadow-2xl">
-              <div className="relative z-10">
-                {user ? (
-                  <div className="space-y-4">
-                    {/* User Info */}
-                    <div className="flex items-center gap-3 pb-4 border-b border-border/50">
+            <div className="bg-background/60 backdrop-blur-2xl backdrop-saturate-150 border border-border/30 rounded-2xl p-6 shadow-2xl">
+              {user ? (
+                <div className="space-y-4">
+                  {/* User Info */}
+                  <div className="flex items-center gap-3 pb-4 border-b border-border/50">
                     <div className="w-12 h-12 bg-primary text-primary-foreground rounded-xl flex items-center justify-center text-lg font-medium">
                       {profile?.display_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
                     </div>
@@ -434,12 +433,12 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                       <p className="font-medium">{profile?.display_name || content.account}</p>
                       <p className="text-sm text-muted-foreground">{user.email}</p>
                     </div>
-                    </div>
+                  </div>
 
-                    {/* Credit Counter */}
-                    <CreditCounter showDetails />
+                  {/* Credit Counter */}
+                  <CreditCounter showDetails />
 
-                    {/* Menu Items */}
+                  {/* Menu Items */}
                   <div className="space-y-2">
                     <Button
                       variant="ghost"
@@ -488,7 +487,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                       <LogOut className="h-4 w-4" />
                       {content.signOut}
                     </Button>
-                    </div>
+                  </div>
 
                     {/* Language Selection */}
                     <div className="pt-4 border-t border-border/50">
@@ -573,7 +572,6 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
                     </div>
                   </div>
                 )}
-              </div>
             </div>
           </motion.div>
         )}
