@@ -6,8 +6,8 @@ import { InteractiveHowItWorks } from '@/components/landing/InteractiveHowItWork
 import { ModernStats } from '@/components/landing/ModernStats';
 import { StoryCard } from '@/components/landing/StoryCard';
 import { LandingFooter } from '@/components/landing/LandingFooter';
-import { WaitlistSection } from '@/components/landing/WaitlistSection';
-import { UpdatedPricingSection } from '@/components/landing/UpdatedPricingSection';
+import { SimplePricingSection } from '@/components/landing/SimplePricingSection';
+import { SimpleWaitlistModal } from '@/components/landing/SimpleWaitlistModal';
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -15,11 +15,10 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
-  const scrollToWaitlist = () => {
-    const element = document.getElementById('waitlist');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+
+  const openWaitlistModal = () => {
+    setShowWaitlistModal(true);
   };
 
   const scrollToPricing = () => {
@@ -30,50 +29,43 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* Header */}
       <ModernHeader />
 
       {/* Hero Section */}
       <HeroSection 
-        onTryFree={scrollToWaitlist}
+        onTryFree={openWaitlistModal}
         onSeePricing={scrollToPricing}
         onLogin={onLogin}
       />
 
-      {/* Waitlist Section */}
-      <WaitlistSection onJoinWaitlist={() => {}} />
-
       {/* Features Section */}
-      <div className="-mt-16">
-        <FeaturesSection />
-      </div>
+      <FeaturesSection />
 
       {/* How It Works Section */}
-      <div className="-mt-8">
-        <InteractiveHowItWorks />
-      </div>
+      <InteractiveHowItWorks />
 
       {/* Pricing Section */}
-      <UpdatedPricingSection onJoinWaitlist={scrollToWaitlist} />
+      <SimplePricingSection onJoinWaitlist={openWaitlistModal} />
 
       {/* Stats */}
-      <div className="-mt-8">
-        <ModernStats />
-      </div>
+      <ModernStats />
 
       {/* Story Card */}
-      <div className="-mt-4">
-        <StoryCard />
-      </div>
+      <StoryCard />
 
       {/* Footer */}
-      <div className="-mt-8">
-        <LandingFooter 
-          onTryFree={scrollToWaitlist}
-          onSignIn={scrollToWaitlist}
-        />
-      </div>
+      <LandingFooter 
+        onTryFree={openWaitlistModal}
+        onSignIn={openWaitlistModal}
+      />
+
+      {/* Waitlist Modal */}
+      <SimpleWaitlistModal 
+        isOpen={showWaitlistModal}
+        onClose={() => setShowWaitlistModal(false)}
+      />
     </div>
   );
 };

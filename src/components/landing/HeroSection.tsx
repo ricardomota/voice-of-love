@@ -23,20 +23,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   
   const content = {
     en: {
-      badge: "✨ Preserving memories for families affected by Alzheimer's",
-      headline: "Keep their voice, wisdom & love alive forever",
-      subhead: "Eterna helps families preserve precious memories, voices, and personality traits of loved ones. Share supportive messages, nutrition tips, and find hope during life's most challenging moments.",
-      tryFree: "Join the Waitlist",
-      seePricing: "Learn More",
-      trustBadge: "Built with love for families going through Alzheimer's journey"
+      badge: "Preserve memories with AI",
+      headline: "Keep their voice and wisdom alive forever",
+      subhead: "Help families affected by Alzheimer's preserve precious memories and stay connected through AI-powered conversations.",
+      tryFree: "Join Waitlist",
+      seePricing: "See Pricing",
+      trustBadge: "Built for families"
     },
     'pt-BR': {
-      badge: "✨ Preservando memórias para famílias afetadas pelo Alzheimer",
-      headline: "Mantenha a voz, sabedoria e amor deles vivos para sempre",
-      subhead: "Eterna ajuda famílias a preservar memórias preciosas, vozes e traços de personalidade de entes queridos. Compartilhe mensagens de apoio, dicas nutricionais e encontre esperança durante os momentos mais desafiadores da vida.",
-      tryFree: "Entrar na Lista de Espera",
-      seePricing: "Saber Mais",
-      trustBadge: "Construído com amor para famílias na jornada do Alzheimer"
+      badge: "Preserve memórias com IA",
+      headline: "Mantenha a voz e sabedoria deles vivos para sempre",
+      subhead: "Ajude famílias afetadas pelo Alzheimer a preservar memórias preciosas e permanecer conectadas através de conversas com IA.",
+      tryFree: "Entrar na Lista",
+      seePricing: "Ver Preços",
+      trustBadge: "Feito para famílias"
     }
   };
   
@@ -66,37 +66,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
+    <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
       
       {/* Main content */}
-      <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-24 text-center">
+      <div className="relative w-full max-w-4xl mx-auto px-6 py-24 text-center">
         
         {/* Status badge */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 text-muted-foreground text-sm font-medium">
-            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 text-sm font-medium">
+            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
             {text.badge}
           </div>
         </motion.div>
 
         {/* Hero headline */}
         <motion.h1 
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-[1.1] tracking-[-0.02em]"
+          className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          {text.headline.replace(' ✨', '')}<span className="ml-2">✨</span>
+          {text.headline}
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p 
-          className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-16 font-light"
+          className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-12 font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -106,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* CTA buttons */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-20"
+          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -116,7 +116,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Button 
                 onClick={onTryFree}
                 size="lg"
-                className="px-8 py-4 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-8 py-3 text-base font-medium bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-100 rounded-lg transition-all duration-200"
               >
                 {text.tryFree}
               </Button>
@@ -125,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={onSeePricing}
                 variant="ghost"
                 size="lg"
-                className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
+                className="px-6 py-3 text-base font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
               >
                 {text.seePricing}
               </Button>
@@ -133,26 +133,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           )}
         </motion.div>
 
-        {/* Waitlist social proof */}
-        {!isLoading && waitlistCount > 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="flex items-center justify-center gap-2 text-sm text-muted-foreground/80 mb-8"
-          >
-            <span>💜 {waitlistCount} families already on the waitlist</span>
-          </motion.div>
-        )}
-
         {/* Trust indicator */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70"
+          className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400"
         >
-          <Security className="w-3 h-3" />
+          <Security className="w-4 h-4" />
           <span>{text.trustBadge}</span>
         </motion.div>
       </div>
