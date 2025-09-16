@@ -93,10 +93,10 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out backdrop-blur-md",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out backdrop-saturate-150",
         isScrolled 
-          ? "bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/30" 
-          : "bg-background/85 backdrop-blur-lg border-b border-transparent"
+          ? "bg-background/70 backdrop-blur-2xl shadow-2xl border-b border-border/40" 
+          : "bg-background/50 backdrop-blur-xl border-b border-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,6 +144,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
             </button>
             
             <div className="flex items-center gap-6">
+              <LanguageSelector />
               <button
                 onClick={onSignIn}
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium hover:scale-105"

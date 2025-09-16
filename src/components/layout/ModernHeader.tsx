@@ -189,11 +189,11 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
   return (
     <>
       <motion.header 
-        className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
+        className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 ease-out ${
           isScrolled 
-            ? 'bg-background/95 backdrop-blur-2xl border border-border/50 shadow-xl' 
-            : 'bg-background/85 backdrop-blur-lg border border-border/30 shadow-lg'
-        } rounded-2xl`}
+            ? 'bg-background/70 backdrop-blur-2xl border border-border/40 shadow-2xl' 
+            : 'bg-background/50 backdrop-blur-xl border border-border/20 shadow-lg'
+        } rounded-2xl backdrop-saturate-150`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -259,6 +259,36 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
               >
                 <CreditCounter />
               </motion.div>
+            )}
+            
+            {/* Language Selector for non-logged users */}
+            {!user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="h-10 px-3 rounded-xl flex items-center gap-2 hover:bg-primary/10">
+                    <Globe className="h-4 w-4" />
+                    <span className="text-sm font-medium">
+                      {currentLanguage === 'pt-BR' ? 'PT' : 
+                       currentLanguage === 'zh-CN' ? 'CN' : 
+                       currentLanguage.toUpperCase()}
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border border-border/30">
+                  {languageOptions.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={`flex items-center gap-3 cursor-pointer ${
+                        currentLanguage === lang.code ? 'bg-muted' : ''
+                      }`}
+                    >
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
             
             {/* User Menu */}
@@ -391,7 +421,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-24 left-4 right-4 z-40 md:hidden"
           >
-            <div className="bg-background/90 backdrop-blur-xl border border-border/30 rounded-2xl p-6 shadow-lg">
+            <div className="bg-background/60 backdrop-blur-2xl backdrop-saturate-150 border border-border/30 rounded-2xl p-6 shadow-2xl">
               {user ? (
                 <div className="space-y-4">
                   {/* User Info */}
