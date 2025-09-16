@@ -6,6 +6,8 @@ import { InteractiveHowItWorks } from '@/components/landing/InteractiveHowItWork
 import { ModernStats } from '@/components/landing/ModernStats';
 import { StoryCard } from '@/components/landing/StoryCard';
 import { LandingFooter } from '@/components/landing/LandingFooter';
+import { WaitlistSection } from '@/components/landing/WaitlistSection';
+import { UpdatedPricingSection } from '@/components/landing/UpdatedPricingSection';
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -13,12 +15,17 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) => {
-  const scrollToPricing = () => {
-    const element = document.getElementById('pricing-section');
+  const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/pricing';
+    }
+  };
+
+  const scrollToPricing = () => {
+    const element = document.getElementById('pricing');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -29,10 +36,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
 
       {/* Hero Section */}
       <HeroSection 
-        onTryFree={onTryFree}
+        onTryFree={scrollToWaitlist}
         onSeePricing={scrollToPricing}
         onLogin={onLogin}
       />
+
+      {/* Waitlist Section */}
+      <WaitlistSection onJoinWaitlist={() => {}} />
 
       {/* Features Section */}
       <div className="-mt-16">
@@ -43,6 +53,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       <div className="-mt-8">
         <InteractiveHowItWorks />
       </div>
+
+      {/* Pricing Section */}
+      <UpdatedPricingSection onJoinWaitlist={scrollToWaitlist} />
 
       {/* Stats */}
       <div className="-mt-8">
@@ -57,8 +70,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       {/* Footer */}
       <div className="-mt-8">
         <LandingFooter 
-          onTryFree={onTryFree}
-          onSignIn={onLogin}
+          onTryFree={scrollToWaitlist}
+          onSignIn={scrollToWaitlist}
         />
       </div>
     </div>

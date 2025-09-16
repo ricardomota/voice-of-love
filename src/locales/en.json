@@ -1,13 +1,32 @@
 {
-  "app.name": "Eterna – Voice of Love",
+  "app.name": "Eterna – Preserve Love, Share Hope",
 
-  "nav.pricing": "Pricing",
-  "nav.wallet": "Wallet",
-  "nav.usage": "Usage",
-  "nav.billing": "Manage Billing",
+  "landing": {
+    "hero": {
+      "badge": "✨ Preserving memories for families affected by Alzheimer's",
+      "headline": "Keep their voice, wisdom & love alive forever",
+      "subhead": "Eterna helps families preserve precious memories, voices, and personality traits of loved ones. Share supportive messages, nutrition tips, and find hope during life's most challenging moments.",
+      "tryFree": "Join the Waitlist",
+      "seePricing": "Learn More",
+      "trustBadge": "Built with love for families going through Alzheimer's journey"
+    },
+    "waitlist": {
+      "title": "Join Our Community",
+      "subtitle": "Be among the first to experience Eterna when we launch. Help us build something meaningful together.",
+      "disclaimer": "Eterna is currently in beta development. This waitlist helps us understand our community's needs. Payments are not active yet — everything is free during our testing phase.",
+      "earlyAccess": "Waitlist members get early access 2-4 weeks before public launch"
+    },
+    "pricing": {
+      "title": "Transparent Pricing for When We Launch",
+      "subtitle": "See our planned pricing structure. During beta, everything is completely free while we perfect the experience.",
+      "disclaimer": "⚠️ Beta Notice: Eterna is currently in development. All features shown are free during our testing phase. Payments will only be activated after we exit beta.",
+      "betaAccess": "All features available free during beta testing"
+    }
+  },
 
-  "pricing.title": "Pricing & Credits",
-  "pricing.subtitle": "Only pay for what you use. Simple, transparent credits.",
+  "nav.pricing": "Pricing Preview",
+  "nav.waitlist": "Join Waitlist",
+  "nav.about": "Our Story",
   "pricing.plans": "Plans",
   "pricing.packs": "Credit Packs",
   "pricing.howItWorks": "How credits work",

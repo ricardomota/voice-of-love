@@ -9,10 +9,15 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Heart, Users, Clock, CheckCircle, Sparkles, Mail, ArrowRight } from 'lucide-react';
+import { Heart, Users, Clock, CheckCircle, Sparkles, Mail, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useLanguage } from '@/hooks/useLanguage';
 
-export const WaitlistSection: React.FC = () => {
-  const { user } = useAuth();
+interface WaitlistSectionProps {
+  onJoinWaitlist?: () => void;
+}
+
+export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist }) => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -24,6 +29,78 @@ export const WaitlistSection: React.FC = () => {
   const [emailValid, setEmailValid] = useState(true);
   const [waitlistPosition, setWaitlistPosition] = useState<number | null>(null);
   const { toast } = useToast();
+  const { currentLanguage } = useLanguage();
+
+  const content = {
+    en: {
+      title: "Join Our Community",
+      subtitle: "Be among the first to experience Eterna when we launch. Help us build something meaningful together.",
+      disclaimer: "Eterna is currently in beta development. This waitlist helps us understand our community's needs. Payments are not active yet — everything is free during our testing phase.",
+      earlyAccess: "Waitlist members get early access 2-4 weeks before public launch",
+      form: {
+        name: "Full Name",
+        email: "Email Address",
+        interest: "Who would you like to connect with?",
+        message: "Tell us your story (optional)",
+        namePlaceholder: "Your name",
+        emailPlaceholder: "your@email.com",
+        messagePlaceholder: "Is there someone special you'd like to reconnect with? Tell us about them...",
+        submit: "Join the Waitlist",
+        submitting: "Joining..."
+      },
+      interests: {
+        family: "Family members who have passed",
+        grandparents: "Grandparents and elders",
+        friends: "Special friends",
+        support: "Need emotional support",
+        memories: "Preserve family memories",
+        other: "Other"
+      },
+      success: {
+        title: "Welcome to the family! 🎉",
+        subtitle: "You've been successfully added to our waitlist",
+        nextSteps: "Next steps",
+        step1: "You'll receive updates via email about our progress",
+        step2: "Beta invites will be sent out gradually",
+        step3: "Early access for waitlist members coming soon"
+      }
+    },
+    'pt-BR': {
+      title: "Junte-se à Nossa Comunidade",
+      subtitle: "Seja um dos primeiros a experimentar o Eterna quando lançarmos. Ajude-nos a construir algo significativo juntos.",
+      disclaimer: "Eterna está atualmente em desenvolvimento beta. Esta lista de espera nos ajuda a entender as necessidades da nossa comunidade. Pagamentos não estão ativos ainda — tudo é gratuito durante nossa fase de testes.",
+      earlyAccess: "Membros da lista de espera recebem acesso antecipado 2-4 semanas antes do lançamento público",
+      form: {
+        name: "Nome Completo",
+        email: "Endereço de Email",
+        interest: "Com quem você gostaria de se conectar?",
+        message: "Conte-nos sua história (opcional)",
+        namePlaceholder: "Seu nome",
+        emailPlaceholder: "seu@email.com",
+        messagePlaceholder: "Há alguém especial com quem você gostaria de se reconectar? Conte-nos sobre eles...",
+        submit: "Entrar na Lista de Espera",
+        submitting: "Entrando..."
+      },
+      interests: {
+        family: "Familiares que partiram",
+        grandparents: "Avós e pessoas mais velhas",
+        friends: "Amigos especiais",
+        support: "Preciso de apoio emocional",
+        memories: "Preservar memórias da família",
+        other: "Outro"
+      },
+      success: {
+        title: "Bem-vindo à família! 🎉",
+        subtitle: "Você foi adicionado com sucesso à nossa lista de espera",
+        nextSteps: "Próximos passos",
+        step1: "Você receberá atualizações por email sobre nosso progresso",
+        step2: "Convites beta serão enviados gradualmente",
+        step3: "Acesso antecipado para membros da lista de espera em breve"
+      }
+    }
+  };
+
+  const text = content[currentLanguage as keyof typeof content] || content.en;
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,35 +154,23 @@ export const WaitlistSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Check if user is authenticated, if not, guide them to sign in first
-      if (!user?.id) {
-        toast({
-          title: "Autenticação necessária",
-          description: "Faça login primeiro para entrar na lista de espera",
-          variant: "destructive"
-        });
-        return;
-      }
-
       const position = await getWaitlistPosition();
       
       const { error } = await supabase
         .from('waitlist')
-        .insert([
-          {
-            full_name: formData.fullName,
-            email: formData.email,
-            user_id: user.id,
-            message: formData.message || null,
-            primary_interest: formData.primaryInterest || null
-          }
-        ]);
+        .insert({
+          full_name: formData.fullName,
+          email: formData.email,
+          message: formData.message || null,
+          primary_interest: formData.primaryInterest || null,
+          user_id: crypto.randomUUID() // Generate a temporary ID since user_id is required
+        });
 
       if (error) {
         if (error.code === '23505') {
           toast({
-            title: "Email já cadastrado",
-            description: "Este email já está na nossa lista de espera.",
+            title: currentLanguage === 'pt-BR' ? "Email já cadastrado" : "Email already registered",
+            description: currentLanguage === 'pt-BR' ? "Este email já está na nossa lista de espera." : "This email is already on our waitlist.",
             variant: "destructive"
           });
         } else {
@@ -115,15 +180,18 @@ export const WaitlistSection: React.FC = () => {
         setWaitlistPosition(position);
         setIsSubmitted(true);
         toast({
-          title: "🎉 Bem-vindo à lista!",
-          description: "Você foi adicionado com sucesso!",
+          title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
+          description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
         });
+        if (onJoinWaitlist) {
+          onJoinWaitlist();
+        }
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
       toast({
-        title: "Erro",
-        description: "Ocorreu um erro ao cadastrar. Tente novamente.",
+        title: currentLanguage === 'pt-BR' ? "Erro" : "Error",
+        description: currentLanguage === 'pt-BR' ? "Ocorreu um erro ao cadastrar. Tente novamente." : "An error occurred while signing up. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -142,19 +210,19 @@ export const WaitlistSection: React.FC = () => {
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 
-                <h2 className="text-4xl font-zilla font-medium italic text-foreground">
-                  Bem-vindo à família! 🎉
+                <h2 className="text-4xl font-bold text-foreground">
+                  {text.success.title}
                 </h2>
                 
                 <div className="space-y-2">
                   <p className="text-lg text-muted-foreground">
-                    Você foi adicionado com sucesso à nossa lista de espera
+                    {text.success.subtitle}
                   </p>
                   {waitlistPosition && (
                     <div className="flex items-center justify-center gap-2">
                       <Badge variant="secondary" className="text-sm px-3 py-1">
                         <Users className="w-4 h-4 mr-2" />
-                        Posição #{waitlistPosition}
+                        #{waitlistPosition}
                       </Badge>
                     </div>
                   )}
@@ -164,16 +232,20 @@ export const WaitlistSection: React.FC = () => {
               <div className="bg-background/50 rounded-lg p-6 space-y-3">
                 <h3 className="font-semibold flex items-center justify-center gap-2">
                   <Sparkles className="w-4 h-4 text-primary" />
-                  Próximos passos
+                  {text.success.nextSteps}
                 </h3>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li className="flex items-center justify-center gap-2">
                     <ArrowRight className="w-3 h-3" />
-                    Você receberá updates por email sobre o progresso
+                    {text.success.step1}
                   </li>
                   <li className="flex items-center justify-center gap-2">
                     <ArrowRight className="w-3 h-3" />
-                    Convites beta serão enviados gradualmente
+                    {text.success.step2}
+                  </li>
+                  <li className="flex items-center justify-center gap-2">
+                    <ArrowRight className="w-3 h-3" />
+                    {text.success.step3}
                   </li>
                 </ul>
               </div>
@@ -187,35 +259,35 @@ export const WaitlistSection: React.FC = () => {
   return (
     <section id="waitlist" className="py-24 bg-gradient-to-br from-muted/30 via-background to-muted/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Beta disclaimer */}
+        <div className="max-w-3xl mx-auto mb-12">
+          <Alert className="bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-800">
+            <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+            <AlertDescription className="text-amber-800 dark:text-amber-200">
+              <strong>{currentLanguage === 'pt-BR' ? 'Aviso Beta' : 'Beta Notice'}:</strong> {text.disclaimer}
+            </AlertDescription>
+          </Alert>
+        </div>
+
         <div className="text-center space-y-6 mb-16">
           <Badge variant="secondary" className="px-4 py-2 text-sm font-medium">
             <Clock className="w-4 h-4 mr-2" />
-            Beta Privado em Breve
+            {currentLanguage === 'pt-BR' ? 'Beta Privado em Breve' : 'Private Beta Coming Soon'}
           </Badge>
           
-          <h2 className="text-4xl sm:text-5xl font-zilla font-medium italic text-foreground">
-            Entre na <span className="text-primary">waitlist</span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+            {text.title}
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Junte-se à nossa lista de espera e ganhe acesso antecipado à primeira plataforma 
-            que preserva vozes e cria conexões eternas com IA.
+            {text.subtitle}
           </p>
 
-          {/* Social proof */}
-          <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              <span>500+ na lista</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4 text-red-500" />
-              <span>Famílias reunidas</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span>IA Avançada</span>
-            </div>
+          {/* Early access note */}
+          <div className="bg-primary/10 rounded-lg p-4 max-w-2xl mx-auto">
+            <p className="text-sm font-medium text-primary">
+              ✨ {text.earlyAccess}
+            </p>
           </div>
         </div>
 

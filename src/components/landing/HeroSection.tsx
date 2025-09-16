@@ -11,45 +11,59 @@ interface HeroSectionProps {
   onLogin: () => void;
 }
 
-import { getLandingContent } from '@/utils/translations';
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onTryFree,
   onSeePricing,
   onLogin
 }) => {
-  const [userCount, setUserCount] = useState(0);
+  const [waitlistCount, setWaitlistCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   const { currentLanguage } = useLanguage();
-  const content = getLandingContent(currentLanguage).hero;
+  
+  const content = {
+    en: {
+      badge: "✨ Preserving memories for families affected by Alzheimer's",
+      headline: "Keep their voice, wisdom & love alive forever",
+      subhead: "Eterna helps families preserve precious memories, voices, and personality traits of loved ones. Share supportive messages, nutrition tips, and find hope during life's most challenging moments.",
+      tryFree: "Join the Waitlist",
+      seePricing: "Learn More",
+      trustBadge: "Built with love for families going through Alzheimer's journey"
+    },
+    'pt-BR': {
+      badge: "✨ Preservando memórias para famílias afetadas pelo Alzheimer",
+      headline: "Mantenha a voz, sabedoria e amor deles vivos para sempre",
+      subhead: "Eterna ajuda famílias a preservar memórias preciosas, vozes e traços de personalidade de entes queridos. Compartilhe mensagens de apoio, dicas nutricionais e encontre esperança durante os momentos mais desafiadores da vida.",
+      tryFree: "Entrar na Lista de Espera",
+      seePricing: "Saber Mais",
+      trustBadge: "Construído com amor para famílias na jornada do Alzheimer"
+    }
+  };
+  
+  const text = content[currentLanguage as keyof typeof content] || content.en;
   
   useEffect(() => {
-    const checkUserCount = async () => {
+    const checkWaitlistCount = async () => {
       try {
-        const {
-          count,
-          error
-        } = await supabase.from('user_settings').select('*', {
-          count: 'exact',
-          head: true
-        });
+        const { count, error } = await supabase
+          .from('waitlist')
+          .select('*', { count: 'exact', head: true });
+          
         if (error) {
-          console.error('Error getting user count:', error);
-          setUserCount(0);
+          console.error('Error getting waitlist count:', error);
+          setWaitlistCount(0);
         } else {
-          setUserCount(count || 0);
+          setWaitlistCount(count || 0);
         }
       } catch (error) {
-        console.error('Error in checkUserCount:', error);
-        setUserCount(0);
+        console.error('Error in checkWaitlistCount:', error);
+        setWaitlistCount(0);
       } finally {
         setIsLoading(false);
       }
     };
-    checkUserCount();
+    checkWaitlistCount();
   }, []);
-  
-  const isWaitlistMode = userCount >= 10;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
@@ -65,8 +79,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="mb-12"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 text-muted-foreground text-sm font-medium">
-            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-            {content.badge}
+            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+            {text.badge}
           </div>
         </motion.div>
 
@@ -77,7 +91,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          {content.headline.replace(' ✨', '')}<span className="ml-2">✨</span>
+          {text.headline.replace(' ✨', '')}<span className="ml-2">✨</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -87,7 +101,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {content.subhead}
+          {text.subhead}
         </motion.p>
 
         {/* CTA buttons */}
@@ -100,11 +114,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {!isLoading && (
             <>
               <Button 
-                onClick={isWaitlistMode ? onTryFree : onLogin}
+                onClick={onTryFree}
                 size="lg"
-                className="px-6 py-3 text-sm font-medium bg-foreground hover:bg-foreground/90 text-background rounded-lg transition-all duration-200"
+                className="px-8 py-4 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                {content.tryFree}
+                {text.tryFree}
               </Button>
               
               <Button 
@@ -113,11 +127,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 size="lg"
                 className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground"
               >
-                {content.seePricing}
+                {text.seePricing}
               </Button>
             </>
           )}
         </motion.div>
+
+        {/* Waitlist social proof */}
+        {!isLoading && waitlistCount > 0 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.35 }}
+            className="flex items-center justify-center gap-2 text-sm text-muted-foreground/80 mb-8"
+          >
+            <span>💜 {waitlistCount} families already on the waitlist</span>
+          </motion.div>
+        )}
 
         {/* Trust indicator */}
         <motion.div 
@@ -127,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70"
         >
           <Security className="w-3 h-3" />
-          <span>{content.trustBadge}</span>
+          <span>{text.trustBadge}</span>
         </motion.div>
       </div>
     </section>
