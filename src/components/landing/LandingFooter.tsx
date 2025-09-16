@@ -33,11 +33,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
           {/* Brand */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
-              <img 
-                src="/lovable-uploads/eterna-logo-black.png" 
-                alt="Eterna Logo" 
-                className="h-6 w-auto"
-              />
+              <div className="font-bold text-xl text-primary-foreground">
+                Eterna
+              </div>
             </div>
             
             <p className="text-primary-foreground/70 leading-relaxed max-w-md">

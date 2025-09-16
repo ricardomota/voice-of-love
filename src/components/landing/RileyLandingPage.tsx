@@ -608,11 +608,9 @@ export default function RileyLandingPage({
           <div className="grid md:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <img 
-                  src="/lovable-uploads/eterna-logo-black.png" 
-                  alt="Eterna Logo" 
-                  className="h-4 w-auto"
-                />
+                <div className="font-bold text-lg text-foreground">
+                  Eterna
+                </div>
               </div>
               <p className="text-muted-foreground mb-4 max-w-md">
                 Preservando vozes e memórias familiares com tecnologia de IA avançada. 

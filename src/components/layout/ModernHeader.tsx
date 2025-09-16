@@ -201,11 +201,9 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <Link to="/" className="flex items-center" aria-label="Voltar à página inicial">
-            <img 
-              src="/lovable-uploads/eterna-logo-black.png" 
-              alt="Eterna Logo" 
-              className="h-6 w-auto"
-            />
+            <div className="font-bold text-xl text-primary">
+              Eterna
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
