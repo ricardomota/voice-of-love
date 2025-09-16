@@ -108,12 +108,14 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         >
           {/* Simple Logo */}
           <div className="flex items-center gap-3 relative cursor-pointer">
-            <div className={cn(
-              "font-bold text-primary transition-all duration-300",
-              isScrolled ? "text-lg" : "text-xl"
-            )}>
-              Eterna
-            </div>
+            <img 
+              src="/eterna-logo.svg" 
+              alt="Eterna Logo" 
+              className={cn(
+                "w-auto transition-all duration-300",
+                isScrolled ? "h-4" : "h-5"
+              )}
+            />
           </div>
 
           {/* Simple Desktop Navigation */}
