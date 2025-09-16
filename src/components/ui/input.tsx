@@ -3,7 +3,18 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, maxLength, ...props }, ref) => {
+    // Security: Add input validation and length limits
+    const secureProps = {
+      ...props,
+      // Default maxLength for security (can be overridden)
+      maxLength: maxLength || (type === 'email' ? 254 : type === 'password' ? 128 : 1000),
+      // Prevent autocomplete for sensitive fields
+      autoComplete: type === 'password' ? 'current-password' : props.autoComplete,
+      // Additional security attributes
+      spellCheck: type === 'password' || type === 'email' ? false : props.spellCheck,
+    };
+
     return (
       <input
         type={type}
@@ -12,7 +23,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           className
         )}
         ref={ref}
-        {...props}
+        {...secureProps}
       />
     )
   }

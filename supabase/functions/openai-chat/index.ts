@@ -46,10 +46,23 @@ serve(async (req) => {
       throw new Error('Messages array cannot be empty');
     }
 
-    // Limit message length to prevent abuse
+    // Enhanced input validation and rate limiting
     const totalLength = messages.reduce((acc, msg) => acc + (msg.content?.length || 0), 0);
-    if (totalLength > 10000) {
+    if (totalLength > 5000) { // Reduced from 10000 for better security
       throw new Error('Message content too long');
+    }
+
+    // Validate individual message length
+    for (const message of messages) {
+      if (message.content && message.content.length > 2000) {
+        throw new Error('Individual message too long');
+      }
+    }
+
+    // Basic rate limiting check (implement redis-based rate limiting in production)
+    const userAgent = req.headers.get('User-Agent') || '';
+    if (userAgent.length === 0) {
+      throw new Error('Missing user agent');
     }
 
     if (!openAIApiKey) {

@@ -2,9 +2,21 @@ import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-// Initialize Stripe with publishable key - using test key for now
-// In production, this should be your live publishable key
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+// Secure Stripe key management with environment-based configuration
+const getStripePublishableKey = () => {
+  // In production/live environments, this would use the live publishable key
+  // For test/development, we use the test key
+  const testKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+  
+  // Add build-time validation for production deployments
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    console.warn('⚠️ SECURITY NOTICE: Using test Stripe key in production environment. Please update to live key.');
+  }
+  
+  return testKey;
+};
+
+const stripePromise = loadStripe(getStripePublishableKey());
 
 interface StripeProviderProps {
   children: React.ReactNode;

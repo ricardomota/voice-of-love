@@ -147,8 +147,23 @@ serve(async (req) => {
 
     const { sessionId, message, ragEnabled = true, language = 'en' }: ChatRequest = await req.json();
 
+    // Enhanced input validation
     if (!sessionId || !message) {
       throw new Error('Missing required fields: sessionId, message');
+    }
+
+    if (message.length > 2000) {
+      throw new Error('Message too long');
+    }
+
+    if (sessionId.length > 36) {
+      throw new Error('Invalid session ID format');
+    }
+
+    // Validate language parameter
+    const validLanguages = ['en', 'pt', 'pt-BR', 'es', 'fr', 'de', 'it', 'ja', 'ko', 'zh-CN', 'zh-TW'];
+    if (language && !validLanguages.includes(language)) {
+      throw new Error('Invalid language parameter');
     }
 
     if (!openAIApiKey) {
