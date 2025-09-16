@@ -261,36 +261,6 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
               </motion.div>
             )}
             
-            {/* Language Selector for non-logged users */}
-            {!user && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-10 px-3 rounded-xl flex items-center gap-2">
-                    <Globe className="h-4 w-4" />
-                    <span className="text-sm font-medium">
-                      {currentLanguage === 'pt-BR' ? 'PT' : 
-                       currentLanguage === 'zh-CN' ? 'CN' : 
-                       currentLanguage.toUpperCase()}
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-background/95 backdrop-blur-xl border border-border/50">
-                  {languageOptions.map((lang) => (
-                    <DropdownMenuItem
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={`flex items-center gap-3 cursor-pointer ${
-                        currentLanguage === lang.code ? 'bg-muted' : ''
-                      }`}
-                    >
-                      <span>{lang.flag}</span>
-                      <span>{lang.label}</span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-            
             {/* User Menu */}
             {user && (
               <DropdownMenu>

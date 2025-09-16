@@ -144,7 +144,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
             </button>
             
             <div className="flex items-center gap-6">
-              <LanguageSelector />
               <button
                 onClick={onSignIn}
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 px-4 py-2 rounded-xl hover:bg-muted/50 text-lg font-medium hover:scale-105"
@@ -164,8 +163,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
 
           {/* Mobile: Menu button */}
           <div className="flex items-center gap-3 lg:hidden">
-            <LanguageSelector />
-            
             <Button
               variant="ghost"
               size="icon"
