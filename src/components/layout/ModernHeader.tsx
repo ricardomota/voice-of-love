@@ -191,8 +191,8 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
       <motion.header 
         className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 ease-out ${
           isScrolled 
-            ? 'bg-background/70 backdrop-blur-2xl border border-border/40 shadow-2xl' 
-            : 'bg-background/50 backdrop-blur-xl border border-border/20 shadow-lg'
+            ? 'bg-background/60 backdrop-blur-2xl border border-border/30 shadow-2xl' 
+            : 'bg-background/40 backdrop-blur-xl border border-border/15 shadow-lg'
         } rounded-2xl backdrop-saturate-150`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
