@@ -69,6 +69,102 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       tryFree: "Rejoindre la Liste",
       seePricing: "Voir les Prix",
       trustBadge: "Conçu pour les familles"
+    },
+    de: {
+      badge: "Erinnerungen mit KI bewahren",
+      headline: "Ihre Stimme und Weisheit für immer am Leben erhalten",
+      subhead: "Helfen Sie Familien, die von Alzheimer betroffen sind, kostbare Erinnerungen zu bewahren und durch KI-gestützte Gespräche verbunden zu bleiben.",
+      tryFree: "Warteliste beitreten",
+      seePricing: "Preise ansehen",
+      trustBadge: "Für Familien gebaut"
+    },
+    it: {
+      badge: "Preserva i ricordi con l'IA",
+      headline: "Mantieni viva per sempre la loro voce e saggezza",
+      subhead: "Aiuta le famiglie colpite dall'Alzheimer a preservare ricordi preziosi e rimanere connesse attraverso conversazioni AI.",
+      tryFree: "Unisciti alla Lista",
+      seePricing: "Vedi Prezzi",
+      trustBadge: "Costruito per le famiglie"
+    },
+    ru: {
+      badge: "Сохраните воспоминания с ИИ",
+      headline: "Сохраните их голос и мудрость навсегда",
+      subhead: "Помогите семьям, пострадавшим от болезни Альцгеймера, сохранить драгоценные воспоминания и оставаться на связи через разговоры с ИИ.",
+      tryFree: "Присоединиться к списку ожидания",
+      seePricing: "Посмотреть цены",
+      trustBadge: "Создано для семей"
+    },
+    ja: {
+      badge: "AIで思い出を保存",
+      headline: "彼らの声と知恵を永遠に生かし続ける",
+      subhead: "アルツハイマー病の影響を受けた家族が大切な思い出を保存し、AI会話を通じてつながりを保つお手伝いをします。",
+      tryFree: "ウェイトリストに参加",
+      seePricing: "料金を見る",
+      trustBadge: "家族のために作られました"
+    },
+    ko: {
+      badge: "AI로 추억 보존",
+      headline: "그들의 목소리와 지혜를 영원히 살려두세요",
+      subhead: "알츠하이머에 영향을 받은 가족들이 소중한 추억을 보존하고 AI 대화를 통해 연결을 유지할 수 있도록 도와드립니다.",
+      tryFree: "대기자 명단 참여",
+      seePricing: "가격 보기",
+      trustBadge: "가족을 위해 만들어졌습니다"
+    },
+    ar: {
+      badge: "احفظ الذكريات بالذكاء الاصطناعي",
+      headline: "أبق صوتهم وحكمتهم حيين إلى الأبد",
+      subhead: "ساعد العائلات المتأثرة بالزهايمر على حفظ الذكريات الثمينة والبقاء متصلين من خلال محادثات الذكاء الاصطناعي.",
+      tryFree: "انضم لقائمة الانتظار",
+      seePricing: "عرض الأسعار",
+      trustBadge: "مبني للعائلات"
+    },
+    hi: {
+      badge: "AI के साथ यादें संरक्षित करें",
+      headline: "उनकी आवाज़ और बुद्धिमत्ता को हमेशा के लिए जीवित रखें",
+      subhead: "अल्जाइमर से प्रभावित परिवारों को कीमती यादों को संरक्षित करने और AI वार्तालाप के माध्यम से जुड़े रहने में मदद करें।",
+      tryFree: "प्रतीक्षा सूची में शामिल हों",
+      seePricing: "मूल्य देखें",
+      trustBadge: "परिवारों के लिए बनाया गया"
+    },
+    nl: {
+      badge: "Bewaar herinneringen met AI",
+      headline: "Houd hun stem en wijsheid voor altijd levend",
+      subhead: "Help families die getroffen zijn door Alzheimer om kostbare herinneringen te bewaren en verbonden te blijven door AI-gesprekken.",
+      tryFree: "Doe mee aan wachtlijst",
+      seePricing: "Bekijk prijzen",
+      trustBadge: "Gebouwd voor families"
+    },
+    sv: {
+      badge: "Bevara minnen med AI",
+      headline: "Håll deras röst och visdom levande för alltid",
+      subhead: "Hjälp familjer som drabbats av Alzheimer att bevara värdefulla minnen och hålla kontakten genom AI-samtal.",
+      tryFree: "Gå med i väntelistan",
+      seePricing: "Se priser",
+      trustBadge: "Byggd för familjer"
+    },
+    no: {
+      badge: "Bevar minner med AI",
+      headline: "Hold deres stemme og visdom levende for alltid",
+      subhead: "Hjelp familier påvirket av Alzheimer med å bevare verdifulle minner og holde kontakten gjennom AI-samtaler.",
+      tryFree: "Bli med på ventelisten",
+      seePricing: "Se priser",
+      trustBadge: "Bygget for familier"
+    },
+    da: {
+      badge: "Bevar minder med AI",
+      headline: "Hold deres stemme og visdom levende for evigt",
+      subhead: "Hjælp familier påvirket af Alzheimer med at bevare værdifulde minder og forblive forbundet gennem AI-samtaler.",
+      tryFree: "Tilmeld dig ventelisten",
+      seePricing: "Se priser",
+      trustBadge: "Bygget til familier"
+    },
+    fi: {
+      badge: "Säilytä muistoja tekoälyllä",
+      headline: "Pidä heidän äänensä ja viisautensa elossa ikuisesti",
+      subhead: "Auta Alzheimerin taudista kärsiviä perheitä säilyttämään arvokkaita muistoja ja pysymään yhteydessä tekoälykeskustelujen kautta.",
+      tryFree: "Liity jonotuslistalle",
+      seePricing: "Katso hinnat",
+      trustBadge: "Rakennettu perheille"
     }
   };
   
