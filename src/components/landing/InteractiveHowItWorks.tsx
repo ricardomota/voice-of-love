@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Upload, MessageCircle, Heart, Settings, ChevronRight, Play } from 'lucide-react';
+import { Upload, MessageCircle, Heart, Settings, ChevronRight, Play, Mic, Plus, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MessageBubble } from '@/components/ui/message-bubble';
+import { TypingIndicator } from '@/components/ui/typing-indicator';
+import { Badge } from '@/components/ui/badge';
 
 import { getLandingContent } from '@/utils/translations';
 
@@ -139,30 +143,100 @@ export const InteractiveHowItWorks: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
-                  className="text-center"
+                  className="w-full max-w-sm mx-auto"
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Play className="w-8 h-8 text-primary" />
-                  </div>
-                  
-                  <h4 className="text-lg font-semibold text-foreground mb-4">
-                    {stepsWithIcons[activeStep].title}
-                  </h4>
-                  
-                  <div className="bg-muted/30 rounded-xl p-4 mb-6">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <div className="w-2 h-2 bg-primary/60 rounded-full animate-pulse" />
-                      {stepsWithIcons[activeStep].demo}
+                  {/* Step 1: Upload Memories */}
+                  {activeStep === 0 && (
+                    <div className="space-y-4">
+                      <div className="bg-card border border-border rounded-xl p-4 space-y-3">
+                        <div className="flex items-start gap-3">
+                          <Avatar className="w-12 h-12">
+                            <AvatarFallback className="bg-muted text-muted-foreground">
+                              MA
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-foreground text-sm">Maria</h4>
+                            <Badge variant="secondary" className="text-xs mt-1">
+                              Mãe
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Heart className="w-3 h-3" />
+                          <span>12 memórias</span>
+                          <Mic className="w-3 h-3 ml-2" />
+                          <span>3 áudios</span>
+                        </div>
+                      </div>
+                      
+                      <Button variant="outline" size="sm" className="w-full">
+                        <Plus className="w-3 h-3 mr-2" />
+                        Adicionar memória
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full"
-                  >
-                    Try it now
-                  </Button>
+                  )}
+
+                  {/* Step 2: AI Processing */}
+                  {activeStep === 1 && (
+                    <div className="space-y-4">
+                      <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-3">
+                        <div className="flex items-center gap-2 text-xs">
+                          <Heart className="w-3 h-3 text-primary flex-shrink-0" />
+                          <span className="text-foreground">
+                            <span className="font-medium">IA Processando:</span> Analisando personalidade e memórias...
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-card border border-border rounded-xl p-4 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Análise de Voz</span>
+                          <div className="w-2 h-2 bg-green-500 rounded-full" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Padrões de Fala</span>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">Personalidade</span>
+                          <div className="w-2 h-2 bg-muted rounded-full" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: Chat Interface */}
+                  {activeStep === 2 && (
+                    <div className="space-y-3">
+                      <div className="space-y-2 max-h-32 overflow-hidden">
+                        <MessageBubble
+                          content="Oi meu amor, como foi seu dia?"
+                          isUser={false}
+                          personName="Maria"
+                          className="text-xs"
+                        />
+                        <MessageBubble
+                          content="Oi mãe! Foi ótimo, obrigado por perguntar."
+                          isUser={true}
+                          className="text-xs"
+                        />
+                        <TypingIndicator
+                          personName="Maria"
+                          className="text-xs"
+                        />
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <div className="flex-1 bg-muted rounded-full px-3 py-2 text-xs text-muted-foreground">
+                          Digite sua mensagem...
+                        </div>
+                        <Button size="sm" variant="outline" className="px-3">
+                          <Volume2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
