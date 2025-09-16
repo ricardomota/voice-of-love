@@ -93,10 +93,10 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out backdrop-blur-md",
         isScrolled 
-          ? "bg-background/95 backdrop-blur-xl shadow-sm border-b border-border" 
-          : "bg-background/90"
+          ? "bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/30" 
+          : "bg-background/85 backdrop-blur-lg border-b border-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -181,7 +181,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
-              className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-t border-border shadow-xl overflow-hidden"
+              className="lg:hidden absolute top-full left-0 right-0 bg-background/90 backdrop-blur-xl border-t border-border/20 shadow-xl overflow-hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}

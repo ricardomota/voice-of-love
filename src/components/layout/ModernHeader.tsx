@@ -191,8 +191,8 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
       <motion.header 
         className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-background/95 backdrop-blur-xl border border-border/50 shadow-lg' 
-            : 'bg-background/80 backdrop-blur-sm border border-border/30'
+            ? 'bg-background/95 backdrop-blur-2xl border border-border/50 shadow-xl' 
+            : 'bg-background/85 backdrop-blur-lg border border-border/30 shadow-lg'
         } rounded-2xl`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -391,7 +391,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-24 left-4 right-4 z-40 md:hidden"
           >
-            <div className="bg-background/95 backdrop-blur-xl border border-border/50 rounded-2xl p-6 shadow-lg">
+            <div className="bg-background/90 backdrop-blur-xl border border-border/30 rounded-2xl p-6 shadow-lg">
               {user ? (
                 <div className="space-y-4">
                   {/* User Info */}

@@ -97,7 +97,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border backdrop-blur-xl bg-background/95 shadow-sm">
+    <header className="fixed top-0 z-50 w-full border-b border-border/20 backdrop-blur-xl bg-background/90 shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
