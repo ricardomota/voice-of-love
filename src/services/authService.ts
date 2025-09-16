@@ -37,50 +37,6 @@ export const authService = {
     return supabase.auth.onAuthStateChange(callback);
   },
 
-  // OAuth providers
-  async signInWithOAuth(provider: 'google' | 'apple' | 'azure', redirectTo?: string) {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: redirectTo || `${window.location.origin}/`
-      }
-    });
-    return { data, error };
-  },
-
-  // Email OTP - send code
-  async sendEmailOtp(email: string) {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        shouldCreateUser: true,
-        emailRedirectTo: `${window.location.origin}/`
-      }
-    });
-    return { data, error };
-  },
-
-  // Phone OTP - send code
-  async sendPhoneOtp(phone: string) {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      phone,
-      options: {
-        channel: 'sms'
-      }
-    });
-    return { data, error };
-  },
-
-  // Verify OTP - works for both email and phone
-  async verifyOtp(identifier: string, token: string, type: 'email' | 'sms') {
-    const verifyData = type === 'email' 
-      ? { email: identifier, token, type: 'email' as const }
-      : { phone: identifier, token, type: 'sms' as const };
-    
-    const { data, error } = await supabase.auth.verifyOtp(verifyData);
-    return { data, error };
-  },
-
   // Resend email confirmation
   async resendConfirmation(email: string) {
     const { data, error } = await supabase.auth.resend({
