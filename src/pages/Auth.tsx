@@ -270,11 +270,10 @@ export const Auth: React.FC<AuthProps> = ({
             {/* Go Back Button */}
             <Button
               variant="ghost"
-              onClick={() => setMode('signin')}
+              onClick={() => navigate('/')}
               className="mb-8 p-0 h-auto text-muted-foreground hover:text-foreground"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t.backToHome}
+              ← {t.backToHome}
             </Button>
 
             <div className="text-center mb-8">
