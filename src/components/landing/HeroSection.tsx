@@ -37,6 +37,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       tryFree: "Entrar na Lista",
       seePricing: "Ver Preços",
       trustBadge: "Feito para famílias"
+    },
+    'zh-CN': {
+      badge: "用AI保存记忆",
+      headline: "让他们的声音和智慧永远活着",
+      subhead: "帮助受阿尔茨海默症影响的家庭保存珍贵记忆，通过AI对话保持联系。",
+      tryFree: "加入等候名单",
+      seePricing: "查看定价",
+      trustBadge: "为家庭而建"
+    },
+    'zh-TW': {
+      badge: "用AI保存記憶",
+      headline: "讓他們的聲音和智慧永遠活著",
+      subhead: "幫助受阿茲海默症影響的家庭保存珍貴記憶，通過AI對話保持聯繫。",
+      tryFree: "加入等候名單",
+      seePricing: "查看定價",
+      trustBadge: "為家庭而建"
+    },
+    es: {
+      badge: "Preserva recuerdos con IA",
+      headline: "Mantén su voz y sabiduría vivas para siempre",
+      subhead: "Ayuda a las familias afectadas por el Alzheimer a preservar recuerdos preciosos y mantenerse conectadas a través de conversaciones con IA.",
+      tryFree: "Unirse a la Lista",
+      seePricing: "Ver Precios",
+      trustBadge: "Construido para familias"
+    },
+    fr: {
+      badge: "Préservez les souvenirs avec l'IA",
+      headline: "Gardez leur voix et leur sagesse vivantes pour toujours",
+      subhead: "Aidez les familles touchées par Alzheimer à préserver des souvenirs précieux et à rester connectées grâce aux conversations IA.",
+      tryFree: "Rejoindre la Liste",
+      seePricing: "Voir les Prix",
+      trustBadge: "Conçu pour les familles"
     }
   };
   

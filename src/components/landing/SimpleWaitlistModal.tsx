@@ -46,6 +46,58 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
         subtitle: "Notificaremos você quando o Eterna estiver pronto"
       },
       back: "Voltar"
+    },
+    'zh-CN': {
+      title: "加入等候名单",
+      subtitle: "第一时间了解Eterna发布消息",
+      emailLabel: "电子邮件地址",
+      emailPlaceholder: "你的@邮箱.com",
+      submit: "加入等候名单",
+      submitting: "加入中...",
+      success: {
+        title: "您已在名单中！",
+        subtitle: "当Eterna准备就绪时我们会通知您"
+      },
+      back: "返回"
+    },
+    'zh-TW': {
+      title: "加入等候名單",
+      subtitle: "第一時間了解Eterna發布消息",
+      emailLabel: "電子郵件地址",
+      emailPlaceholder: "你的@郵箱.com",
+      submit: "加入等候名單",
+      submitting: "加入中...",
+      success: {
+        title: "您已在名單中！",
+        subtitle: "當Eterna準備就緒時我們會通知您"
+      },
+      back: "返回"
+    },
+    es: {
+      title: "Unirse a la lista de espera",
+      subtitle: "Sé el primero en saber cuándo se lance Eterna",
+      emailLabel: "Dirección de correo",
+      emailPlaceholder: "tu@email.com",
+      submit: "Unirse a la lista",
+      submitting: "Uniéndose...",
+      success: {
+        title: "¡Estás en la lista!",
+        subtitle: "Te notificaremos cuando Eterna esté listo"
+      },
+      back: "Atrás"
+    },
+    fr: {
+      title: "Rejoindre la liste d'attente",
+      subtitle: "Soyez le premier à savoir quand Eterna sera lancé",
+      emailLabel: "Adresse e-mail",
+      emailPlaceholder: "votre@email.com",
+      submit: "Rejoindre la liste",
+      submitting: "Inscription...",
+      success: {
+        title: "Vous êtes sur la liste !",
+        subtitle: "Nous vous préviendrons quand Eterna sera prêt"
+      },
+      back: "Retour"
     }
   };
 
@@ -55,7 +107,15 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     e.preventDefault();
     
     if (!email) {
-      toast.error(currentLanguage === 'pt-BR' ? 'Email é obrigatório' : 'Email is required');
+      const requiredTexts = {
+        en: 'Email is required',
+        'pt-BR': 'Email é obrigatório',
+        'zh-CN': '邮箱是必需的',
+        'zh-TW': '郵箱是必需的',
+        es: 'El email es requerido',
+        fr: 'L\'email est requis'
+      };
+      toast.error(requiredTexts[currentLanguage as keyof typeof requiredTexts] || requiredTexts.en);
       return;
     }
 
@@ -72,17 +132,41 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
 
       if (error) {
         if (error.code === '23505') {
-          toast.error(currentLanguage === 'pt-BR' ? 'Este email já está na lista' : 'This email is already on the list');
+          const duplicateTexts = {
+            en: 'This email is already on the list',
+            'pt-BR': 'Este email já está na lista',
+            'zh-CN': '此邮箱已在名单中',
+            'zh-TW': '此郵箱已在名單中',
+            es: 'Este email ya está en la lista',
+            fr: 'Cet email est déjà sur la liste'
+          };
+          toast.error(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
         } else {
           throw error;
         }
       } else {
         setIsSubmitted(true);
-        toast.success(currentLanguage === 'pt-BR' ? 'Adicionado à lista!' : 'Added to waitlist!');
+        const successTexts = {
+          en: 'Added to waitlist!',
+          'pt-BR': 'Adicionado à lista!',
+          'zh-CN': '已加入等候名单！',
+          'zh-TW': '已加入等候名單！',
+          es: '¡Añadido a la lista!',
+          fr: 'Ajouté à la liste !'
+        };
+        toast.success(successTexts[currentLanguage as keyof typeof successTexts] || successTexts.en);
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
-      toast.error(currentLanguage === 'pt-BR' ? 'Erro ao cadastrar' : 'Error signing up');
+      const errorTexts = {
+        en: 'Error signing up',
+        'pt-BR': 'Erro ao cadastrar',
+        'zh-CN': '注册出错',
+        'zh-TW': '註冊出錯',
+        es: 'Error al registrarse',
+        fr: 'Erreur lors de l\'inscription'
+      };
+      toast.error(errorTexts[currentLanguage as keyof typeof errorTexts] || errorTexts.en);
     } finally {
       setIsSubmitting(false);
     }
@@ -133,10 +217,17 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
                   <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {currentLanguage === 'pt-BR' 
-                    ? 'Obrigado por se juntar! Entraremos em contato em breve.'
-                    : 'Thanks for joining! We\'ll be in touch soon.'
-                  }
+                  {(() => {
+                    const thankTexts = {
+                      en: 'Thanks for joining! We\'ll be in touch soon.',
+                      'pt-BR': 'Obrigado por se juntar! Entraremos em contato em breve.',
+                      'zh-CN': '感谢加入！我们很快就会联系您。',
+                      'zh-TW': '感謝加入！我們很快就會聯繫您。',
+                      es: '¡Gracias por unirte! Nos pondremos en contacto pronto.',
+                      fr: 'Merci de nous avoir rejoint ! Nous vous contacterons bientôt.'
+                    };
+                    return thankTexts[currentLanguage as keyof typeof thankTexts] || thankTexts.en;
+                  })()}
                 </p>
               </div>
             ) : (

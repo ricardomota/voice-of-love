@@ -103,6 +103,186 @@ export const SimplePricingSection: React.FC<SimplePricingSectionProps> = ({ onJo
           ]
         }
       ]
+    },
+    'zh-CN': {
+      title: "简单透明的定价",
+      subtitle: "测试期间免费。下方显示发布定价。",
+      disclaimer: "目前在测试阶段 - 开发期间所有功能免费",
+      plans: [
+        {
+          name: "免费",
+          price: "$0",
+          period: "永远",
+          description: "完美的开始",
+          features: [
+            "1个亲人档案",
+            "基本对话",
+            "照片记忆",
+            "社区支持"
+          ]
+        },
+        {
+          name: "家庭",
+          price: "$29",
+          period: "每月",
+          description: "适合成长中的家庭",
+          features: [
+            "最多3个档案",
+            "语音消息",
+            "高级个性",
+            "音频记忆",
+            "家庭分享"
+          ]
+        },
+        {
+          name: "传承",
+          price: "$79",
+          period: "每月",
+          description: "保存一切",
+          features: [
+            "无限档案",
+            "定制语音克隆",
+            "视频记忆",
+            "优先支持",
+            "扩展分享"
+          ]
+        }
+      ]
+    },
+    'zh-TW': {
+      title: "簡單透明的定價",
+      subtitle: "測試期間免費。下方顯示發佈定價。",
+      disclaimer: "目前在測試階段 - 開發期間所有功能免費",
+      plans: [
+        {
+          name: "免費",
+          price: "$0",
+          period: "永遠",
+          description: "完美的開始",
+          features: [
+            "1個親人檔案",
+            "基本對話",
+            "照片記憶",
+            "社區支持"
+          ]
+        },
+        {
+          name: "家庭",
+          price: "$29",
+          period: "每月",
+          description: "適合成長中的家庭",
+          features: [
+            "最多3個檔案",
+            "語音消息",
+            "高級個性",
+            "音頻記憶",
+            "家庭分享"
+          ]
+        },
+        {
+          name: "傳承",
+          price: "$79",
+          period: "每月",
+          description: "保存一切",
+          features: [
+            "無限檔案",
+            "定制語音克隆",
+            "視頻記憶",
+            "優先支持",
+            "擴展分享"
+          ]
+        }
+      ]
+    },
+    es: {
+      title: "Precios simples y transparentes",
+      subtitle: "Gratis durante la beta. Precios de lanzamiento mostrados abajo.",
+      disclaimer: "Actualmente en beta - todas las funciones gratis durante el desarrollo",
+      plans: [
+        {
+          name: "Gratis",
+          price: "$0",
+          period: "para siempre",
+          description: "Perfecto para comenzar",
+          features: [
+            "1 perfil de ser querido",
+            "Conversaciones básicas",
+            "Recuerdos fotográficos",
+            "Soporte comunitario"
+          ]
+        },
+        {
+          name: "Familiar",
+          price: "$29",
+          period: "por mes",
+          description: "Para familias en crecimiento",
+          features: [
+            "Hasta 3 perfiles",
+            "Mensajes de voz",
+            "Personalidad avanzada",
+            "Recuerdos de audio",
+            "Compartir familiar"
+          ]
+        },
+        {
+          name: "Legado",
+          price: "$79",
+          period: "por mes",
+          description: "Preservar todo",
+          features: [
+            "Perfiles ilimitados",
+            "Clonación de voz personalizada",
+            "Recuerdos de video",
+            "Soporte prioritario",
+            "Compartir extendido"
+          ]
+        }
+      ]
+    },
+    fr: {
+      title: "Prix simples et transparents",
+      subtitle: "Gratuit pendant la bêta. Prix de lancement montrés ci-dessous.",
+      disclaimer: "Actuellement en bêta - toutes les fonctionnalités gratuites pendant le développement",
+      plans: [
+        {
+          name: "Gratuit",
+          price: "$0",
+          period: "pour toujours",
+          description: "Parfait pour commencer",
+          features: [
+            "1 profil d'être cher",
+            "Conversations de base",
+            "Souvenirs photo",
+            "Support communautaire"
+          ]
+        },
+        {
+          name: "Famille",
+          price: "$29",
+          period: "par mois",
+          description: "Pour les familles grandissantes",
+          features: [
+            "Jusqu'à 3 profils",
+            "Messages vocaux",
+            "Personnalité avancée",
+            "Souvenirs audio",
+            "Partage familial"
+          ]
+        },
+        {
+          name: "Héritage",
+          price: "$79",
+          period: "par mois",
+          description: "Tout préserver",
+          features: [
+            "Profils illimités",
+            "Clonage vocal personnalisé",
+            "Souvenirs vidéo",
+            "Support prioritaire",
+            "Partage étendu"
+          ]
+        }
+      ]
     }
   };
 
@@ -188,7 +368,17 @@ export const SimplePricingSection: React.FC<SimplePricingSectionProps> = ({ onJo
                         : 'bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
                     }`}
                   >
-                    {currentLanguage === 'pt-BR' ? 'Entrar na Lista' : 'Join Waitlist'}
+                    {(() => {
+                      const joinTexts = {
+                        en: 'Join Waitlist',
+                        'pt-BR': 'Entrar na Lista',
+                        'zh-CN': '加入等候名单',
+                        'zh-TW': '加入等候名單',
+                        es: 'Unirse a la Lista',
+                        fr: 'Rejoindre la Liste'
+                      };
+                      return joinTexts[currentLanguage as keyof typeof joinTexts] || joinTexts.en;
+                    })()}
                   </Button>
                 </CardContent>
               </Card>
