@@ -10,6 +10,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { analyticsIntegrations } from '@/lib/integrations';
 import { PlanSelectionModal } from '@/components/PlanSelectionModal';
+import { LanguageSelector } from '@/components/ui/language-selector';
 
 type AuthMode = 'signin' | 'signup' | 'email_confirmation';
 
@@ -267,14 +268,17 @@ export const Auth: React.FC<AuthProps> = ({
             animate={{ opacity: 1, y: 0 }}
             className="w-full max-w-md"
           >
-            {/* Go Back Button */}
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/')}
-              className="mb-8 p-0 h-auto text-muted-foreground hover:text-foreground"
-            >
-              ← {t.backToHome}
-            </Button>
+            {/* Header with Go Back and Language Selector */}
+            <div className="flex justify-between items-center mb-8">
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/')}
+                className="p-0 h-auto text-muted-foreground hover:text-foreground"
+              >
+                ← {t.backToHome}
+              </Button>
+              <LanguageSelector />
+            </div>
 
             <div className="text-center mb-8">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
@@ -314,15 +318,18 @@ export const Auth: React.FC<AuthProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          {/* Go Back Button */}
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="mb-8 p-0 h-auto text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {t.backToHome}
-          </Button>
+          {/* Header with Go Back and Language Selector */}
+          <div className="flex justify-between items-center mb-8">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="p-0 h-auto text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t.backToHome}
+            </Button>
+            <LanguageSelector />
+          </div>
 
           {/* Header */}
           <div className="mb-8">
