@@ -108,11 +108,21 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
         >
           {/* Simple Logo */}
           <div className="flex items-center gap-3 relative cursor-pointer">
+            {/* Mobile Logo */}
+            <img 
+              src="/eterna-logo-mobile.svg" 
+              alt="Eterna Logo" 
+              className={cn(
+                "w-auto transition-all duration-300 md:hidden",
+                isScrolled ? "h-4" : "h-5"
+              )}
+            />
+            {/* Desktop Logo */}
             <img 
               src="/eterna-logo.svg" 
               alt="Eterna Logo" 
               className={cn(
-                "w-auto transition-all duration-300",
+                "w-auto transition-all duration-300 hidden md:block",
                 isScrolled ? "h-4" : "h-5"
               )}
             />

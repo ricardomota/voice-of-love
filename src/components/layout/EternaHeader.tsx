@@ -101,10 +101,17 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
+          {/* Mobile Logo */}
+          <img 
+            src="/eterna-logo-mobile.svg" 
+            alt="Eterna Logo" 
+            className="h-6 w-auto md:hidden"
+          />
+          {/* Desktop Logo */}
           <img 
             src="/eterna-logo.svg" 
             alt="Eterna Logo" 
-            className="h-6 w-auto"
+            className="h-6 w-auto hidden md:block"
           />
         </Link>
 
