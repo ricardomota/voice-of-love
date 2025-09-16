@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, AlertCircle, Heart } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, Heart, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FloatingInput } from '@/components/ui/floating-input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -9,7 +9,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { analyticsIntegrations } from '@/lib/integrations';
-import { EternaHeader } from '@/components/layout/EternaHeader';
 import { PlanSelectionModal } from '@/components/PlanSelectionModal';
 
 type AuthMode = 'signin' | 'signup' | 'email_confirmation';
@@ -260,14 +259,24 @@ export const Auth: React.FC<AuthProps> = ({
   // Show email confirmation screen
   if (mode === 'email_confirmation') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-secondary/20">
-        <EternaHeader />
-        <div className="flex items-center justify-center min-h-screen pt-16">
+      <div className="min-h-screen flex">
+        {/* Left Side - Confirmation */}
+        <div className="flex-1 flex items-center justify-center bg-background p-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full max-w-md mx-auto px-6"
+            className="w-full max-w-md"
           >
+            {/* Go Back Button */}
+            <Button
+              variant="ghost"
+              onClick={() => setMode('signin')}
+              className="mb-8 p-0 h-auto text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t.backToHome}
+            </Button>
+
             <div className="text-center mb-8">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
                 <Heart className="w-8 h-8 text-white" />
@@ -279,36 +288,49 @@ export const Auth: React.FC<AuthProps> = ({
                 Check your email to complete your registration.
               </p>
             </div>
-            
-            <Button
-              onClick={() => setMode('signin')}
-              variant="outline"
-              className="w-full"
-            >
-              {t.backToHome}
-            </Button>
           </motion.div>
+        </div>
+
+        {/* Right Side - Image */}
+        <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
+          <div className="relative flex items-center justify-center w-full">
+            <div className="text-center text-white">
+              <Heart className="w-24 h-24 mx-auto mb-6 opacity-80" />
+              <h2 className="text-3xl font-bold mb-4">Welcome to Eterna</h2>
+              <p className="text-xl opacity-90">Preserve your precious memories forever</p>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-secondary/20">
-      <EternaHeader />
-      
-      <div className="flex items-center justify-center min-h-screen pt-16">
+    <div className="min-h-screen flex">
+      {/* Left Side - Form */}
+      <div className="flex-1 flex items-center justify-center bg-background p-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md mx-auto px-6"
+          className="w-full max-w-md"
         >
+          {/* Go Back Button */}
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
+            className="mb-8 p-0 h-auto text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            {t.backToHome}
+          </Button>
+
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-              <Heart className="w-8 h-8 text-white" />
+          <div className="mb-8">
+            <div className="w-12 h-12 mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+              <Heart className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
               {mode === 'signin' ? t.welcomeBack : t.createAccount}
             </h1>
             <p className="text-muted-foreground">
@@ -403,7 +425,7 @@ export const Auth: React.FC<AuthProps> = ({
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-12 text-base"
               disabled={loading}
             >
               {loading ? (
@@ -447,6 +469,26 @@ export const Auth: React.FC<AuthProps> = ({
             )}
           </form>
         </motion.div>
+      </div>
+
+      {/* Right Side - Hero Image */}
+      <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
+        <div className="relative flex items-center justify-center w-full p-12">
+          <div className="text-center text-white max-w-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Heart className="w-24 h-24 mx-auto mb-6 opacity-80" />
+              <h2 className="text-4xl font-bold mb-4">Welcome to Eterna</h2>
+              <p className="text-xl opacity-90 leading-relaxed">
+                Preserve your precious memories forever and keep your loved ones close to your heart
+              </p>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Plan Selection Modal */}
