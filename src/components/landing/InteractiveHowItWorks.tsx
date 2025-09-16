@@ -151,6 +151,7 @@ export const InteractiveHowItWorks: React.FC = () => {
                       <div className="bg-card border border-border rounded-xl p-4 space-y-3">
                         <div className="flex items-start gap-3">
                           <Avatar className="w-12 h-12">
+                            <AvatarImage src="/lovable-uploads/mom-avatar.png" alt="Mom" />
                             <AvatarFallback className="bg-muted text-muted-foreground">
                               MA
                             </AvatarFallback>
