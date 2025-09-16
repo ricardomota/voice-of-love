@@ -102,7 +102,7 @@ export const EternaHeader: React.FC<EternaHeaderProps> = ({
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
           <img 
-            src="/src/assets/eterna-logo.svg" 
+            src="/lovable-uploads/eterna-logo-black.png" 
             alt="Eterna Logo" 
             className="h-6 w-auto"
           />

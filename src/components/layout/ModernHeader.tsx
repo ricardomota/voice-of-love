@@ -202,7 +202,7 @@ export const ModernHeader: React.FC<ModernHeaderProps> = ({
           {/* Logo */}
           <Link to="/" className="flex items-center" aria-label="Voltar à página inicial">
             <img 
-              src="/src/assets/eterna-logo.svg" 
+              src="/lovable-uploads/eterna-logo-black.png" 
               alt="Eterna Logo" 
               className="h-6 w-auto"
             />

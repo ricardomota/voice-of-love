@@ -109,7 +109,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({ onTryFree, onSignI
           {/* Simple Logo */}
           <div className="flex items-center gap-3 relative cursor-pointer">
             <img 
-              src="/src/assets/eterna-logo.svg" 
+              src="/lovable-uploads/eterna-logo-black.png" 
               alt="Eterna Logo" 
               className={cn(
                 "w-auto transition-all duration-300",
