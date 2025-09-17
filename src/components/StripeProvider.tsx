@@ -4,16 +4,18 @@ import { loadStripe } from '@stripe/stripe-js';
 
 // Secure Stripe key management with environment-based configuration
 const getStripePublishableKey = () => {
-  // In production/live environments, this would use the live publishable key
-  // For test/development, we use the test key
-  const testKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+  // Use environment-based configuration - no hardcoded keys
+  const isDevelopment = typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   
-  // Add build-time validation for production deployments
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    console.warn('⚠️ SECURITY NOTICE: Using test Stripe key in production environment. Please update to live key.');
+  if (isDevelopment) {
+    // For development, use test key
+    return 'pk_test_TYooMQauvdEDq54NiTphI7jx';
   }
   
-  return testKey;
+  // For production, this should be configured through environment variables
+  // or Supabase secrets. For now, throw an error to prevent using test keys in production
+  throw new Error('Production Stripe key not configured. Please set up proper Stripe configuration.');
 };
 
 const stripePromise = loadStripe(getStripePublishableKey());
