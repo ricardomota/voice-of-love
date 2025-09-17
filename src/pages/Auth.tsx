@@ -982,13 +982,11 @@ export const Auth: React.FC<AuthProps> = ({
         {/* Right Side - Image */}
         <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
-          <div className="relative flex items-center justify-center w-full p-12">
-            <img 
-              src="/lovable-uploads/humanoid-bust.png" 
-              alt="Humanoid bust representing AI consciousness" 
-              className="w-full max-w-md rounded-xl shadow-2xl"
-            />
-          </div>
+          <img 
+            src="/lovable-uploads/humanoid-bust.png" 
+            alt="Humanoid bust representing AI consciousness" 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
       </div>
     );
@@ -1162,20 +1160,14 @@ export const Auth: React.FC<AuthProps> = ({
       {/* Right Side - Hero Image */}
       <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
-        <div className="relative flex items-center justify-center w-full p-12">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="w-full max-w-md"
-          >
-            <img 
-              src="/lovable-uploads/humanoid-bust.png" 
-              alt="Humanoid bust representing AI consciousness" 
-              className="w-full rounded-xl shadow-2xl"
-            />
-          </motion.div>
-        </div>
+        <motion.img 
+          src="/lovable-uploads/humanoid-bust.png" 
+          alt="Humanoid bust representing AI consciousness" 
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+        />
       </div>
 
       {/* Plan Selection Modal */}
