@@ -969,9 +969,6 @@ export const Auth: React.FC<AuthProps> = ({
             </div>
 
             <div className="text-center mb-8">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                <Heart className="w-8 h-8 text-white" />
-              </div>
               <h1 className="text-2xl font-bold text-foreground mb-2">
                 {t.accountCreated}
               </h1>
@@ -985,12 +982,12 @@ export const Auth: React.FC<AuthProps> = ({
         {/* Right Side - Image */}
         <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
-          <div className="relative flex items-center justify-center w-full">
-            <div className="text-center text-white">
-              <Heart className="w-24 h-24 mx-auto mb-6 opacity-80" />
-              <h2 className="text-3xl font-bold mb-4">Welcome to Eterna</h2>
-              <p className="text-xl opacity-90">Preserve your precious memories forever</p>
-            </div>
+          <div className="relative flex items-center justify-center w-full p-12">
+            <img 
+              src="/lovable-uploads/humanoid-bust.png" 
+              alt="Humanoid bust representing AI consciousness" 
+              className="w-full max-w-md rounded-xl shadow-2xl"
+            />
           </div>
         </div>
       </div>
@@ -1011,7 +1008,7 @@ export const Auth: React.FC<AuthProps> = ({
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
-              className="p-0 h-auto text-muted-foreground hover:text-foreground"
+              className="p-0 h-auto text-muted-foreground"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               {t.backToHome}
@@ -1021,9 +1018,6 @@ export const Auth: React.FC<AuthProps> = ({
 
           {/* Header */}
           <div className="mb-8">
-            <div className="w-12 h-12 mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white" />
-            </div>
             <h1 className="text-3xl font-bold text-foreground mb-2">
               {mode === 'signin' ? t.welcomeBack : t.createAccount}
             </h1>
@@ -1169,19 +1163,18 @@ export const Auth: React.FC<AuthProps> = ({
       <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-primary/20 to-secondary/20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-secondary/80" />
         <div className="relative flex items-center justify-center w-full p-12">
-          <div className="text-center text-white max-w-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <Heart className="w-24 h-24 mx-auto mb-6 opacity-80" />
-              <h2 className="text-4xl font-bold mb-4">Welcome to Eterna</h2>
-              <p className="text-xl opacity-90 leading-relaxed">
-                Preserve your precious memories forever and keep your loved ones close to your heart
-              </p>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="w-full max-w-md"
+          >
+            <img 
+              src="/lovable-uploads/humanoid-bust.png" 
+              alt="Humanoid bust representing AI consciousness" 
+              className="w-full rounded-xl shadow-2xl"
+            />
+          </motion.div>
         </div>
       </div>
 
