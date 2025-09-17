@@ -11,7 +11,7 @@ interface WelcomeViewProps {
 const getContent = (language: string) => {
   const content = {
     en: {
-      madeWithLove: "❤️ Made with love for families with Alzheimer's",
+      madeWithLove: "Made with love for families with Alzheimer's",
       welcome: "Welcome to Eterna",
       description: "Preserve precious memories and maintain eternal conversations with beloved people through artificial intelligence.",
       createButton: "Create First Eternal Person",
@@ -25,7 +25,7 @@ const getContent = (language: string) => {
       mission: "I created this tool with great love, motivated by the need to keep my mother present, even with Alzheimer's. I want to help other families preserve the memories and personalities of their loved ones forever."
     },
     'pt-BR': {
-      madeWithLove: "❤️ Feito com amor para famílias com Alzheimer",
+      madeWithLove: "Feito com amor para famílias com Alzheimer",
       welcome: "Bem-vindo ao Eterna",
       description: "Preserve memórias preciosas e mantenha conversas eternas com pessoas queridas através de inteligência artificial.",
       createButton: "Criar Primeira Pessoa Eterna",
@@ -39,7 +39,7 @@ const getContent = (language: string) => {
       mission: "Criei esta ferramenta com muito amor, motivado pela necessidade de manter minha mãe presente, mesmo com o Alzheimer. Quero ajudar outras famílias a preservarem as memórias e personalidades de seus entes queridos para sempre."
     },
     es: {
-      madeWithLove: "❤️ Hecho con amor para familias con Alzheimer", 
+      madeWithLove: "Hecho con amor para familias con Alzheimer",
       welcome: "Bienvenido a Eterna",
       description: "Preserva recuerdos preciosos y mantén conversaciones eternas con personas queridas a través de inteligencia artificial.",
       createButton: "Crear Primera Persona Eterna", 
@@ -125,27 +125,13 @@ export const WelcomeView = memo(({ onCreatePerson }: WelcomeViewProps) => {
           </div>
         </div>
 
-        {/* Mission Card */}
+        {/* Humanoid Bust Image */}
         <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl sm:rounded-3xl shadow-lg max-w-2xl w-full p-4 sm:p-6 lg:p-8 text-center mx-4">
-          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">{content.whyCreated}</h3>
-          <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
-            {content.mission}
-          </p>
-          
-          <div className="flex items-center justify-center pt-4 border-t border-border/50">
-            <a 
-              href="https://www.alz.org/?form=FUNDHYMMBXU" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity"
-            >
-              <img 
-                src="/lovable-uploads/da7c745c-758a-4054-a38a-03a05da9fb7b.png" 
-                alt="Alzheimer's Association" 
-                className="h-5 sm:h-6 opacity-80"
-              />
-            </a>
-          </div>
+          <img 
+            src="/lovable-uploads/humanoid-bust.png" 
+            alt="Humanoid bust representing AI consciousness" 
+            className="w-full max-w-md mx-auto rounded-xl"
+          />
         </div>
       </div>
     </div>
