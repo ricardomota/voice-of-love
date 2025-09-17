@@ -961,7 +961,7 @@ export const Auth: React.FC<AuthProps> = ({
               <Button
                 variant="ghost"
                 onClick={() => navigate('/')}
-                className="p-0 h-auto text-muted-foreground hover:text-foreground"
+                className="p-0 h-auto text-muted-foreground"
               >
                 ← {t.backToHome}
               </Button>
