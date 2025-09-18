@@ -194,7 +194,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
+    <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-gray-950 overflow-hidden">
+      {/* Subtle animated rainbow blur background */}
+      <div className="absolute inset-0 opacity-30 dark:opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-pink-300/20 via-purple-300/20 to-blue-300/20 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '4s' }} />
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-300/20 via-cyan-300/20 to-emerald-300/20 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '6s', animationDelay: '1s' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-yellow-300/20 via-orange-300/20 to-red-300/20 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '5s', animationDelay: '2s' }} />
+      </div>
       
       {/* Main content */}
       <div className="relative w-full max-w-4xl mx-auto px-6 py-24 text-center">

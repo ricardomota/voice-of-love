@@ -54,10 +54,10 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
               <div className="flex items-center gap-2 text-sm">
                 <Mail className="w-4 h-4 text-primary-foreground" />
                 <a 
-                  href="mailto:support@eterna.chat"
+                  href="mailto:contact@eterna.chat"
                   className="text-primary-foreground hover:text-primary-foreground/80 transition-colors"
                 >
-                  support@eterna.chat
+                  contact@eterna.chat
                 </a>
               </div>
             </div>

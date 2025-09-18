@@ -18,20 +18,11 @@ export const StoryCard: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }} 
           viewport={{ once: true, margin: "-100px" }} 
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12"
+          className="flex flex-col items-center"
         >
-          {/* Left Side - Visual Element */}
-          <div className="flex-shrink-0 lg:w-1/3">
-            <div className="relative">
-              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto bg-gradient-to-br from-primary via-primary/80 to-primary/60 rounded-full flex items-center justify-center shadow-2xl shadow-primary/20">
-                <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-primary-foreground" />
-              </div>
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-full blur-xl" />
-            </div>
-          </div>
 
-          {/* Right Side - Content */}
-          <div className="flex-1 text-center lg:text-left space-y-6">
+          {/* Content */}
+          <div className="flex-1 text-center space-y-6">
             <div className="space-y-4">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -45,7 +36,7 @@ export const StoryCard: React.FC = () => {
               </motion.div>
               
               <motion.p 
-                className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0"
+                className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -56,7 +47,7 @@ export const StoryCard: React.FC = () => {
             </div>
 
             <motion.div 
-              className="flex items-center justify-center lg:justify-start gap-3 pt-2"
+              className="flex items-center justify-center gap-3 pt-2"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

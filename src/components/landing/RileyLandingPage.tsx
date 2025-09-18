@@ -619,7 +619,7 @@ export default function RileyLandingPage({
                 Feito com amor para famílias brasileiras.
               </p>
               <div className="flex space-x-4 text-muted-foreground">
-                <span>contato@eterna.com.br</span>
+                <span>contact@eterna.chat</span>
               </div>
             </div>
             
