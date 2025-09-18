@@ -11,6 +11,8 @@ import { BrowserRouter, Routes, Route, useSearchParams, Navigate, useLocation } 
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Loader2 } from 'lucide-react';
 import { useState, useEffect, memo, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { cacheApiCall } from '@/utils/performanceUtils';
 import { Auth } from "@/pages/Auth";
 
 import RileyLandingPage from "./components/landing/RileyLandingPage";
