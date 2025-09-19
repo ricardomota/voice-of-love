@@ -302,6 +302,7 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
         });
 
       if (error) {
+        console.error('Database error:', error);
         if (error.code === '23505') {
           const duplicateTexts = {
             en: 'This email is already on the list',
