@@ -290,12 +290,39 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     setIsSubmitting(true);
 
     try {
+      // First, try to sign up the user anonymously if they're not authenticated
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      
+      let authUserId = currentUser?.id;
+      
+      // If user is not authenticated, create an anonymous sign-up with the email
+      if (!currentUser) {
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithOtp({
+          email: email,
+          options: {
+            shouldCreateUser: true
+          }
+        });
+        
+        if (signInError) {
+          console.error('Sign in error:', signInError);
+          // If sign-in fails, we'll try to insert without authentication
+          authUserId = null;
+        } else {
+          // Get the user after sign-in attempt
+          const { data: { user: newUser } } = await supabase.auth.getUser();
+          authUserId = newUser?.id || null;
+        }
+      }
+
       const { error } = await supabase
         .from('waitlist')
         .insert({
           email,
           full_name: '',
-          user_id: crypto.randomUUID()
+          user_id: authUserId,
+          status: 'queued',
+          primary_interest: 'general'
         });
 
       if (error) {
@@ -322,6 +349,7 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
           };
           toast.error(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
         } else {
+          console.error('Database error:', error);
           throw error;
         }
       } else {
