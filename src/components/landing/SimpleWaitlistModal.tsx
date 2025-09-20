@@ -290,15 +290,16 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     setIsSubmitting(true);
 
     try {
-      // Simple waitlist signup without authentication - just store the email
+      // FIXED: Provide proper full_name to satisfy NOT NULL constraint
       const { error } = await supabase
         .from('waitlist')
         .insert({
-          email,
-          full_name: '',
+          email: email.trim().toLowerCase(),
+          full_name: 'Anonymous User', // Fix for NOT NULL constraint
           user_id: null, // Allow null user_id for anonymous waitlist signups
           status: 'queued',
-          primary_interest: 'general'
+          primary_interest: 'general',
+          how_did_you_hear: 'website'
         });
 
       if (error) {
