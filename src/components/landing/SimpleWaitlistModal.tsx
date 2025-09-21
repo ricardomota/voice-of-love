@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -261,6 +260,7 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('🔵 1. Form submitted with email:', email);
     
     if (!email) {
       const requiredTexts = {
@@ -288,58 +288,59 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     }
 
     setIsSubmitting(true);
+    console.log('🔵 2. Setting isSubmitting to true, starting process...');
 
     try {
-      // First check for duplicates using secure function (prevents email enumeration)
-      const { data: isDuplicate, error: duplicateError } = await supabase
-        .rpc('check_waitlist_duplicate', { email_to_check: email.trim().toLowerCase() });
+      console.log('🔵 3. Making API request to waitlist endpoint...');
+      
+      // Use the new secure API endpoint
+      const response = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/waitlist-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim().toLowerCase() })
+      });
 
-      if (duplicateError) {
-        console.error('Duplicate check error:', duplicateError);
-        // Continue with insertion - let database handle constraint violation
-      } else if (isDuplicate) {
-        // Email already exists - show friendly message
-        const duplicateTexts = {
-          en: 'You\'re already on our waitlist!',
-          'pt-BR': 'Você já está na nossa lista!',
-          'zh-CN': '您已在我们的等候名单中！',
-          'zh-TW': '您已在我們的等候名單中！',
-          es: '¡Ya estás en nuestra lista!',
-          fr: 'Vous êtes déjà sur notre liste !',
-          de: 'Sie stehen bereits auf unserer Liste!',
-          it: 'Sei già nella nostra lista!',
-          ru: 'Вы уже в нашем списке!',
-          ja: '既にウェイトリストに登録されています！',
-          ko: '이미 대기자 명단에 등록되어 있습니다!',
-          ar: 'أنت بالفعل في قائمة الانتظار لدينا!',
-          hi: 'आप पहले से ही हमारी प्रतीक्षा सूची में हैं!',
-          nl: 'Je staat al op onze wachtlijst!',
-          sv: 'Du finns redan på vår väntelista!',
-          no: 'Du er allerede på ventelisten vår!',
-          da: 'Du er allerede på vores venteliste!',
-          fi: 'Olet jo jonotilauksessamme!'
-        };
-        toast.success(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
-        setIsSubmitted(true);
-        return;
+      console.log('🔵 4. API response received - status:', response.status);
+      
+      const result = await response.json();
+      console.log('🔵 5. API response data:', result);
+
+      if (!response.ok) {
+        if (response.status === 400 && result.error === 'INVALID_EMAIL') {
+          const invalidTexts = {
+            en: 'Please enter a valid email address',
+            'pt-BR': 'Por favor, insira um endereço de email válido',
+            'zh-CN': '请输入有效的电子邮件地址',
+            'zh-TW': '請輸入有效的電子郵件地址',
+            es: 'Por favor, introduce una dirección de correo válida',
+            fr: 'Veuillez entrer une adresse e-mail valide',
+            de: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+            it: 'Inserisci un indirizzo email valido',
+            ru: 'Пожалуйста, введите действительный адрес электронной почты',
+            ja: '有効なメールアドレスを入力してください',
+            ko: '유효한 이메일 주소를 입력해주세요',
+            ar: 'يرجى إدخال عنوان بريد إلكتروني صالح',
+            hi: 'कृपया एक वैध ईमेल पता दर्ज करें',
+            nl: 'Voer een geldig e-mailadres in',
+            sv: 'Ange en giltig e-postadress',
+            no: 'Vennligst oppgi en gyldig e-postadresse',
+            da: 'Indtast venligst en gyldig e-mailadresse',
+            fi: 'Anna kelvollinen sähköpostiosoite'
+          };
+          toast.error(invalidTexts[currentLanguage as keyof typeof invalidTexts] || invalidTexts.en);
+          return;
+        }
+        throw new Error(`API error: ${result.error || 'Unknown error'}`);
       }
 
-      // Proceed with secure insertion
-      const { error } = await supabase
-        .from('waitlist')
-        .insert({
-          email: email.trim().toLowerCase(),
-          full_name: 'Anonymous User', // Fix for NOT NULL constraint
-          user_id: null, // Allow null user_id for anonymous waitlist signups
-          status: 'queued',
-          primary_interest: 'general',
-          how_did_you_hear: 'website'
-        });
-
-      if (error) {
-        console.error('Database error:', error);
-        if (error.code === '23505') {
-          // Fallback duplicate detection at database level
+      // Handle success or duplicate
+      if (result.ok) {
+        setIsSubmitted(true);
+        
+        if (result.message === 'ALREADY_EXISTS') {
+          // Email already exists - show friendly message
           const duplicateTexts = {
             en: 'You\'re already on our waitlist!',
             'pt-BR': 'Você já está na nossa lista!',
@@ -361,37 +362,34 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
             fi: 'Olet jo jonotilauksessamme!'
           };
           toast.success(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
-          setIsSubmitted(true);
         } else {
-          console.error('Database error:', error);
-          throw error;
+          // New signup success
+          console.log('🔵 6. SUCCESS! Email added to waitlist:', email.trim().toLowerCase());
+          const successTexts = {
+            en: 'Added to waitlist!',
+            'pt-BR': 'Adicionado à lista!',
+            'zh-CN': '已加入等候名单！',
+            'zh-TW': '已加入等候名單！',
+            es: '¡Añadido a la lista!',
+            fr: 'Ajouté à la liste !',
+            de: 'Zur Warteliste hinzugefügt!',
+            it: 'Aggiunto alla lista!',
+            ru: 'Добавлено в список!',
+            ja: 'ウェイトリストに追加されました！',
+            ko: '대기자 명단에 추가되었습니다!',
+            ar: 'تمت الإضافة لقائمة الانتظار!',
+            hi: 'प्रतीक्षा सूची में जोड़ा गया!',
+            nl: 'Toegevoegd aan wachtlijst!',
+            sv: 'Tillagd i väntelistan!',
+            no: 'Lagt til i ventelisten!',
+            da: 'Tilføjet til ventelisten!',
+            fi: 'Lisätty jonotuslistalle!'
+          };
+          toast.success(successTexts[currentLanguage as keyof typeof successTexts] || successTexts.en);
         }
-      } else {
-        setIsSubmitted(true);
-        const successTexts = {
-          en: 'Added to waitlist!',
-          'pt-BR': 'Adicionado à lista!',
-          'zh-CN': '已加入等候名单！',
-          'zh-TW': '已加入等候名單！',
-          es: '¡Añadido a la lista!',
-          fr: 'Ajouté à la liste !',
-          de: 'Zur Warteliste hinzugefügt!',
-          it: 'Aggiunto alla lista!',
-          ru: 'Добавлено в список!',
-          ja: 'ウェイトリストに追加されました！',
-          ko: '대기자 명단에 추가되었습니다!',
-          ar: 'تمت الإضافة لقائمة الانتظار!',
-          hi: 'प्रतीक्षा सूची में जोड़ा गया!',
-          nl: 'Toegevoegd aan wachtlijst!',
-          sv: 'Tillagd i väntelistan!',
-          no: 'Lagt til i ventelisten!',
-          da: 'Tilføjet til ventelisten!',
-          fi: 'Lisätty jonotuslistalle!'
-        };
-        toast.success(successTexts[currentLanguage as keyof typeof successTexts] || successTexts.en);
       }
     } catch (error) {
-      console.error('Error submitting to waitlist:', error);
+      console.error('❌ Caught error submitting to waitlist:', error);
       const errorTexts = {
         en: 'Error signing up',
         'pt-BR': 'Erro ao cadastrar',
