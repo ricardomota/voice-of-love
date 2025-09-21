@@ -1742,6 +1742,10 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: boolean
       }
+      check_waitlist_duplicate: {
+        Args: { email_to_check: string }
+        Returns: boolean
+      }
       compute_entitlements: {
         Args: { user_plan: string }
         Returns: Json

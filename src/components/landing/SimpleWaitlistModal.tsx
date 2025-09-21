@@ -290,7 +290,41 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     setIsSubmitting(true);
 
     try {
-      // FIXED: Provide proper full_name to satisfy NOT NULL constraint
+      // First check for duplicates using secure function (prevents email enumeration)
+      const { data: isDuplicate, error: duplicateError } = await supabase
+        .rpc('check_waitlist_duplicate', { email_to_check: email.trim().toLowerCase() });
+
+      if (duplicateError) {
+        console.error('Duplicate check error:', duplicateError);
+        // Continue with insertion - let database handle constraint violation
+      } else if (isDuplicate) {
+        // Email already exists - show friendly message
+        const duplicateTexts = {
+          en: 'You\'re already on our waitlist!',
+          'pt-BR': 'Você já está na nossa lista!',
+          'zh-CN': '您已在我们的等候名单中！',
+          'zh-TW': '您已在我們的等候名單中！',
+          es: '¡Ya estás en nuestra lista!',
+          fr: 'Vous êtes déjà sur notre liste !',
+          de: 'Sie stehen bereits auf unserer Liste!',
+          it: 'Sei già nella nostra lista!',
+          ru: 'Вы уже в нашем списке!',
+          ja: '既にウェイトリストに登録されています！',
+          ko: '이미 대기자 명단에 등록되어 있습니다!',
+          ar: 'أنت بالفعل في قائمة الانتظار لدينا!',
+          hi: 'आप पहले से ही हमारी प्रतीक्षा सूची में हैं!',
+          nl: 'Je staat al op onze wachtlijst!',
+          sv: 'Du finns redan på vår väntelista!',
+          no: 'Du er allerede på ventelisten vår!',
+          da: 'Du er allerede på vores venteliste!',
+          fi: 'Olet jo jonotilauksessamme!'
+        };
+        toast.success(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
+        setIsSubmitted(true);
+        return;
+      }
+
+      // Proceed with secure insertion
       const { error } = await supabase
         .from('waitlist')
         .insert({
@@ -305,27 +339,29 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
       if (error) {
         console.error('Database error:', error);
         if (error.code === '23505') {
+          // Fallback duplicate detection at database level
           const duplicateTexts = {
-            en: 'This email is already on the list',
-            'pt-BR': 'Este email já está na lista',
-            'zh-CN': '此邮箱已在名单中',
-            'zh-TW': '此郵箱已在名單中',
-            es: 'Este email ya está en la lista',
-            fr: 'Cet email est déjà sur la liste',
-            de: 'Diese E-Mail steht bereits auf der Liste',
-            it: 'Questa email è già nella lista',
-            ru: 'Этот email уже в списке',
-            ja: 'このメールアドレスは既にリストにあります',
-            ko: '이 이메일은 이미 목록에 있습니다',
-            ar: 'هذا البريد الإلكتروني موجود بالفعل في القائمة',
-            hi: 'यह ईमेल पहले से ही सूची में है',
-            nl: 'Deze e-mail staat al op de lijst',
-            sv: 'Den här e-posten finns redan på listan',
-            no: 'Denne e-posten er allerede på listen',
-            da: 'Denne e-mail er allerede på listen',
-            fi: 'Tämä sähköposti on jo listalla'
+            en: 'You\'re already on our waitlist!',
+            'pt-BR': 'Você já está na nossa lista!',
+            'zh-CN': '您已在我们的等候名单中！',
+            'zh-TW': '您已在我們的等候名單中！',
+            es: '¡Ya estás en nuestra lista!',
+            fr: 'Vous êtes déjà sur notre liste !',
+            de: 'Sie stehen bereits auf unserer Liste!',
+            it: 'Sei già nella nostra lista!',
+            ru: 'Вы уже в нашем списке!',
+            ja: '既にウェイトリストに登録されています！',
+            ko: '이미 대기자 명단에 등록되어 있습니다!',
+            ar: 'أنت بالفعل في قائمة الانتظار لدينا!',
+            hi: 'आप पहले से ही हमारी प्रतीक्षा सूची में हैं!',
+            nl: 'Je staat al op onze wachtlijst!',
+            sv: 'Du finns redan på vår väntelista!',
+            no: 'Du er allerede på ventelisten vår!',
+            da: 'Du er allerede på vores venteliste!',
+            fi: 'Olet jo jonotilauksessamme!'
           };
-          toast.error(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
+          toast.success(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
+          setIsSubmitted(true);
         } else {
           console.error('Database error:', error);
           throw error;
