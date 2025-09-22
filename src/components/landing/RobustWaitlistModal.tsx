@@ -169,13 +169,20 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
         
         console.log('🔵 10. Fallback payload:', Object.fromEntries(formData));
 
-        // Use a different endpoint or create a simple form post
-        const fallbackResponse = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/waitlist-signup', {
-          method: 'POST',
-          body: formData
-        });
+        // Use direct database insert as fallback
+        const { error: fallbackError } = await supabase
+          .from('waitlist')
+          .insert({
+            email: normalizedEmail,
+            full_name: 'Anonymous User',
+            user_id: null,
+            status: 'pending',
+            primary_interest: 'general',
+            how_did_you_hear: 'website',
+            requested_at: new Date().toISOString()
+          });
 
-        if (fallbackResponse.ok) {
+        if (!fallbackError) {
           console.log('🔵 11. Fallback SUCCESS!');
           setIsSubmitted(true);
           toast.success("Added to waitlist!");

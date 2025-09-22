@@ -27,26 +27,58 @@ export const SimpleWaitlistForm: React.FC<SimpleWaitlistFormProps> = ({ isOpen, 
     console.log('Submitting email:', email);
 
     try {
-      const response = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/waitlist-signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase()
-        })
-      });
+      // Use direct database insert with status 'pending' (working solution)
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
+          email: email.trim().toLowerCase(),
+          full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
+          primary_interest: 'general',
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      console.log('Response status:', response.status);
+      console.log('Database insert result:', insertData, 'Error:', insertError);
       
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Response data:', result);
+      if (!insertError) {
+        console.log('Database insert successful');
         setIsSubmitted(true);
         toast.success('Successfully added to waitlist!');
       } else {
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          toast.error('Email already registered');
+          return;
+        }
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: email.trim().toLowerCase(),
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
         toast.error('Failed to join waitlist. Please try again.');
       }
     } catch (error) {
