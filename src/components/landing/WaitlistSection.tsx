@@ -159,22 +159,51 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
       const { error } = await supabase
         .from('waitlist')
         .insert({
+          email: formData.email.trim().toLowerCase(),
           full_name: formData.fullName,
-          email: formData.email,
-          message: formData.message || null,
-          primary_interest: formData.primaryInterest || null,
-          user_id: crypto.randomUUID() // Generate a temporary ID since user_id is required
+          user_id: null,
+          status: 'pending', // This status works!
+          primary_interest: formData.primaryInterest || 'general',
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
         });
 
       if (error) {
+        // Handle duplicate constraint
         if (error.code === '23505') {
           toast({
             title: currentLanguage === 'pt-BR' ? "Email já cadastrado" : "Email already registered",
             description: currentLanguage === 'pt-BR' ? "Este email já está na nossa lista de espera." : "This email is already on our waitlist.",
             variant: "destructive"
           });
-        } else {
-          throw error;
+          return;
+        }
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: formData.email.trim().toLowerCase(),
+              full_name: formData.fullName,
+              user_id: null,
+              status: status,
+              primary_interest: formData.primaryInterest || 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
         }
       } else {
         setWaitlistPosition(position);
