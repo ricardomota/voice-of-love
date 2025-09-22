@@ -1,0 +1,241 @@
+import React, { useState } from 'react';
+import { Settings, Logout, User, Help, Information, Language } from '@carbon/icons-react';
+
+import { Button } from '@/components/ui/button';
+import { LanguageSelector } from '@/components/ui/language-selector';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { useAuth } from '@/hooks/useAuth';
+import { useProfile } from '@/hooks/useProfile';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useLanguage, type Language as LanguageType } from '@/hooks/useLanguage';
+import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+import { ProfileModal } from '@/components/ProfileModal';
+import { WalletBadge } from '@/components/wallet/WalletBadge';
+
+interface EternaHeaderProps {
+  onSettingsClick?: () => void;
+}
+
+const getContent = (language: string) => {
+  const content = {
+    en: {
+      account: "Account",
+      profile: "Profile",
+      settings: "Settings", 
+      help: "Help & Support",
+      about: "About",
+      language: "Language",
+      signOut: "Sign out"
+    },
+    'pt-BR': {
+      account: "Conta",
+      profile: "Perfil",
+      settings: "Configurações",
+      help: "Ajuda e Suporte",
+      about: "Sobre",
+      language: "Idioma",
+      signOut: "Sair"
+    },
+    es: {
+      account: "Cuenta",
+      profile: "Perfil", 
+      settings: "Configuración",
+      help: "Ayuda y Soporte",
+      about: "Acerca de",
+      language: "Idioma",
+      signOut: "Cerrar sesión"
+    }
+  };
+
+  return content[language as keyof typeof content] || content.en;
+};
+
+export const EternaHeader: React.FC<EternaHeaderProps> = ({
+  onSettingsClick
+}) => {
+  const { user, signOut } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+  const { currentLanguage, setLanguage } = useLanguage();
+  const content = getContent(currentLanguage);
+  const { toast } = useToast();
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  // Add debugging
+  console.log('EternaHeader - user:', !!user, 'profile:', !!profile, 'profileLoading:', profileLoading);
+
+  const languageOptions: { code: LanguageType; label: string; flag: string }[] = [
+    { code: 'en', label: 'English', flag: '🇺🇸' },
+    { code: 'pt-BR', label: 'Português', flag: '🇧🇷' },
+    { code: 'es', label: 'Español', flag: '🇪🇸' }
+  ];
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logout realizado com sucesso",
+        description: "Você foi desconectado da sua conta.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao fazer logout",
+        description: "Tente novamente.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  return (
+    <header className="fixed top-0 z-50 w-full border-b border-border/20 backdrop-blur-xl bg-background/90 shadow-sm">
+      <div className="container flex h-16 items-center justify-between px-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3" aria-label="Voltar à página inicial">
+          {/* Mobile Logo */}
+          <img 
+            src="/eterna-logo-mobile.svg" 
+            alt="Eterna Logo" 
+            className="h-6 w-auto md:hidden"
+          />
+          {/* Desktop Logo */}
+          <img 
+            src="/eterna-logo.svg" 
+            alt="Eterna Logo" 
+            className="h-6 w-auto hidden md:block"
+          />
+        </Link>
+
+        {/* Right side actions */}
+        <div className="flex items-center gap-2">
+          {/* Only show standalone language selector when user is not logged in */}
+          {!user && <LanguageSelector />}
+          
+          {/* Wallet Badge for logged in users */}
+          {user && <WalletBadge />}
+          
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="w-9 h-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors overflow-hidden border border-border shadow-sm">
+                  {profile?.avatar_url ? (
+                    <img 
+                      src={profile.avatar_url} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover rounded-lg"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.setAttribute('style', 'display: flex');
+                      }}
+                    />
+                  ) : null}
+                  <span 
+                    className="text-sm font-semibold flex items-center justify-center w-full h-full"
+                    style={{ display: profile?.avatar_url ? 'none' : 'flex' }}
+                  >
+                    {profile?.display_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
+                  </span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 bg-background border shadow-lg z-50">
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {profile?.display_name || content.account}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem 
+                  onClick={() => setShowProfileModal(true)}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <User size={16} />
+                  {content.profile}
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem 
+                  onClick={() => {
+                    if (onSettingsClick) onSettingsClick();
+                    else {
+                      toast({
+                        title: content.settings,
+                        description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.'
+                      });
+                    }
+                  }}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Settings size={16} />
+                  {content.settings}
+                </DropdownMenuItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="flex items-center gap-2 cursor-pointer">
+                    <Language size={16} />
+                    {content.language}
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    {languageOptions.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code)}
+                        className={`flex items-center gap-2 cursor-pointer ${
+                          currentLanguage === lang.code ? 'bg-muted' : ''
+                        }`}
+                      >
+                        <span>{lang.flag}</span>
+                        <span>{lang.label}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => toast({ title: content.help, description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.' })}>
+                  <Help size={16} />
+                  {content.help}
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => toast({ title: content.about, description: currentLanguage === 'pt-BR' ? 'Em breve.' : currentLanguage === 'es' ? 'Próximamente.' : 'Coming soon.' })}>
+                  <Information size={16} />
+                  {content.about}
+                </DropdownMenuItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem 
+                  onClick={handleSignOut}
+                  className="flex items-center gap-2 text-destructive cursor-pointer focus:text-destructive"
+                >
+                  <Logout size={16} />
+                  {content.signOut}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
+      </div>
+      
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={showProfileModal} 
+        onClose={() => setShowProfileModal(false)} 
+      />
+    </header>
+  );
+};

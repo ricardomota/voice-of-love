@@ -1,0 +1,16 @@
+project_id = "awodornqrhssfbkgjgfx"
+
+[functions.waitlist-signup]
+verify_jwt = false
+
+[functions.openai-chat]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = false
+
+[functions.voice-waitlist]
+verify_jwt = true
+
+[functions.security-audit]
+verify_jwt = true
