@@ -68,14 +68,21 @@ serve(async (req) => {
 
     console.log('🔵 4. Checking for duplicate email...');
     
-    // Check for duplicate using the secure function
-    const { data: isDuplicate, error: duplicateError } = await supabase
-      .rpc('check_waitlist_duplicate', { email_to_check: normalizedEmail });
+    // Check for duplicate using the secure function (best-effort)
+    let isDuplicate = false
+    try {
+      const { data, error: duplicateError } = await supabase
+        .rpc('check_waitlist_duplicate', { email_to_check: normalizedEmail });
+      if (duplicateError) {
+        console.warn('⚠️ Duplicate check RPC unavailable or failed, continuing:', duplicateError?.message);
+      } else {
+        isDuplicate = Boolean(data);
+      }
+    } catch (rpcErr) {
+      console.warn('⚠️ Duplicate check threw, continuing with insert:', rpcErr);
+    }
 
-    if (duplicateError) {
-      console.error('❌ Duplicate check error:', duplicateError);
-      // Continue with insertion - let database handle constraint violation
-    } else if (isDuplicate) {
+    if (isDuplicate) {
       console.log('🔵 5. Email is duplicate, returning success');
       return new Response(
         JSON.stringify({ ok: true, message: 'ALREADY_EXISTS' }),
@@ -89,16 +96,12 @@ serve(async (req) => {
     console.log('🔵 6. Inserting email into waitlist...');
 
     // Insert into waitlist table using service role
+    // Keep payload minimal to avoid schema/version mismatches
     const { error: insertError } = await supabase
       .from('waitlist')
       .insert({
         email: normalizedEmail,
-        full_name: 'Anonymous User',
-        user_id: null,
-        status: 'queued',
-        primary_interest: 'general',
-        how_did_you_hear: 'website',
-        requested_at: new Date().toISOString()
+        full_name: 'Anonymous User'
       })
 
     if (insertError) {
@@ -116,9 +119,9 @@ serve(async (req) => {
         )
       }
 
-      // Other database errors
+      // Other database errors (return limited diagnostic code)
       return new Response(
-        JSON.stringify({ error: 'INTERNAL_ERROR' }),
+        JSON.stringify({ error: 'INTERNAL_ERROR', code: insertError.code || 'DB_ERROR' }),
         { 
           status: 500, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
