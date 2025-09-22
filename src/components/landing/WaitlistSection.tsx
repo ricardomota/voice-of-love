@@ -126,7 +126,8 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
       return (count || 0) + 1;
     } catch (error) {
       console.error('Error getting waitlist position:', error);
-      return null;
+      // Don't fail the entire flow if position calculation fails
+      return 1; // Default to position 1
     }
   };
 
@@ -154,8 +155,6 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
     setIsSubmitting(true);
 
     try {
-      const position = await getWaitlistPosition();
-      
       const { error } = await supabase
         .from('waitlist')
         .insert({
@@ -205,16 +204,18 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
         if (!success) {
           throw new Error('Unable to join waitlist. Please try again later.');
         }
-      } else {
-        setWaitlistPosition(position);
-        setIsSubmitted(true);
-        toast({
-          title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
-          description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
-        });
-        if (onJoinWaitlist) {
-          onJoinWaitlist();
-        }
+      }
+
+      // Get position after successful insert (non-blocking)
+      const position = await getWaitlistPosition();
+      setWaitlistPosition(position);
+      setIsSubmitted(true);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
+        description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
+      });
+      if (onJoinWaitlist) {
+        onJoinWaitlist();
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
