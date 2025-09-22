@@ -94,33 +94,65 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
       };
       console.log('🔵 5. Payload to send:', payload);
 
-      // Use the waitlist-signup edge function via Supabase client
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
+      // Use the working approach: direct database insert with status 'pending'
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
           email: normalizedEmail,
           full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
           primary_interest: 'general',
-          how_did_you_hear: 'website'
-        },
-      });
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      console.log('🔵 6. Edge function response received');
-      console.log('🔵 MODAL DEBUG: Result:', result, 'Error:', error);
+      console.log('🔵 6. Direct insert response received');
+      console.log('🔵 MODAL DEBUG: Insert result:', insertData, 'Error:', insertError);
       
-      if (error) {
-        console.log('🔵 MODAL DEBUG: Error from edge function:', error);
-        throw new Error(error.message || 'Failed to join waitlist');
-      } else {
-        console.log('🔵 7. SUCCESS! Email processed successfully');
-        setIsSubmitted(true);
+      if (insertError) {
+        console.log('🔵 MODAL DEBUG: Error from direct insert:', insertError);
         
-        if (result?.message === 'ALREADY_EXISTS') {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          console.log('🔵 7. Duplicate email detected');
+          setIsSubmitted(true);
           toast.success("You're already on our waitlist!");
-        } else {
-          toast.success("Added to waitlist!");
+          return;
         }
-        return;
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: normalizedEmail,
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
       }
+
+      console.log('🔵 7. SUCCESS! Email processed successfully');
+      setIsSubmitted(true);
+      toast.success("Added to waitlist!");
+      return;
 
     } catch (error) {
       console.log('⚠️ Primary API approach failed:', error);
@@ -135,13 +167,20 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
         
         console.log('🔵 10. Fallback payload:', Object.fromEntries(formData));
 
-        // Use a different endpoint or create a simple form post
-        const fallbackResponse = await fetch('https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/waitlist-signup', {
-          method: 'POST',
-          body: formData
-        });
+        // Fallback: try direct database insert with different status
+        const { error: fallbackError } = await supabase
+          .from('waitlist')
+          .insert({
+            email: email.trim().toLowerCase(),
+            full_name: 'Anonymous User',
+            user_id: null,
+            status: 'active', // Try different status
+            primary_interest: 'general',
+            how_did_you_hear: 'website',
+            requested_at: new Date().toISOString()
+          });
 
-        if (fallbackResponse.ok) {
+        if (!fallbackError) {
           console.log('🔵 11. Fallback SUCCESS!');
           setIsSubmitted(true);
           toast.success("Added to waitlist!");

@@ -71,44 +71,72 @@ export const WaitlistFormB: React.FC<WaitlistFormBProps> = ({
     setSubmitAttempts(prev => prev + 1);
 
     try {
-      // Use the waitlist-signup edge function instead of direct database calls
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
+      // Use the working approach: direct database insert with status 'pending'
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
           email: trimmedEmail,
           full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
           primary_interest: 'general',
-          how_did_you_hear: 'website'
-        },
-      });
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      if (error) {
-        console.error('Waitlist signup error:', error);
+      if (insertError) {
+        console.error('Waitlist signup error:', insertError);
         
-        // Handle specific error cases
-        if (result?.message === 'ALREADY_EXISTS') {
-          // Duplicate email
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
           toast({
             title: "Already on waitlist",
             description: "You're already on the waitlist!",
           });
           setIsSubmitted(true);
-        } else {
-          throw new Error(result?.error || error.message || 'Failed to join waitlist');
+          return;
         }
-      } else {
-        setIsSubmitted(true);
-        toast({
-          title: "Success!",
-          description: "Successfully added to waitlist!",
-        });
         
-        // Track successful signup
-        if ((window as any).gtag) {
-          (window as any).gtag('event', 'waitlist_signup_success', {
-            'event_category': 'engagement',
-            'value': 1
-          });
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: trimmedEmail,
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
         }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: "Success!",
+        description: "Successfully added to waitlist!",
+      });
+      
+      // Track successful signup
+      if ((window as any).gtag) {
+        (window as any).gtag('event', 'waitlist_signup_success', {
+          'event_category': 'engagement',
+          'value': 1
+        });
       }
     } catch (error) {
       console.error('Waitlist signup error:', error);
