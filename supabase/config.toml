@@ -1,5 +1,8 @@
 project_id = "awodornqrhssfbkgjgfx"
 
+[functions.waitlist-signup]
+verify_jwt = false
+
 [functions.openai-chat]
 verify_jwt = true
 
