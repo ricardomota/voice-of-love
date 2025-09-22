@@ -7,7 +7,7 @@ import { ModernStats } from '@/components/landing/ModernStats';
 import { StoryCard } from '@/components/landing/StoryCard';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { SimplePricingSection } from '@/components/landing/SimplePricingSection';
-import { RobustWaitlistModal } from '@/components/landing/RobustWaitlistModal';
+import { SimpleWaitlistForm } from '@/components/landing/SimpleWaitlistForm';
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -62,7 +62,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       />
 
       {/* Waitlist Modal */}
-      <RobustWaitlistModal 
+      <SimpleWaitlistForm 
         isOpen={showWaitlistModal}
         onClose={() => setShowWaitlistModal(false)}
       />
