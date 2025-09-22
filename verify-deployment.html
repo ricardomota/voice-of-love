@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eterna Waitlist Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Eterna Waitlist Test</h1>
+    <p>This page tests the waitlist functionality on eterna.chat</p>
+    
+    <div>
+        <input type="email" id="email" placeholder="test@example.com" value="test-verification@example.com">
+        <button onclick="testWaitlist()">Test Waitlist</button>
+    </div>
+    
+    <div id="result"></div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://awodornqrhssfbkgjgfx.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3b2Rvcm5xcmhzc2Zia2dqZ2Z4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3OTk4MDAsImV4cCI6MjA2OTM3NTgwMH0.ryFB-d-Fu5xe3lRDUd8K98YjMJRoiYysKQ-sVxK6Vg8'
+        );
+
+        async function testWaitlist() {
+            const email = document.getElementById('email').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = '<p>Testing waitlist...</p>';
+            
+            try {
+                const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
+                    body: {
+                        email: email,
+                        full_name: 'Test User',
+                        primary_interest: 'general',
+                        how_did_you_hear: 'website'
+                    },
+                });
+
+                if (error) {
+                    resultDiv.innerHTML = `
+                        <p style="color: red;">❌ Error: ${error.message}</p>
+                        <p>This means the RLS migration hasn't been applied yet.</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <p style="color: green;">✅ Success! Waitlist is working!</p>
+                        <p>Response: ${JSON.stringify(result, null, 2)}</p>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">❌ Network Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
