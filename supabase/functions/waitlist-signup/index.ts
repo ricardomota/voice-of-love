@@ -48,7 +48,7 @@ serve(async (req) => {
     console.log('🔵 3. Normalized email:', normalizedEmail);
 
     // Basic email validation
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(normalizedEmail)) {
       console.log('❌ Email format invalid:', normalizedEmail);
       return new Response(
