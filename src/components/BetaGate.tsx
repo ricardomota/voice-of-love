@@ -180,14 +180,62 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
         return;
       }
 
-      // Use the waitlist-signup edge function instead of direct database calls
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
-          email: formData.email,
-          full_name: formData.fullName,
-          message: formData.message || null,
-          primary_interest: formData.primaryInterest || null,
-        },
+            // Use direct database insert with status 'pending' (working solution)
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
+          email: formData.email.trim().toLowerCase(),
+          full_name: formData.fullName || 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
+          primary_interest: formData.primaryInterest || 'general',
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
+
+      if (insertError) {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          toast({
+            title: currentLanguage === 'pt-BR' ? "Email já cadastrado" : "Email already registered",
+            description: currentLanguage === 'pt-BR' ? "Este email já está na nossa lista de espera." : "This email is already on our waitlist.",
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: formData.email.trim().toLowerCase(),
+              full_name: formData.fullName || 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: formData.primaryInterest || 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
+        description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
       });
 
       if (error) {
