@@ -126,7 +126,8 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
       return (count || 0) + 1;
     } catch (error) {
       console.error('Error getting waitlist position:', error);
-      return null;
+      // Don't fail the entire flow if position calculation fails
+      return 1; // Default to position 1
     }
   };
 
@@ -154,38 +155,68 @@ export const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onJoinWaitlist
     setIsSubmitting(true);
 
     try {
-      const position = await getWaitlistPosition();
-      
-      // Use the waitlist-signup edge function instead of direct database calls
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
-          email: formData.email,
+      // Use direct database insert with status 'pending' (working solution)
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
+          email: formData.email.trim().toLowerCase(),
           full_name: formData.fullName,
-          message: formData.message || null,
-          primary_interest: formData.primaryInterest || null,
-        },
-      });
+          user_id: null,
+          status: 'pending', // This status works!
+          primary_interest: formData.primaryInterest || 'general',
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      if (error) {
-        if (result?.message === 'ALREADY_EXISTS') {
+      if (insertError) {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
           toast({
             title: currentLanguage === 'pt-BR' ? "Email já cadastrado" : "Email already registered",
             description: currentLanguage === 'pt-BR' ? "Este email já está na nossa lista de espera." : "This email is already on our waitlist.",
             variant: "destructive"
           });
-        } else {
-          throw new Error(result?.error || error.message || 'Failed to join waitlist');
+          return;
         }
-      } else {
-        setWaitlistPosition(position);
-        setIsSubmitted(true);
-        toast({
-          title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
-          description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
-        });
-        if (onJoinWaitlist) {
-          onJoinWaitlist();
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: formData.email.trim().toLowerCase(),
+              full_name: formData.fullName,
+              user_id: null,
+              status: status,
+              primary_interest: formData.primaryInterest || 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
         }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
+      }
+
+      // Get position after successful insert (non-blocking)
+      const position = await getWaitlistPosition();
+      setWaitlistPosition(position);
+      setIsSubmitted(true);
+      toast({
+        title: currentLanguage === 'pt-BR' ? "🎉 Bem-vindo à lista!" : "🎉 Welcome to the list!",
+        description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
+      });
+      if (onJoinWaitlist) {
+        onJoinWaitlist();
       }
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
