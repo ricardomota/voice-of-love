@@ -48,13 +48,16 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('🔵 1. Form submitted with email:', email);
+    console.log('🔵 MODAL DEBUG: Form submission started');
     
     if (!email) {
+      console.log('🔵 MODAL DEBUG: Email is empty');
       toast.error('Email is required');
       return;
     }
 
     if (!validateEmail(email)) {
+      console.log('🔵 MODAL DEBUG: Email validation failed');
       toast.error('Please enter a valid email address');
       return;
     }
@@ -98,24 +101,29 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
         body: JSON.stringify(payload)
       });
 
-      console.log('🔵 6. API response received - status:', response.status);
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('🔵 7. API response data:', result);
+        console.log('🔵 6. API response received - status:', response.status);
+        console.log('🔵 MODAL DEBUG: Response object:', response);
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('🔵 7. API response data:', result);
 
-        if (result.ok) {
-          console.log('🔵 8. SUCCESS! Email processed successfully');
-          setIsSubmitted(true);
-          
-          if (result.message === 'ALREADY_EXISTS') {
-            toast.success("You're already on our waitlist!");
-          } else {
-            toast.success("Added to waitlist!");
+          if (result.ok) {
+            console.log('🔵 8. SUCCESS! Email processed successfully');
+            setIsSubmitted(true);
+            
+            if (result.message === 'ALREADY_EXISTS') {
+              toast.success("You're already on our waitlist!");
+            } else {
+              toast.success("Added to waitlist!");
+            }
+            return;
           }
-          return;
+        } else {
+          console.log('🔵 MODAL DEBUG: Response not OK, status:', response.status);
+          const errorText = await response.text();
+          console.log('🔵 MODAL DEBUG: Error response:', errorText);
         }
-      }
 
       // If API fails, throw error to trigger fallback
       throw new Error(`API failed with status: ${response.status}`);
