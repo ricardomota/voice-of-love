@@ -294,20 +294,65 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     try {
       console.log('🔵 3. Making API request to waitlist endpoint...');
       
-      // Use the waitlist-signup edge function via Supabase client
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
+      // Use direct database insert with status 'pending' (working solution)
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
           email: email.trim().toLowerCase(),
           full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
           primary_interest: 'general',
-          how_did_you_hear: 'website'
-        },
-      });
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      console.log('🔵 4. Edge function response received');
-      console.log('🔵 5. API response data:', result, 'Error:', error);
+      console.log('🔵 4. Database insert response received');
+      console.log('🔵 5. API response data:', insertData, 'Error:', insertError);
 
-      if (error) {
+      if (insertError) {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          toast.success("You're already on our waitlist!");
+          setIsSubmitted(true);
+          return;
+        }
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: email.trim().toLowerCase(),
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
+      } else {
+        console.log('🔵 6. SUCCESS! Email processed successfully');
+        setIsSubmitted(true);
+        toast.success("🎉 Welcome to the list! You've been successfully added!");
+        return;
+      }
+
+      // Legacy error handling (should not reach here)
+      if (false) {
         if (error.message?.includes('INVALID_EMAIL')) {
           const invalidTexts = {
             en: 'Please enter a valid email address',

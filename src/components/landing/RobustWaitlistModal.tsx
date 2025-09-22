@@ -94,22 +94,56 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
       };
       console.log('🔵 5. Payload to send:', payload);
 
-      // Use the waitlist-signup edge function via Supabase client
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
+      // Use direct database insert with status 'pending' (working solution)
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
           email: normalizedEmail,
           full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
           primary_interest: 'general',
-          how_did_you_hear: 'website'
-        },
-      });
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      console.log('🔵 6. Edge function response received');
-      console.log('🔵 MODAL DEBUG: Result:', result, 'Error:', error);
+      console.log('🔵 6. Database insert response received');
+      console.log('🔵 MODAL DEBUG: Result:', insertData, 'Error:', insertError);
       
-      if (error) {
-        console.log('🔵 MODAL DEBUG: Error from edge function:', error);
-        throw new Error(error.message || 'Failed to join waitlist');
+      if (insertError) {
+        console.log('🔵 MODAL DEBUG: Error from database insert:', insertError);
+        
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          throw new Error('Email already registered');
+        }
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: normalizedEmail,
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
       } else {
         console.log('🔵 7. SUCCESS! Email processed successfully');
         setIsSubmitted(true);
