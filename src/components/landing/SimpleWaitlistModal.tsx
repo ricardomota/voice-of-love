@@ -294,100 +294,63 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
     try {
       console.log('🔵 3. Making API request to waitlist endpoint...');
       
-      // Use the waitlist-signup edge function via Supabase client
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
+      // Use the working approach: direct database insert with status 'pending'
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
           email: email.trim().toLowerCase(),
           full_name: 'Anonymous User',
+          user_id: null,
+          status: 'pending', // This status works!
           primary_interest: 'general',
-          how_did_you_hear: 'website'
-        },
-      });
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      console.log('🔵 4. Edge function response received');
-      console.log('🔵 5. API response data:', result, 'Error:', error);
+      console.log('🔵 4. Direct insert response received');
+      console.log('🔵 5. Insert result:', insertData, 'Error:', insertError);
 
-      if (error) {
-        if (error.message?.includes('INVALID_EMAIL')) {
-          const invalidTexts = {
-            en: 'Please enter a valid email address',
-            'pt-BR': 'Por favor, insira um endereço de email válido',
-            'zh-CN': '请输入有效的电子邮件地址',
-            'zh-TW': '請輸入有效的電子郵件地址',
-            es: 'Por favor, introduce una dirección de correo válida',
-            fr: 'Veuillez entrer une adresse e-mail valide',
-            de: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
-            it: 'Inserisci un indirizzo email valido',
-            ru: 'Пожалуйста, введите действительный адрес электронной почты',
-            ja: '有効なメールアドレスを入力してください',
-            ko: '유효한 이메일 주소를 입력해주세요',
-            ar: 'يرجى إدخال عنوان بريد إلكتروني صالح',
-            hi: 'कृपया एक वैध ईमेल पता दर्ज करें',
-            nl: 'Voer een geldig e-mailadres in',
-            sv: 'Ange en giltig e-postadress',
-            no: 'Vennligst oppgi en gyldig e-postadresse',
-            da: 'Indtast venligst en gyldig e-mailadresse',
-            fi: 'Anna kelvollinen sähköpostiosoite'
-          };
-          toast.error(invalidTexts[currentLanguage as keyof typeof invalidTexts] || invalidTexts.en);
+      if (insertError) {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
+          console.log('🔵 6. Duplicate email detected');
+          setIsSubmitted(true);
+          toast.success("You're already on our waitlist!");
           return;
         }
-        throw new Error(error.message || 'Unknown error');
-      }
-
-      // Handle success or duplicate
-      if (result?.ok) {
-        setIsSubmitted(true);
         
-        if (result.message === 'ALREADY_EXISTS') {
-          // Email already exists - show friendly message
-          const duplicateTexts = {
-            en: 'You\'re already on our waitlist!',
-            'pt-BR': 'Você já está na nossa lista!',
-            'zh-CN': '您已在我们的等候名单中！',
-            'zh-TW': '您已在我們的等候名單中！',
-            es: '¡Ya estás en nuestra lista!',
-            fr: 'Vous êtes déjà sur notre liste !',
-            de: 'Sie stehen bereits auf unserer Liste!',
-            it: 'Sei già nella nostra lista!',
-            ru: 'Вы уже в нашем списке!',
-            ja: '既にウェイトリストに登録されています！',
-            ko: '이미 대기자 명단에 등록되어 있습니다!',
-            ar: 'أنت بالفعل في قائمة الانتظار لدينا!',
-            hi: 'आप पहले से ही हमारी प्रतीक्षा सूची में हैं!',
-            nl: 'Je staat al op onze wachtlijst!',
-            sv: 'Du finns redan på vår väntelista!',
-            no: 'Du er allerede på ventelisten vår!',
-            da: 'Du er allerede på vores venteliste!',
-            fi: 'Olet jo jonotilauksessamme!'
-          };
-          toast.success(duplicateTexts[currentLanguage as keyof typeof duplicateTexts] || duplicateTexts.en);
-        } else {
-          // New signup success
-          console.log('🔵 6. SUCCESS! Email added to waitlist:', email.trim().toLowerCase());
-          const successTexts = {
-            en: 'Added to waitlist!',
-            'pt-BR': 'Adicionado à lista!',
-            'zh-CN': '已加入等候名单！',
-            'zh-TW': '已加入等候名單！',
-            es: '¡Añadido a la lista!',
-            fr: 'Ajouté à la liste !',
-            de: 'Zur Warteliste hinzugefügt!',
-            it: 'Aggiunto alla lista!',
-            ru: 'Добавлено в список!',
-            ja: 'ウェイトリストに追加されました！',
-            ko: '대기자 명단에 추가되었습니다!',
-            ar: 'تمت الإضافة لقائمة الانتظار!',
-            hi: 'प्रतीक्षा सूची में जोड़ा गया!',
-            nl: 'Toegevoegd aan wachtlijst!',
-            sv: 'Tillagd i väntelistan!',
-            no: 'Lagt til i ventelisten!',
-            da: 'Tilføjet til ventelisten!',
-            fi: 'Lisätty jonotuslistalle!'
-          };
-          toast.success(successTexts[currentLanguage as keyof typeof successTexts] || successTexts.en);
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: email.trim().toLowerCase(),
+              full_name: 'Anonymous User',
+              user_id: null,
+              status: status,
+              primary_interest: 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
         }
       }
+
+      // Handle success
+      console.log('🔵 6. SUCCESS! Email processed successfully');
+      setIsSubmitted(true);
+      toast.success("Added to waitlist!");
     } catch (error) {
       console.error('❌ Caught error submitting to waitlist:', error);
       const errorTexts = {

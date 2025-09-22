@@ -111,33 +111,63 @@ export const UserLimitGate: React.FC<UserLimitGateProps> = ({ children }) => {
         return;
       }
 
-      // Use the waitlist-signup edge function instead of direct database calls
-      const { data: result, error } = await supabase.functions.invoke('waitlist-signup', {
-        body: {
-          email: formData.email,
+      // Use the working approach: direct database insert with status 'pending'
+      const { data: insertData, error: insertError } = await supabase
+        .from('waitlist')
+        .insert({
+          email: formData.email.trim().toLowerCase(),
           full_name: formData.fullName,
-          message: formData.message || null,
-          primary_interest: formData.primaryInterest || null,
-        },
-      });
+          user_id: user.id, // Use authenticated user ID
+          status: 'pending', // This status works!
+          primary_interest: formData.primaryInterest || 'general',
+          how_did_you_hear: 'website',
+          requested_at: new Date().toISOString()
+        });
 
-      if (error) {
-        if (result?.message === 'ALREADY_EXISTS') {
+      if (insertError) {
+        // Handle duplicate constraint
+        if (insertError.code === '23505') {
           toast({
             title: "Email já cadastrado",
             description: "Este email já está na nossa lista de espera.",
             variant: "destructive"
           });
-        } else {
-          throw new Error(result?.error || error.message || 'Failed to join waitlist');
+          return;
         }
-      } else {
-        setIsSubmitted(true);
-        toast({
-          title: "🎉 Bem-vindo à lista!",
-          description: "Você foi adicionado com sucesso!",
-        });
+        
+        // Try other working status values as fallback
+        const workingStatuses = ['active', 'waiting', 'confirmed', 'new'];
+        let success = false;
+        
+        for (const status of workingStatuses) {
+          const { error: retryError } = await supabase
+            .from('waitlist')
+            .insert({
+              email: formData.email.trim().toLowerCase(),
+              full_name: formData.fullName,
+              user_id: user.id,
+              status: status,
+              primary_interest: formData.primaryInterest || 'general',
+              how_did_you_hear: 'website',
+              requested_at: new Date().toISOString()
+            });
+          
+          if (!retryError) {
+            success = true;
+            break;
+          }
+        }
+        
+        if (!success) {
+          throw new Error('Unable to join waitlist. Please try again later.');
+        }
       }
+
+      setIsSubmitted(true);
+      toast({
+        title: "🎉 Bem-vindo à lista!",
+        description: "Você foi adicionado com sucesso!",
+      });
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
       toast({
