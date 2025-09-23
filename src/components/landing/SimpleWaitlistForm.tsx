@@ -107,7 +107,7 @@ export const SimpleWaitlistForm: React.FC<SimpleWaitlistFormProps> = ({ isOpen, 
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <CardTitle>
-              {isSubmitted ? "You're on the list! ✨" : "Join the waitlist"}
+              {isSubmitted ? "🎉 You're on the list!" : "✨ Join the waitlist"}
             </CardTitle>
           </div>
         </CardHeader>

@@ -23,12 +23,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   
   const content = {
     en: {
-      badge: "Preserve memories with AI",
-      headline: "Keep their voice and wisdom alive forever",
-      subhead: "Help families affected by Alzheimer's preserve precious memories and stay connected through AI-powered conversations.",
-      tryFree: "Join Waitlist",
-      seePricing: "See Pricing",
-      trustBadge: "Built for families"
+      badge: "💫 Preserve memories with AI",
+      headline: "Keep their voice and wisdom alive forever 💝",
+      subhead: "Help families affected by Alzheimer's preserve precious memories and stay connected through AI-powered conversations. 🤗",
+      tryFree: "🚀 Join Waitlist",
+      seePricing: "💰 See Pricing",
+      trustBadge: "🏠 Built for families"
     },
     'pt-BR': {
       badge: "Preserve memórias com IA",
