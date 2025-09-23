@@ -29,7 +29,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-blue-950/20">
       {/* Header */}
       <ModernHeader />
 
@@ -41,25 +41,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       />
 
       {/* Features Section */}
-      <FeaturesSection />
+      <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+        <FeaturesSection />
+      </div>
 
       {/* How It Works Section */}
-      <InteractiveHowItWorks />
+      <div className="bg-gradient-to-r from-purple-100/80 to-blue-100/80 dark:from-purple-900/20 dark:to-blue-900/20">
+        <InteractiveHowItWorks />
+      </div>
 
       {/* Pricing Section */}
-      <SimplePricingSection onJoinWaitlist={openWaitlistModal} />
+      <div className="bg-white/70 dark:bg-gray-800/30 backdrop-blur-sm">
+        <SimplePricingSection onJoinWaitlist={openWaitlistModal} />
+      </div>
 
       {/* Stats */}
-      <ModernStats />
+      <div className="bg-gradient-to-r from-pink-100/80 to-purple-100/80 dark:from-pink-900/20 dark:to-purple-900/20">
+        <ModernStats />
+      </div>
 
       {/* Story Card */}
-      <StoryCard />
+      <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+        <StoryCard />
+      </div>
 
       {/* Footer */}
-      <LandingFooter 
-        onTryFree={openWaitlistModal}
-        onSignIn={openWaitlistModal}
-      />
+      <div className="bg-gradient-to-r from-blue-100/80 to-purple-100/80 dark:from-blue-900/20 dark:to-purple-900/20">
+        <LandingFooter 
+          onTryFree={openWaitlistModal}
+          onSignIn={openWaitlistModal}
+        />
+      </div>
 
       {/* Waitlist Modal */}
       <SimpleWaitlistForm 

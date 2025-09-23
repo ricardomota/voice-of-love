@@ -101,7 +101,8 @@ serve(async (req) => {
       .from('waitlist')
       .insert({
         email: normalizedEmail,
-        full_name: 'Anonymous User'
+        full_name: 'Anonymous User',
+        status: 'pending'
       })
 
     if (insertError) {

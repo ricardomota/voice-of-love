@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SimpleWaitlistFormProps {
   isOpen: boolean;
@@ -79,7 +80,8 @@ export const SimpleWaitlistForm: React.FC<SimpleWaitlistFormProps> = ({ isOpen, 
         if (!success) {
           throw new Error('Unable to join waitlist. Please try again later.');
         }
-        toast.error('Failed to join waitlist. Please try again.');
+        setIsSubmitted(true);
+        toast.success('Successfully added to waitlist!');
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -105,7 +107,7 @@ export const SimpleWaitlistForm: React.FC<SimpleWaitlistFormProps> = ({ isOpen, 
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <CardTitle>
-              {isSubmitted ? "You're on the list!" : "Join the waitlist"}
+              {isSubmitted ? "🎉 You're on the list!" : "✨ Join the waitlist"}
             </CardTitle>
           </div>
         </CardHeader>
