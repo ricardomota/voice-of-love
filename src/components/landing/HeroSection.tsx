@@ -23,12 +23,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   
   const content = {
     en: {
-      badge: "💫 Preserve memories with AI",
-      headline: "Keep their voice and wisdom alive forever 💝",
-      subhead: "Help families affected by Alzheimer's preserve precious memories and stay connected through AI-powered conversations. 🤗",
-      tryFree: "🚀 Join Waitlist",
-      seePricing: "💰 See Pricing",
-      trustBadge: "🏠 Built for families"
+      badge: "Preserve memories with AI",
+      headline: "Keep their voice and wisdom alive forever",
+      subhead: "Help families affected by Alzheimer's preserve precious memories and stay connected through AI-powered conversations.",
+      tryFree: "Join Waitlist",
+      seePricing: "See Pricing",
+      trustBadge: "✨ Built for families"
     },
     'pt-BR': {
       badge: "Preserve memórias com IA",
@@ -194,15 +194,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-gray-950 overflow-hidden">
-      {/* Subtle animated rainbow blur background */}
-      <div className="absolute inset-0 opacity-30 dark:opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-pink-300/20 via-purple-300/20 to-blue-300/20 rounded-full blur-3xl animate-pulse" 
-             style={{ animationDuration: '4s' }} />
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-300/20 via-cyan-300/20 to-emerald-300/20 rounded-full blur-3xl animate-pulse" 
-             style={{ animationDuration: '6s', animationDelay: '1s' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-yellow-300/20 via-orange-300/20 to-red-300/20 rounded-full blur-3xl animate-pulse" 
-             style={{ animationDuration: '5s', animationDelay: '2s' }} />
+    <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
+      {/* Subtle animated background elements */}
+      <div className="absolute inset-0 opacity-20 dark:opacity-10">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/10 via-accent/10 to-muted/20 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '8s' }} />
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-accent/10 via-muted/15 to-primary/10 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '12s', animationDelay: '2s' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-muted/15 via-accent/10 to-primary/10 rounded-full blur-3xl animate-pulse" 
+             style={{ animationDuration: '10s', animationDelay: '4s' }} />
       </div>
       
       {/* Main content */}
@@ -215,15 +215,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 text-sm font-medium">
-            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm font-medium border border-border/50">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
             {text.badge}
           </div>
         </motion.div>
 
         {/* Hero headline */}
         <motion.h1 
-          className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight"
+          className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground mb-6 leading-tight tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
@@ -233,7 +233,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Subtitle */}
         <motion.p 
-          className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mb-12 font-light"
+          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12 font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -253,7 +253,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Button 
                 onClick={onTryFree}
                 size="lg"
-                className="px-8 py-3 text-base font-medium bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-100 rounded-lg transition-all duration-200"
+                className="px-8 py-3 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
               >
                 {text.tryFree}
               </Button>
@@ -262,7 +262,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={onSeePricing}
                 variant="ghost"
                 size="lg"
-                className="px-6 py-3 text-base font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                className="px-6 py-3 text-base font-medium text-muted-foreground hover:text-foreground transition-all duration-300"
               >
                 {text.seePricing}
               </Button>
@@ -275,7 +275,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+          className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
         >
           <Security className="w-4 h-4" />
           <span>{text.trustBadge}</span>

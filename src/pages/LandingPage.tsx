@@ -29,44 +29,46 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-blue-950/20">
+    <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
       {/* Header */}
       <ModernHeader />
 
       {/* Hero Section */}
-      <HeroSection 
-        onTryFree={openWaitlistModal}
-        onSeePricing={scrollToPricing}
-        onLogin={onLogin}
-      />
+      <div className="transition-all duration-700 ease-in-out">
+        <HeroSection 
+          onTryFree={openWaitlistModal}
+          onSeePricing={scrollToPricing}
+          onLogin={onLogin}
+        />
+      </div>
 
       {/* Features Section */}
-      <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+      <div className="bg-gradient-to-b from-background/50 to-muted/50 backdrop-blur-sm transition-all duration-700 ease-in-out">
         <FeaturesSection />
       </div>
 
       {/* How It Works Section */}
-      <div className="bg-gradient-to-r from-purple-100/80 to-blue-100/80 dark:from-purple-900/20 dark:to-blue-900/20">
+      <div className="bg-gradient-to-r from-muted/40 via-accent/30 to-muted/40 dark:from-muted/20 dark:via-accent/10 dark:to-muted/20 transition-all duration-700 ease-in-out">
         <InteractiveHowItWorks />
       </div>
 
       {/* Pricing Section */}
-      <div className="bg-white/70 dark:bg-gray-800/30 backdrop-blur-sm">
+      <div className="bg-gradient-to-b from-background/70 to-muted/30 backdrop-blur-sm transition-all duration-700 ease-in-out">
         <SimplePricingSection onJoinWaitlist={openWaitlistModal} />
       </div>
 
       {/* Stats */}
-      <div className="bg-gradient-to-r from-pink-100/80 to-purple-100/80 dark:from-pink-900/20 dark:to-purple-900/20">
+      <div className="bg-gradient-to-r from-accent/30 via-muted/40 to-accent/30 dark:from-accent/10 dark:via-muted/20 dark:to-accent/10 transition-all duration-700 ease-in-out">
         <ModernStats />
       </div>
 
       {/* Story Card */}
-      <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+      <div className="bg-gradient-to-b from-muted/40 to-background/60 backdrop-blur-sm transition-all duration-700 ease-in-out">
         <StoryCard />
       </div>
 
       {/* Footer */}
-      <div className="bg-gradient-to-r from-blue-100/80 to-purple-100/80 dark:from-blue-900/20 dark:to-purple-900/20">
+      <div className="bg-gradient-to-t from-muted/50 to-background/40 transition-all duration-700 ease-in-out">
         <LandingFooter 
           onTryFree={openWaitlistModal}
           onSignIn={openWaitlistModal}

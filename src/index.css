@@ -29,26 +29,26 @@ body {
 /* Base CSS Variables - Eterna Riley Adapted */
 @layer base {
   :root {
-    /* Modern Professional Color System - OpenAI inspired */
+    /* Elegant Minimal Color System */
     --background: 0 0% 100%; /* Pure white background */
-    --foreground: 215 25% 27%; /* Rich dark blue-gray text */
+    --foreground: 224 71% 4%; /* Deep elegant dark */
     --card: 0 0% 100%; /* Pure white cards */
-    --card-foreground: 215 25% 27%; /* Rich dark blue-gray text */
+    --card-foreground: 224 71% 4%; /* Deep elegant dark */
     --popover: 0 0% 100%; /* Pure white popover */
-    --popover-foreground: 215 25% 27%; /* Rich dark blue-gray text */
-    --primary: 217 91% 60%; /* Modern blue primary */
-    --primary-foreground: 0 0% 98%; /* Nearly white text on primary */
-    --secondary: 215 20% 96%; /* Light gray secondary */
-    --secondary-foreground: 215 25% 20%; /* Dark text */
-    --muted: 215 20% 96%; /* Light gray muted */
-    --muted-foreground: 215 16% 47%; /* Medium gray text */
-    --accent: 217 91% 60%; /* Modern blue accent */
-    --accent-foreground: 0 0% 98%; /* Nearly white text on accent */
+    --popover-foreground: 224 71% 4%; /* Deep elegant dark */
+    --primary: 262 83% 58%; /* Elegant purple primary */
+    --primary-foreground: 210 20% 98%; /* Clean white text */
+    --secondary: 220 14% 96%; /* Subtle gray secondary */
+    --secondary-foreground: 220 9% 46%; /* Medium gray text */
+    --muted: 220 14% 96%; /* Subtle gray muted */
+    --muted-foreground: 220 9% 46%; /* Medium gray text */
+    --accent: 220 14% 96%; /* Subtle gray accent */
+    --accent-foreground: 220 9% 46%; /* Medium gray text */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 20% 92%; /* Light border */
-    --input: 215 20% 96%; /* Light input background */
-    --ring: 217 91% 60%; /* Modern blue ring */
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%; /* Very subtle border */
+    --input: 220 13% 91%; /* Very subtle input background */
+    --ring: 262 83% 58%; /* Elegant purple ring */
     --radius: 0.75rem;
     
     /* Chart colors - modern theme */
@@ -72,13 +72,14 @@ body {
     --gradient-secondary: linear-gradient(135deg, hsl(200 35% 65%) 0%, hsl(210 25% 75%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(51 20% 97%) 0%, hsl(51 15% 93%) 100%);
     
-    /* Refined Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(315 30% 25% / 0.06);
-    --shadow-md: 0 4px 6px -1px hsl(315 30% 25% / 0.08);
-    --shadow-lg: 0 10px 15px -3px hsl(315 30% 25% / 0.08);
-    --shadow-xl: 0 20px 25px -5px hsl(315 30% 25% / 0.08);
-    --shadow-card: 0 1px 3px 0 hsl(315 30% 25% / 0.08);
-    --shadow-hover: 0 4px 15px -3px hsl(315 30% 25% / 0.10);
+    /* Elegant Shadows */
+    --shadow-xs: 0 1px 2px 0 hsl(224 71% 4% / 0.03);
+    --shadow-sm: 0 1px 3px 0 hsl(224 71% 4% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(224 71% 4% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(224 71% 4% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(224 71% 4% / 0.04);
+    --shadow-card: 0 1px 3px 0 hsl(224 71% 4% / 0.05);
+    --shadow-hover: 0 4px 15px -3px hsl(224 71% 4% / 0.08);
 
     /* Professional Sidebar Colors */
     --sidebar-background: 51 15% 95%; /* F2F1ED - light cream */
@@ -131,26 +132,26 @@ body {
   }
 
   .dark {
-    /* Dark Mode - Modern Professional Colors */
-    --background: 215 28% 7%; /* Very dark blue-gray */
-    --foreground: 215 20% 95%; /* Nearly white text */
-    --card: 215 28% 10%; /* Dark card background */
-    --card-foreground: 215 20% 95%; /* Nearly white text */
-    --popover: 215 28% 10%; /* Dark popover */
-    --popover-foreground: 215 20% 95%; /* Nearly white text */
-    --primary: 217 91% 60%; /* Same modern blue */
-    --primary-foreground: 215 28% 7%; /* Dark text on primary */
-    --secondary: 215 28% 15%; /* Dark secondary */
-    --secondary-foreground: 215 20% 95%; /* Light text */
-    --muted: 215 28% 15%; /* Dark muted */
-    --muted-foreground: 215 20% 65%; /* Medium light text */
-    --accent: 217 91% 60%; /* Same modern blue accent */
-    --accent-foreground: 215 28% 7%; /* Dark text on accent */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 28% 18%; /* Dark border */
-    --input: 215 28% 15%; /* Dark input */
-    --ring: 217 91% 60%; /* Same modern blue ring */
+    /* Elegant Dark Mode */
+    --background: 224 71% 4%; /* Deep elegant dark */
+    --foreground: 210 20% 98%; /* Clean white text */
+    --card: 224 71% 4%; /* Deep elegant dark cards */
+    --card-foreground: 210 20% 98%; /* Clean white text */
+    --popover: 224 71% 4%; /* Deep elegant dark popover */
+    --popover-foreground: 210 20% 98%; /* Clean white text */
+    --primary: 263 70% 50%; /* Elegant purple primary */
+    --primary-foreground: 210 20% 98%; /* Clean white text */
+    --secondary: 215 28% 17%; /* Dark subtle secondary */
+    --secondary-foreground: 210 20% 98%; /* Clean white text */
+    --muted: 215 28% 17%; /* Dark subtle muted */
+    --muted-foreground: 217 11% 65%; /* Medium light text */
+    --accent: 215 28% 17%; /* Dark subtle accent */
+    --accent-foreground: 210 20% 98%; /* Clean white text */
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 28% 17%; /* Dark subtle border */
+    --input: 215 28% 17%; /* Dark subtle input */
+    --ring: 263 70% 50%; /* Elegant purple ring */
 
     /* Dark Modern Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(215 28% 10%) 0%, hsl(215 28% 7%) 100%);
@@ -682,5 +683,22 @@ body {
 
   main > section:nth-of-type(even) {
     background: hsl(var(--muted));
+  }
+
+  /* Smooth Transition Utilities */
+  .transition-elegant {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-smooth {
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .hover-lift {
+    @apply transition-elegant hover:translate-y-[-2px] hover:shadow-lg;
+  }
+
+  .section-transition {
+    @apply transition-smooth;
   }
 }
