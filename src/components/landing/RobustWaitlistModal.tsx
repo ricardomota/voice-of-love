@@ -147,12 +147,7 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
       } else {
         console.log('🔵 7. SUCCESS! Email processed successfully');
         setIsSubmitted(true);
-        
-        if (result?.message === 'ALREADY_EXISTS') {
-          toast.success("You're already on our waitlist!");
-        } else {
-          toast.success("Added to waitlist!");
-        }
+        toast.success("Added to waitlist!");
         return;
       }
 
@@ -170,6 +165,7 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
         console.log('🔵 10. Fallback payload:', Object.fromEntries(formData));
 
         // Use direct database insert as fallback
+        const normalizedEmail = email.trim().toLowerCase();
         const { error: fallbackError } = await supabase
           .from('waitlist')
           .insert({
@@ -181,7 +177,6 @@ export const RobustWaitlistModal: React.FC<RobustWaitlistModalProps> = ({ isOpen
             how_did_you_hear: 'website',
             requested_at: new Date().toISOString()
           });
-
         if (!fallbackError) {
           console.log('🔵 11. Fallback SUCCESS!');
           setIsSubmitted(true);

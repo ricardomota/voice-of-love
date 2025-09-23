@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/hooks/useLanguage';
 import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,6 +19,8 @@ interface BetaGateProps {
 
 export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
   const { user } = useAuth();
+  const { currentLanguage } = useLanguage();
+  const { toast } = useToast();
   const [hasAccess, setHasAccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userCount, setUserCount] = useState(0);
@@ -31,7 +34,6 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
   const [waitlistPosition, setWaitlistPosition] = useState<number | null>(null);
-  const { toast } = useToast();
 
   const MAX_BETA_USERS = 10;
 
@@ -238,29 +240,11 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
         description: currentLanguage === 'pt-BR' ? "Você foi adicionado com sucesso!" : "You've been successfully added!",
       });
 
-      if (error) {
-        if (result?.message === 'ALREADY_EXISTS') {
-          toast({
-            title: "Email já cadastrado",
-            description: "Este email já está na nossa lista de espera.",
-            variant: "destructive"
-          });
-        } else {
-          throw new Error(result?.error || error.message || 'Failed to join waitlist');
-        }
-      } else {
-        setWaitlistPosition(position);
-        setIsSubmitted(true);
-        toast({
-          title: "🎉 Bem-vindo à lista!",
-          description: "Você foi adicionado com sucesso!",
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting to waitlist:', error);
+    } catch (error: any) {
+      console.error('Failed to join waitlist:', error);
       toast({
-        title: "Erro",
-        description: "Ocorreu um erro ao cadastrar. Tente novamente.",
+        title: currentLanguage === 'pt-BR' ? "Erro ao entrar na lista" : "Failed to join waitlist",
+        description: currentLanguage === 'pt-BR' ? "Tente novamente em alguns instantes." : "Please try again in a few moments.",
         variant: "destructive"
       });
     } finally {

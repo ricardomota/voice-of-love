@@ -159,7 +159,6 @@ export const WaitlistTester: React.FC = () => {
         <WaitlistFormB 
           isOpen={true} 
           onClose={() => setActiveForm(null)} 
-          currentLanguage={currentLanguage}
         />
       )}
       {activeForm === 'C' && (
