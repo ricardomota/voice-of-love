@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { Heart, Users, Clock, CheckCircle, ArrowRight, Sparkles, Share2, Zap } from 'lucide-react';
+import { validateEmail, validateInput, sanitizeInput, INPUT_LIMITS } from '@/utils/securityUtils';
 
 interface BetaGateProps {
   children: React.ReactNode;
@@ -68,16 +69,29 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
     checkAccess();
   }, []);
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const validateEmailField = (email: string) => {
+    const { isValid } = validateEmail(email);
+    return isValid;
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value;
-    setFormData(prev => ({ ...prev, email }));
-    if (email) {
-      setEmailValid(validateEmail(email));
+    const rawEmail = e.target.value;
+    const sanitizedEmail = sanitizeInput(rawEmail, 'email');
+    
+    // Validate input length
+    const lengthCheck = validateInput(sanitizedEmail, INPUT_LIMITS.EMAIL);
+    if (!lengthCheck.isValid) {
+      toast({
+        title: "Input inválido",
+        description: lengthCheck.error,
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setFormData(prev => ({ ...prev, email: sanitizedEmail }));
+    if (sanitizedEmail) {
+      setEmailValid(validateEmailField(sanitizedEmail));
     } else {
       setEmailValid(true);
     }
@@ -99,7 +113,12 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
   const handleEarlyAccessSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName || !formData.email) {
+    // Sanitize and validate all inputs
+    const sanitizedName = sanitizeInput(formData.fullName, 'text');
+    const sanitizedEmail = sanitizeInput(formData.email, 'email');
+    
+    // Validate required fields
+    if (!sanitizedName || !sanitizedEmail) {
       toast({
         title: "Campos obrigatórios",
         description: "Por favor, preencha nome e email.",
@@ -107,11 +126,24 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
       });
       return;
     }
+    
+    // Validate name length
+    const nameValidation = validateInput(sanitizedName, INPUT_LIMITS.NAME);
+    if (!nameValidation.isValid) {
+      toast({
+        title: "Nome inválido",
+        description: nameValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
 
-    if (!emailValid) {
+    // Validate email
+    const emailValidation = validateEmail(sanitizedEmail);
+    if (!emailValidation.isValid) {
       toast({
         title: "Email inválido",
-        description: "Por favor, insira um email válido.",
+        description: emailValidation.error || "Por favor, insira um email válido.",
         variant: "destructive"
       });
       return;
@@ -120,14 +152,10 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
     setIsSubmitting(true);
 
     try {
-      // Grant immediate access for early users
-      localStorage.setItem('beta_early_access', 'true');
-      localStorage.setItem('beta_user_info', JSON.stringify({
-        name: formData.fullName,
-        email: formData.email,
-        joinedAt: new Date().toISOString()
-      }));
-
+      // Instead of localStorage, just grant access for early users
+      // Store minimal session data only (no sensitive info in browser storage)
+      sessionStorage.setItem('beta_early_access_granted', 'true');
+      
       setHasAccess(true);
       toast({
         title: "🎉 Acesso liberado!",
@@ -149,7 +177,14 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName || !formData.email) {
+    // Sanitize and validate all inputs
+    const sanitizedName = sanitizeInput(formData.fullName, 'text');
+    const sanitizedEmail = sanitizeInput(formData.email, 'email');
+    const sanitizedMessage = sanitizeInput(formData.message, 'text');
+    const sanitizedInterest = sanitizeInput(formData.primaryInterest, 'text');
+    
+    // Validate required fields
+    if (!sanitizedName || !sanitizedEmail) {
       toast({
         title: "Campos obrigatórios",
         description: "Por favor, preencha nome e email.",
@@ -158,10 +193,15 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
       return;
     }
 
-    if (!emailValid) {
+    // Validate field lengths and content
+    const nameValidation = validateInput(sanitizedName, INPUT_LIMITS.NAME);
+    const emailValidation = validateEmail(sanitizedEmail);
+    const messageValidation = sanitizedMessage ? validateInput(sanitizedMessage, INPUT_LIMITS.MESSAGE) : { isValid: true };
+    
+    if (!nameValidation.isValid || !emailValidation.isValid || !messageValidation.isValid) {
       toast({
-        title: "Email inválido",
-        description: "Por favor, insira um email válido.",
+        title: "Dados inválidos",
+        description: nameValidation.error || emailValidation.error || messageValidation.error || "Por favor, verifique os dados inseridos.",
         variant: "destructive"
       });
       return;
@@ -182,15 +222,15 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
         return;
       }
 
-            // Use direct database insert with status 'pending' (working solution)
+            // Use direct database insert with validated data
       const { data: insertData, error: insertError } = await supabase
         .from('waitlist')
         .insert({
-          email: formData.email.trim().toLowerCase(),
-          full_name: formData.fullName || 'Anonymous User',
+          email: sanitizedEmail.toLowerCase(),
+          full_name: sanitizedName,
           user_id: null,
-          status: 'pending', // This status works!
-          primary_interest: formData.primaryInterest || 'general',
+          status: 'pending',
+          primary_interest: sanitizedInterest || 'general',
           how_did_you_hear: 'website',
           requested_at: new Date().toISOString()
         });
@@ -214,11 +254,11 @@ export const BetaGate: React.FC<BetaGateProps> = ({ children }) => {
           const { error: retryError } = await supabase
             .from('waitlist')
             .insert({
-              email: formData.email.trim().toLowerCase(),
-              full_name: formData.fullName || 'Anonymous User',
+              email: sanitizedEmail.toLowerCase(),
+              full_name: sanitizedName,
               user_id: null,
               status: status,
-              primary_interest: formData.primaryInterest || 'general',
+              primary_interest: sanitizedInterest || 'general',
               how_did_you_hear: 'website',
               requested_at: new Date().toISOString()
             });

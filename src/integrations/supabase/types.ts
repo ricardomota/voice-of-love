@@ -1738,6 +1738,10 @@ export type Database = {
         Args: { p_access_code?: string; p_email: string }
         Returns: Json
       }
+      check_beta_access_secure: {
+        Args: { email_to_check: string }
+        Returns: boolean
+      }
       check_event_rate_limit: {
         Args: { p_user_id: string }
         Returns: boolean

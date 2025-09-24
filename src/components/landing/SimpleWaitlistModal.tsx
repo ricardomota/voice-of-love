@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { validateEmail, sanitizeInput, INPUT_LIMITS } from '@/utils/securityUtils';
 
 interface SimpleWaitlistModalProps {
   isOpen: boolean;
@@ -19,8 +20,18 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (!email || !email.includes('@')) {
-      toast.error('Please enter a valid email address');
+    // Sanitize and validate email
+    const sanitizedEmail = sanitizeInput(email, 'email');
+    const emailValidation = validateEmail(sanitizedEmail);
+    
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.error || 'Please enter a valid email address');
+      return;
+    }
+
+    // Check email length
+    if (sanitizedEmail.length > INPUT_LIMITS.EMAIL) {
+      toast.error('Email address is too long');
       return;
     }
 
@@ -30,7 +41,7 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
       const { error } = await supabase
         .from('waitlist')
         .insert({
-          email: email.trim().toLowerCase(),
+          email: sanitizedEmail.toLowerCase(),
           full_name: 'Anonymous User',
           user_id: null,
           status: 'pending',
@@ -91,10 +102,14 @@ export const SimpleWaitlistModal: React.FC<SimpleWaitlistModalProps> = ({ isOpen
                 <Input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    const sanitized = sanitizeInput(e.target.value, 'email');
+                    setEmail(sanitized);
+                  }}
                   placeholder="your@email.com"
                   required
                   disabled={isSubmitting}
+                  maxLength={INPUT_LIMITS.EMAIL}
                 />
               </div>
               <Button 

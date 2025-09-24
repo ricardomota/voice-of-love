@@ -63,22 +63,27 @@ export const WaitlistFormA: React.FC<WaitlistFormAProps> = ({
     setEmailError('');
 
     try {
-      const response = await fetch('/api/waitlist', {
+      // Use Supabase edge function
+      const response = await fetch(`https://awodornqrhssfbkgjgfx.supabase.co/functions/v1/waitlist-signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
         },
         body: JSON.stringify({ 
-          email: email.trim().toLowerCase(),
-          language: currentLanguage 
+          email: email.trim().toLowerCase()
         })
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 409) {
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast({
+          title: "Success!",
+          description: "Successfully added to waitlist!",
+        });
+      } else {
+        const data = await response.json();
+        if (response.status === 409 || (data.error && data.error.includes('duplicate'))) {
           toast({
             title: "Already on waitlist",
             description: "You're already on the waitlist!",
@@ -89,12 +94,6 @@ export const WaitlistFormA: React.FC<WaitlistFormAProps> = ({
         } else {
           throw new Error(data.message || 'Network error occurred');
         }
-      } else {
-        setIsSubmitted(true);
-        toast({
-          title: "Success!",
-          description: "Successfully added to waitlist!",
-        });
       }
     } catch (error) {
       console.error('Waitlist signup error:', error);
