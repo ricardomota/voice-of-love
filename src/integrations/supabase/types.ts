@@ -1874,6 +1874,10 @@ export type Database = {
         Args: { "": unknown[] }
         Returns: number
       }
+      waitlist_join: {
+        Args: { p_email: string; p_source?: string }
+        Returns: number
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
