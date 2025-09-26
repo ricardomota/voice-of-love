@@ -232,7 +232,7 @@ serve(async (req) => {
     }
 
     return new Response(JSON.stringify({ 
-      error: error.message || 'Chunking and embedding failed' 
+      error: error instanceof Error ? error.message : 'Chunking and embedding failed' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -162,7 +162,7 @@ serve(async (req) => {
     }
 
     return new Response(JSON.stringify({ 
-      error: error.message || 'Transcription failed' 
+      error: error instanceof Error ? error.message : 'Transcription failed' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

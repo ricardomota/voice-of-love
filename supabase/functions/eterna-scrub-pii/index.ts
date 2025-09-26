@@ -194,7 +194,7 @@ serve(async (req) => {
     console.error('Error in PII scrubbing function:', error);
     
     return new Response(JSON.stringify({ 
-      error: error.message || 'PII scrubbing failed' 
+      error: error instanceof Error ? error.message : 'PII scrubbing failed' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

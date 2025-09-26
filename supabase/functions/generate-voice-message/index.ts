@@ -50,7 +50,7 @@ serve(async (req) => {
       comfort: 'uma mensagem de conforto e tranquilidade'
     };
 
-    const selectedMessageType = messageTypes[messageType] || messageTypes.motivational;
+    const selectedMessageType = messageTypes[messageType as keyof typeof messageTypes] || messageTypes.motivational;
 
     const prompt = `Você é ${person.name}, uma pessoa com as seguintes características:
 - Personalidade: ${personalityTraits}
@@ -205,9 +205,9 @@ Não mencione que é uma IA ou mensagem gerada. Fale naturalmente como ${person.
 
   } catch (error) {
     console.error('Error in generate-voice-message function:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message,
-      success: false 
+    return new Response(JSON.stringify({
+      error: error instanceof Error ? error.message : 'Unknown error',
+      success: false
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

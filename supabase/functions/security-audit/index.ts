@@ -102,7 +102,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in security-audit function:', error);
     return new Response(JSON.stringify({ 
-      error: error.message || 'Security audit failed'
+      error: error instanceof Error ? error.message : 'Security audit failed'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -149,7 +149,7 @@ async function checkSuspiciousActivity(
       .limit(10);
 
     if (recentIPs && recentIPs.length > 0) {
-      const uniqueIPs = new Set(recentIPs.map(log => log.ip_address));
+      const uniqueIPs = new Set(recentIPs.map((log: any) => log.ip_address));
       
       // Alert if user is accessing from many different IPs
       if (uniqueIPs.size >= 5) {

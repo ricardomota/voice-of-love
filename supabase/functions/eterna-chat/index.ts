@@ -336,7 +336,7 @@ serve(async (req) => {
     const fallbackMessage = "I'm sorry, I'm having trouble responding right now. Please try again in a moment.";
     
     return new Response(JSON.stringify({ 
-      error: error.message || 'Chat request failed',
+      error: error instanceof Error ? error.message : 'Chat request failed',
       fallback_message: fallbackMessage
     }), {
       status: 500,
