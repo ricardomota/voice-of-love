@@ -1,9 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, AlertTriangle, Heart } from 'lucide-react';
+import { Check, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useLanguage } from '@/hooks/useLanguage';
 
 interface SimplePricingSectionProps {
@@ -831,15 +830,6 @@ export const SimplePricingSection: React.FC<SimplePricingSectionProps> = ({ onJo
   return (
     <section id="pricing" className="py-24 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Beta Notice */}
-        <div className="max-w-2xl mx-auto mb-16">
-          <Alert className="bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-800">
-            <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-            <AlertDescription className="text-amber-800 dark:text-amber-200 font-medium">
-              {text.disclaimer}
-            </AlertDescription>
-          </Alert>
-        </div>
 
         {/* Header */}
         <motion.div 
