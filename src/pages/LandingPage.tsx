@@ -8,6 +8,7 @@ import { StoryCard } from '@/components/landing/StoryCard';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { SimplePricingSection } from '@/components/landing/SimplePricingSection';
 import { SimpleWaitlistForm } from '@/components/landing/SimpleWaitlistForm';
+import { BetaDisclaimer } from '@/components/landing/BetaDisclaimer';
 
 interface LandingPageProps {
   onTryFree: () => void;
@@ -51,6 +52,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTryFree, onLogin }) 
       <div className="bg-gradient-to-r from-muted/40 via-accent/30 to-muted/40 dark:from-muted/20 dark:via-accent/10 dark:to-muted/20 transition-all duration-700 ease-in-out">
         <InteractiveHowItWorks />
       </div>
+
+      {/* Beta Disclaimer */}
+      <BetaDisclaimer />
 
       {/* Pricing Section */}
       <div className="bg-gradient-to-b from-background/70 to-muted/30 backdrop-blur-sm transition-all duration-700 ease-in-out">
