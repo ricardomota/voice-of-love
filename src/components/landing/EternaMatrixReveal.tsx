@@ -48,17 +48,19 @@ export default function EternaMatrixReveal({
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d", { alpha: true })!;
 
-    // Size to parent
+    // Size to parent - batch with requestAnimationFrame to prevent forced reflows
     const resize = () => {
-      const parent = canvas.parentElement!;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = parent.clientWidth;
-      const height = parent.clientHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      requestAnimationFrame(() => {
+        const parent = canvas.parentElement!;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = parent.clientWidth;
+        const height = parent.clientHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      });
     };
     resize();
     const ro = new ResizeObserver(resize);

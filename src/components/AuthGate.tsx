@@ -230,31 +230,62 @@ export const AuthGate = memo(({
     }
   }, [email, password, content, toast, signIn, signUp, navigate]);
 
+  // Cache card dimensions to prevent forced reflows
+  const cardDimensionsRef = useRef({ width: 0, height: 0, rect: { left: 0, top: 0 } });
+  const rafRef = useRef<number>();
+
+  // Update card dimensions (call on mount/resize)
+  const updateCardDimensions = useCallback(() => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    cardDimensionsRef.current = {
+      width: cardRef.current.offsetWidth,
+      height: cardRef.current.offsetHeight,
+      rect: { left: rect.left, top: rect.top }
+    };
+  }, []);
+
   // Apple TV card animation handlers
   const handleCardMouseEnter = useCallback(() => {
     setIsCardTransitioning(true);
+    updateCardDimensions(); // Update dimensions when interaction starts
     setTimeout(() => setIsCardTransitioning(false), 250);
-  }, []);
+  }, [updateCardDimensions]);
+
   const handleCardMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current || !highlightRef.current) return;
-    const card = cardRef.current;
-    const highlight = highlightRef.current;
-    const rect = card.getBoundingClientRect();
+    
+    // Cancel previous frame if still pending
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    // Use cached dimensions to avoid forced reflow
+    const { width: cardWidth, height: cardHeight, rect } = cardDimensionsRef.current;
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    const cardWidth = card.offsetWidth;
-    const cardHeight = card.offsetHeight;
     const rotationLimit = 8;
     const middleX = cardWidth / 2;
     const middleY = cardHeight / 2;
     const rotateX = (x - middleX) * (rotationLimit / middleX);
     const rotateY = (middleY - y) * (rotationLimit / middleY);
-    card.style.transform = `perspective(1200px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) translateZ(20px)`;
-    highlight.style.top = `-${100 + rotateY * 20}px`;
-    highlight.style.right = `-${100 - rotateX * 20}px`;
+
+    // Batch DOM writes in requestAnimationFrame
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current || !highlightRef.current) return;
+      cardRef.current.style.transform = `perspective(1200px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) translateZ(20px)`;
+      highlightRef.current.style.top = `-${100 + rotateY * 20}px`;
+      highlightRef.current.style.right = `-${100 - rotateX * 20}px`;
+    });
   }, []);
   const handleCardMouseLeave = useCallback(() => {
     if (!cardRef.current || !highlightRef.current) return;
+    
+    // Cancel any pending animation frame
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    
     setIsCardTransitioning(true);
     setTimeout(() => {
       if (cardRef.current && highlightRef.current) {
