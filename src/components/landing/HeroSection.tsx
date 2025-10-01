@@ -208,11 +208,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Main content */}
       <div className="relative w-full max-w-4xl mx-auto px-6 py-24 text-center">
         
-        {/* Status badge */}
+        {/* Status badge - render immediately */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
           className="mb-8"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm font-medium border border-border/50">
@@ -221,22 +221,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </motion.div>
 
-        {/* Hero headline */}
+        {/* Hero headline - render immediately for LCP */}
         <motion.h1 
           className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground mb-6 leading-tight tracking-tight"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.3 }}
         >
           {text.headline}
         </motion.h1>
 
-        {/* Subtitle */}
+        {/* Subtitle - render immediately */}
         <motion.p 
           className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12 font-light"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.3 }}
         >
           {text.subhead}
         </motion.p>
