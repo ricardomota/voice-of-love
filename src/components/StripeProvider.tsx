@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 
 // Secure Stripe key management with environment-based configuration
 const getStripePublishableKey = () => {
@@ -16,7 +16,14 @@ const getStripePublishableKey = () => {
   return testKey;
 };
 
-const stripePromise = loadStripe(getStripePublishableKey());
+// Lazy load Stripe - only when needed
+let stripePromise: Promise<Stripe | null> | null = null;
+const getStripePromise = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(getStripePublishableKey());
+  }
+  return stripePromise;
+};
 
 interface StripeProviderProps {
   children: React.ReactNode;
@@ -24,6 +31,13 @@ interface StripeProviderProps {
 }
 
 export const StripeProvider: React.FC<StripeProviderProps> = ({ children, clientSecret }) => {
+  const [stripe, setStripe] = useState<Promise<Stripe | null> | null>(null);
+
+  useEffect(() => {
+    // Load Stripe only when this component mounts
+    setStripe(getStripePromise());
+  }, []);
+
   const options = {
     clientSecret,
     appearance: {
@@ -40,8 +54,12 @@ export const StripeProvider: React.FC<StripeProviderProps> = ({ children, client
     },
   };
 
+  if (!stripe) {
+    return <div className="flex items-center justify-center p-8">Loading payment form...</div>;
+  }
+
   return (
-    <Elements stripe={stripePromise} options={options}>
+    <Elements stripe={stripe} options={options}>
       {children}
     </Elements>
   );

@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useSearchParams, Navigate, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Loader2 } from 'lucide-react';
-import { useState, useEffect, memo, useCallback } from 'react';
+import { useState, useEffect, memo, useCallback, lazy, Suspense } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cacheApiCall } from '@/utils/performanceUtils';
 import { Auth } from "@/pages/Auth";
@@ -19,8 +19,11 @@ import RileyLandingPage from "./components/landing/RileyLandingPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Changelog } from "./pages/Changelog";
-import { Payment } from "./pages/Payment";
-import { PaymentSuccess } from "./pages/PaymentSuccess";
+
+// Lazy load payment-related pages to reduce initial bundle
+const Payment = lazy(() => import("./pages/Payment").then(m => ({ default: m.Payment })));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess").then(m => ({ default: m.PaymentSuccess })));
+
 import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
 import { About } from "./pages/About";
@@ -220,12 +223,18 @@ const AppContent = () => {
         } 
       />
       
-      {/* Payment Pages */}
+      {/* Payment Pages - Lazy loaded */}
       <Route 
         path="/payment" 
         element={
           <PublicRoute>
-            <Payment />
+            <Suspense fallback={
+              <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            }>
+              <Payment />
+            </Suspense>
           </PublicRoute>
         } 
       />
@@ -233,7 +242,13 @@ const AppContent = () => {
         path="/payment/success" 
         element={
           <PublicRoute>
-            <PaymentSuccess />
+            <Suspense fallback={
+              <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            }>
+              <PaymentSuccess />
+            </Suspense>
           </PublicRoute>
         } 
       />
