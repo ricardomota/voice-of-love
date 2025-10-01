@@ -4,13 +4,25 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 
 // Secure Stripe key management with environment-based configuration
 const getStripePublishableKey = () => {
-  // In production/live environments, this would use the live publishable key
-  // For test/development, we use the test key
+  // SECURITY: Publishable keys are safe to expose client-side
+  // However, ensure you're using the correct key for your environment
+  
+  // Production domains should use live keys (pk_live_...)
+  const isProduction = typeof window !== 'undefined' && 
+    !window.location.hostname.includes('localhost') && 
+    !window.location.hostname.includes('127.0.0.1') &&
+    !window.location.hostname.includes('.lovable.app'); // Lovable preview domains
+  
+  // TEST KEY - Replace with live key for production
   const testKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
   
-  // Add build-time validation for production deployments
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    console.warn('⚠️ SECURITY NOTICE: Using test Stripe key in production environment. Please update to live key.');
+  // TODO: When deploying to production, update this to use your live Stripe key
+  // const liveKey = 'pk_live_YOUR_LIVE_KEY_HERE';
+  // return isProduction ? liveKey : testKey;
+  
+  if (isProduction) {
+    console.error('🚨 CRITICAL SECURITY WARNING: Using Stripe TEST key in production!');
+    console.error('Update getStripePublishableKey() to use your live Stripe publishable key');
   }
   
   return testKey;
