@@ -241,33 +241,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {text.subhead}
         </motion.p>
 
-        {/* CTA buttons */}
+        {/* CTA buttons - render immediately */}
         <motion.div 
           className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.3 }}
         >
-          {!isLoading && (
-            <>
-              <Button 
-                onClick={onTryFree}
-                size="lg"
-                className="px-8 py-3 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
-              >
-                {text.tryFree}
-              </Button>
-              
-              <Button 
-                onClick={onSeePricing}
-                variant="ghost"
-                size="lg"
-                className="px-6 py-3 text-base font-medium text-muted-foreground hover:text-foreground transition-all duration-300"
-              >
-                {text.seePricing}
-              </Button>
-            </>
-          )}
+          <Button 
+            onClick={onTryFree}
+            size="lg"
+            className="px-8 py-3 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+          >
+            {text.tryFree}
+          </Button>
+          
+          <Button 
+            onClick={onSeePricing}
+            variant="ghost"
+            size="lg"
+            className="px-6 py-3 text-base font-medium text-muted-foreground hover:text-foreground transition-all duration-300"
+          >
+            {text.seePricing}
+          </Button>
         </motion.div>
 
         {/* Trust indicator */}
