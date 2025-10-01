@@ -24,9 +24,20 @@
       base-uri 'self';
       form-action 'self';
     " />
+    <!-- Preconnect to Google Fonts for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sohne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Load fonts asynchronously to prevent render blocking -->
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sohne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" 
+      media="print" 
+      onload="this.media='all'"
+    >
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sohne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    </noscript>
     <title>Eterna - Preserve Memórias com IA</title>
     <meta name="description" content="Relive special memories and talk with AI versions of your loved ones, recreated with their voice and personality.">
     <meta name="author" content="Eterna" />
