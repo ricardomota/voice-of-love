@@ -186,7 +186,7 @@ export type Database = {
           rag_enabled: boolean | null
           title: string | null
           updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string | null
@@ -196,7 +196,7 @@ export type Database = {
           rag_enabled?: boolean | null
           title?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string | null
@@ -206,7 +206,7 @@ export type Database = {
           rag_enabled?: boolean | null
           title?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -315,7 +315,7 @@ export type Database = {
           members: Json | null
           name: string
           updated_at: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string
@@ -323,7 +323,7 @@ export type Database = {
           members?: Json | null
           name: string
           updated_at?: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string
@@ -331,7 +331,7 @@ export type Database = {
           members?: Json | null
           name?: string
           updated_at?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -769,7 +769,7 @@ export type Database = {
           id: string
           locale: string
           updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           consent_flags?: Json | null
@@ -778,7 +778,7 @@ export type Database = {
           id?: string
           locale?: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           consent_flags?: Json | null
@@ -787,7 +787,7 @@ export type Database = {
           id?: string
           locale?: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -800,7 +800,7 @@ export type Database = {
           person_id: string | null
           status: string
           updated_at: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string
@@ -810,7 +810,7 @@ export type Database = {
           person_id?: string | null
           status?: string
           updated_at?: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string
@@ -820,7 +820,7 @@ export type Database = {
           person_id?: string | null
           status?: string
           updated_at?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -956,7 +956,7 @@ export type Database = {
           metadata: Json | null
           status: string
           updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string | null
@@ -965,7 +965,7 @@ export type Database = {
           metadata?: Json | null
           status?: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string | null
@@ -974,7 +974,7 @@ export type Database = {
           metadata?: Json | null
           status?: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -1170,7 +1170,7 @@ export type Database = {
           display_name: string
           id: string
           updated_at: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           avatar_url?: string | null
@@ -1179,7 +1179,7 @@ export type Database = {
           display_name: string
           id?: string
           updated_at?: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           avatar_url?: string | null
@@ -1188,7 +1188,7 @@ export type Database = {
           display_name?: string
           id?: string
           updated_at?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
