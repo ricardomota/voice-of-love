@@ -33,12 +33,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://awodornqrhssfbkgjgfx.supabase.co">
     
-    <!-- Load fonts asynchronously to prevent render blocking with font-display swap -->
+    <!-- Preload critical font files for instant text rendering -->
+    <link 
+      rel="preload" 
+      as="font" 
+      type="font/woff2"
+      href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2"
+      crossorigin
+    >
+    
+    <!-- Load fonts with optimal performance settings -->
     <link 
       rel="stylesheet" 
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sohne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" 
       media="print" 
       onload="this.media='all'; this.onload=null;"
+      fetchpriority="low"
     >
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sohne:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
