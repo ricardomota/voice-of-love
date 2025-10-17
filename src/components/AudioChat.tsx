@@ -160,7 +160,9 @@ class AudioQueue {
 
     try {
       const wavData = createWavFromPCM(audioData);
-      const audioBuffer = await this.audioContext.decodeAudioData(wavData.buffer);
+      // Create a new ArrayBuffer copy to ensure type compatibility
+      const arrayBufferCopy = wavData.buffer.slice(0);
+      const audioBuffer = await this.audioContext.decodeAudioData(arrayBufferCopy as ArrayBuffer);
       
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;

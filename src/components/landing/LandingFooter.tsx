@@ -25,8 +25,12 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
   };
 
   return (
-    <footer className="bg-primary border-t border-border/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+    <footer className="relative border-t border-border/20 overflow-hidden" style={{ background: 'var(--gradient-footer)' }}>
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ 
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        backgroundRepeat: 'repeat'
+      }} />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           
@@ -40,22 +44,22 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
               />
             </div>
             
-            <p className="text-primary-foreground/70 leading-relaxed max-w-md">
+            <p className="text-gray-700 leading-relaxed max-w-md">
               {content.tagline}
             </p>
 
             <div className="space-y-4">
-              <h4 className="font-semibold text-primary-foreground">
+              <h4 className="font-semibold text-gray-900">
                 {content.support}
               </h4>
-              <p className="text-sm text-primary-foreground/70 leading-relaxed">
+              <p className="text-sm text-gray-700 leading-relaxed">
                 We're here to help you preserve your family's most precious voices.
               </p>
               <div className="flex items-center gap-2 text-sm">
-                <Mail className="w-4 h-4 text-primary-foreground" />
+                <Mail className="w-4 h-4 text-gray-900" />
                 <a 
                   href="mailto:contact@eterna.chat"
-                  className="text-primary-foreground hover:text-primary-foreground/80 transition-colors"
+                  className="text-gray-900 hover:text-gray-700 transition-colors"
                 >
                   contact@eterna.chat
                 </a>
@@ -65,23 +69,23 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-primary-foreground">{content.quickLinks}</h4>
+            <h4 className="font-semibold text-gray-900">{content.quickLinks}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => scrollToSection('pricing')}
-                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
+                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
               >
                 Pricing
               </button>
               <button 
                 onClick={onTryFree}
-                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
+                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
               >
                 {content.tryFree}
               </button>
               <button 
                 onClick={onSignIn}
-                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-left"
+                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
               >
                 {content.signIn}
               </button>
@@ -90,17 +94,17 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
           {/* Support & Updates */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-primary-foreground">{content.support}</h4>
+            <h4 className="font-semibold text-gray-900">{content.support}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => navigate('/changelog')}
-                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors flex items-center gap-2"
+                className="text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-2"
               >
-                <FileText className="w-4 h-4 text-primary-foreground" />
+                <FileText className="w-4 h-4 text-gray-900" />
                 Changelog
               </button>
-              <button className="text-primary-foreground/70 hover:text-primary-foreground transition-colors flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary-foreground" />
+              <button className="text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-2">
+                <Mail className="w-4 h-4 text-gray-900" />
                 {content.contact}
               </button>
             </nav>
@@ -108,11 +112,11 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-primary-foreground/20">
+        <div className="pt-8 border-t border-gray-900/10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             
             {/* Copyright */}
-            <p className="text-sm text-primary-foreground/70 text-center sm:text-left">
+            <p className="text-sm text-gray-700 text-center sm:text-left">
               {content.copyright}
             </p>
 
