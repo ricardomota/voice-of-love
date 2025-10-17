@@ -894,8 +894,8 @@ export const SimplePricingSection: React.FC<SimplePricingSectionProps> = ({ onJo
                     onClick={onJoinWaitlist}
                     className={`w-full ${
                       index === 1 
-                        ? 'bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-100' 
-                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
+                        ? 'bg-[#FEA8BF] hover:bg-[#FD8FAD] text-white dark:bg-[#FEA8BF] dark:text-white dark:hover:bg-[#FD8FAD]' 
+                        : 'bg-[#FDE7E9] hover:bg-[#FDD4D9] text-[#FEA8BF] dark:bg-[#FDE7E9] dark:text-[#FEA8BF] dark:hover:bg-[#FDD4D9]'
                     }`}
                   >
                     {(() => {
