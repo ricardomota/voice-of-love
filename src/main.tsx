@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-// Initialize security features
-import { initializeCSP } from "./utils/cspHeaders";
+// Note: CSP should be set via HTTP headers by the hosting platform
+// Client-side CSP via meta tags causes warnings and is not recommended
+// import { initializeCSP } from "./utils/cspHeaders";
+// initializeCSP();
 
-// Apply CSP headers for security
-initializeCSP();
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 

@@ -65,9 +65,9 @@ export const creditService = {
     const { data, error } = await supabase
       .from('credit_balance')
       .select('*')
-      .single();
+      .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') {
+    if (error) {
       console.error('Error fetching credit balance:', error);
       return null;
     }
