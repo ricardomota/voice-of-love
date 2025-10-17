@@ -35,26 +35,26 @@ body {
     --card-foreground: 224 71% 4%; /* Deep elegant dark */
     --popover: 0 0% 100%; /* Pure white popover */
     --popover-foreground: 224 71% 4%; /* Deep elegant dark */
-    --primary: 262 83% 58%; /* Elegant purple primary */
-    --primary-foreground: 210 20% 98%; /* Clean white text */
+    --primary: 344 96% 83%; /* Elegant pink primary #FEA8BF */
+    --primary-foreground: 224 71% 4%; /* Deep elegant dark */
     --secondary: 220 14% 96%; /* Subtle gray secondary */
     --secondary-foreground: 220 9% 46%; /* Medium gray text */
     --muted: 220 14% 96%; /* Subtle gray muted */
     --muted-foreground: 220 9% 46%; /* Medium gray text */
-    --accent: 220 14% 96%; /* Subtle gray accent */
-    --accent-foreground: 220 9% 46%; /* Medium gray text */
+    --accent: 344 90% 88%; /* Light pink accent */
+    --accent-foreground: 224 71% 4%; /* Deep elegant dark */
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 20% 98%;
     --border: 220 13% 91%; /* Very subtle border */
     --input: 220 13% 91%; /* Very subtle input background */
-    --ring: 262 83% 58%; /* Elegant purple ring */
+    --ring: 344 96% 83%; /* Elegant pink ring #FEA8BF */
     --radius: 0.75rem;
     
     /* Chart colors - modern theme */
     --chart-1: 217 91% 60%; /* modern blue */
     --chart-2: 142 76% 36%; /* emerald */
-    --chart-3: 262 83% 58%; /* purple */
-    --chart-4: 346 77% 49%; /* pink */
+    --chart-3: 344 96% 83%; /* pink #FEA8BF */
+    --chart-4: 344 90% 75%; /* deeper pink */
     --chart-5: 46 97% 55%; /* yellow */
 
     /* Professional Color Palette */
@@ -67,8 +67,8 @@ body {
     --blue-gray: 210 25% 88%; /* E0E7EA - secondary */
     
     /* Professional Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(315 30% 25%) 0%, hsl(315 25% 30%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(200 35% 65%) 0%, hsl(210 25% 75%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(344 96% 83%) 0%, hsl(344 90% 88%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(344 85% 75%) 0%, hsl(344 90% 88%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(51 20% 97%) 0%, hsl(51 15% 93%) 100%);
     --gradient-footer: linear-gradient(135deg, #FEA8BF 0%, #FDE7E9 100%);
     
@@ -139,19 +139,19 @@ body {
     --card-foreground: 210 20% 98%; /* Clean white text */
     --popover: 224 71% 4%; /* Deep elegant dark popover */
     --popover-foreground: 210 20% 98%; /* Clean white text */
-    --primary: 263 70% 50%; /* Elegant purple primary */
-    --primary-foreground: 210 20% 98%; /* Clean white text */
+    --primary: 344 85% 75%; /* Elegant pink primary (darker for dark mode) */
+    --primary-foreground: 224 71% 4%; /* Deep elegant dark */
     --secondary: 215 28% 17%; /* Dark subtle secondary */
     --secondary-foreground: 210 20% 98%; /* Clean white text */
     --muted: 215 28% 17%; /* Dark subtle muted */
     --muted-foreground: 217 11% 65%; /* Medium light text */
-    --accent: 215 28% 17%; /* Dark subtle accent */
-    --accent-foreground: 210 20% 98%; /* Clean white text */
+    --accent: 344 80% 70%; /* Dark pink accent */
+    --accent-foreground: 224 71% 4%; /* Deep elegant dark */
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 20% 98%;
     --border: 215 28% 17%; /* Dark subtle border */
     --input: 215 28% 17%; /* Dark subtle input */
-    --ring: 263 70% 50%; /* Elegant purple ring */
+    --ring: 344 85% 75%; /* Elegant pink ring */
 
     /* Dark Modern Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(215 28% 10%) 0%, hsl(215 28% 7%) 100%);
