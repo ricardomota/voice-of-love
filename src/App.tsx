@@ -33,6 +33,7 @@ import { Support } from "./pages/Support";
 import { EternaPricingPage } from "./components/pricing/EternaPricingPage";
 import { Wallet } from "./pages/Wallet";
 import Eterna from "./pages/Eterna";
+import Admin from "./pages/Admin";
 
 // Create QueryClient outside component to avoid re-creation
 const queryClient = new QueryClient({
@@ -169,6 +170,14 @@ const AppContent = () => {
         element={
           <ProtectedRoute>
             <Wallet />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute>
+            <Admin />
           </ProtectedRoute>
         } 
       />

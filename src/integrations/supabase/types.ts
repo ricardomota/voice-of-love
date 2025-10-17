@@ -93,21 +93,33 @@ export type Database = {
           access_code: string
           created_at: string
           email: string
+          expires_at: string | null
+          granted_from_waitlist: boolean | null
           id: string
+          is_temporary: boolean | null
+          notes: string | null
           used_at: string | null
         }
         Insert: {
           access_code?: string
           created_at?: string
           email: string
+          expires_at?: string | null
+          granted_from_waitlist?: boolean | null
           id?: string
+          is_temporary?: boolean | null
+          notes?: string | null
           used_at?: string | null
         }
         Update: {
           access_code?: string
           created_at?: string
           email?: string
+          expires_at?: string | null
+          granted_from_waitlist?: boolean | null
           id?: string
+          is_temporary?: boolean | null
+          notes?: string | null
           used_at?: string | null
         }
         Relationships: []
@@ -1718,7 +1730,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admin_beta_access_overview: {
+        Row: {
+          access_code: string | null
+          access_status: string | null
+          created_at: string | null
+          days_remaining: number | null
+          email: string | null
+          expires_at: string | null
+          granted_from_waitlist: boolean | null
+          id: string | null
+          is_temporary: boolean | null
+          notes: string | null
+          used_at: string | null
+          waitlist_id: string | null
+          waitlist_status: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       binary_quantize: {
@@ -1760,6 +1789,14 @@ export type Database = {
       }
       get_user_subscription_info: {
         Args: { user_id: string }
+        Returns: Json
+      }
+      grant_waitlist_beta_access: {
+        Args: {
+          days_duration?: number
+          email_list: string[]
+          notes_text?: string
+        }
         Returns: Json
       }
       halfvec_avg: {
@@ -1823,7 +1860,7 @@ export type Database = {
       }
       l2_normalize: {
         Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: string
+        Returns: unknown
       }
       match_chunks: {
         Args: {
