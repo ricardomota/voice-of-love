@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { WelcomeView } from "@/components/WelcomeView";
 import { Dashboard } from "@/pages/Dashboard";
 import { CreatePerson } from "@/pages/CreatePerson";
@@ -19,6 +20,7 @@ import { useTranslations } from "@/utils/translations";
 import { Loader2 } from "lucide-react";
 
 const Index = () => {
+  const location = useLocation();
   const { toast } = useToast();
   const { user, loading: authLoading } = useAuth();
   const { currentLanguage } = useLanguage();
@@ -48,8 +50,12 @@ const Index = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Load people from Supabase only after authentication is confirmed
+  // Only auto-navigate on the root path to prevent interference with protected routes
   useEffect(() => {
     if (authLoading || !user) return;
+    
+    // Only run auto-navigation logic on the root path
+    if (location.pathname !== '/') return;
 
     const initializeApp = async () => {
       console.log('Index: Initializing app and loading people...');
@@ -61,7 +67,7 @@ const Index = () => {
     };
 
     initializeApp();
-  }, [user, authLoading]); // Removidas dependências que causavam loop
+  }, [user, authLoading, location.pathname]); // Added location.pathname to dependencies
 
   const handleSavePerson = useCallback(async (personData: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {

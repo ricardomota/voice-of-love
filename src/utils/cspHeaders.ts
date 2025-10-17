@@ -30,7 +30,8 @@ export const DEFAULT_CSP_CONFIG: CSPConfig = {
     "https://js.stripe.com",
     "https://checkout.stripe.com",
     "https://*.supabase.co",
-    "https://cdn.jsdelivr.net"
+    "https://cdn.jsdelivr.net",
+    "https://cdn.gpteng.co"
   ],
   'style-src': [
     "'self'",
@@ -44,7 +45,8 @@ export const DEFAULT_CSP_CONFIG: CSPConfig = {
     "https://*.supabase.co",
     "https://images.unsplash.com",
     "https://via.placeholder.com",
-    "https://*.stripe.com"
+    "https://*.stripe.com",
+    "https://storage.googleapis.com"
   ],
   'font-src': [
     "'self'",
@@ -142,10 +144,8 @@ export const PRODUCTION_CSP_CONFIG: CSPConfig = {
   ...DEFAULT_CSP_CONFIG,
   'script-src': DEFAULT_CSP_CONFIG['script-src'].filter(src => 
     !src.includes('unsafe-inline') && !src.includes('unsafe-eval')
-  ).concat([
-    // Add specific nonce or hash-based CSP for production scripts
-    "'sha256-YOUR_SCRIPT_HASH_HERE'" // Replace with actual script hashes
-  ])
+  )
+  // Note: Add specific nonces or hashes for production scripts when needed
 };
 
 /**
