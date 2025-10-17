@@ -40,7 +40,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
               <img 
                 src="/eterna-logo-grey-blue.svg" 
                 alt="Eterna Logo" 
-                className="h-6 w-auto"
+                className="h-6 w-auto brightness-0 invert"
               />
             </div>
             
