@@ -1862,6 +1862,10 @@ export type Database = {
         Args: { "": string } | { "": unknown } | { "": unknown }
         Returns: unknown
       }
+      make_user_admin: {
+        Args: { user_email: string }
+        Returns: undefined
+      }
       match_chunks: {
         Args: {
           loved_one_id: string
