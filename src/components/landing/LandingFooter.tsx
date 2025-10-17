@@ -44,22 +44,23 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
               />
             </div>
             
-            <p className="text-gray-700 leading-relaxed max-w-md">
+            <p className="font-bold leading-relaxed max-w-md" style={{ color: '#FEA8BF' }}>
               {content.tagline}
             </p>
 
             <div className="space-y-4">
-              <h4 className="font-semibold text-gray-900">
+              <h4 className="font-bold" style={{ color: '#FEA8BF' }}>
                 {content.support}
               </h4>
-              <p className="text-sm text-gray-700 leading-relaxed">
+              <p className="text-sm font-bold leading-relaxed" style={{ color: '#FEA8BF' }}>
                 We're here to help you preserve your family's most precious voices.
               </p>
               <div className="flex items-center gap-2 text-sm">
-                <Mail className="w-4 h-4 text-gray-900" />
+                <Mail className="w-4 h-4" style={{ color: '#FEA8BF' }} />
                 <a 
                   href="mailto:contact@eterna.chat"
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  className="font-bold hover:opacity-80 transition-opacity"
+                  style={{ color: '#FEA8BF' }}
                 >
                   contact@eterna.chat
                 </a>
@@ -69,23 +70,26 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-gray-900">{content.quickLinks}</h4>
+            <h4 className="font-bold" style={{ color: '#FEA8BF' }}>{content.quickLinks}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => scrollToSection('pricing')}
-                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
+                className="font-bold hover:opacity-80 transition-opacity text-left"
+                style={{ color: '#FEA8BF' }}
               >
                 Pricing
               </button>
               <button 
                 onClick={onTryFree}
-                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
+                className="font-bold hover:opacity-80 transition-opacity text-left"
+                style={{ color: '#FEA8BF' }}
               >
                 {content.tryFree}
               </button>
               <button 
                 onClick={onSignIn}
-                className="text-gray-700 hover:text-gray-900 transition-colors text-left"
+                className="font-bold hover:opacity-80 transition-opacity text-left"
+                style={{ color: '#FEA8BF' }}
               >
                 {content.signIn}
               </button>
@@ -94,17 +98,18 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
 
           {/* Support & Updates */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-gray-900">{content.support}</h4>
+            <h4 className="font-bold" style={{ color: '#FEA8BF' }}>{content.support}</h4>
             <nav className="flex flex-col space-y-3">
               <button 
                 onClick={() => navigate('/changelog')}
-                className="text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-2"
+                className="font-bold hover:opacity-80 transition-opacity flex items-center gap-2"
+                style={{ color: '#FEA8BF' }}
               >
-                <FileText className="w-4 h-4 text-gray-900" />
+                <FileText className="w-4 h-4" style={{ color: '#FEA8BF' }} />
                 Changelog
               </button>
-              <button className="text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-2">
-                <Mail className="w-4 h-4 text-gray-900" />
+              <button className="font-bold hover:opacity-80 transition-opacity flex items-center gap-2" style={{ color: '#FEA8BF' }}>
+                <Mail className="w-4 h-4" style={{ color: '#FEA8BF' }} />
                 {content.contact}
               </button>
             </nav>
@@ -116,7 +121,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onTryFree, onSignI
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             
             {/* Copyright */}
-            <p className="text-sm text-gray-700 text-center sm:text-left">
+            <p className="text-sm font-bold text-center sm:text-left" style={{ color: '#FEA8BF' }}>
               {content.copyright}
             </p>
 
