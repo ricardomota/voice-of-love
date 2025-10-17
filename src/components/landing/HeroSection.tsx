@@ -250,8 +250,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         >
           <Button 
             onClick={onTryFree}
+            variant="cta"
             size="lg"
-            className="px-8 py-3 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+            className="px-8 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-[#FEA8BF]/25"
           >
             {text.tryFree}
           </Button>
